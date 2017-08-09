@@ -1,0 +1,7 @@
+{
+  "name" : "helms",
+  "repositories" : [ {
+    "type" : "composer",
+    "url" : "https://packagist.org/"
+  } ]
+}
