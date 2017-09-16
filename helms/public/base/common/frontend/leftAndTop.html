@@ -1,0 +1,135 @@
+<!-- Fixed navbar -->
+        <div class="navbar navbar-default navbar-fixed-top navbar-transparent-black mm-fixed-top" role="navigation" id="navbar">        
+
+          <!-- Branding -->
+          <div class="navbar-header col-md-2">
+            <a class="navbar-brand" href="index.html">
+              <strong>HELMS</strong>
+            </a>
+            <div class="sidebar-collapse">
+              <a href="#">
+                <i class="fa fa-bars"></i>
+              </a>
+            </div>
+          </div>
+          <!-- Branding end -->
+
+          <!-- .nav-collapse -->
+          <div class="navbar-collapse">
+                        
+            <!-- Page refresh -->
+            <ul class="nav navbar-nav refresh">
+              <li class="divided">
+                <a href="#" class="page-refresh"><i class="fa fa-refresh"></i></a>
+              </li>
+            </ul>
+            <!-- /Page refresh -->
+
+            <!-- Quick Actions -->
+            <ul class="nav navbar-nav quick-actions">
+              
+              <li class="dropdown divided">
+                <a class="dropdown-toggle button" data-toggle="dropdown" href="#"></a>
+              </li>
+
+              <li class="dropdown divided user" id="current-user">
+                <div class="profile-photo">
+                  <img src="_IMG_/profile-photo.jpg" alt />
+                </div>
+                <a class="dropdown-toggle options" data-toggle="dropdown" href="#">
+                  {$Think.session.session_user['userId']} <i class="fa fa-caret-down"></i>
+                </a>
+                
+                <ul class="dropdown-menu arrow settings">
+                  <li>                    
+                    <h3>背景颜色:</h3>
+                    <ul id="color-schemes">
+                      <li><a href="#" class="bg-1"></a></li>
+                      <li><a href="#" class="bg-2"></a></li>
+                      <li><a href="#" class="bg-3"></a></li>
+                      <li><a href="#" class="bg-4"></a></li>
+                      <li><a href="#" class="bg-5"></a></li>
+                      <li><a href="#" class="bg-6"></a></li>
+                    </ul>
+
+                  </li>
+
+                  <li class="divider"></li>
+
+                  <li>
+                    <a href="#"><i class="fa fa-user"></i> 个人信息</a>
+                  </li>
+
+                  <li>
+                    <a href="#"><i class="fa fa-pencil"></i> 修改密码</a>
+                  </li>
+
+                  <li class="divider"></li>
+
+                  <li>
+                    <a href="#"><i class="fa fa-power-off"></i> 登出</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <!-- /Quick Actions -->
+
+            <!-- Sidebar -->
+            <ul class="nav navbar-nav side-nav" id="sidebar">
+              
+              <li class="collapsed-content"> 
+                <ul>
+                  <li class="search"><!-- Collapsed search pasting here at 768px --></li>
+                </ul>
+              </li>
+
+              <li class="navigation" id="navigation">
+                <a href="#" class="sidebar-toggle" data-toggle="#navigation">导航 <i class="fa fa-angle-up"></i></a>
+                <ul class="menu">
+                  <li class="active">
+                    <a href="index.html">
+                      <i class="fa fa-tachometer"></i> 主页
+                      <span class="badge badge-red">1</span>
+                    </a>
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-list"></i>我的团队 <b class="fa fa-plus dropdown-plus"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a href="/public/index.php/frontend/common/network">
+                          <i class="fa fa-caret-right"></i> 网络结构
+                        </a>
+                      </li>
+                      <li>
+                        <a href="validation-elements.html">
+                          <i class="fa fa-caret-right"></i> 推荐结构
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <!-- <li>
+                    <a href="widgets.html">
+                      <i class="fa fa-play-circle"></i> 我的积分
+                    </a>
+                  </li> -->
+                </ul>
+              </li>
+
+              <li class="summary" id="order-summary">
+                <a href="#" class="sidebar-toggle underline" data-toggle="#order-summary">当前股价<i class="fa fa-angle-up"></i></a>
+
+                <div class="media">
+                  <div class="media-body">
+                    <br>
+                    <h3 class="media-heading">1.50</h3>
+                  </div>
+                </div>
+              </li>            
+            </ul>
+            <!-- Sidebar end -->
+          </div>
+          <!--/.nav-collapse -->
+        </div>
+        <!-- Fixed navbar end -->

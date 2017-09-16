@@ -1,0 +1,157 @@
+{extend name="base/backend"}
+
+{block name="js"}
+    <script type="text/javascript" src="_JS_/common/userlist.js"></script>
+{/block}
+
+{block name="content"}
+        <!-- Page content -->
+        <div id="content" class="col-md-12">
+          <!-- page header -->
+          <div class="pageheader">
+            <h2><i class="fa fa-tachometer"></i> ��Ա��Ϣ<span></span></h2>
+            <div class="breadcrumbs">
+              <ol class="breadcrumb">
+                <li><a href="index.html">HELMS</a></li>
+                <li class="active">��Ա��Ϣ</li>
+              </ol>
+            </div>
+          </div>
+          <!-- /page header -->
+
+          <!-- content main container -->
+          <div class="main">
+          	<div class="row">
+                <div class="col-md-10">
+                 <section class="tile color transparent-white">
+
+                  <!-- tile widget -->
+                  <div class="tile-widget bg-transparent-white-2">
+                      <form class="form-horizontal" role="form" action="SearchUserInfo" method="post" id="SubmitForm">
+                      
+                      <div class="form-group">
+                        <label for="userid" class="col-sm-2 control-label" >��ԱID</label>
+                        <div class="col-sm-2">
+                          <input type="text" class="form-control" name="userid" id="userid">
+                        </div>
+                        <label for="input01" class="col-sm-2 control-label">��Ա��</label>
+                        <div class="col-sm-2">
+                          <input type="text" class="form-control" name="username" id="username">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="input01" class="col-sm-2 control-label">�ֻ�</label>
+                        <div class="col-sm-2">
+                          <input type="text" class="form-control" name="telphone" id="telphone">
+                        </div>
+                        <label for="input01" class="col-sm-2 control-label">����</label>
+                        <div class="col-sm-2">
+                          <input type="text" class="form-control" name="email" id="email">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="input01" class="col-sm-2 control-label">ע��ʱ��</label>
+                        <div class="col-sm-2">
+                          <input type="datetime-local" class="form-control" value="YYYY-MM-DDThh:mm:ss:s" name="fromtime" id="fromtime">
+                        </div>
+                        <div class="col-sm-2">
+                          <input type="datetime-local" class="form-control" value="YYYY-MM-DDThh:mm:ss:s" name="totime" id="totime">
+                        </div>
+                      </div>
+                      <div class="form-group form-footer">
+                        <div class="col-sm-10 text-center">
+                          <button type="submit" class="btn btn-primary">����</button>
+                        </div>
+                      </div>
+                      </form>
+                  </div>
+                  <!-- tile widget -->
+
+                  <!-- tile header -->
+                  <div class="tile-header">
+                    <h1><strong>��Ա��Ϣ</strong></h1>
+                    <div class="controls">
+                      <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
+                      <a href="#" class="remove"><i class="fa fa-times"></i></a>
+                    </div>
+                  </div>
+                  <!-- /tile header -->
+
+                  <!-- tile body -->
+                  <div class="tile-body no-vpadding">
+                    
+                    <table class="table table-custom">
+                      <thead>
+                        <tr>
+                          <th style="width: 40px;">
+                            <div class="checkbox check-transparent">
+                              <input type="checkbox" value="1" id="allchck2">
+                              <label for="allchck2"></label>
+                            </div>
+                          </th>
+                          <th class="sort-asc">��ԱID</th>
+                          <th class="sort-numeric">��Ա��</th>
+                          <th class="sort-amount">�ֻ���</th>
+                          <th class="sort-amount">����</th>
+                          <th class="sort-amount">��Ա�ȼ�</th>
+                          <th class="sort-amount">ע��ʱ��</th>
+                          <th style="width: 30px;"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <div class="checkbox check-transparent">
+                              <input type="checkbox" value="1" id="chck04">
+                              <label for="chck04"></label>
+                            </div>
+                          </td>
+                          <td>Mark</td>
+                          <td>Otto</td>
+                          <td>@mdo</td>
+                          <td>@mdo</td>
+                          <td>@mdo</td>
+                          <td>@mdo</td>
+                          <td class="text-center"><a href="#" class="check-toggler checked"></a></td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                  <!-- /tile body -->
+
+
+                  <!-- tile footer -->
+                  <div class="tile-footer bg-transparent-white-2 rounded-bottom-corners">
+                    <div class="row">  
+                      
+                      <div class="col-sm-4">
+                        <small class="inline table-options paging-info">showing 1-3 of 24 items</small>
+                      </div>
+
+                      <div class="col-sm-4 text-center sm-center">
+                        <ul class="pagination pagination-xs nomargin pagination-custom">
+                          <li class="disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
+                          <li class="active"><a href="#">1</a></li>
+                          <li><a href="#">2</a></li>
+                          <li><a href="#">3</a></li>
+                          <li><a href="#">4</a></li>
+                          <li><a href="#">5</a></li>
+                          <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
+                        </ul>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </section>
+              </div>
+            </div>
+          </div>
+          <!-- /content container -->
+
+        </div>
+        <!-- Page content end -->
+
+{/block}
+      

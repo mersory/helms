@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <title>php.cn</title>
+ <meta charset="utf-8" />
+ <style>
+	 	.box{
+	 		width:250px;
+	 		height:120px;
+	 		background:#f0f0f0;
+	 	}
+	</style>
+ </head>
+ <body>
+ 	<!-- 注册界面 register-->
+ 	 <div class="box">
+	 <form action="UserRegist" method="post"> 
+	 <table>
+				<tr>
+					<td align="right">用户名：</td>
+					<td><input type="text" name="username" value="请输入用户名" maxLength="6"/></td>
+				</tr>
+				<tr>
+					<td align="right">密 码：</td>
+					<td><input type="password" name="password" maxLength="16"/></td>
+				</tr>
+				<tr>
+					<td align="right">二级密码：</td>
+					<td><input type="password" name="confirm" maxLength="16"/></td>
+				</tr>
+				<tr>
+					<td align="right">开户名：</td>
+					<td><input type="text" name="bank_account_name" value="请输入用户名" maxLength="6"/></td>
+				</tr>
+				<tr>
+					<td align="right">开户卡号：</td>
+					<td><input type="text" name="bank_account_num" maxLength="16"/></td>
+				</tr>
+				<tr>
+					<td align="right">开户银行：</td>
+					<td><input type="text" name="bank_name" maxLength="16"/></td>
+				</tr>
+					<tr>
+					<td align="right">用户详情用户名号：</td>
+					<td><input type="text" name="detal_username" maxLength="16"/></td>
+				</tr>
+				<tr>
+					<td align="right">邮箱：</td>
+					<td><input type="text" name="email" maxLength="16"/></td>
+				</tr>
+				<tr>
+					<td align="right">共享分：</td>
+					<td><input type="text" name="shares" maxLength="16"/></td>
+				</tr>
+				<tr>
+					<td colspa="2" align="right"><input type="Submit" name="Submit" value="注册"/></td>
+				</tr>
+	 		</table>
+	 </form>
+	 
+	 <form action="UserDelete" method="post"> 
+	 <table>
+				<tr>
+					<td align="right">用户名：</td>
+					<td><input type="text" name="del_username" value="请输入用户名" maxLength="6"/></td>
+				</tr>
+				<tr>
+					<td align="right">密 码：</td>
+					<td><input type="password" name="del_password" maxLength="16"/></td>
+				</tr>
+				<tr>
+					<td align="right">删除ID：</td>
+					<td><input type="text" name="del_id" maxLength="16"/></td>
+				</tr>
+				<tr>
+					<td colspa="2" align="right"><input type="Submit" name="Submit" value="删除"/></td>
+				</tr>
+	 		</table>
+	 </form>
+	 
+ </div> 
+ </body>
+</html>

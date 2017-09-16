@@ -1,101 +1,129 @@
-# MIPCMS内容管理系统 v2.1.0 介绍
-> #### 官网地址
-> http://www.mipcms.com
-> #### 主要使用技术栈：
-> ThinkPHP5.0.10 、Vue2.x 、Axios、Element Ui、MIP
- #### 系统简介：
-MIPCMS是一套免费开源的基于百度移动加速器MIP引擎基础上而开发的文章、资讯、内容管理系统，同时该系统也为互联网站长、创业者等群体打造的SEO优化后的建站系统。MIPCMS适合个人博客、新闻、门户、垂直领域、社群等类型需求。
-#### 特点：
-   *  我们优化了前后结合特点，采用非前后分离模式。你可以在任何一个PHP版本大于5.4的空间上完整使用整套系统，而不需要单独购买服务器花费昂贵的投资费用。
-   *  我们采用传统的模板切换方式，你可以任意切换你喜欢的模板 pc端模板、m端模板。
-   *  如果你特别喜欢极致的网站模板，连那么1像素的边线都感觉粗的，那么恭喜你，我们是0.5像素。
-   *  我们针对的是小白使用群体，你不需要费太多的精力在建站技术上，你也不需要费太多的精力在网站SEO上，对比程序开发、和网站SEO，请相信我们是非常专业的。你可以认为我们自己也在使用这套系统，请相信那份真挚的梦想，请保持那份一劳永逸的心，我们与中小站点的站长并肩齐步。
+ThinkPHP 5.0
+===============
 
- #### 功能描述：
-    * 友情链接管理
-    * 模块修改标识名称
-    * 模板一键切换
-    * M站 MIP标准模板
-    * MIP img图片处理、a标签处理、style内联样式处理等等功能
-    * slim富文本编辑器
-    * UUID通用唯一识别码 网址
-    * 蜘蛛抓取分析趋势图统计
-#### 安装使用说明:
-    1、PHP版本要求： ≥5.4
-    2、默认系统是在未配置伪静态下实现的，带有 index.php?s= 如要去除，先去后台开启【伪静态功能】，再配置网站伪静态，
-    各种环境的伪静态配置方式不一样，可以参考http://www.mipcms.cn/article/c0de4338a4625a748932f2e8.html
-    3、默认文章内容页面格式 www.xx.com/article/1.html (所有的内容)
-       默认文章分类页面格式 www.xx.com/article/seo/
-       ①后台有修改《article》这个层级（url用的），也有修改《文章》这个名称（显示文字用的）=>整站统一
-       ②如果因为seo目的，去除《article》层（指分类url里的），变成www.xx.com/seo/ 请到后台开启 【文章层级】功能
-       ③友情提醒：如果你的网站日后想进行功能模块扩展，请不要去除article层级，当然这个看网站规划；
-    4、内容页面分页字数，开启后，方可设置单页多少字进行分页；
-    5、MIP自动提交，表示默认系统不自动进行mip地址提交，可以发布文章后，批量选择提交的内容进行mip提交。
-        开启自动提交表示，每次发布一篇文章，自动进行提交，前提你先设置好mip提交的地址；百度站长平台获取，注意不是你的PC站地址
-    6、默认集成百度搜索，网站建立后，需要到百度搜索平台http://zn.baidu.com/获取key，进行替换。
-    7、网站顶级域名的格式是：xxx.com
-    8、网站域名是pc主页的页面（必须填写） 格式：www.xxx.com
-    9、m站域名是你的移动站域名（要开启移动版网站，必须填写这个）格式：m.xxx.com
-    10、pc站的统计代码可以填写任意平台的统计代码
-    11、M站的统计代码必须是符合mip标准的统计代码。输入框前面有问号，里面有格式。把百度的统计代码里面的key替换到MIP里面的即可
-    12、pc站统计代码里面可以放百度自动提交js代码，M站统计代码输入框不允许放js统计代码
-    13、默认为单级分类，如果是二级分类，必须开启去除文章层级；层级太多 对seo不好
-    14、泛域名绑定二级目录 生成二级域名站、对应mip站，功能需要官方人员进行调试；
-    15、站点地图，1000条为一个xml，百度官方规定一个sitemap地图文件只能有50000条，如果多的话就分开规划。底部的站点地图就是所有的地图的集合（一个地图1000条）
-    16、首页四个图片 需要推荐带有图文的的四篇文章。注意：不要推荐不带有图片的文章，不然mip页面不标准：
-#### 注意事项：
-    - 初始化账号密码 admin admin 请在后台修改
-    - 安装时请允许upload目录有可写权限
-    - 安装时请允许cache目录有可写权限
-    - 安装时请允许system\config目录有可写权限
-    - 安装时请允许public\install目录有可写权限
-    - 推荐使用 PHP7.0
+[![Total Downloads](https://poser.pugx.org/topthink/think/downloads)](https://packagist.org/packages/topthink/think)
+[![Latest Stable Version](https://poser.pugx.org/topthink/think/v/stable)](https://packagist.org/packages/topthink/think)
+[![Latest Unstable Version](https://poser.pugx.org/topthink/think/v/unstable)](https://packagist.org/packages/topthink/think)
+[![License](https://poser.pugx.org/topthink/think/license)](https://packagist.org/packages/topthink/think)
 
-#### 安装教程：
-    - 下载源码拷贝到网站根目录
-    - 解析绑定域名（主机允许外网访问）
-    - 输入数据库的信息 进行安装
-    - 安装时 如遇见 '系统错误' 解决方案
-        1、请检查PHP版本 必须>=5.4;
-        2、Nginx环境请配置伪静态
-        3、Apache伪静态规则是否开启
-        4、public\\install目录是否有可写权限
-    - 登录后 修改密码
-    - M站开启方式，后台配置m域名即可
-    - 后台统计代码 M站请输入mip统计代码（M站禁止输入非mip支持统计代码）
-    -
-#### 手动安装：
-    1、 public\install  新建 install.lock 文件（不是文件夹）
-    2、 在phpMyAdmin 新建数据库，将public\package\下的 mipcms_v_2_1_0.sql 文件导入
-    3、复制\package\database.php文件到system\config\目录下，修改如下标识
-        '#hostname#'      修改为 'localhost' 或者 '127.0.0.1'
-        '#database#'      修改为 'mipcms' （你的数据库名称）
-        '#username#'      修改为 'root' （你的数据库用户）
-        '#hostport#'      修改为 '*******' （你的数据库密码）
-        '#prefix#'        修改为 'mip_'
-#### 版本更新 2.1
-    升级：THINKPHP5内核版本为 5.0.10，并且改进了系统层级目录
-    新增：百度搜索（key后台修改）
-    新增：标签页面
-    新增：编辑器HTML代码功能、本地历史记录保存功能
-    新增：二级目录功能
-    新增：MIP模板导航头
-    新增：MIP推送 自动手动切换功能
-    新增：PC端模板、移动端模板单独切换功能
-    新增：文章内页分页 字数控制功能
-    新增：文章（article）层级后台去除功能
-    新增：文章URL自定义功能
-    新增：分类自定义SEO标题功能
-    新增：分类排序功能
-    新增：泛域名对应分类名称自动生成子站功能（自动对应MIP站）（商业授权用户）
-    新增：泛域名对应分类名称自动生成子站单独模板应用功能 （商业授权用户）
-    改进：MIP默认模板 去除mip-link功能，改为mip官方最新版 a 链接功能
-    改进：PC版、移动版 sitemap xml规范问题
-    改进：PC版默认模板 SEO优化改进
-    改进：PC版 内容页面 增加相关文章功能，改进了猜你喜欢数量问题
-    改进：默认安装状态非强制开启配置 伪静态限制
-    优化：MIP页面canonical指向PC页面
-    优化：PC页面底部增加mip页面链接
-    修复社区反馈的一些bug，修正了qq群反馈的一些bug
- #### 联系我们：
- > QQ群：576199348
+ThinkPHP5在保持快速开发和大道至简的核心理念不变的同时，PHP版本要求提升到5.4，对已有的CBD模式做了更深的强化，优化核心，减少依赖，基于全新的架构思想和命名空间实现，是ThinkPHP突破原有框架思路的颠覆之作，其主要特性包括：
+
+ + 基于命名空间和众多PHP新特性
+ + 核心功能组件化
+ + 强化路由功能
+ + 更灵活的控制器
+ + 重构的模型和数据库类
+ + 配置文件可分离
+ + 重写的自动验证和完成
+ + 简化扩展机制
+ + API支持完善
+ + 改进的Log类
+ + 命令行访问支持
+ + REST支持
+ + 引导文件支持
+ + 方便的自动生成定义
+ + 真正惰性加载
+ + 分布式环境支持
+ + 更多的社交类库
+
+> ThinkPHP5的运行环境要求PHP5.4以上。
+
+详细开发文档参考 [ThinkPHP5完全开发手册](http://www.kancloud.cn/manual/thinkphp5)
+
+## 目录结构
+
+初始的目录结构如下：
+
+~~~
+www  WEB部署目录（或者子目录）
+├─application           应用目录
+│  ├─common             公共模块目录（可以更改）
+│  ├─module_name        模块目录
+│  │  ├─config.php      模块配置文件
+│  │  ├─common.php      模块函数文件
+│  │  ├─controller      控制器目录
+│  │  ├─model           模型目录
+│  │  ├─view            视图目录
+│  │  └─ ...            更多类库目录
+│  │
+│  ├─command.php        命令行工具配置文件
+│  ├─common.php         公共函数文件
+│  ├─config.php         公共配置文件
+│  ├─route.php          路由配置文件
+│  ├─tags.php           应用行为扩展定义文件
+│  └─database.php       数据库配置文件
+│
+├─public                WEB目录（对外访问目录）
+│  ├─index.php          入口文件
+│  ├─router.php         快速测试文件
+│  └─.htaccess          用于apache的重写
+│
+├─thinkphp              框架系统目录
+│  ├─lang               语言文件目录
+│  ├─library            框架类库目录
+│  │  ├─think           Think类库包目录
+│  │  └─traits          系统Trait目录
+│  │
+│  ├─tpl                系统模板目录
+│  ├─base.php           基础定义文件
+│  ├─console.php        控制台入口文件
+│  ├─convention.php     框架惯例配置文件
+│  ├─helper.php         助手函数文件
+│  ├─phpunit.xml        phpunit配置文件
+│  └─start.php          框架入口文件
+│
+├─extend                扩展类库目录
+├─runtime               应用的运行时目录（可写，可定制）
+├─vendor                第三方类库目录（Composer依赖库）
+├─build.php             自动生成定义文件（参考）
+├─composer.json         composer 定义文件
+├─LICENSE.txt           授权说明文件
+├─README.md             README 文件
+├─think                 命令行入口文件
+~~~
+
+> router.php用于php自带webserver支持，可用于快速测试
+> 切换到public目录后，启动命令：php -S localhost:8888  router.php
+> 上面的目录结构和名称是可以改变的，这取决于你的入口文件和配置参数。
+
+## 命名规范
+
+`ThinkPHP5`遵循PSR-2命名规范和PSR-4自动加载规范，并且注意如下规范：
+
+### 目录和文件
+
+*   目录不强制规范，驼峰和小写+下划线模式均支持；
+*   类库、函数文件统一以`.php`为后缀；
+*   类的文件名均以命名空间定义，并且命名空间的路径和类库文件所在路径一致；
+*   类名和类文件名保持一致，统一采用驼峰法命名（首字母大写）；
+
+### 函数和类、属性命名
+*   类的命名采用驼峰法，并且首字母大写，例如 `User`、`UserType`，默认不需要添加后缀，例如`UserController`应该直接命名为`User`；
+*   函数的命名使用小写字母和下划线（小写字母开头）的方式，例如 `get_client_ip`；
+*   方法的命名使用驼峰法，并且首字母小写，例如 `getUserName`；
+*   属性的命名使用驼峰法，并且首字母小写，例如 `tableName`、`instance`；
+*   以双下划线“__”打头的函数或方法作为魔法方法，例如 `__call` 和 `__autoload`；
+
+### 常量和配置
+*   常量以大写字母和下划线命名，例如 `APP_PATH`和 `THINK_PATH`；
+*   配置参数以小写字母和下划线命名，例如 `url_route_on` 和`url_convert`；
+
+### 数据表和字段
+*   数据表和字段采用小写加下划线方式命名，并注意字段名不要以下划线开头，例如 `think_user` 表和 `user_name`字段，不建议使用驼峰和中文作为数据表字段命名。
+
+## 参与开发
+请参阅 [ThinkPHP5 核心框架包](https://github.com/top-think/framework)。
+
+## 版权信息
+
+ThinkPHP遵循Apache2开源协议发布，并提供免费使用。
+
+本项目包含的第三方源码和二进制文件之版权信息另行标注。
+
+版权所有Copyright © 2006-2017 by ThinkPHP (http://thinkphp.cn)
+
+All rights reserved。
+
+ThinkPHP® 商标和著作权所有者为上海顶想信息科技有限公司。
+
+更多细节参阅 [LICENSE.txt](LICENSE.txt)

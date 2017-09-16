@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HELMS - 主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+
+    <link rel="icon" type="image/ico" href="http://tattek.com/minimal/assets/images/favicon.ico" />
+    <!-- Bootstrap -->
+    <link href="../../assets/css/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/vendor/animate/animate.min.css">
+    <link type="text/css" rel="stylesheet" media="all" href="../../assets/js/vendor/mmenu/css/jquery.mmenu.all.css" />
+    <link rel="stylesheet" href="../../assets/js/vendor/videobackground/css/jquery.videobackground.css">
+    <link rel="stylesheet" href="../../assets/css/vendor/bootstrap-checkbox.css">
+    <link rel="stylesheet" href="../../static/css/fonts.css">
+
+    <link rel="stylesheet" href="../../assets/js/vendor/rickshaw/css/rickshaw.min.css">
+    <link rel="stylesheet" href="../../assets/js/vendor/morris/css/morris.css">
+    <link rel="stylesheet" href="../../assets/js/vendor/tabdrop/css/tabdrop.css">
+    <link rel="stylesheet" href="../../assets/js/vendor/summernote/css/summernote.css">
+    <link rel="stylesheet" href="../../assets/js/vendor/summernote/css/summernote-bs3.css">
+    <link rel="stylesheet" href="../../assets/js/vendor/chosen/css/chosen.min.css">
+    <link rel="stylesheet" href="../../assets/js/vendor/chosen/css/chosen-bootstrap.css">
+
+    <link href="../../assets/css/minimal.css" rel="stylesheet">
+    <link href="../../assets/css/main.css" rel="stylesheet">
+
+  </head>
+  <body class="bg-1">
+    <!-- Preloader -->
+    <!-- <div class="mask"><div id="loader"></div></div> -->
+    <!--/Preloader -->
+
+    <!-- Wrap all page content here -->
+    <div id="wrap">
+      <!-- Make page fluid -->
+      <div class="row">
+
+        <!-- Fixed navbar -->
+        <div class="navbar navbar-default navbar-fixed-top navbar-transparent-black mm-fixed-top" role="navigation" id="navbar">        
+
+          <!-- Branding -->
+          <div class="navbar-header col-md-2">
+            <a class="navbar-brand" href="index.html">
+              <strong>HELMS</strong>
+            </a>
+            <div class="sidebar-collapse">
+              <a href="#">
+                <i class="fa fa-bars"></i>
+              </a>
+            </div>
+          </div>
+          <!-- Branding end -->
+
+          <!-- .nav-collapse -->
+          <div class="navbar-collapse">
+                        
+            <!-- Page refresh -->
+            <ul class="nav navbar-nav refresh">
+              <li class="divided">
+                <a href="#" class="page-refresh"><i class="fa fa-refresh"></i></a>
+              </li>
+            </ul>
+            <!-- /Page refresh -->
+
+            <!-- Quick Actions -->
+            <ul class="nav navbar-nav quick-actions">
+              
+              <li class="dropdown divided">
+                
+                <a class="dropdown-toggle button" data-toggle="dropdown" href="#">
+                  <i class="fa fa-envelope"></i>
+                  <span class="label label-transparent-black">1</span>
+                </a>
+
+                <ul class="dropdown-menu wider arrow nopadding messages">
+                  <li><h1>You have <strong>1</strong> new message</h1></li>
+                  <li>
+                    <a class="cyan" href="#">
+                      <div class="profile-photo">
+                        <img src="../../assets/images/ici-avatar.jpg" alt />
+                      </div>
+                      <div class="message-info">
+                        <span class="sender">Ing. Imrich Kamarel</span>
+                        <span class="time">12 mins</span>
+                        <div class="message-content">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum</div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="green" href="#">
+                      <div class="profile-photo">
+                        <img src="../../assets/images/arnold-avatar.jpg" alt />
+                      </div>
+                      <div class="message-info">
+                        <span class="sender">Arnold Karlsberg</span>
+                        <span class="time">1 hour</span>
+                        <div class="message-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit</div>
+                      </div>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="#">
+                      <div class="profile-photo">
+                        <img src="../../assets/images/profile-photo.jpg" alt />
+                      </div>
+                      <div class="message-info">
+                        <span class="sender">John Douey</span>
+                        <span class="time">3 hours</span>
+                        <div class="message-content">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="red" href="#">
+                      <div class="profile-photo">
+                        <img src="../../assets/images/peter-avatar.jpg" alt />
+                      </div>
+                      <div class="message-info">
+                        <span class="sender">Peter Kay</span>
+                        <span class="time">5 hours</span>
+                        <div class="message-content">Ut enim ad minim veniam, quis nostrud exercitation</div>
+                      </div>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a class="orange" href="#">
+                      <div class="profile-photo">
+                        <img src="../../assets/images/george-avatar.jpg" alt />
+                      </div>
+                      <div class="message-info">
+                        <span class="sender">George McCain</span>
+                        <span class="time">6 hours</span>
+                        <div class="message-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit</div>
+                      </div>
+                    </a>
+                  </li>
+                  <li class="topborder"><a href="#">Check all messages <i class="fa fa-angle-right"></i></a></li>
+                </ul>
+
+              </li>
+
+              <!-- 个人信息 -->
+              <li class="dropdown divided user" id="current-user">
+                <div class="profile-photo">
+                  <img src="../../assets/images/profile-photo.jpg" alt />
+                </div>
+                <a class="dropdown-toggle options" data-toggle="dropdown" href="#">
+                  John Douey <i class="fa fa-caret-down"></i>
+                </a>
+                
+                <ul class="dropdown-menu arrow settings">
+                  <li>                    
+                    <h3>背景颜色:</h3>
+                    <ul id="color-schemes">
+                      <li><a href="#" class="bg-1"></a></li>
+                      <li><a href="#" class="bg-2"></a></li>
+                      <li><a href="#" class="bg-3"></a></li>
+                      <li><a href="#" class="bg-4"></a></li>
+                      <li><a href="#" class="bg-5"></a></li>
+                      <li><a href="#" class="bg-6"></a></li>
+                    </ul>
+
+                  </li>
+
+                  <li class="divider"></li>
+
+                  <li>
+                    <a href="#"><i class="fa fa-user"></i> 个人信息</a>
+                  </li>
+
+                  <li>
+                    <a href="#"><i class="fa fa-pencil"></i> 修改密码</a>
+                  </li>
+
+                  <li class="divider"></li>
+
+                  <li>
+                    <a href="#"><i class="fa fa-power-off"></i> Logout</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <!-- /Quick Actions -->
+
+            <!-- Sidebar -->
+            <ul class="nav navbar-nav side-nav" id="sidebar">
+              
+              <li class="collapsed-content"> 
+                <ul>
+                  <li class="search"><!-- Collapsed search pasting here at 768px --></li>
+                </ul>
+              </li>
+
+              <li class="navigation" id="navigation">
+                <a href="#" class="sidebar-toggle" data-toggle="#navigation">导航 <i class="fa fa-angle-up"></i></a>
+                <ul class="menu">
+                  <li class="active">
+                    <a href="index.html">
+                      <i class="fa fa-tachometer"></i> 主页
+                      <span class="badge badge-red">1</span>
+                    </a>
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-list"></i> 我的团队 <b class="fa fa-plus dropdown-plus"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a href="form-elements.html">
+                          <i class="fa fa-caret-right"></i> 网络结构
+                        </a>
+                      </li>
+                      <li>
+                        <a href="validation-elements.html">
+                          <i class="fa fa-caret-right"></i> 推荐结构
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <a href="widgets.html">
+                      <i class="fa fa-play-circle"></i> 我的积分
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="summary" id="order-summary">
+                <a href="#" class="sidebar-toggle underline" data-toggle="#order-summary">当前股价 <i class="fa fa-angle-up"></i></a>
+
+                <div class="media">
+                  <div class="media-body">
+                    <br>
+                    <h3 class="media-heading">1.50</h3>
+                  </div>
+                </div>
+              </li>            
+            </ul>
+            <!-- Sidebar end -->
+          </div>
+          <!--/.nav-collapse -->
+        </div>
+        <!-- Fixed navbar end -->
+
+        
+        <!-- Page content -->
+        <div id="content" class="col-md-12">
+          
+
+
+
+
+
+
+
+
+          <!-- page header -->
+          <div class="pageheader">
+            
+
+            <h2><i class="fa fa-envelope" style="line-height: 48px;padding-left: 0;"></i> 留言箱 <span></span></h2>
+            
+
+            <div class="breadcrumbs">
+              <ol class="breadcrumb">
+                <li><a href="index.html">HELMS</a></li>
+                <li><a href="#">留言箱</a></li>
+              </ol>
+            </div>
+
+
+          </div>
+          <!-- /page header -->
+          
+          
+
+
+
+
+          <!-- content main container -->
+          <div class="main horizontal-mail">
+            
+            
+
+
+            <!-- row -->
+            <div class="row">
+
+              <div class="col-md-10">
+
+                <div class="table-responsive inbox" id="mail-inbox">
+                  <table  class="table table-datatable table-custom" id="inboxDataTable">
+                    <thead>
+                      <tr>
+                        <th class="no-sort controls"></th>
+                        <th class="sort-alpha">发件人</th>
+                        <th class="sort-alpha">内容</th>
+                        <th class="sort-amount">日期</th>
+                        <th class="no-sort text-center controls"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                      <tr class="odd unread">
+                        <td>
+                          <div class="checkbox check-transparent">
+                            <input type="checkbox" value="1" checked id="msg01">
+                            <label for="msg01"></label>
+                          </div>
+                        </td>
+                        <td>Lucius Cashmere (5)</td>
+                        <td>Mail Message Subject</td>
+                        <td>12.02.2014, 16:23</td>
+                        <td class="text-center">
+                          <div class="mail-actions">
+                            <a href="#" class="reply"><i class="fa fa-reply"></i></a> 
+                            <a href="#" class="delete"><i class="fa fa-trash-o"></i></a>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr class="even">
+                        <td>
+                          <div class="checkbox check-transparent">
+                            <input type="checkbox" id="msg02">
+                            <label for="msg02"></label>
+                          </div>
+                        </td>
+                        <td>Jesse Phoenix</td>
+                        <td>Mail Message Subject</td>
+                        <td>11.02.2014, 7:58</td>
+                        <td class="text-center">
+                          <div class="mail-actions">
+                            <a href="#" class="reply"><i class="fa fa-reply"></i></a> 
+                            <a href="#" class="delete"><i class="fa fa-trash-o"></i></a>
+                          </div>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>              
+
+
+                <div class="mail-content" id="mail-content" style="padding-left:0px;">
+                
+                  <div class="quick-navigation">
+                    <button type="button" class="btn btn-default pull-left"><i class="fa fa-angle-left"></i></button>
+                    <h3>收件箱 (3/154)</h3>
+                    <button type="button" class="btn btn-default pull-right"><i class="fa fa-angle-right"></i></button>
+                  </div>
+
+                  <div class="message">
+
+                    <div class="header">
+                      <h1>留言内容</h1>
+
+                      <div class="actions">
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default"><i class="fa fa-reply"></i></button>
+                        </div>
+
+                        <button type="button" class="btn btn-default pull-right"><i class="fa fa-trash-o"></i></button>
+
+                      </div>
+                    </div>
+
+                    <div class="header" style="min-width: 1300px;color: white;">
+
+                      <ul style="list-style-type: none;"> 
+                        <li class="text-left">
+                          <span>你：</span>
+                          <span>2014-12-23 12:30:00</span>
+                          <p>今天干嘛了</p>
+                        </li>
+                        <li class="text-right">
+                          <span>管理员：</span>
+                          <span>2014-12-23 12:30:00</span>
+                          <p>今天干嘛了</p>
+                        </li>
+                        <li class="text-left">
+                          <span>你：</span>
+                          <span>2014-12-23 12:30:00</span>
+                          <p>今天干嘛了</p>
+                        </li>
+                        <li class="text-right">
+                          <span>管理员：</span>
+                          <span>2014-12-23 12:30:00</span>
+                          <p>今天干嘛了</p>
+                        </li>
+                      </ul>
+                      
+                    </div>
+
+                  </div>
+              </div>
+              <div class="mail-content" id="mail-content" style="margin-top: 20px;padding-left: 0px;">
+
+                  <div class="message">
+
+                    <div class="content">
+                      <h4 class="filled"><button type="button" class="btn btn-default"><i class="fa fa-plus"></i></button><i class="icon-mail-reply"></i> 给我们留言</h4>
+                      <div>
+                        <form>
+                          <div id="message-wysiwyg"></div>
+                          <button type="submit" class="btn btn-greensea">发送</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              
+            </div>
+            <!-- /row -->
+
+
+
+          </div>
+          <!-- /content container -->
+
+
+
+
+
+
+        </div>
+        <!-- Page content end -->
+
+      </div>
+      <!-- Make page fluid-->
+
+
+
+
+    </div>
+    <!-- Wrap all page content end -->
+
+
+
+    <section class="videocontent" id="video"></section>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../../assets/js/vendor/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/vendor/mmenu/js/jquery.mmenu.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/vendor/sparkline/jquery.sparkline.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/vendor/nicescroll/jquery.nicescroll.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/vendor/animate-numbers/jquery.animateNumbers.js"></script>
+    <script type="text/javascript" src="../../assets/js/vendor/videobackground/jquery.videobackground.js"></script>
+    <script type="text/javascript" src="../../assets/js/vendor/blockui/jquery.blockUI.js"></script>
+
+    <script src="../../assets/js/vendor/flot/jquery.flot.min.js"></script>
+    <script src="../../assets/js/vendor/flot/jquery.flot.time.min.js"></script>
+    <script src="../../assets/js/vendor/flot/jquery.flot.selection.min.js"></script>
+    <script src="../../assets/js/vendor/flot/jquery.flot.animator.min.js"></script>
+    <script src="../../assets/js/vendor/flot/jquery.flot.orderBars.js"></script>
+    <script src="../../assets/js/vendor/easypiechart/jquery.easypiechart.min.js"></script>
+
+    <script src="../../assets/js/vendor/rickshaw/raphael-min.js"></script> 
+    <script src="../../assets/js/vendor/rickshaw/d3.v2.js"></script>
+    <script src="../../assets/js/vendor/rickshaw/rickshaw.min.js"></script>
+
+    <script src="../../assets/js/vendor/morris/morris.min.js"></script>
+
+    <script src="../../assets/js/vendor/tabdrop/bootstrap-tabdrop.min.js"></script>
+
+    <script src="../../assets/js/vendor/summernote/summernote.min.js"></script>
+
+    <script src="../../assets/js/vendor/chosen/chosen.jquery.min.js"></script>
+
+    <script src="../../assets/js/minimal.min.js"></script>
+
+    <script src="../../assets/js/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../assets/js/vendor/datatables/ColReorderWithResize.js"></script>
+    <script src="../../assets/js/vendor/datatables/colvis/dataTables.ColVis.min.js"></script>
+    <script src="../../assets/js/vendor/datatables/dataTables.bootstrap.js"></script>
+
+    <script src="../../assets/js/minimal.min.js"></script>
+
+    <script>
+  $(function(){
+
+
+      /****************************************************/
+      /**************** ADVANCED DATATABLE ****************/
+      /****************************************************/
+
+      var oTable01 = $('#inboxDataTable').dataTable({
+        "sDom":
+          "R<'row table-heading'<'col-md-6 heading'><'col-md-6'Cf>r>"+
+          "t",
+        "iDisplayLength": 99999999,
+        "oColVis": {
+          "buttonText": '<i class="fa fa-cog"></i>',
+          "sAlign": "right"
+        },
+        "oLanguage": {
+          "sSearch": ""
+        },
+        "aoColumnDefs": [
+          { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+        ],
+        "aaSorting": [[ 3, "desc" ]],
+        "sScrollY": "200px",
+        "bPaginate": false
+      });
+
+
+      $('#inboxDataTable_wrapper .heading').html('<h1>留言记录</h1>');
+
+      /* Add a click handler to the rows - this could be used as a callback */
+      $("#inboxDataTable tbody tr").click( function( e ) {
+        if ( $(this).hasClass('row_selected') ) {
+          $(this).removeClass('row_selected');
+        }
+        else {
+          oTable01.$('tr.row_selected').removeClass('row_selected');
+          $(this).addClass('row_selected');
+        }
+      });
+
+      $('#mail-inbox .mail-favourite').click(function(){
+        $(this).toggleClass('active');
+      });
+
+      //load wysiwyg editor
+      $('#message-wysiwyg').summernote({
+        height: 158,   //set editable area's height
+        toolbar: [
+          //['style', ['style']], // no style button
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['fontsize', ['fontsize']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['height', ['height']],
+          //['insert', ['picture', 'link']], // no insert buttons
+          //['table', ['table']], // no table button
+          //['help', ['help']] //no help button
+        ]
+      });
+
+      $("#mail-inbox .dataTables_scrollBody").niceScroll({
+        cursorcolor: '#000000',
+        zindex: 999999,
+        bouncescroll: true,
+        cursoropacitymax: 0.4,
+        cursorborder: '',
+        cursorborderradius: 0,
+        cursorwidth: '5px'
+      });
+
+      oTable01.fnDraw();
+
+      
+    })
+      
+    </script>
+  </body>
+</html>
+      

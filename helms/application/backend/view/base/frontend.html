@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HELMS - <block name="title">标题</block></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+	{include file="base/common/css.html"/}
+	{include file="base/common/js.html"/}
+	
+	<!-- custom css -->
+	{block name="css"}css{/block}
+	<!-- custom js -->
+	{block name="js"}js{/block}
+
+  </head>
+  <body class="bg-1">
+
+    <!-- Wrap all page content here -->
+    <div id="wrap">
+      <!-- Make page fluid -->
+      <div class="row">
+	
+    	<!-- left and top -->	   
+		{include file="base/common/backend/leftAndTop.html"/}
+        
+        <!-- main content -->
+        {block name="content"}主内容<{/block}
+
+      </div>
+      <!-- Make page fluid-->
+
+    </div>
+    <!-- Wrap all page content end -->
+
+  </body>
+</html>
+      

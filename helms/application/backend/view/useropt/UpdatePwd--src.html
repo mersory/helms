@@ -1,0 +1,70 @@
+<?php
+	session_start();
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>重设密码</title>
+</head>
+<body>
+	<?php
+		echo "用户编号：";
+    	echo $_SESSION["ID"];
+		echo "<br/>";
+		echo "用户名：";
+		echo $_SESSION["username"];
+		echo "<br/>";
+		$username = $_SESSION["username"];
+	?>
+	<form action="PwdUpdateCommit" method="post" id="myForm">
+			  <section>
+				<input   type= "text "  name="username" readonly= "true "   value= "<?php echo $username;?>" > 
+			  </section>
+              <section>
+                <div class="input-group">
+                  <input type="text" class="form-control" name="old_pwd">
+                  <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                </div>
+                <div class="input-group">
+                  <input type="password" class="form-control" name="password">
+                  <div class="input-group-addon"><i class="fa fa-key"></i></div>
+                </div>
+                <div class="input-group">
+                  <input type="password" class="form-control" name="comfirm">
+                  <div class="input-group-addon"><i class="fa fa-key"></i></div>
+                </div>
+              </section>
+              <section class="log-in">
+                 <input type="button" value="submitBtn" onclick="return submitForm();"/> 
+              </section>
+    </form>
+  <script type="text/javascript">
+   function validate() 
+   {
+		var pwd = document.getElementsByName("password");
+		var cfm = document.getElementsByName("comfirm");
+		alert(pwd[0].value);
+		alert(cfm[0].value);
+		if(pwd[0].value != cfm[0].value)
+		{
+			 alert("输入的两个密码不符合规范");
+			 return false;
+		}
+		else if (confirm("确认修改?")) 
+		{
+	      return true;
+	    } 
+		else 
+		{
+	      return false;
+	    }
+   }
+   function submitForm() {
+    if (validate()) {
+      document.getElementById("myForm").submit();
+    }
+   }
+ </script>
+</body>
+</html>
