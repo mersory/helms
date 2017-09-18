@@ -3,4 +3,5 @@ composer.lock
 *.log
 */runtime/*
 */tests/*
+*.project
 thinkphp
