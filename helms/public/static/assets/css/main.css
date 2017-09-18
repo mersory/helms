@@ -1,0 +1,26 @@
+ul.news-title li{
+	cursor:pointer;
+}
+
+ul.news-title li a:hover{
+	color:#fff;
+}
+
+section.news-content div.tile-header,section.news-content div.tile-widget{
+	text-align: center;
+}
+
+section.news-content div.tile-widget span{
+	margin: 0 20px 0 20px;
+}
+
+section.news-content div.tile-body p{
+	margin: 0 150px 50px 150px;
+}
+
+.card-container {
+    max-height: 123px;
+}
+.card-container .card .front{
+	height:auto;
+}

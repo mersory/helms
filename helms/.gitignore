@@ -1,4 +1,6 @@
 .idea
 composer.lock
 *.log
+*/runtime/*
+*/tests/*
 thinkphp
