@@ -75,12 +75,10 @@ class Priority extends Model
         if ($state)
         {
             $this->commit();
-            var_dump("role insert commit");
         }
         else
         {
             $this->rollback();
-            var_dump("role insert rollback");
         }
         return $state;
     }

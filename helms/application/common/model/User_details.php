@@ -105,12 +105,10 @@ class User_details extends Model
         if ($state)
         {
             $this->commit();
-            var_dump("Details insert commit");
         }
         else
         {
             $this->rollback();
-            var_dump("Details insert rollback");
         }
         return $state;
     }

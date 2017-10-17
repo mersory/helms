@@ -105,12 +105,10 @@ class User_point extends Model
         if ($state)
         {
             $this->commit();
-            var_dump("point insert commit");
         }
         else
         {
             $this->rollback();
-            var_dump("point insert rollback");
         }
         return $state;
     }

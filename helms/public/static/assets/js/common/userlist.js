@@ -238,3 +238,20 @@
       $(".chosen-select").chosen({disable_search_threshold: 10});
       
     })
+	
+$(function(){
+	$('#btn_user_list').on("click",function(){
+	 		alert("调用方法");
+	 	 });
+		
+});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

@@ -1,6 +1,7 @@
 {extend name="base/backend"}
 
 {block name="js"}
+ <script type="text/javascript" src="_JS_/common/admin/inandout.js"></script>
 {/block}
 
 {block name="css"}
@@ -30,7 +31,7 @@
 
                   <!-- tile widget -->
                   <div class="tile-widget bg-transparent-white-2">
-                      <form class="form-horizontal" role="form">
+                     
                       
                       <div class="form-group">
                         <label for="input01" class="col-sm-2 control-label">时间</label>
@@ -41,9 +42,15 @@
                           <input type="text" class="form-control" id="input01">
                         </div>
                       </div>
+					  <div>
+                          <input type="datetime-local" class="form-control" value="YYYY-MM-DDThh:mm:ss:s" id="income_expense_start">
+                      </div>
+                      <div>
+                           <input type="datetime-local" class="form-control" value="YYYY-MM-DDThh:mm:ss:s" id="income_expense_end">
+                      </div>
                       <div class="form-group form-footer">
                         <div class="col-sm-10 text-center">
-                          <button type="submit" class="btn btn-primary">搜索</button>
+                          <button type="submit" class="btn btn-primary" id="btn_income_expend">搜索</button>
                         </div>
                       </div>
                   </div>
@@ -62,7 +69,7 @@
                   <!-- tile body -->
                   <div class="tile-body no-vpadding">
                     
-                    <table class="table table-custom">
+                    <table class="table table-custom" id="income_expense_table">
                       <thead>
                         <tr>
                           <th class="sort-asc">序号</th>

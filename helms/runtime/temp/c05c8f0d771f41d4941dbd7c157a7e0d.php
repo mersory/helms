@@ -1,4 +1,96 @@
-<!-- Fixed navbar -->
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:92:"C:\Users\Administrator\git\helms\helms\public/../application/backend\view\common\notice.html";i:1505921315;s:91:"C:\Users\Administrator\git\helms\helms\public/../application/backend\view\base\backend.html";i:1505921315;s:20:"base/common/css.html";i:1505921314;s:19:"base/common/js.html";i:1505921315;s:35:"base/common/backend/leftAndTop.html";i:1506528894;}*/ ?>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HELMS - <block name="title">标题</block></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+	 	<link rel="icon" type="image/ico" href="http://tattek.com/minimal/assets/images/favicon.ico" />
+    <!-- Bootstrap -->
+    <link href="_CSS_/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="_CSS_/vendor/animate/animate.min.css">
+    <link type="text/css" rel="stylesheet" media="all" href="_JS_/vendor/mmenu/css/jquery.mmenu.all.css" />
+    <link rel="stylesheet" href="_JS_/vendor/videobackground/css/jquery.videobackground.css">
+    <link rel="stylesheet" href="_CSS_/vendor/bootstrap-checkbox.css">
+
+    <link rel="stylesheet" href="_JS_/vendor/rickshaw/css/rickshaw.min.css">
+    <link rel="stylesheet" href="_JS_/vendor/morris/css/morris.css">
+    <link rel="stylesheet" href="_JS_/vendor/tabdrop/css/tabdrop.css">
+    <link rel="stylesheet" href="_JS_/vendor/summernote/css/summernote.css">
+    <link rel="stylesheet" href="_JS_/vendor/summernote/css/summernote-bs3.css">
+    <link rel="stylesheet" href="_JS_/vendor/chosen/css/chosen.min.css">
+    <link rel="stylesheet" href="_JS_/vendor/chosen/css/chosen-bootstrap.css">
+
+    <link href="_CSS_/minimal.css" rel="stylesheet">
+    <link href="_CSS_/main.css" rel="stylesheet">
+    
+    
+    
+    
+
+	    <script src="_JS_/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
+
+    <script src="_JS_/vendor/flot/jquery.flot.min.js"></script>
+    <script src="_JS_/vendor/flot/jquery.flot.time.min.js"></script>
+    <script src="_JS_/vendor/flot/jquery.flot.selection.min.js"></script>
+    <script src="_JS_/vendor/flot/jquery.flot.animator.min.js"></script>
+    <script src="_JS_/vendor/flot/jquery.flot.orderBars.js"></script>
+    <script src="_JS_/vendor/easypiechart/jquery.easypiechart.min.js"></script>
+
+    <script src="_JS_/vendor/rickshaw/raphael-min.js"></script> 
+    <script src="_JS_/vendor/rickshaw/d3.v2.js"></script>
+    <script src="_JS_/vendor/rickshaw/rickshaw.min.js"></script>
+
+    <script src="_JS_/vendor/morris/morris.min.js"></script>
+
+    <script src="_JS_/vendor/tabdrop/bootstrap-tabdrop.min.js"></script>
+
+    <script src="_JS_/vendor/summernote/summernote.min.js"></script>
+
+    <script src="_JS_/vendor/chosen/chosen.jquery.min.js"></script>
+
+    <script src="_JS_/minimal.min.js"></script>
+    
+    <section class="videocontent" id="video"></section>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
+
+
+	
+	<!-- custom css -->
+	
+
+
+	<!-- custom js -->
+	
+
+
+  </head>
+  <body class="bg-1">
+
+    <!-- Wrap all page content here -->
+    <div id="wrap">
+      <!-- Make page fluid -->
+      <div class="row">
+	
+    	<!-- left and top -->	   
+		<!-- Fixed navbar -->
         <div class="navbar navbar-default navbar-fixed-top navbar-transparent-black mm-fixed-top" role="navigation" id="navbar">        
 
           <!-- Branding -->
@@ -37,7 +129,7 @@
                   <img src="_IMG_/profile-photo.jpg" alt />
                 </div>
                 <a class="dropdown-toggle options" data-toggle="dropdown" href="#">
-                  {$Think.session.session_user['userId']} <i class="fa fa-caret-down"></i>
+                  <?php echo \think\Session::get('session_user')['userId']; ?> <i class="fa fa-caret-down"></i>
                 </a>
                 
                 <ul class="dropdown-menu arrow settings">
@@ -173,3 +265,17 @@
           <!--/.nav-collapse -->
         </div>
         <!-- Fixed navbar end -->
+        
+        <!-- main content -->
+        
+
+
+      </div>
+      <!-- Make page fluid-->
+
+    </div>
+    <!-- Wrap all page content end -->
+
+  </body>
+</html>
+      

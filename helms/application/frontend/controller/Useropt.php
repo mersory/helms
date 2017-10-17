@@ -126,50 +126,36 @@ class Useropt extends Controller
     
     
     //用户注册操作
-    public function UserRegist()
+    public function UserRegist($name, $email, $telphone, $recommender, $activator, $pwd1, $pwd2)
     {
-        var_dump("用户注册");
-        $_post = Request::instance()->post();
+		$_resdata = array();
         $_user_info = new User_info(); 
-        $name = $_post["fullname"];
-        $pwd1 = $_post["primarypwd"];//
-        $pwd2 = $_post["minorpwd"];//
         //此处插入用的是用户名和密码，必须这样做，因为此处插入之后才会有对应得ID生成，以便后续使用，此处不需要提供ID，因为主表的ID是自增的
         $_state = $_user_info->UserinfoInsert($name, $pwd1, $pwd2);
         if ($_state != 0)
         {
             $_res =$_user_info->UserinfoQuery($name, $pwd1);
-            echo count($_res);
             if (count($_res) != 1)
             {
                 echo "存在多个同名用户，或者改用户不存在";
                 return ;
-            }
-            else
-            {
-                echo "1111fasfsaf";
-                //var_dump($_res) ;
-            }
-                
+            } 
         }
-
+		$_resdata["success"] = true;
         //银行信息插入
         $_bank_info = new User_bankinfo();
         $user_id = $_res[0]["ID"];
         $bank_account_name = "白浅上仙";
         $bank_account_num = "622718219839182";
         $bank_name = "中国工商银行";
-        $bank_city = $_post["telphone"];
         $sub_bank = "";
         
         //用户详情信息插入
-        $user_name = $_post["fullname"];
-        $email = $_post["email"];
         $portrait = -1;
         $user_level = -1; 
         $open_time = -1;
-        $recommender = intval($_post["recommender"]); 
-        $activator = intval($_post["activator"]);
+        $recommender = intval($recommender); 
+        $activator = intval($activator);
         $registry = -1;
         $_details_info = new User_details();
                
@@ -191,23 +177,22 @@ class Useropt extends Controller
         $_role_info = new User_role();
         
         $_user_info->startTrans();
-        $_bank_insert = $_bank_info->BankinfoInsert($user_id, $bank_name, $bank_account_name, $bank_account_num, $bank_city, $sub_bank);
-        $_details_insert = $_details_info->DetailsInsert($user_id, $user_name, $email, $portrait, $user_level, $open_time, $recommender, $activator, $registry);
+        $_bank_insert = $_bank_info->BankinfoInsert($user_id, $bank_name, $bank_account_name, $bank_account_num, $telphone, $sub_bank);
+        $_details_insert = $_details_info->DetailsInsert($user_id, $name, $email, $portrait, $user_level, $open_time, $recommender, $activator, $registry);
         $_point_insert = $_point_info->PointInsert($user_id, $shares, $bonus_point, $regist_point);
         $_priority_insert = $_priority_info->PriorityInsert($user_id);//默认参数列表
-        $_role_insert = $_role_info->RoleInsert($user_id);
+        $_role_insert = $_role_info->RoleInsert($user_id);//默认参数列表
         if ($_bank_insert && $_details_insert && $_point_insert && $_priority_insert &&$_role_insert)
         {
-            echo "事务执行成功，提交";
             $_user_info->commit();
         }
         else
         {
-            echo "事务执行失败，回滚";
+			$_resdata["success"] = false;
             $_user_info->rollback();    
         }
         
-        return $user_id . '成功增加至数据表中';
+        echo json_encode($_resdata);
         
     }
     

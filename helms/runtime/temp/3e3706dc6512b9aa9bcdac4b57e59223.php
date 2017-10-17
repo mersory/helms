@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:99:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\useropt\registindex.html";i:1506434536;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>

@@ -66,12 +66,10 @@ class User_info extends Model
                 if ($state)
                 {
                     $this->commit();
-                    var_dump("commit");
                 }
                 else
                 {
                     $this->rollback();
-                    var_dump("rollback");
                 }
             }
             else 
@@ -92,12 +90,10 @@ class User_info extends Model
         if ($state)
         {
             $this->commit();
-            var_dump("Userinfo Insert commit");
         }
         else
         {
             $this->rollback();
-            var_dump("Userinfo Insert rollback");
         }
         return $state;
     }
@@ -192,10 +188,6 @@ class User_info extends Model
             $_where = "$_where and details.open_time < '$_totime'";
         }
         
-        echo "----------------------------------------";
-        echo "<br/>";
-        echo $_where;
-       
         if (strcmp("$_where", ""))
         {
             $res = $this->table('helms_user_info info, helms_user_details details')

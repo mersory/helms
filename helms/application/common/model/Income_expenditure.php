@@ -46,7 +46,7 @@ class Income_expenditure extends Model
         if (strcmp("$_where", ""))
         {
             $res = $this->where($_where)
-                        ->field( 'user_id, deal_count, current_profit, count_time')
+                        ->field( 'user_id, deal_count, current_profit, count_time, comment')
                         ->select();
         }
         else

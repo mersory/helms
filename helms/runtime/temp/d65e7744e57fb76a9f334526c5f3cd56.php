@@ -1,11 +1,11 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:102:"C:\Users\Administrator\git\helms\helms\public/../application/backend\view\common\incomeandexpense.html";i:1507555663;s:91:"C:\Users\Administrator\git\helms\helms\public/../application/backend\view\base\backend.html";i:1505921315;s:20:"base/common/css.html";i:1505921314;s:19:"base/common/js.html";i:1505921315;s:35:"base/common/backend/leftAndTop.html";i:1506528894;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>HELMS - 主页</title>
+    <title>HELMS - <block name="title">标题</block></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8" />
-
-    <link rel="icon" type="image/ico" href="http://tattek.com/minimal/assets/images/favicon.ico" />
+	 	<link rel="icon" type="image/ico" href="http://tattek.com/minimal/assets/images/favicon.ico" />
     <!-- Bootstrap -->
     <link href="_CSS_/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -24,20 +24,74 @@
 
     <link href="_CSS_/minimal.css" rel="stylesheet">
     <link href="_CSS_/main.css" rel="stylesheet">
-	<script type="text/javascript" src="https://code.jquery.com/jquery.js"></script>
-	<script type="text/javascript" src="_JS_/common/regist/regist.js"></script>
+    
+    
+    
+    
+
+	    <script src="_JS_/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
+
+    <script src="_JS_/vendor/flot/jquery.flot.min.js"></script>
+    <script src="_JS_/vendor/flot/jquery.flot.time.min.js"></script>
+    <script src="_JS_/vendor/flot/jquery.flot.selection.min.js"></script>
+    <script src="_JS_/vendor/flot/jquery.flot.animator.min.js"></script>
+    <script src="_JS_/vendor/flot/jquery.flot.orderBars.js"></script>
+    <script src="_JS_/vendor/easypiechart/jquery.easypiechart.min.js"></script>
+
+    <script src="_JS_/vendor/rickshaw/raphael-min.js"></script> 
+    <script src="_JS_/vendor/rickshaw/d3.v2.js"></script>
+    <script src="_JS_/vendor/rickshaw/rickshaw.min.js"></script>
+
+    <script src="_JS_/vendor/morris/morris.min.js"></script>
+
+    <script src="_JS_/vendor/tabdrop/bootstrap-tabdrop.min.js"></script>
+
+    <script src="_JS_/vendor/summernote/summernote.min.js"></script>
+
+    <script src="_JS_/vendor/chosen/chosen.jquery.min.js"></script>
+
+    <script src="_JS_/minimal.min.js"></script>
+    
+    <section class="videocontent" id="video"></section>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
+    <script type="text/javascript" src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
+
+
+	
+	<!-- custom css -->
+	
+
+
+	<!-- custom js -->
+	
+ <script type="text/javascript" src="_JS_/common/admin/inandout.js"></script>
+
+
   </head>
   <body class="bg-1">
-    <!-- Preloader -->
-    <!-- <div class="mask"><div id="loader"></div></div> -->
-    <!--/Preloader -->
 
     <!-- Wrap all page content here -->
     <div id="wrap">
       <!-- Make page fluid -->
       <div class="row">
-
-        <!-- Fixed navbar -->
+	
+    	<!-- left and top -->	   
+		<!-- Fixed navbar -->
         <div class="navbar navbar-default navbar-fixed-top navbar-transparent-black mm-fixed-top" role="navigation" id="navbar">        
 
           <!-- Branding -->
@@ -68,88 +122,15 @@
             <ul class="nav navbar-nav quick-actions">
               
               <li class="dropdown divided">
-                
-                <a class="dropdown-toggle button" data-toggle="dropdown" href="#">
-                  <i class="fa fa-envelope"></i>
-                  <span class="label label-transparent-black">1</span>
-                </a>
-
-                <ul class="dropdown-menu wider arrow nopadding messages">
-                  <li><h1>You have <strong>1</strong> new message</h1></li>
-                  <li>
-                    <a class="cyan" href="#">
-                      <div class="profile-photo">
-                        <img src="_IMG_/ici-avatar.jpg" alt />
-                      </div>
-                      <div class="message-info">
-                        <span class="sender">Ing. Imrich Kamarel</span>
-                        <span class="time">12 mins</span>
-                        <div class="message-content">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="green" href="#">
-                      <div class="profile-photo">
-                        <img src="_IMG_/arnold-avatar.jpg" alt />
-                      </div>
-                      <div class="message-info">
-                        <span class="sender">Arnold Karlsberg</span>
-                        <span class="time">1 hour</span>
-                        <div class="message-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit</div>
-                      </div>
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href="#">
-                      <div class="profile-photo">
-                        <img src="_IMG_/profile-photo.jpg" alt />
-                      </div>
-                      <div class="message-info">
-                        <span class="sender">John Douey</span>
-                        <span class="time">3 hours</span>
-                        <div class="message-content">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="red" href="#">
-                      <div class="profile-photo">
-                        <img src="_IMG_/peter-avatar.jpg" alt />
-                      </div>
-                      <div class="message-info">
-                        <span class="sender">Peter Kay</span>
-                        <span class="time">5 hours</span>
-                        <div class="message-content">Ut enim ad minim veniam, quis nostrud exercitation</div>
-                      </div>
-                    </a>
-                  </li>
-
-                  <li>
-                    <a class="orange" href="#">
-                      <div class="profile-photo">
-                        <img src="_IMG_/george-avatar.jpg" alt />
-                      </div>
-                      <div class="message-info">
-                        <span class="sender">George McCain</span>
-                        <span class="time">6 hours</span>
-                        <div class="message-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="topborder"><a href="#">Check all messages <i class="fa fa-angle-right"></i></a></li>
-                </ul>
-
+                <a class="dropdown-toggle button" data-toggle="dropdown" href="#"></a>
               </li>
 
-              <!-- 个人信息 -->
               <li class="dropdown divided user" id="current-user">
                 <div class="profile-photo">
                   <img src="_IMG_/profile-photo.jpg" alt />
                 </div>
                 <a class="dropdown-toggle options" data-toggle="dropdown" href="#">
-                  John Douey <i class="fa fa-caret-down"></i>
+                  <?php echo \think\Session::get('session_user')['userId']; ?> <i class="fa fa-caret-down"></i>
                 </a>
                 
                 <ul class="dropdown-menu arrow settings">
@@ -179,7 +160,7 @@
                   <li class="divider"></li>
 
                   <li>
-                    <a href="#"><i class="fa fa-power-off"></i> Logout</a>
+                    <a href="#"><i class="fa fa-power-off"></i> 登出</a>
                   </li>
                 </ul>
               </li>
@@ -199,38 +180,78 @@
                 <a href="#" class="sidebar-toggle" data-toggle="#navigation">导航 <i class="fa fa-angle-up"></i></a>
                 <ul class="menu">
                   <li class="active">
-                    <a href="index.html">
+                    <a href="index">
                       <i class="fa fa-tachometer"></i> 主页
                       <span class="badge badge-red">1</span>
                     </a>
                   </li>
-                  <li class="dropdown">
+<!--                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-list"></i> 我的团队 <b class="fa fa-plus dropdown-plus"></b>
+                      <i class="fa fa-list"></i>我的团队 <b class="fa fa-plus dropdown-plus"></b>
                     </a>
                     <ul class="dropdown-menu">
                       <li>
-                        <a href="form-elements.html">
+                        <a href="/public/index.php/frontend/common/network">
                           <i class="fa fa-caret-right"></i> 网络结构
                         </a>
                       </li>
                       <li>
-                        <a href="validation-elements.html">
+                        <a href="/public/index.php/frontend/common/introduce">
                           <i class="fa fa-caret-right"></i> 推荐结构
                         </a>
                       </li>
                     </ul>
-                  </li>
+                  </li> -->
                   <li>
-                    <a href="widgets.html">
-                      <i class="fa fa-play-circle"></i> 我的积分
+                    <a href="memberList">
+                      <i class="fa fa-play-circle"></i> 会员列表
                     </a>
                   </li>
+                                    <li>
+                    <a href="memberApplication">
+                      <i class="fa fa-play-circle"></i> 会员申请
+                    </a>
+                  </li> 
+                                    <li>
+                    <a href="pointsDetails">
+                      <i class="fa fa-play-circle"></i> 积分明细
+                    </a>
+                  </li> 
+                                    <li>
+                    <a href="pointsTransfer">
+                      <i class="fa fa-play-circle"></i> 积分互转
+                    </a>
+                  </li> 
+                                    <li>
+                    <a href="incomeAndExpense">
+                      <i class="fa fa-play-circle"></i> 收支明细
+                    </a>
+                  </li> 
+                                    <li>
+                    <a href="presentApplication">
+                      <i class="fa fa-play-circle"></i> 提现申请
+                    </a>
+                  </li> 
+                                    <li>
+                    <a href="notice">
+                      <i class="fa fa-play-circle"></i> 公告管理
+                    </a>
+                  </li>
+                                                      <li>
+                    <a href="option">
+                      <i class="fa fa-play-circle"></i> 参数设置
+                    </a>
+                  </li>    
+                                                      <li>
+                    <a href="log">
+                      <i class="fa fa-play-circle"></i> 操作日志
+                    </a>
+                  </li>  
                 </ul>
               </li>
 
               <li class="summary" id="order-summary">
-                <a href="#" class="sidebar-toggle underline" data-toggle="#order-summary">当前股价 <i class="fa fa-angle-up"></i></a>
+                <a href="#" class="sidebar-toggle underline" data-toggle="#order-summary">当前股价<i class="fa fa-angle-up"></i></a>
 
                 <div class="media">
                   <div class="media-body">
@@ -245,17 +266,18 @@
           <!--/.nav-collapse -->
         </div>
         <!-- Fixed navbar end -->
-
+        
+        <!-- main content -->
         
         <!-- Page content -->
         <div id="content" class="col-md-12">
           <!-- page header -->
           <div class="pageheader">
-            <h2><i class="fa fa-tachometer"></i> 注册会员<span></span></h2>
+            <h2><i class="fa fa-tachometer"></i> 收支明细<span></span></h2>
             <div class="breadcrumbs">
               <ol class="breadcrumb">
                 <li><a href="index.html">HELMS</a></li>
-                <li class="active">注册会员</li>
+                <li class="active">收支明细</li>
               </ol>
             </div>
           </div>
@@ -264,14 +286,39 @@
           <!-- content main container -->
           <div class="main">
           	<div class="row">
-                <div class="col-md-6">
-                  <section class="tile color transparent-black">
+                <div class="col-md-10">
+                 <section class="tile color transparent-white">
 
-
+                  <!-- tile widget -->
+                  <div class="tile-widget bg-transparent-white-2">
+                     
+                      
+                      <div class="form-group">
+                        <label for="input01" class="col-sm-2 control-label">时间</label>
+                        <div class="col-sm-2">
+                          <input type="text" class="form-control" id="input01">
+                        </div>
+                        <div class="col-sm-2">
+                          <input type="text" class="form-control" id="input01">
+                        </div>
+                      </div>
+					  <div>
+                          <input type="datetime-local" class="form-control" value="YYYY-MM-DDThh:mm:ss:s" id="income_expense_start">
+                      </div>
+                      <div>
+                           <input type="datetime-local" class="form-control" value="YYYY-MM-DDThh:mm:ss:s" id="income_expense_end">
+                      </div>
+                      <div class="form-group form-footer">
+                        <div class="col-sm-10 text-center">
+                          <button type="submit" class="btn btn-primary" id="btn_income_expend">搜索</button>
+                        </div>
+                      </div>
+                  </div>
+                  <!-- tile widget -->
 
                   <!-- tile header -->
                   <div class="tile-header">
-                    <h1><strong>注册会员</strong></h1>
+                    <h1><strong>收支明细</strong></h1>
                     <div class="controls">
                       <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
                       <a href="#" class="remove"><i class="fa fa-times"></i></a>
@@ -280,72 +327,60 @@
                   <!-- /tile header -->
 
                   <!-- tile body -->
-                  <div class="tile-body">
+                  <div class="tile-body no-vpadding">
                     
-                    <form class="form-horizontal" id="basicvalidations">
-                      
-                      <div class="form-group">
-                        <label for="fullname" class="col-sm-4 control-label">会员名 *</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control parsley-validated" name="fullname" id="fullname" parsley-trigger="change" parsley-required="true" parsley-minlength="4" parsley-validation-minlength="1">
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <label for="email" class="col-sm-4 control-label">邮箱 *</label>
-                        <div class="col-sm-8">
-                          <input type="email" class="form-control parsley-validated" name="email" id="email" parsley-trigger="change" parsley-required="true" parsley-minlength="4" parsley-type="email" parsley-validation-minlength="1">
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <label for="telphone" class="col-sm-4 control-label">手机号 *</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control parsley-validated" name="telphone" id="telphone" parsley-trigger="change" parsley-required="true" parsley-minlength="6" parsley-type="alphanum" parsley-validation-minlength="1">
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <label for="recommender" class="col-sm-4 control-label">推荐人 *</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control parsley-validated" name="recommender" id="recommender" parsley-trigger="change" parsley-required="true" parsley-minlength="6" parsley-type="alphanum" parsley-validation-minlength="1" parsley-equalto="#password">
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <label for="activator" class="col-sm-4 control-label">节点人 *</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control parsley-validated" name="activator" id="activator" parsley-trigger="change" parsley-minlength="4" parsley-type="url" parsley-validation-minlength="1">
-                        </div>
-                      </div>
-					  <div class="form-group">
-                        <label for="primarypwd" class="col-sm-4 control-label">一级密码 *</label>
-                        <div class="col-sm-8">
-                          <input type="password" class="form-control parsley-validated" name="primarypwd" id="primarypwd" parsley-trigger="change" parsley-minlength="4" parsley-type="url" parsley-validation-minlength="1">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="minorpwd" class="col-sm-4 control-label">二级密码 *</label>
-                        <div class="col-sm-8">
-                          <input type="password" class="form-control parsley-validated" name="minorpwd" id="minorpwd" parsley-trigger="change" parsley-minlength="4" parsley-type="url" parsley-validation-minlength="1">
-                        </div>
-                      </div>
-                      <div class="form-group form-footer">
-                        <div class="col-sm-offset-4 col-sm-8">
-                          <button type="submit" class="btn btn-primary" id="regist">注册</button>
-                        </div>
-                      </div>
-
-                    </form>
+                    <table class="table table-custom" id="income_expense_table">
+                      <thead>
+                        <tr>
+                          <th class="sort-asc">序号</th>
+                          <th class="sort-asc">会员ID</th>
+                          <th class="sort-numeric">收支类型</th>
+                          <th class="sort-amount">金额</th>
+                          <th class="sort-amount">收支说明</th>
+                          <th class="sort-amount">时间</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>1</td>
+                          <td>123124</td>
+                          <td>注册分转入</td>
+                          <td>+500</td>
+                          <td></td>
+                          <td>2017-09-01 12:30:00</td>
+                        </tr>
+                      </tbody>
+                    </table>
 
                   </div>
                   <!-- /tile body -->
-                  
-                
 
+
+                  <!-- tile footer -->
+                  <div class="tile-footer bg-transparent-white-2 rounded-bottom-corners">
+                    <div class="row">  
+                      
+                      <div class="col-sm-4">
+                        <small class="inline table-options paging-info">showing 1-3 of 24 items</small>
+                      </div>
+
+                      <div class="col-sm-4 text-center sm-center">
+                        <ul class="pagination pagination-xs nomargin pagination-custom">
+                          <li class="disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
+                          <li class="active"><a href="#">1</a></li>
+                          <li><a href="#">2</a></li>
+                          <li><a href="#">3</a></li>
+                          <li><a href="#">4</a></li>
+                          <li><a href="#">5</a></li>
+                          <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
+                        </ul>
+                      </div>
+
+                    </div>
+                  </div>
 
                 </section>
-                </div>
+              </div>
             </div>
           </div>
           <!-- /content container -->
@@ -353,50 +388,7 @@
         </div>
         <!-- Page content end -->
 
-      </div>
-      <!-- Make page fluid-->
-
-
-
-
-    </div>
-    <!-- Wrap all page content end -->
-
-
-
-    <section class="videocontent" id="video"></section>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
-
-    <script src="_JS_/vendor/flot/jquery.flot.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.time.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.selection.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.animator.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.orderBars.js"></script>
-    <script src="_JS_/vendor/easypiechart/jquery.easypiechart.min.js"></script>
-
-    <script src="_JS_/vendor/rickshaw/raphael-min.js"></script> 
-    <script src="_JS_/vendor/rickshaw/d3.v2.js"></script>
-    <script src="_JS_/vendor/rickshaw/rickshaw.min.js"></script>
-
-    <script src="_JS_/vendor/morris/morris.min.js"></script>
-
-    <script src="_JS_/vendor/tabdrop/bootstrap-tabdrop.min.js"></script>
-
-    <script src="_JS_/vendor/summernote/summernote.min.js"></script>
-
-    <script src="_JS_/vendor/chosen/chosen.jquery.min.js"></script>
-
-    <script src="_JS_/minimal.min.js"></script>
-
+ 
     <script>
     $(function(){
 
@@ -640,6 +632,14 @@
     })
       
     </script>
+  
+
+      </div>
+      <!-- Make page fluid-->
+
+    </div>
+    <!-- Wrap all page content end -->
+
   </body>
 </html>
       

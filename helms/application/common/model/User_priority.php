@@ -59,12 +59,10 @@ class User_priority extends Model
         if ($state)
         {
             $this->commit();
-            var_dump("commit");
         }
         else
         {
             $this->rollback();
-            var_dump("rollback");
         }
         return $state;
     }

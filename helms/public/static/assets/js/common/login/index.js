@@ -1,7 +1,6 @@
 $(function(){
 	//清空表单
 	emptyForm();
-	
 	//登录
 	$("#login").on("click",function(event){
 		var username = $("#username").val();
@@ -17,8 +16,13 @@ $(function(){
 			return false;
 		}
 		
-		var url =  "/public/index.php/login/login/login"
-		 $.post(url,{username:username,password:password},function(result){
+		if( !validate() ){
+			showError("输入密码用户名或错误");
+			return false;
+		}
+		
+		var url =  "/public/index.php/login/login/login";
+		 $.post(url,{_username:username,_password:password},function(result){
 			 result = JSON.parse(result);
 			 if(result.success){
 				 window.location.href=result.redirectUrl;
@@ -49,11 +53,34 @@ $(function(){
 	
 	//创建账号
 	$("#create").on("click",function(){
-		
-		
+		window.location.href="http://localhost/public/index.php/frontend/Useropt/RegistIndex";
 	});
 	
 });
+
+function validate() 
+{
+	var user = $('#username').val();
+	var pwd = $('#password').val();
+	if( !(/[A-Z]/.test(user)) || !(/[A-Z]/.test(pwd)) )
+    {
+	    alert("输入序列必须包含大写字母");
+	    return false;
+    }
+    if( !(/[a-z]/.test(user)) || !(/[A-Z]/.test(pwd)) )
+    {
+	    alert("输入序列必须包含小写字母");
+	    return false;
+    }
+    if( !(/[0-9]/.test(user)) || !(/[A-Z]/.test(pwd)) )
+    {
+	    alert("输入序列必须包含数字");
+	    return false;
+    }
+    alert("输入序列合法");
+    return true;
+}  
+
 
 function emptyForm(){
 	$("#username").val("");

@@ -10,7 +10,7 @@ class Withdrawal_record extends Model
         var_dump("Userdetails");
     }
     
-    public function WithdrawalQuery($user_id)//»¹ÓÐÆäËûµÄ²éÕÒ·½Ê½£¬´Ë´¦Ö»ÁÐ³öÕâÒ»¸ö
+    public function WithdrawalQuery($user_id)//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½Ò·ï¿½Ê½ï¿½ï¿½ï¿½Ë´ï¿½Ö»ï¿½Ð³ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
     {
         $_where = '';
         if ($user_id != -1)
@@ -28,20 +28,24 @@ class Withdrawal_record extends Model
         return $_withdrawal_info;
     }
     
-    public function WithdrawalApplicationByTime($_start, $_end)
+    public function WithdrawalApplicationByTime($user_id, $_start, $_end)
     {
         $_where = '';
+        if (strcmp("$user_id", ""))
+        {
+            $_where = "user_id = $user_id";
+        }
+        else 
+        {
+            $_where = "user_id != -1";
+        }
         if (strcmp("$_start", "") )
         {
-            $_where = "apply_time > '$_start'";   //ÕâÀï²»Òª=ÒýºÅ£¬ÒòÎª´«ÈëÊý¾Ý¿âÖÐµÄID¾ÍÊÇintÀàÐÍ
-        }
-        else
-        {
-            $_where = "apply_time > '1970-01-01 00:00:00'";
+            $_where = "apply_time > '$_start'";   //ï¿½ï¿½ï¿½ï²»Òª=ï¿½ï¿½ï¿½Å£ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ðµï¿½IDï¿½ï¿½ï¿½ï¿½intï¿½ï¿½ï¿½ï¿½
         }
         if (strcmp("$_end", "") )
         {
-            $_where = "$_where and apply_time < '$_end'";//ÕâÀïÐèÒªÌí¼ÓÒýºÅ
+            $_where = "$_where and apply_time < '$_end'";//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         }
         if (strcmp("$_where", ""))
         {
@@ -105,7 +109,7 @@ class Withdrawal_record extends Model
     
         if ($withdrawal_status >=0)
         {
-            $_withdrawalinfo["withdrawal_status"] = $withdrawal_status;//Ò»°ãÕâÀïÖ»ÄÜÎª0£¬±íÊ¾ÉêÇëÌá½»£¬»¹Ã»ÉóºË
+            $_withdrawalinfo["withdrawal_status"] = $withdrawal_status;//Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Îª0ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½á½»ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½
         }
         $_withdrawalinfo["apply_time"] = date("Y-m-d H:i:s");
         $this->startTrans();
@@ -134,7 +138,7 @@ class Withdrawal_record extends Model
             {
                 echo "fasa";
                 $_withdrawalinfo["withdrawal_status"] = $updatetype;
-                if ($updatetype == 1)//ÉóºËÍ¨¹ý
+                if ($updatetype == 1)//ï¿½ï¿½ï¿½Í¨ï¿½ï¿½
                 {
                     $_withdrawalinfo["approve_time"] = date("Y-m-d H:i:s");
                 }
