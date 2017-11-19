@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:92:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\common\index.html";i:1506525789;s:93:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\base\frontend.html";i:1505921317;s:20:"base/common/css.html";i:1505921314;s:19:"base/common/js.html";i:1505921315;s:36:"base/common/frontend/leftAndTop.html";i:1506529931;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:92:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\common\index.html";i:1509264824;s:93:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\base\frontend.html";i:1505921317;s:20:"base/common/css.html";i:1505921314;s:19:"base/common/js.html";i:1505921315;s:36:"base/common/frontend/leftAndTop.html";i:1506529931;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -414,7 +414,7 @@
 
                   <!-- tile header -->
                   <div class="tile-header color transparent-black textured rounded-top-corners">
-                    <h1><strong>股价趋势</strong> </h1>
+                    <h1><strong>股价ssss趋势</strong> </h1>
                     <div class="controls">
                       <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
                       <a href="#" class="remove"><i class="fa fa-times"></i></a>

@@ -1,6 +1,14 @@
+//new_element=document.createElement("script");
+//new_element.setAttribute("type","text/javascript");
+//new_element.setAttribute("src","../admin/userlist.js");// 在这里引入了a.js
+//document.body.appendChild(new_element);
+
+//document.write("<script language=javascript src='_JS_/common/admin/pointtransform.js'></script>");
+
 $(function(){
 	//清空表单
 	emptyForm();
+	b();
 	//登录
 	$("#login").on("click",function(event){
 		var username = $("#username").val();
@@ -57,6 +65,12 @@ $(function(){
 	});
 	
 });
+
+
+function b()  {
+	alert("function b（） 输入序列合法");
+	//pointtran();
+}
 
 function validate() 
 {
