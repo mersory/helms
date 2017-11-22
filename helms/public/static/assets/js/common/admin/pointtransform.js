@@ -42,6 +42,13 @@ function validate()
    return true;
 }  
 
+function pointtran() 
+{
+   alert("pointtran");
+   return true;
+}  
+
+
 //插入行
 function addCol(res_index, user_id, point_change_type, point_change_sum, point_change_time) {
 	alert(user_id);
