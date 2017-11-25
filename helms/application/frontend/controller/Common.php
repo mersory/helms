@@ -17,8 +17,9 @@ use app\common\model\Historical_price;
 use app\common\model\Subuser_info;
 use think\Session;
 use app\common\model\Role;
+use app\frontend\controller\Basecontroller;
 
-class Common extends Controller
+class Common extends Basecontroller
 {
     public function index()
     {
@@ -341,4 +342,40 @@ class Common extends Controller
                 return $htmls;
          }
     }
+    public function test_func($time)
+    {
+        $_user = new Historical_price();
+        $_res = $_user->HistoricalpriceQuery($time);
+        for($i= 0; $i<count($_res); $i++)
+        {
+            var_dump($_res[$i]["current_time"]);
+            var_dump($_res[$i]["share_price"]);
+        }
+        return $_res;
+    }
+    
+    public function get_history_price($from, $to)
+    {
+        check_special_characters($from);
+        check_special_characters($to);
+        $_user = new Historical_price();
+        $_resdata = array();
+        $_res = $_user->HistoricalpriceQueryByTiem($from, $to);
+        $_resdata["info"] = "no";
+        $_tmp = array();
+        if(count($_res) > 0)
+        {
+            $_resdata["info"] = "ok";
+            for($i= 0; $i<count($_res); $i++)
+            {
+                $_res[$i]["current_time"] = substr($_res[$i]["current_time"], 0, 10);
+                $_tmp[$i]['time'] = $_res[$i]["current_time"];
+                $_tmp[$i]['price'] = $_res[$i]["share_price"];
+            }
+            $_resdata['res'] = $_tmp;
+        }
+        var_dump($_resdata);
+        //return json_encode($_resdata);
+    }
+    
 }

@@ -19,10 +19,11 @@ use app\common\model\Subuser_info;
 use think\Session;
 use app\common\model\Role;
 use app\common\model\Income_expenditure;
+use app\backend\controller\Basecontroller;
 
-class Common extends Controller
+class Common extends Basecontroller
 {
-    public function check_special_characters($input)
+    /*public function check_special_characters($input)
     {
         if(preg_match("/[\'.,:;*?~`!@#$%^&+=)(<>{}]|\]|\[|\/|\\\|\"|\|/",$input)){
             return true;      //echo "包含特殊字符";
@@ -71,7 +72,8 @@ class Common extends Controller
         } else
             return false;
     }
-    
+    */
+        
     //初始化UI
     public function index()
     {
@@ -81,7 +83,7 @@ class Common extends Controller
         }else{
             $_user_id = $_session_user["userId"];
             $_role_id = $_session_user["roleId"];
-            
+            check_special_characters($_role_id);
             $_user = new User_details();
             $_res = $_user->DetailsQuery($_user_id);
             if (count($_res) == 1)
