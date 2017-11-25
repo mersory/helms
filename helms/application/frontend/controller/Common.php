@@ -374,7 +374,7 @@ class Common extends Basecontroller
             for($i= 0; $i<count($_res); $i++)
             {
                 $_res[$i]["current_time"] = substr($_res[$i]["current_time"], 0, 10);
-                $_tmp[$i][ $_res[$i]["current_time"] ] = $_res[$i]["share_price"];
+                $_tmp[ $_res[$i]["current_time"] ] = $_res[$i]["share_price"];
             }
             $_resdata['res'] = $_tmp;
         }
@@ -392,13 +392,24 @@ class Common extends Basecontroller
         $_user = new Positionality();
         $_res = $_user->PositionQuery($userid);
         if(count($_res) > 0)
-        {
-            
+        { 
+            $tmp["parent"] = $_res[0]["parent"];
+            $tmp["json"] = $_res[0]["json"];
             $_resdata["info"] = "ok";
-            $_resdata['res'] = $_res[0]["json"];
+            $_resdata['res'] = $tmp;
         }
-        //var_dump($_resdata);
         return json_encode($_resdata);
+    }
+    
+    public function add_net_topology($parent)
+    {
+        if(parent::include_special_characters($parent))
+            return false;
+        $_user = new Positionality();
+        //$_res = $_user->PositionInsertPrev($parent);   //这两行用于完成新建网络结构
+        //return _res;
+        $_res = $_user->PositionChildByJson($parent);    //这两行用于打开当前节点，展示所有孩子节点
+        var_dump($_res) ;
     }
     
 }
