@@ -374,12 +374,10 @@ class Common extends Basecontroller
             for($i= 0; $i<count($_res); $i++)
             {
                 $_res[$i]["current_time"] = substr($_res[$i]["current_time"], 0, 10);
-                $_tmp[$i]['time'] = $_res[$i]["current_time"];
-                $_tmp[$i]['price'] = $_res[$i]["share_price"];
+                $_tmp[$i][ $_res[$i]["current_time"] ] = $_res[$i]["share_price"];
             }
             $_resdata['res'] = $_tmp;
         }
-        //var_dump($_resdata);
         return json_encode($_resdata);
     }
     
