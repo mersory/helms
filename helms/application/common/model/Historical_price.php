@@ -34,7 +34,7 @@ class Historical_price extends Model
         $_where = '';
         if ($from != -1)
         {
-            $_where = "`current_time` > $from and `current_time` < $to";  //
+            $_where = "`current_time` > '$from' and `current_time` < '$to'";  //
         }
         //echo $_where;
         $_price_info = $this->where($_where)

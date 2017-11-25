@@ -17,6 +17,7 @@ use app\common\model\Historical_price;
 use app\common\model\Subuser_info;
 use think\Session;
 use app\common\model\Role;
+use app\common\model\Positionality;
 use app\frontend\controller\Basecontroller;
 
 class Common extends Basecontroller
@@ -356,12 +357,16 @@ class Common extends Basecontroller
     
     public function get_history_price($from, $to)
     {
-        check_special_characters($from);
-        check_special_characters($to);
-        $_user = new Historical_price();
         $_resdata = array();
-        $_res = $_user->HistoricalpriceQueryByTiem($from, $to);
         $_resdata["info"] = "no";
+        $is_date = parent::isDatetime($from);
+        if(!$is_date)
+            return json_encode($_resdata);
+        $is_date = parent::isDatetime($to);
+        if(!$is_date)
+            return json_encode($_resdata);
+        $_user = new Historical_price();
+        $_res = $_user->HistoricalpriceQueryByTiem($from, $to);        
         $_tmp = array();
         if(count($_res) > 0)
         {
@@ -374,8 +379,28 @@ class Common extends Basecontroller
             }
             $_resdata['res'] = $_tmp;
         }
-        var_dump($_resdata);
-        //return json_encode($_resdata);
+        //var_dump($_resdata);
+        return json_encode($_resdata);
+    }
+    
+    public function get_net_topology($userid)
+    {
+        $_resdata = array();
+        $_resdata["info"] = "no";
+        if( parent::include_special_characters($userid) )//包含特殊字符则返回true，不包含则返回false
+        {
+            return json_encode($_resdata);
+        }
+        $_user = new Positionality();
+        $_res = $_user->PositionQuery($userid);
+        if(count($_res) > 0)
+        {
+            
+            $_resdata["info"] = "ok";
+            $_resdata['res'] = $_res[0]["json"];
+        }
+        //var_dump($_resdata);
+        return json_encode($_resdata);
     }
     
 }

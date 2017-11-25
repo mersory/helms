@@ -10,7 +10,7 @@ class Positionality extends Model
         var_dump("Userdetails");
     }
     
-    public function PositionQuery($ID)//»¹ÓÐÆäËûµÄ²éÕÒ·½Ê½£¬´Ë´¦Ö»ÁÐ³öÕâÒ»¸ö
+    public function PositionQuery($ID)//æŸ¥çœ‹å½“å‰ç”¨æˆ·çš„ç½‘ç»œç»“æž„
     {
         $_where = '';
         if ($ID > 0)
@@ -22,7 +22,6 @@ class Positionality extends Model
         $count = count($_position_info);
         if ($count < 1)
         {
-            var_dump("ID :$ID not exsist");
             return ;
         }
         return $_position_info;

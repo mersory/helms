@@ -5,7 +5,7 @@ use think\Controller;
 
 class Basecontroller extends Controller
 {
-    public function check_special_characters($input)
+    public function include_special_characters($input)
     {
         if(preg_match("/[\'.,:;*?~`!@#$%^&+=)(<>{}]|\]|\[|\/|\\\|\"|\|/",$input)){
             return true;      //echo "包含特殊字符";
@@ -53,6 +53,11 @@ class Basecontroller extends Controller
             return true;      //echo "包含特殊字符";
         } else
             return false;
+    }
+    
+    function isDatetime($param = '', $format = 'Y-m-d')
+    {
+        return date($format, strtotime($param)) === $param;
     }
     
 }
