@@ -10,12 +10,12 @@ class Realtime_price extends Model
         var_dump("Userdetails");
     }
     
-    public function RealtimepriceQuery($time)//»¹ÓĞÆäËûµÄ²éÕÒ·½Ê½£¬´Ë´¦Ö»ÁĞ³öÕâÒ»¸ö
+    public function RealtimepriceQuery($time)//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½Ò·ï¿½Ê½ï¿½ï¿½ï¿½Ë´ï¿½Ö»ï¿½Ğ³ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
     {
         $_where = '';
         if ($time != -1)
         {
-            $_where = "`current_time` > $time";  //Ê±¼ä×Ö¶Î²éÑ¯Ê±ĞèÒªÌí¼Ó×óÉÏ½ÇµÄ·ûºÅ
+            $_where = "`current_time` > $time";  //Ê±ï¿½ï¿½ï¿½Ö¶Î²ï¿½Ñ¯Ê±ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï½ÇµÄ·ï¿½ï¿½ï¿½
         }
         echo $_where;
         $_offline_info = $this->where($_where)
@@ -42,12 +42,10 @@ class Realtime_price extends Model
         if ($state)
         {
             $this->commit();
-            var_dump("Offline deal insert commit");
         }
         else
         {
             $this->rollback();
-            var_dump("Details insert rollback");
         }
         return $state;
     }

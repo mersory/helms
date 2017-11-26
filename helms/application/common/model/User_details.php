@@ -22,7 +22,6 @@ class User_details extends Model
         $count = count($_details_info);
         if ($count < 1)
         {
-            var_dump("ID :$user_id not exsist");
             return ;
         }
         return $_details_info;

@@ -19,6 +19,7 @@ use think\Session;
 use app\common\model\Role;
 use app\common\model\Positionality;
 use app\frontend\controller\Basecontroller;
+use app\common\model\Deal_info;
 
 class Common extends Basecontroller
 {
@@ -401,6 +402,34 @@ class Common extends Basecontroller
         return json_encode($_resdata);
     }
     
+    public function get_all_children($userId)
+    {
+        $_resdata = array();
+        $_resdata["info"] = "no";
+        if(parent::include_special_characters($userId))
+            return $_resdata;
+        $_user = new Positionality();
+        $_curid = $_user->PositionQuery($userId);
+        $_userinfo =new User_details();
+        if(count($_curid) < 1)
+            return $_resdata;
+        else 
+        {
+            $_resdata["info"] = "ok";
+            $parent = $_curid[0]["ID"];
+            $_res = $_user->getAllChildByJson($parent);
+            $_keys = array_keys($_res);
+            for($i=0; $i<count($_res); $i++)
+            {
+                $_user_realname = $_userinfo->DetailsQuery($_keys[$i]);
+                $_user_realname = $_user_realname[0]["user_name"];
+                $_res[$_keys[$i]]["realname"] = $_user_realname;
+            }
+            var_dump($_res);
+        }
+    }
+    
+    
     public function add_net_topology($parent)
     {
         if(parent::include_special_characters($parent))
@@ -412,4 +441,74 @@ class Common extends Basecontroller
         var_dump($_res) ;
     }
     
+    /*
+    public function get_fivelevel_topology($user_id)
+    {
+        $_resdata = array();
+        $_resdata["info"] = "no";
+        if(parent::include_special_characters($user_id))
+            return $_resdata;
+        $_user = new Positionality();
+        $_curid = $_user->PositionQuery($user_id);
+        if(count($_curid) < 1)
+            var_dump($_resdata) ;
+        else 
+        {
+            $_resdata["info"] = "no";
+            $parent = $_curid[0]["ID"];
+            $_res = $_user->PositionChildByJson($parent);    //这两行用于打开当前节点，展示所有孩子节点
+            echo "first level:";
+            var_dump($_res);
+            echo "\n";
+            for($i=0; $i<count($_res); $i++)
+            {
+                $_curid = array_values($_res);
+                if(strcmp($_curid[$i], ""))
+                    $_res_2[$i] = $_user->PositionChildByJson($_curid[$i]);
+            }
+            echo "second level:";
+            var_dump($_res_2);
+            echo "\n";
+            for($i=0; $i<count($_res_2); $i++)
+            {
+                $_curid = array_values($_res_2);
+                if(strcmp($_curid[$i], ""))
+                    $_res_3[$i] = $_user->PositionChildByJson($_curid[$i]);
+            }
+            echo "third level:";
+            var_dump($_res_3);
+            echo "\n";
+            for($i=0; $i<count($_res_3); $i++)
+            {
+                $_curid = array_values($_res_3);
+                if(strcmp($_curid[$i], ""))
+                    $_res_4[$i] = $_user->PositionChildByJson($_curid[$i]);
+            }
+            echo "fourth level:";
+            var_dump($_res_4);
+            echo "\n";
+            for($i=0; $i<count($_res_4); $i++)
+            {
+                $_curid = array_values($_res_4);
+                if(strcmp($_curid[$i], ""))
+                    $_res_5[$i] = $_user->PositionChildByJson($_curid[$i]);
+            }
+            echo "fifth level:";
+            var_dump($_res_5);
+            echo "\n";
+        }
+    }
+    */
 }
+
+
+
+
+
+
+
+
+
+
+
+
