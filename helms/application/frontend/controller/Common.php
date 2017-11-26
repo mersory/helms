@@ -425,7 +425,8 @@ class Common extends Basecontroller
                 $_user_realname = $_user_realname[0]["user_name"];
                 $_res[$_keys[$i]]["realname"] = $_user_realname;
             }
-            var_dump($_res);
+            $_resdata["res"] = $_res;
+            return $_resdata;
         }
     }
     
