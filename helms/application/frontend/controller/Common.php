@@ -420,8 +420,8 @@ class Common extends Basecontroller
             $_resdata["info"] = "ok";
             $parent = $_curid[0]["ID"];//
             $_res = $_user->getAllChildByJson($parent);
-            $_res[$_curid[0]["user_id"]]["userid"] = $_curid[0]["user_id"];
-            $_res[$_curid[0]["user_id"]]["ID"] = $_curid[0]["ID"];
+            $_res[$_curid[0]["user_id"]]["currentid"] = $_curid[0]["user_id"];
+            $_res[$_curid[0]["user_id"]]["curPointID"] = $_curid[0]["ID"];
             $_res[$_curid[0]["user_id"]]["json"] = $_curid[0]["json"];
             $_res[$_curid[0]["user_id"]]["parent"] = $_curid[0]["parent"];
             $_res[$_curid[0]["user_id"]]["left"] = $_curid[0]["leftchild"];

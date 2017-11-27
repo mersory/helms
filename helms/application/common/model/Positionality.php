@@ -94,8 +94,8 @@ class Positionality extends Model
         {
             while($count)
             {
-                $_res[$_position_info[$count-1]["user_id"]]["userid"] = $_position_info[$count-1]["user_id"];
-                $_res[$_position_info[$count-1]["user_id"]]["ID"] = $_position_info[$count-1]["ID"];
+                $_res[$_position_info[$count-1]["user_id"]]["childrenid"] = $_position_info[$count-1]["user_id"];
+                $_res[$_position_info[$count-1]["user_id"]]["chiPointID"] = $_position_info[$count-1]["ID"];
                 $_res[$_position_info[$count-1]["user_id"]]["json"] = $_position_info[$count-1]["json"];
                 $parentID = $this->getUserIdByID($_position_info[$count-1]["parent"]);
                 $_res[$_position_info[$count-1]["user_id"]]["parent"] = $parentID;
