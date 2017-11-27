@@ -155,7 +155,7 @@ class User_info extends Model
         return $_point_down && $_activate;
     }
 
-    //�������ݿ������֮�����������������������д�������������ݿ����ּ���
+    //根据提供信息，查询当前用户信息
     public function UserSearch($_userid, $_username, $_telphone, $_email, $_fromtime, $_totime)
     {
         $_where = '';
@@ -200,7 +200,10 @@ class User_info extends Model
             ->where("info.ID=details.ID")
             ->select();
         }
-        return $res;
+        if(count($res) == 1)
+            return $res;
+        else 
+            return;
     }
     
     public function UserApplication($_start, $_end)
