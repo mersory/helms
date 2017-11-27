@@ -27,6 +27,23 @@ class User_details extends Model
         return $_details_info;
     }
     
+    public function RecommanderQuery($recommend)
+    {
+        $_where = '';
+        if ($user_id != -1)
+        {
+            $_where = "recommender = $user_id";
+        }
+        $_details_info = $this->where($_where)
+        ->select();
+        $count = count($_details_info);
+        if ($count < 1)
+        {
+            return ;
+        }
+        return $_details_info;
+    }
+    
     public function DetailsDel($user_id)
     {
         $_where = '';

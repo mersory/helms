@@ -28,7 +28,7 @@ class Positionality extends Model
         return $_position_info;
     }
     
-    public function PositionChildByJson($str)//查看当前节点的直系孩子节点,返回用户ID号和在位置表中的对应的编号1，2，3，4，5
+    public function PositionChildByJson($str)//查看当前节点的直系孩子节点,返回用户userid号和在位置表中的对应的编号，例如1，2，3，4，5
     {
         $_where = '';
         if (strcmp($str, ""))
@@ -56,6 +56,7 @@ class Positionality extends Model
          return $_res;
     }
     
+    //通过编号获取到对应的userid号
     public function getUserIdByID($ID)
     {
         $_where = '';
@@ -93,6 +94,8 @@ class Positionality extends Model
         {
             while($count)
             {
+                $_res[$_position_info[$count-1]["user_id"]]["userid"] = $_position_info[$count-1]["user_id"];
+                $_res[$_position_info[$count-1]["user_id"]]["ID"] = $_position_info[$count-1]["ID"];
                 $_res[$_position_info[$count-1]["user_id"]]["json"] = $_position_info[$count-1]["json"];
                 $parentID = $this->getUserIdByID($_position_info[$count-1]["parent"]);
                 $_res[$_position_info[$count-1]["user_id"]]["parent"] = $parentID;

@@ -382,6 +382,7 @@ class Common extends Basecontroller
         return json_encode($_resdata);
     }
     
+    //返回当前用户userid对应的json值，父节点的编号
     public function get_net_topology($userid)
     {
         $_resdata = array();
@@ -402,6 +403,7 @@ class Common extends Basecontroller
         return json_encode($_resdata);
     }
     
+    //根据提供的用户userid，查找用户userID的子孙节点的json，编号，parent的userid，左区性质，真实姓名
     public function get_all_children($userId)
     {
         $_resdata = array();
@@ -416,8 +418,16 @@ class Common extends Basecontroller
         else 
         {
             $_resdata["info"] = "ok";
-            $parent = $_curid[0]["ID"];
+            $parent = $_curid[0]["ID"];//
             $_res = $_user->getAllChildByJson($parent);
+            $_res[$_curid[0]["user_id"]]["userid"] = $_curid[0]["user_id"];
+            $_res[$_curid[0]["user_id"]]["ID"] = $_curid[0]["ID"];
+            $_res[$_curid[0]["user_id"]]["json"] = $_curid[0]["json"];
+            $_res[$_curid[0]["user_id"]]["parent"] = $_curid[0]["parent"];
+            $_res[$_curid[0]["user_id"]]["left"] = $_curid[0]["leftchild"];
+            $_user_realname = $_userinfo->DetailsQuery($_curid[0]["user_id"]);
+            $_user_realname = $_user_realname[0]["user_name"];
+            $_res[$_curid[0]["user_id"]]["realname"] = $_user_realname;
             $_keys = array_keys($_res);
             for($i=0; $i<count($_res); $i++)
             {
@@ -426,7 +436,7 @@ class Common extends Basecontroller
                 $_res[$_keys[$i]]["realname"] = $_user_realname;
             }
             $_resdata["res"] = $_res;
-            return $_resdata;
+            var_dump($_resdata) ;
         }
     }
     
@@ -442,7 +452,19 @@ class Common extends Basecontroller
         var_dump($_res) ;
     }
     
-    /*
+    public function get_introducer_tree($userId)
+    {
+        $_resdata = array();
+        $_resdata["info"] = "no";
+        if(parent::include_special_characters($userId))
+            return $_resdata;
+        $_user = new User_details();
+        $_res = $_user->RecommanderQuery($userId);
+        var_dump($_res);
+    }
+    
+    
+    /*//本函数已经弃用
     public function get_fivelevel_topology($user_id)
     {
         $_resdata = array();
