@@ -420,8 +420,9 @@ class Common extends Basecontroller
             $_resdata["info"] = "ok";
             $parent = $_curid[0]["ID"];//
             $_res = $_user->getAllChildByJson($parent);
-            $_res[$_curid[0]["user_id"]]["currentid"] = $_curid[0]["user_id"];
-            $_res[$_curid[0]["user_id"]]["curPointID"] = $_curid[0]["ID"];
+            $_res[$_curid[0]["user_id"]]["currentId"] = $_curid[0]["user_id"];
+            $_res[$_curid[0]["user_id"]]["childrenId"] = $_user->getDirectChildrenByJson($_curid[0]["ID"]);
+            $_res[$_curid[0]["user_id"]]["ID"] = $_curid[0]["ID"];
             $_res[$_curid[0]["user_id"]]["json"] = $_curid[0]["json"];
             $_res[$_curid[0]["user_id"]]["parent"] = $_curid[0]["parent"];
             $_res[$_curid[0]["user_id"]]["left"] = $_curid[0]["leftchild"];
@@ -429,6 +430,7 @@ class Common extends Basecontroller
             $_user_realname = $_user_realname[0]["user_name"];
             $_res[$_curid[0]["user_id"]]["realname"] = $_user_realname;
             $_keys = array_keys($_res);
+            $_values = array_values($_res);
             for($i=0; $i<count($_res); $i++)
             {
                 $_user_realname = $_userinfo->DetailsQuery($_keys[$i]);
@@ -436,7 +438,7 @@ class Common extends Basecontroller
                 $_res[$_keys[$i]]["realname"] = $_user_realname;
             }
             $_resdata["res"] = $_res;
-            var_dump($_resdata) ;
+           return json_encode($_resdata) ;
         }
     }
     

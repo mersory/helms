@@ -74,6 +74,33 @@ class Positionality extends Model
         return $_position_info[0]["user_id"];
     }
     
+    public function getDirectChildrenByJson($str)//查看当前节点的所有孩子节点，包括多次派生的孩子，返回用户id和json子串
+    {
+        $_where = '';
+        if ($str > -1)
+        {
+            $_where = "json like '%$str'";
+        }
+        else
+            return;
+            $_position_info = $this->where($_where)
+            ->select();
+            $count = count($_position_info);
+            if ($count < 1)
+            {
+                return ;
+            }
+            else
+            {
+                while($count)
+                {
+                    $_res[$_position_info[$count-1]["leftchild"]] = $_position_info[$count-1]["user_id"];
+                    $count--;
+                }
+            }
+            return $_res;
+    }
+    
     public function getAllChildByJson($str)//查看当前节点的所有孩子节点，包括多次派生的孩子，返回用户id和json子串
     {
         $_where = '';
@@ -94,8 +121,9 @@ class Positionality extends Model
         {
             while($count)
             {
-                $_res[$_position_info[$count-1]["user_id"]]["childrenid"] = $_position_info[$count-1]["user_id"];
-                $_res[$_position_info[$count-1]["user_id"]]["chiPointID"] = $_position_info[$count-1]["ID"];
+                $_res[$_position_info[$count-1]["user_id"]]["currentId"] = $_position_info[$count-1]["user_id"];
+                $_res[$_position_info[$count-1]["user_id"]]["childrenId"] = $this->getDirectChildrenByJson($_position_info[$count-1]["ID"]);
+                $_res[$_position_info[$count-1]["user_id"]]["ID"] = $_position_info[$count-1]["ID"];
                 $_res[$_position_info[$count-1]["user_id"]]["json"] = $_position_info[$count-1]["json"];
                 $parentID = $this->getUserIdByID($_position_info[$count-1]["parent"]);
                 $_res[$_position_info[$count-1]["user_id"]]["parent"] = $parentID;
