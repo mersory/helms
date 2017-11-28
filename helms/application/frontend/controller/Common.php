@@ -409,12 +409,12 @@ class Common extends Basecontroller
         $_resdata = array();
         $_resdata["info"] = "no";
         if(parent::include_special_characters($userId))
-            return $_resdata;
+            return json_encode($_resdata) ;
         $_user = new Positionality();
         $_curid = $_user->PositionQuery($userId);
         $_userinfo =new User_details();
         if(count($_curid) < 1)
-            return $_resdata;
+            return json_encode($_resdata) ;
         else 
         {
             $_resdata["info"] = "ok";
@@ -451,18 +451,63 @@ class Common extends Basecontroller
         //$_res = $_user->PositionInsertPrev($parent);   //这两行用于完成新建网络结构
         //return _res;
         $_res = $_user->PositionChildByJson($parent);    //这两行用于打开当前节点，展示所有孩子节点
-        var_dump($_res) ;
+        return json_encode($_res) ;
     }
     
+    //获取当前用户$userId的推荐结构
     public function get_introducer_tree($userId)
     {
         $_resdata = array();
         $_resdata["info"] = "no";
+        //即使是错误的返回也必须先转化为约定的json格式，否则会出错
         if(parent::include_special_characters($userId))
-            return $_resdata;
+            return json_encode($_resdata) ;
+        //此处必须要用不同的变量去获取不同类的对象
+        $_user_info = new User_info();
+        $_res1 = $_user_info->UserSearch($userId, "", "", "", "", "");
+        if(!empty($_res1))
+        {
+            $_resdata["info"] = "ok";
+            $tmp[$_res1[0]["ID"]]["user_id"] = $_res1[0]["username"];
+            $tmp[$_res1[0]["ID"]]["username"] = $_res1[0]["username"];
+            $tmp[$_res1[0]["ID"]]["user_name"] = $_res1[0]["user_name"];
+            $_resdata["res"] = $tmp;
+        }
+        else 
+            return json_encode($_resdata) ;
+        //此处必须要用不同的变量去获取不同类的对象
         $_user = new User_details();
         $_res = $_user->RecommanderQuery($userId);
-        var_dump($_res);
+        if(count($_res) < 1)
+        {
+            $tmp[$_res1[0]["ID"]]["has_recommand"] = 0;
+            return json_encode($_resdata) ;
+        }
+        else 
+        {
+            $_resdata["info"] = "ok";
+            $tmp[$_res1[0]["ID"]]["has_recommand"] = 1;
+            for($i=0; $i<count($_res); $i++)
+            {
+                $tmp[$_res[$i]["ID"]]["user_id"] = $_res[$i]["ID"];
+                $tmp[$_res[$i]["ID"]]["user_name"] = $_res[$i]["user_name"];
+                $tmp[$_res[$i]["ID"]]["has_recommand"] = $_user->HasRecommander($_res[$i]["ID"]);
+                
+                //相同类产生的对象可以用相同的变量去获取
+                $_user_info = new User_info();
+                $_res_tmp = $_user_info->UserSearch($_res[$i]["ID"], "", "", "", "", "");
+                if(count($_res_tmp) == 1)
+                {
+                    $tmp[$_res[$i]["ID"]]["username"] = $_res_tmp[0]["username"];
+                }
+                else 
+                {
+                    $tmp[$_res[$i]["ID"]]["username"] = "not invalid";
+                }
+            }
+             $_resdata["res"] = $tmp;
+        }
+        return json_encode($_resdata) ;
     }
     
     

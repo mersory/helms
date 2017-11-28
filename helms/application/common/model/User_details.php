@@ -27,14 +27,16 @@ class User_details extends Model
         return $_details_info;
     }
     
+    //查询由变量$recommend推荐的用户信息
     public function RecommanderQuery($recommend)
     {
         $_where = '';
-        if ($user_id != -1)
+        if ($recommend != -1)
         {
-            $_where = "recommender = $user_id";
+            $_where = "recommender = $recommend";
         }
         $_details_info = $this->where($_where)
+        ->field('ID,user_name')
         ->select();
         $count = count($_details_info);
         if ($count < 1)
@@ -42,6 +44,28 @@ class User_details extends Model
             return ;
         }
         return $_details_info;
+    }
+    
+    //查询由变量$recommend是否推荐过用户
+    public function HasRecommander($recommend)
+    {
+        $_where = '';
+        if ($recommend != -1)
+        {
+            $_where = "recommender = $recommend";
+        }
+        $_details_info = $this->where($_where)
+        ->field('ID')
+        ->select();
+        $count = count($_details_info);
+        if ($count < 1)
+        {
+            return 0;
+        }
+        else
+        {
+            return 1;
+        }
     }
     
     public function DetailsDel($user_id)
