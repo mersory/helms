@@ -459,6 +459,7 @@ class Common extends Basecontroller
     {
         $_resdata = array();
         $_resdata["info"] = "no";
+        $tmp = array();
         //即使是错误的返回也必须先转化为约定的json格式，否则会出错
         if(parent::include_special_characters($userId))
             return json_encode($_resdata) ;
@@ -468,9 +469,9 @@ class Common extends Basecontroller
         if(!empty($_res1))
         {
             $_resdata["info"] = "ok";
-            $tmp[$_res1[0]["ID"]]["user_id"] = $_res1[0]["username"];
-            $tmp[$_res1[0]["ID"]]["username"] = $_res1[0]["username"];
-            $tmp[$_res1[0]["ID"]]["user_name"] = $_res1[0]["user_name"];
+            $tmp[$_res1[0]["ID"]]["userId"] = $_res1[0]["ID"];
+            $tmp[$_res1[0]["ID"]]["realName"] = $_res1[0]["user_name"];
+            $tmp[$_res1[0]["ID"]]["userName"] = $_res1[0]["username"];
             $_resdata["res"] = $tmp;
         }
         else 
@@ -480,30 +481,30 @@ class Common extends Basecontroller
         $_res = $_user->RecommanderQuery($userId);
         if(count($_res) < 1)
         {
-            $tmp[$_res1[0]["ID"]]["has_recommand"] = 0;
+            $tmp[$_res1[0]["ID"]]["hasRecommand"] = 0;
             return json_encode($_resdata) ;
         }
         else 
         {
             $_resdata["info"] = "ok";
-            $tmp[$_res1[0]["ID"]]["has_recommand"] = 1;
+            $tmp[$_res1[0]["ID"]]["hasRecommand"] = 1;
             for($i=0; $i<count($_res); $i++)
             {
-                $tmp[$_res[$i]["ID"]]["user_id"] = $_res[$i]["ID"];
-                $tmp[$_res[$i]["ID"]]["user_name"] = $_res[$i]["user_name"];
-                $tmp[$_res[$i]["ID"]]["has_recommand"] = $_user->HasRecommander($_res[$i]["ID"]);
+                $tmp[$_res[$i]["ID"]]["userId"] = $_res[$i]["ID"];
+                $tmp[$_res[$i]["ID"]]["realName"] = $_res[$i]["user_name"];
                 
                 //相同类产生的对象可以用相同的变量去获取
                 $_user_info = new User_info();
                 $_res_tmp = $_user_info->UserSearch($_res[$i]["ID"], "", "", "", "", "");
                 if(count($_res_tmp) == 1)
                 {
-                    $tmp[$_res[$i]["ID"]]["username"] = $_res_tmp[0]["username"];
+                    $tmp[$_res[$i]["ID"]]["userName"] = $_res_tmp[0]["username"];
                 }
                 else 
                 {
-                    $tmp[$_res[$i]["ID"]]["username"] = "not invalid";
+                    $tmp[$_res[$i]["ID"]]["userName"] = "not invalid";
                 }
+                $tmp[$_res[$i]["ID"]]["hasRecommand"] = $_user->HasRecommander($_res[$i]["ID"]);
             }
              $_resdata["res"] = $tmp;
         }
