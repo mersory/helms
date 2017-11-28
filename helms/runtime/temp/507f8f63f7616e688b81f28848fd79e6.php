@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:91:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\common\index.html";i:1505517981;s:92:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\base\frontend.html";i:1505490411;s:20:"base/common/css.html";i:1505486330;s:19:"base/common/js.html";i:1505514190;s:36:"base/common/frontend/leftAndTop.html";i:1505520944;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:91:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\common\index.html";i:1511630019;s:92:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\base\frontend.html";i:1511664072;s:20:"base/common/css.html";i:1511359924;s:19:"base/common/js.html";i:1511676215;s:36:"base/common/frontend/leftAndTop.html";i:1511359924;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -29,49 +29,49 @@
     
     
 
-	    <script src="_JS_/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
+	
+<script src="_JS_/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
 
-    <script src="_JS_/vendor/flot/jquery.flot.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.time.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.selection.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.animator.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.orderBars.js"></script>
-    <script src="_JS_/vendor/easypiechart/jquery.easypiechart.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.time.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.selection.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.animator.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.orderBars.js"></script>
+<script src="_JS_/vendor/easypiechart/jquery.easypiechart.min.js"></script>
 
-    <script src="_JS_/vendor/rickshaw/raphael-min.js"></script> 
-    <script src="_JS_/vendor/rickshaw/d3.v2.js"></script>
-    <script src="_JS_/vendor/rickshaw/rickshaw.min.js"></script>
+<script src="_JS_/vendor/rickshaw/raphael-min.js"></script>
+<script src="_JS_/vendor/rickshaw/d3.v2.js"></script>
+<script src="_JS_/vendor/rickshaw/rickshaw.min.js"></script>
 
-    <script src="_JS_/vendor/morris/morris.min.js"></script>
+<script src="_JS_/vendor/morris/morris.min.js"></script>
 
-    <script src="_JS_/vendor/tabdrop/bootstrap-tabdrop.min.js"></script>
+<script src="_JS_/vendor/tabdrop/bootstrap-tabdrop.min.js"></script>
 
-    <script src="_JS_/vendor/summernote/summernote.min.js"></script>
+<script src="_JS_/vendor/summernote/summernote.min.js"></script>
 
-    <script src="_JS_/vendor/chosen/chosen.jquery.min.js"></script>
+<script src="_JS_/vendor/chosen/chosen.jquery.min.js"></script>
+<script src="_JS_/vendor/parsley/parsley.min.js"></script>
+<script src="_JS_/vendor/wizard/jquery.bootstrap.wizard.min.js"></script>
+<script src="_JS_/minimal.min.js"></script>
+<script src="_JS_/common/main.js"></script>
 
-    <script src="_JS_/minimal.min.js"></script>
-    
-    <section class="videocontent" id="video"></section>
-
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
-
-
+<script type="text/javascript">
+	root = "__ROOT__";
+</script>
 	
 	<!-- custom css -->
 	
@@ -84,6 +84,7 @@
 
   </head>
   <body class="bg-1">
+  	<div class="mask" style="display: none;"><div id="loader" style="display: none;"></div></div>
 
     <!-- Wrap all page content here -->
     <div id="wrap">
@@ -196,7 +197,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="validation-elements.html">
+                        <a href="/public/index.php/frontend/common/introduce">
                           <i class="fa fa-caret-right"></i> 推荐结构
                         </a>
                       </li>
@@ -259,13 +260,13 @@
 
                       <div class="media-body">
                         <small>万能分</small>
-                        <h2 class="media-heading animate-number" data-value="500" data-animation-duration="10">0</h2>
+                        <h2 class="media-heading animate-number" data-value='<?php echo $pass_data["universal_point"]; ?>'  data-animation-duration="10">0</h2>
                       </div>
                     </div>
 
                   </div>
                   <div class="back">
-                    <a href="#">
+                    <a href="points">
                       <!-- <i class="fa fa-bar-chart-o fa-4x"></i> -->
                       <span>积分介绍</span>
                     </a>  
@@ -284,7 +285,7 @@
 
                       <div class="media-body">
                         <small>奖励分</small>
-                        <h2 class="media-heading animate-number" data-value="1000" data-animation-duration="10">0</h2>
+                        <h2 class="media-heading animate-number" data-value='<?php echo $pass_data["bonus_point"]; ?>'  data-animation-duration="10">0</h2>
                       </div>
                     </div>
 
@@ -311,13 +312,13 @@
 
                       <div class="media-body">
                         <small>注册分</small>
-                        <h2 class="media-heading animate-number" data-value="1200" data-animation-duration="10">0</h2>
+                        <h2 class="media-heading animate-number" data-value='<?php echo $pass_data["regist_point"]; ?>' data-animation-duration="10">0</h2>
                       </div>
                     </div>
 
                   </div>
                   <div class="back">
-                    <a href="#">
+                    <a href="points">
                       <!-- <i class="fa fa-bar-chart-o fa-4x"></i> -->
                       <span>积分介绍</span>
                     </a>
@@ -337,7 +338,7 @@
 
                       <div class="media-body">
                         <small>重复消费分</small>
-                        <h2 class="media-heading animate-number" data-value="200" data-animation-duration="10">0</h2>
+                        <h2 class="media-heading animate-number" data-value='<?php echo $pass_data["re_consume"]; ?>' data-animation-duration="10">0</h2>
                       </div>
                     </div>
 
@@ -351,7 +352,7 @@
                 </div>
               </div>
               
-              <div class="card-container col-lg-3 col-sm-6 col-sm-12">
+<!--               <div class="card-container col-lg-3 col-sm-6 col-sm-12">
                 <div class="card card-hotpink hover">
                   <div class="front"> 
 
@@ -362,19 +363,19 @@
 
                       <div class="media-body">
                         <small>复投分</small>
-                        <h2 class="media-heading animate-number" data-value="700" data-animation-duration="10">0</h2>
+                        <h2 class="media-heading animate-number" data-value='<?php echo $pass_data["re_cast"]; ?>' data-animation-duration="10">0</h2>
                       </div>
                     </div>
 
                   </div>
                   <div class="back">
                     <a href="#">
-                      <!-- <i class="fa fa-bar-chart-o fa-4x"></i> -->
+                      <i class="fa fa-bar-chart-o fa-4x"></i>
                       <span>积分介绍</span>
                     </a>  
                   </div>
                 </div>
-              </div>
+              </div> -->
               
               <div class="card-container col-lg-3 col-sm-6 col-sm-12">
                 <div class="card card-cyan hover">
@@ -386,8 +387,8 @@
                       </span>
 
                       <div class="media-body">
-                        <small>注册分</small>
-                        <h2 class="media-heading animate-number" data-value="600" data-animation-duration="10">0</h2>
+                        <small>共享分</small>
+                        <h2 class="media-heading animate-number" data-value='<?php echo $pass_data["shares"]; ?>' data-animation-duration="10">0</h2>
                       </div>
                     </div>
 
@@ -413,10 +414,12 @@
                 <section class="tile transparent">
 
                   <!-- tile header -->
-                  <div class="tile-header color transparent-black textured rounded-top-corners">
+                  <div class="tile-header color transparent-black textured rounded-top-corners stock-price">
                     <h1><strong>股价趋势</strong> </h1>
                     <div class="controls">
-                      <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
+                      <a href="#" class="reload"  reloadType="1">近一周</a>
+                      <a href="#" class="reload" reloadType="2">近一个月</a>
+                      <a href="#" class="reload" reloadType="3">近半年</a>
                       <a href="#" class="remove"><i class="fa fa-times"></i></a>
                     </div>
                   </div>
