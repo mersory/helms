@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:96:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\common\introduce.html";i:1506529781;s:93:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\base\frontend.html";i:1505921317;s:20:"base/common/css.html";i:1505921314;s:19:"base/common/js.html";i:1505921315;s:36:"base/common/frontend/leftAndTop.html";i:1506529931;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:96:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\common\introduce.html";i:1506529781;s:93:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\base\frontend.html";i:1511877397;s:20:"base/common/css.html";i:1505921314;s:19:"base/common/js.html";i:1511877397;s:36:"base/common/frontend/leftAndTop.html";i:1511878855;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -29,49 +29,49 @@
     
     
 
-	    <script src="_JS_/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
+	
+<script src="_JS_/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
 
-    <script src="_JS_/vendor/flot/jquery.flot.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.time.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.selection.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.animator.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.orderBars.js"></script>
-    <script src="_JS_/vendor/easypiechart/jquery.easypiechart.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.time.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.selection.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.animator.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.orderBars.js"></script>
+<script src="_JS_/vendor/easypiechart/jquery.easypiechart.min.js"></script>
 
-    <script src="_JS_/vendor/rickshaw/raphael-min.js"></script> 
-    <script src="_JS_/vendor/rickshaw/d3.v2.js"></script>
-    <script src="_JS_/vendor/rickshaw/rickshaw.min.js"></script>
+<script src="_JS_/vendor/rickshaw/raphael-min.js"></script>
+<script src="_JS_/vendor/rickshaw/d3.v2.js"></script>
+<script src="_JS_/vendor/rickshaw/rickshaw.min.js"></script>
 
-    <script src="_JS_/vendor/morris/morris.min.js"></script>
+<script src="_JS_/vendor/morris/morris.min.js"></script>
 
-    <script src="_JS_/vendor/tabdrop/bootstrap-tabdrop.min.js"></script>
+<script src="_JS_/vendor/tabdrop/bootstrap-tabdrop.min.js"></script>
 
-    <script src="_JS_/vendor/summernote/summernote.min.js"></script>
+<script src="_JS_/vendor/summernote/summernote.min.js"></script>
 
-    <script src="_JS_/vendor/chosen/chosen.jquery.min.js"></script>
+<script src="_JS_/vendor/chosen/chosen.jquery.min.js"></script>
+<script src="_JS_/vendor/parsley/parsley.min.js"></script>
+<script src="_JS_/vendor/wizard/jquery.bootstrap.wizard.min.js"></script>
+<script src="_JS_/minimal.min.js"></script>
+<script src="_JS_/common/main.js"></script>
 
-    <script src="_JS_/minimal.min.js"></script>
-    
-    <section class="videocontent" id="video"></section>
-
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
-
-
+<script type="text/javascript">
+	root = "__ROOT__";
+</script>
 	
 	<!-- custom css -->
 	 
@@ -82,6 +82,7 @@
 
   </head>
   <body class="bg-1">
+  	<div class="mask" style="display: none;"><div id="loader" style="display: none;"></div></div>
 
     <!-- Wrap all page content here -->
     <div id="wrap">
@@ -148,7 +149,7 @@
                   <li class="divider"></li>
 
                   <li>
-                    <a href="#"><i class="fa fa-user"></i> 个人信息</a>
+                    <a href="www.baidu.com"><i class="fa fa-user"></i> 个人---信息</a>
                   </li>
 
                   <li>

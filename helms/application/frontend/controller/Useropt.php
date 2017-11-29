@@ -15,8 +15,11 @@ use app\common\model\Offline_deal;
 use app\common\model\Realtime_price;
 use app\common\model\Historical_price;
 use app\common\model\Subuser_info;
+use think\Session;
+use app\common\model\Role;
+use app\backend\controller\Basecontroller;
 
-class Useropt extends Controller
+class Useropt extends Basecontroller
 {
     public function index()
     {
@@ -257,6 +260,83 @@ class Useropt extends Controller
         $htmls = $this->fetch();   
         // 将数据返回给用户
         return $htmls;
+    }
+    
+    // 给更新密码页面传递数据，如用户id      30/11/17
+    public function memberModifyPwd()
+    {
+        $_session_user = Session::get(USER_SEESION);
+        $_resdata = array();
+        $_user_id = $_session_user["userId"];
+        $_resdata["userId"] = $_session_user["userId"];
+        $this->assign('pass_data', $_resdata);
+        $htmls = $this->fetch();
+        return $htmls;
+    }
+    
+    // 给用户信息查看页面传递数据，如用户id，用户名，银行信息等      30/11/17
+    public function userinfo()
+    {
+        $_session_user = Session::get(USER_SEESION);
+        if(empty($_session_user)){
+            return $this->redirect("/login/login/index");
+        }else{
+            $_user_id = $_session_user["userId"];
+            $_role_id = $_session_user["roleId"];
+            parent::include_special_characters($_role_id);
+            $_user = new User_details();
+            $_res = $_user->DetailsQuery($_user_id);
+            if (count($_res) == 1)
+            {
+                $_session_user["userName"] = $_res[0]["user_name"];
+                $_session_user["email"] = $_res[0]["email"];
+                $_session_user["userLevel"] = $_res[0]["user_level"];
+            }
+            
+            $_role = new Role();
+            $_res = $_role->RoleQuery($_role_id);
+            if (count($_res) == 1)
+            {
+                $_session_user["role_type"] = $_res[0]["role_type"];
+            }
+            
+            //更新session
+            Session::set(USER_SEESION,$_session_user);
+            
+            $_resdata = array();
+            $_resdata["userId"] = $_user_id;
+            $_resdata["userName"] = $_res[0]["user_name"];
+            $_resdata["email"] = $_res[0]["email"];
+            $_resdata["userLevel"] = $_res[0]["user_level"];
+            
+            $_user = new User_bankinfo();
+            $_res = $_user->BankinfoQuery($_user_id);
+            if (count($_res) == 1)
+            {
+                $_resdata["bank_name"] = $_res[0]["bank_name"];
+                $_resdata["bank_account_name"] = $_res[0]["bank_account_name"];
+                $_resdata["bank_account_num"] = $_res[0]["bank_account_num"];
+                $_resdata["reserve1"] = $_res[0]["reserve1"];
+            }
+            
+            $_user = new User_point();
+            $_res = $_user->PointQuery($_user_id);
+            if (count($_res) == 1)
+            {
+                $_resdata["shares"] = $_res[0]["shares"];
+                $_resdata["bonus_point"] = $_res[0]["bonus_point"];
+                $_resdata["regist_point"] = $_res[0]["regist_point"];
+				$_resdata["re_consume"] = $_res[0]["re_consume"];
+                $_resdata["universal_point"] = $_res[0]["universal_point"];
+                $_resdata["re_cast"] = $_res[0]["re_cast"];
+            }
+            
+            $this->assign('pass_data', $_resdata);//真正传递的是前面那个变量，这也是html中可以使用的
+            
+            // 取回打包后的数据
+            $htmls = $this->fetch();
+            return $htmls;
+        }
     }
     
     public function UpdatePwd()//记得密码，想要重新设置密码

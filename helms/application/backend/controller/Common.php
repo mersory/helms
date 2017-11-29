@@ -589,7 +589,6 @@ class Common extends Basecontroller
             $_user = new Realtime_price();
             $_user->RealtimepriceInsert($price);
         }
-            
     }
     
     public function notice()

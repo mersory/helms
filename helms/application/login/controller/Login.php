@@ -101,6 +101,7 @@ class Login extends Controller
         {
             $_resdata["success"] = false;
         }else {
+            //Session::destroy();
             $_user = new User_info();
             $_res = $_user->UserinfoQuery($_username, $_password);
             if (count($_res) == 1)

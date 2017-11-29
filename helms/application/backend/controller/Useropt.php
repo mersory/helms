@@ -15,8 +15,9 @@ use app\common\model\Offline_deal;
 use app\common\model\Realtime_price;
 use app\common\model\Historical_price;
 use app\common\model\Subuser_info;
+use app\backend\controller\Basecontroller;
 
-class Useropt extends Controller
+class Useropt extends Basecontroller
 {
     public function index()
     {
@@ -245,6 +246,19 @@ class Useropt extends Controller
             $_user_info->rollback();
         }
       
+    }
+    
+    public function memberModifyPwd()
+    {
+        $htmls = $this->fetch();
+        return $htmls;
+    }
+    
+
+    public function userinfo()
+    {
+        $htmls = $this->fetch();
+        return $htmls;
     }
     
     //激活操作

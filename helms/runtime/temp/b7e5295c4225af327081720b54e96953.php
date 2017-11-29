@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:92:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\common\index.html";i:1509264824;s:93:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\base\frontend.html";i:1505921317;s:20:"base/common/css.html";i:1505921314;s:19:"base/common/js.html";i:1505921315;s:36:"base/common/frontend/leftAndTop.html";i:1506529931;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:92:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\common\index.html";i:1511877397;s:93:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\base\frontend.html";i:1511877397;s:20:"base/common/css.html";i:1505921314;s:19:"base/common/js.html";i:1511877397;s:36:"base/common/frontend/leftAndTop.html";i:1511971111;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -29,49 +29,49 @@
     
     
 
-	    <script src="_JS_/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
+	
+<script src="_JS_/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
 
-    <script src="_JS_/vendor/flot/jquery.flot.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.time.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.selection.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.animator.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.orderBars.js"></script>
-    <script src="_JS_/vendor/easypiechart/jquery.easypiechart.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.time.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.selection.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.animator.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.orderBars.js"></script>
+<script src="_JS_/vendor/easypiechart/jquery.easypiechart.min.js"></script>
 
-    <script src="_JS_/vendor/rickshaw/raphael-min.js"></script> 
-    <script src="_JS_/vendor/rickshaw/d3.v2.js"></script>
-    <script src="_JS_/vendor/rickshaw/rickshaw.min.js"></script>
+<script src="_JS_/vendor/rickshaw/raphael-min.js"></script>
+<script src="_JS_/vendor/rickshaw/d3.v2.js"></script>
+<script src="_JS_/vendor/rickshaw/rickshaw.min.js"></script>
 
-    <script src="_JS_/vendor/morris/morris.min.js"></script>
+<script src="_JS_/vendor/morris/morris.min.js"></script>
 
-    <script src="_JS_/vendor/tabdrop/bootstrap-tabdrop.min.js"></script>
+<script src="_JS_/vendor/tabdrop/bootstrap-tabdrop.min.js"></script>
 
-    <script src="_JS_/vendor/summernote/summernote.min.js"></script>
+<script src="_JS_/vendor/summernote/summernote.min.js"></script>
 
-    <script src="_JS_/vendor/chosen/chosen.jquery.min.js"></script>
+<script src="_JS_/vendor/chosen/chosen.jquery.min.js"></script>
+<script src="_JS_/vendor/parsley/parsley.min.js"></script>
+<script src="_JS_/vendor/wizard/jquery.bootstrap.wizard.min.js"></script>
+<script src="_JS_/minimal.min.js"></script>
+<script src="_JS_/common/main.js"></script>
 
-    <script src="_JS_/minimal.min.js"></script>
-    
-    <section class="videocontent" id="video"></section>
-
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
-
-
+<script type="text/javascript">
+	root = "__ROOT__";
+</script>
 	
 	<!-- custom css -->
 	
@@ -84,6 +84,7 @@
 
   </head>
   <body class="bg-1">
+  	<div class="mask" style="display: none;"><div id="loader" style="display: none;"></div></div>
 
     <!-- Wrap all page content here -->
     <div id="wrap">
@@ -150,17 +151,17 @@
                   <li class="divider"></li>
 
                   <li>
-                    <a href="#"><i class="fa fa-user"></i> 个人信息</a>
+                    <a href="http://localhost/public/index.php/frontend/Useropt/userinfo"><i class="fa fa-user"></i> 个人信息</a>
                   </li>
 
                   <li>
-                    <a href="#"><i class="fa fa-pencil"></i> 修改密码</a>
+                    <a href="http://localhost/public/index.php/frontend/Useropt/memberModifyPwd"><i class="fa fa-pencil"></i> 修改密码</a>
                   </li>
 
                   <li class="divider"></li>
 
                   <li>
-                    <a href="#"><i class="fa fa-power-off"></i> 登出</a>
+                    <a href="http://localhost/public/index.php/login/login/index"><i class="fa fa-power-off"></i> 登出</a>
                   </li>
                 </ul>
               </li>
@@ -351,7 +352,7 @@
                 </div>
               </div>
               
-              <div class="card-container col-lg-3 col-sm-6 col-sm-12">
+<!--               <div class="card-container col-lg-3 col-sm-6 col-sm-12">
                 <div class="card card-hotpink hover">
                   <div class="front"> 
 
@@ -369,12 +370,12 @@
                   </div>
                   <div class="back">
                     <a href="#">
-                      <!-- <i class="fa fa-bar-chart-o fa-4x"></i> -->
+                      <i class="fa fa-bar-chart-o fa-4x"></i>
                       <span>积分介绍</span>
                     </a>  
                   </div>
                 </div>
-              </div>
+              </div> -->
               
               <div class="card-container col-lg-3 col-sm-6 col-sm-12">
                 <div class="card card-cyan hover">
@@ -413,10 +414,12 @@
                 <section class="tile transparent">
 
                   <!-- tile header -->
-                  <div class="tile-header color transparent-black textured rounded-top-corners">
-                    <h1><strong>股价ssss趋势</strong> </h1>
+                  <div class="tile-header color transparent-black textured rounded-top-corners stock-price">
+                    <h1><strong>股价趋势</strong> </h1>
                     <div class="controls">
-                      <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
+                      <a href="#" class="reload"  reloadType="1">近一周</a>
+                      <a href="#" class="reload" reloadType="2">近一个月</a>
+                      <a href="#" class="reload" reloadType="3">近半年</a>
                       <a href="#" class="remove"><i class="fa fa-times"></i></a>
                     </div>
                   </div>
