@@ -34,20 +34,6 @@ function refreshNetworkChart(userId){
 	}, function(result) {
 		result = JSON.parse(result);
 		if (result.info == 'ok') {
-//			var datascource = {
-//					'userId' : '11111',
-//					'realname' : 'Ball game',
-//					'children' : [ {
-//						'userId' : '11112',
-//						'realname' : 'Ball game'
-//					}, {
-//						'userId' : '11113',
-//						'realname' : 'Ball game'
-//					}, {
-//						'userId' : '11114',
-//						'realname' : 'Ball game'
-//					} ]
-//				};
 			var dataSource = handleNetworkData(result.res,userId);
 			if(null == dataSource){
 				$('#chart-container').empty();
