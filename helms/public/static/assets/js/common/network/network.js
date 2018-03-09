@@ -8,8 +8,7 @@ $(function() {
 						// 节点人ID
 						var parentId = $('#rd-node-user').val();
 						if($.trim(parentId) != ""){
-							var url = "/public/index.php/frontend/Useropt/RegistIndex?parentId="
-								+ parentId;
+							var url = "/public/index.php/frontend/Useropt/RegistIndex?parentId=" + parentId+"&position=left";
 							window.open(url);	
 						}else{
 							alert("请先选择父节点");
@@ -38,6 +37,7 @@ function refreshNetworkChart(userId){
 			if(null == dataSource){
 				$('#chart-container').empty();
 			}else{
+				$('#chart-container').empty();
 				var oc = $('#chart-container').orgchart({
 					'data' : dataSource,
 					'nodeTitle' : 'userId',
