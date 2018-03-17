@@ -114,7 +114,6 @@ class Login extends Controller
                 $_priority = new User_priority();
                 $_priority_info = $_priority->PriorityQuery($_res[0]["ID"]);
                 if(empty($_priority_info)){
-                    var_dump("鏈煡璇㈠埌瑙掕壊");
                     $_resdata["success"] = false;
                 }else{
                     if (count($_priority_info) == 1)

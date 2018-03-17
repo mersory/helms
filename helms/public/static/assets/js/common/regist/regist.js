@@ -39,13 +39,13 @@ $(function(){
 			return false;
 		}
 		var url =  "/public/index.php/frontend/Useropt/UserRegist";
-		$.post(url,{name:username, email:email, telphone:telphone, recommender:recommender, activator:activator, pwd1:primarypwd, pwd2:minorpwd},function(result){
+		$.post(url,{name:username, email:email, telphone:telphone, recommender:recommender, activator:activator, pwd1:primarypwd, pwd2:minorpwd, $userlevel:1},function(result){
 			result = JSON.parse(result);
 			if(result.success){
 				alert("regist success,goto login");
 				window.location.href="/public/index.php/login/login/index";
 			}else{
-				showError("用户名和密码不正确，请重新登录");	 
+				showError("填写数据不规范，请重新注册");	 
 				return false;
 			}
 		});

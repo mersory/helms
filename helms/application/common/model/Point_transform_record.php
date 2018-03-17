@@ -10,7 +10,7 @@ class Point_transform_record extends Model
         var_dump("Userdetails");
     }
 
-    public function PointTransformQuery($deal_id)//»¹ÓÐÆäËûµÄ²éÕÒ·½Ê½£¬´Ë´¦Ö»ÁÐ³öÕâÒ»¸ö
+    public function PointTransformQuery($deal_id)//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½Ò·ï¿½Ê½ï¿½ï¿½ï¿½Ë´ï¿½Ö»ï¿½Ð³ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
     {
         $_where = '';
         if ($deal_id != -1)
@@ -41,11 +41,11 @@ class Point_transform_record extends Model
         }
         if (strcmp("$_start", ""))
         {
-            $_where = "$_where and point_change_time >= '$_start'";//ÕâÀïÐèÒªÌí¼ÓÒýºÅ   //ÕâÀï²»Òª=ÒýºÅ£¬ÒòÎª´«ÈëÊý¾Ý¿âÖÐµÄID¾ÍÊÇintÀàÐÍ
+            $_where = "$_where and point_change_time >= '$_start'";//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½   //ï¿½ï¿½ï¿½ï²»Òª=ï¿½ï¿½ï¿½Å£ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ðµï¿½IDï¿½ï¿½ï¿½ï¿½intï¿½ï¿½ï¿½ï¿½
         }
         if (strcmp("$_end", "") )
         {
-            $_where = "$_where and point_change_time <= '$_end'";//ÕâÀïÐèÒªÌí¼ÓÒýºÅ
+            $_where = "$_where and point_change_time <= '$_end'";//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         }
         if (strcmp("$_where", ""))
         {
@@ -61,13 +61,9 @@ class Point_transform_record extends Model
         return $res;
     }
 
-    public function PointTransformInsert($point_id, $user_id, $point_type, $point_change_sum, $point_change_type)
+    public function PointTransformInsert($user_id, $point_type, $point_change_type, $point_change_sum)
     {
         $_pointtransform = array();
-        if ($point_id >=0)
-        {
-            $_pointtransform["POINT_ID"] = $point_id;
-        }
 
         if ($user_id >=0)
         {
@@ -78,10 +74,15 @@ class Point_transform_record extends Model
         {
             $_pointtransform["point_type"] = $point_type;
         }
+        
+        if ($point_change_type >=0)
+        {
+            $_pointtransform["point_change_type"] = $point_change_type;
+        }
 
         if ($point_change_sum >=0)
         {
-            $_pointtransform["point_change_sum"] = $point_change_sum;//Ò»°ãÕâÀïÖ»ÄÜÎª0£¬±íÊ¾ÉêÇëÌá½»£¬»¹Ã»ÉóºË
+            $_pointtransform["point_change_sum"] = $point_change_sum;//Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Îª0ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½á½»ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½
         }
         $_pointtransform["point_change_time"] = date("Y-m-d H:i:s");
         $this->startTrans();
@@ -114,7 +115,7 @@ class Point_transform_record extends Model
 
         if ($deal_sum >=0)
         {
-            $_dealinfo["deal_sum"] = $deal_sum;//Ò»°ãÕâÀïÖ»ÄÜÎª0£¬±íÊ¾ÉêÇëÌá½»£¬»¹Ã»ÉóºË
+            $_dealinfo["deal_sum"] = $deal_sum;//Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Îª0ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½á½»ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½
         }
         $_dealinfo["deal_time"] = date("Y-m-d H:i:s");
         $state = $this-> where("deal_id=$deal_id")

@@ -15,7 +15,7 @@ class User_bankinfo extends Model
         $_where = '';
         if ($user_id != -1)
         {
-            $_where = "user_id = $user_id";
+            $_where = "user_id = '$user_id'";
         }
         $_bank_info = $this->where($_where)
         ->select();

@@ -36,7 +36,6 @@ class Historical_price extends Model
         {
             $_where = "`current_time` > '$from' and `current_time` < '$to'";  //
         }
-        //echo $_where;
         $_price_info = $this->where($_where)
         ->select();
         $count = count($_price_info);
@@ -61,12 +60,12 @@ class Historical_price extends Model
         if ($state)
         {
             $this->commit();
-            var_dump("Offline deal insert commit");
+            var_dump("HistoricalpriceInsert commit");
         }
         else
         {
             $this->rollback();
-            var_dump("Details insert rollback");
+            var_dump("HistoricalpriceInsert rollback");
         }
         return $state;
     }

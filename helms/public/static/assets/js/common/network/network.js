@@ -26,10 +26,10 @@ $(function() {
 	refreshNetworkChart( $('#userId').val());
 })
 
-function refreshNetworkChart(userId){
-	var userId = "100042";
+function refreshNetworkChart(_userId){
+	//var userId = "100042";
 	$.post(loadNetworkUrl, {
-		userId : userId
+		userId : _userId
 	}, function(result) {
 		result = JSON.parse(result);
 		if (result.info == 'ok') {
@@ -69,14 +69,18 @@ function handleNetworkData(mapData,userId){
 //递归返回五层网络结构
 function getUserInfo(mapData,userId){
 	if(null != userId){
-		var data = mapData[userId];
+		var t = typeof( userId );
+		if(typeof( userId ) == "string")
+			var data = mapData[userId];
+		else
+			var data = mapData[userId.value];
 		var originObject = new Object();
 		originObject.userId = data.currentId;
 		originObject.realname = data.realname;
 		if(null != data.childrenId || undefined != data.childrenId || "" != $.trim(data.childrenId)){
 			var childrenSplitArray = data.childrenId;
 			var childrenArray = new Array();
-			for(var i=0;i<childrenSplitArray.length;i++){
+			for(var i in childrenSplitArray){
 				childrenArray.push(getUserInfo(mapData,childrenSplitArray[i]));
 			}
 			originObject.children  = childrenArray;

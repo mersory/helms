@@ -8,7 +8,6 @@
 $(function(){
 	//清空表单
 	emptyForm();
-	b();
 	//登录
 	$("#login").on("click",function(event){
 		var username = $("#username").val();
@@ -66,32 +65,20 @@ $(function(){
 	
 });
 
-
-function b()  {
-	alert("function b（） 输入序列合法");
-	//pointtran();
-}
-
 function validate() 
 {
 	var user = $('#username').val();
 	var pwd = $('#password').val();
-	if( !(/[A-Z]/.test(user)) || !(/[A-Z]/.test(pwd)) )
+	if( !(/[A-Z]/.test(user)) )
     {
-	    alert("输入序列必须包含大写字母");
+	    alert("用户名必须包含大写字母");
 	    return false;
     }
-    if( !(/[a-z]/.test(user)) || !(/[A-Z]/.test(pwd)) )
+    if( !(/[0-9]/.test(user)) || !(/[0-9]/.test(pwd)) )
     {
-	    alert("输入序列必须包含小写字母");
+	    alert("用户名和密码必须包含数字");
 	    return false;
     }
-    if( !(/[0-9]/.test(user)) || !(/[A-Z]/.test(pwd)) )
-    {
-	    alert("输入序列必须包含数字");
-	    return false;
-    }
-    alert("输入序列合法");
     return true;
 }  
 

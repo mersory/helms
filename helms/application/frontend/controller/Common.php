@@ -90,7 +90,6 @@ class Common extends Basecontroller
         }
     }
     
-    
     public function news()
     {
         $_session_user = Session::get(USER_SEESION);
@@ -455,7 +454,7 @@ class Common extends Basecontroller
     }
     
     //获取当前用户$userId的推荐结构
-    public function get_introducer_tree($userId)
+    public function get_introducer_tree_SRC($userId)
     {
         $_resdata = array();
         $_resdata["info"] = "no";
@@ -511,65 +510,72 @@ class Common extends Basecontroller
         return json_encode($_resdata) ;
     }
     
-    
-    /*//本函数已经弃用
-    public function get_fivelevel_topology($user_id)
+    //获取当前用户$userId的推荐结构
+    public function get_introducer_tree($userId)
     {
         $_resdata = array();
         $_resdata["info"] = "no";
-        if(parent::include_special_characters($user_id))
-            return $_resdata;
-        $_user = new Positionality();
-        $_curid = $_user->PositionQuery($user_id);
-        if(count($_curid) < 1)
-            var_dump($_resdata) ;
-        else 
+        $tmp = array();
+        //即使是错误的返回也必须先转化为约定的json格式，否则会出错
+        if(parent::include_special_characters($userId))//这里检查输入是否含有特殊字符串，通过浏览器上方输入的方式访问时，字符串不能添加引号
+            return json_encode($_resdata) ;
+        //此处必须要用不同的变量去获取不同类的对象
+        $_user_info = new User_info();
+        $_res1 = $_user_info->UserSearch($userId, "", "", "", "", "");
+        $tmp_ID = array();
+        if(!empty($_res1))//如果当前数据不为空,也就是empty函数为false
         {
-            $_resdata["info"] = "no";
-            $parent = $_curid[0]["ID"];
-            $_res = $_user->PositionChildByJson($parent);    //这两行用于打开当前节点，展示所有孩子节点
-            echo "first level:";
-            var_dump($_res);
-            echo "\n";
-            for($i=0; $i<count($_res); $i++)
+            $_resdata["info"] = "ok";
+            $tmp[$_res1[0]["ID"]]["userId"] = $_res1[0]["ID"];
+            $tmp[$_res1[0]["ID"]]["user_name"] = $_res1[0]["user_name"];
+            $tmp[$_res1[0]["ID"]]["user_level"] = $_res1[0]["user_level"];
+            
+            $_user = new User_details();
+            $_recommand = $_user->RecommanderQuery($userId);
+            $tmp[$_res1[0]["ID"]]["children"]=$_recommand;
+            
+            for($i=0; $i<count($_recommand); $i++)
             {
-                $_curid = array_values($_res);
-                if(strcmp($_curid[$i], ""))
-                    $_res_2[$i] = $_user->PositionChildByJson($_curid[$i]);
+                $tmp_ID[$i]=$_recommand[$i]["ID"];
             }
-            echo "second level:";
-            var_dump($_res_2);
-            echo "\n";
-            for($i=0; $i<count($_res_2); $i++)
+            
+            $index=0;
+            while($index < count($tmp_ID))
             {
-                $_curid = array_values($_res_2);
-                if(strcmp($_curid[$i], ""))
-                    $_res_3[$i] = $_user->PositionChildByJson($_curid[$i]);
+                $_res1 = $_user_info->UserSearch($tmp_ID[$index], "", "", "", "", "");
+                if(!empty($_res1))
+                {
+                    //每次查询之后，只会有一条记录，所以下标一定是0
+                    $tmp[$_res1[0]["ID"]]["userId"] = $_res1[0]["ID"];
+                    $tmp[$_res1[0]["ID"]]["user_name"] = $_res1[0]["user_name"];
+                    $tmp[$_res1[0]["ID"]]["user_level"] = $_res1[0]["user_level"];
+                    
+                    $_user = new User_details();
+                    $_recommand = $_user->RecommanderQuery($_res1[0]["ID"]);
+                    
+                    if(count($_recommand)>=1)
+                    {
+                 
+                        $tmp[$_res1[0]["ID"]]["children"]=$_recommand;
+                        $tm_count = count($tmp_ID);
+                        for($i=0; $i<count($_recommand); $i++)
+                        {
+                            $tmp_ID[$tm_count+$i]=$_recommand[$i]["ID"];
+                          
+                        }
+                    }
+                    
+                }
+                $index = $index+1;
+                $tmp[$_res1[0]["ID"]]["children"]=$_recommand;
             }
-            echo "third level:";
-            var_dump($_res_3);
-            echo "\n";
-            for($i=0; $i<count($_res_3); $i++)
-            {
-                $_curid = array_values($_res_3);
-                if(strcmp($_curid[$i], ""))
-                    $_res_4[$i] = $_user->PositionChildByJson($_curid[$i]);
-            }
-            echo "fourth level:";
-            var_dump($_res_4);
-            echo "\n";
-            for($i=0; $i<count($_res_4); $i++)
-            {
-                $_curid = array_values($_res_4);
-                if(strcmp($_curid[$i], ""))
-                    $_res_5[$i] = $_user->PositionChildByJson($_curid[$i]);
-            }
-            echo "fifth level:";
-            var_dump($_res_5);
-            echo "\n";
+            $_resdata["res"] = $tmp;
+             //($_resdata);
         }
+        return json_encode($_resdata);
+        
     }
-    */
+    
 }
 
 

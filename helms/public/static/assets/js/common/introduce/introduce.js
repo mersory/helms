@@ -1,8 +1,18 @@
 var loadNetworkUrl = "/public/index.php/frontend/common/get_introducer_tree";
 $(function() {
 
-	refreshIntroduceTree('100050');
+	//搜索按钮
+	$("#network-search").on("click",function(){
+		var CurrentId = $('#userId').val();
+		if($.trim(CurrentId) != ""){
+			refreshIntroduceTree(CurrentId);
+		}
+	})
+	
+	refreshIntroduceTree( $('#userId').val());
 })
+
+
 
 function getTree() {
 	//

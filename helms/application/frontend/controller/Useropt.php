@@ -18,6 +18,7 @@ use app\common\model\Subuser_info;
 use think\Session;
 use app\common\model\Role;
 use app\backend\controller\Basecontroller;
+use app\trigger\controller\External;
 
 class Useropt extends Basecontroller
 {
@@ -126,18 +127,18 @@ class Useropt extends Basecontroller
         return $htmls;
     }
     
-    
-    
     //用户注册操作
-    public function UserRegist($name, $email, $telphone, $recommender, $activator, $pwd1, $pwd2)
+    public function UserRegist($name, $email, $telphone, $recommender, $activator, $pwd1, $pwd2, $userlevel=1)
     {
 		$_resdata = array();
+		$extern = new External();
+		$ID = $extern->_auto_userid();
         $_user_info = new User_info(); 
         //此处插入用的是用户名和密码，必须这样做，因为此处插入之后才会有对应得ID生成，以便后续使用，此处不需要提供ID，因为主表的ID是自增的
-        $_state = $_user_info->UserinfoInsert($name, $pwd1, $pwd2);
+        $_state = $_user_info->UserinfoInsert($name, $pwd1, $pwd2, $ID);
         if ($_state != 0)
         {
-            $_res =$_user_info->UserinfoQuery($name, $pwd1);
+            $_res =$_user_info->UserinfoQuery($ID, $pwd1);
             if (count($_res) != 1)
             {
                 echo "存在多个同名用户，或者改用户不存在";
@@ -147,7 +148,7 @@ class Useropt extends Basecontroller
 		$_resdata["success"] = true;
         //银行信息插入
         $_bank_info = new User_bankinfo();
-        $user_id = $_res[0]["ID"];
+        $user_id = $ID;
         $bank_account_name = "白浅上仙";
         $bank_account_num = "622718219839182";
         $bank_name = "中国工商银行";
@@ -155,17 +156,22 @@ class Useropt extends Basecontroller
         
         //用户详情信息插入
         $portrait = -1;
-        $user_level = -1; 
-        $open_time = -1;
+        $user_level = $userlevel; 
+        $open_time = time();
         $recommender = intval($recommender); 
         $activator = intval($activator);
         $registry = -1;
         $_details_info = new User_details();
                
         //用户绩点插入
-        $shares=600;
+        if($userlevel == 1)
+            $regist_point=500;
+        else if($userlevel == 2)
+            $regist_point=1000;
+        else 
+            $regist_point=1500;
         $bonus_point=40;
-        $regist_point=30;
+        $shares=300;
         $re_consume=0;
         $universal_point=0;
         $re_cast=0;
@@ -388,9 +394,7 @@ class Useropt extends Basecontroller
 //---------------------------------单个接口测试--------------------------------
 //---------------------------------单个接口测试--------------------------------
 //---------------------------------单个接口测试--------------------------------
-//---------------------------------单个接口测试--------------------------------
-    
-    
+//---------------------------------单个接口测试-------------------------------- 
     public function UserinfoQuery($name, $pwd)
     {
         $_user = new User_info();
@@ -403,10 +407,10 @@ class Useropt extends Basecontroller
         $_user->UserinfoDel($id, $name, $pwd);
     }
     
-    public function UserinfoInsert($name, $pwd1, $pwd2)
+    public function UserinfoInsert($name, $pwd1, $pwd2, $ID)
     {
         $_user = new User_info();
-        $_user->UserinfoInsert($name, $pwd1, $pwd2);
+        $_user->UserinfoInsert($name, $pwd1, $pwd2, $ID);
     }
     
     public function UserinfoUpdate($name, $pwd)

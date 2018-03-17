@@ -10,7 +10,7 @@ class Deal_info extends Model
         var_dump("Userdetails");
     }
     
-    public function DealinfoQuery($deal_id)//»¹ÓÐÆäËûµÄ²éÕÒ·½Ê½£¬´Ë´¦Ö»ÁÐ³öÕâÒ»¸ö
+    public function DealinfoQuery($deal_id)//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½Ò·ï¿½Ê½ï¿½ï¿½ï¿½Ë´ï¿½Ö»ï¿½Ð³ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
     {
         $_where = '';
         if ($deal_id != -1)
@@ -33,7 +33,7 @@ class Deal_info extends Model
         $_where = '';
         if (strcmp("$_start", "") )
         {
-            $_where = "deal_time > '$_start'";   //ÕâÀï²»Òª=ÒýºÅ£¬ÒòÎª´«ÈëÊý¾Ý¿âÖÐµÄID¾ÍÊÇintÀàÐÍ
+            $_where = "deal_time > '$_start'";   //ï¿½ï¿½ï¿½ï²»Òª=ï¿½ï¿½ï¿½Å£ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ðµï¿½IDï¿½ï¿½ï¿½ï¿½intï¿½ï¿½ï¿½ï¿½
         }
         else
         {
@@ -41,7 +41,7 @@ class Deal_info extends Model
         }
         if (strcmp("$_end", "") )
         {
-            $_where = "$_where and deal_time < '$_end'";//ÕâÀïÐèÒªÌí¼ÓÒýºÅ
+            $_where = "$_where and deal_time < '$_end'";//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         }
         if (strcmp("$_where", ""))
         {
@@ -80,13 +80,9 @@ class Deal_info extends Model
         return $state;
     }
     
-    public function DealinfoInsert($deal_id, $user_id, $deal_type, $deal_sum)
+    public function DealinfoInsert($user_id, $deal_type=1, $ok_money, $ok_nums, $cf_gp, $details, $status, $pay_gujia)
     {
         $_dealinfo = array();
-        if ($deal_id >=0)
-        {
-            $_dealinfo["deal_id"] = $deal_id;
-        }
     
         if ($user_id >=0)
         {
@@ -98,10 +94,36 @@ class Deal_info extends Model
             $_dealinfo["deal_type"] = $deal_type;
         }
     
-        if ($deal_sum >=0)
+        if ($ok_money >=0)
         {
-            $_dealinfo["deal_sum"] = $deal_sum;//Ò»°ãÕâÀïÖ»ÄÜÎª0£¬±íÊ¾ÉêÇëÌá½»£¬»¹Ã»ÉóºË
+            $_dealinfo["ok_money"] = $ok_money;//Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Îª0ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½á½»ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½
         }
+        
+        if ($ok_nums >=0)
+        {
+            $_dealinfo["ok_nums"] = $ok_nums;
+        }
+        
+        if ($cf_gp >=0)
+        {
+            $_dealinfo["cf_gp"] = $cf_gp;
+        }
+         
+        if ($details >=0)
+        {
+            $_dealinfo["details"] = $details;
+        }
+        
+        if ($status >=0)
+        {
+            $_dealinfo["status"] = $status;//Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Îª0ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½á½»ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½
+        }
+        
+        if ($pay_gujia >=0)
+        {
+            $_dealinfo["pay_gujia"] = $pay_gujia;//Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Îª0ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½á½»ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½
+        }
+        
         $_dealinfo["deal_time"] = date("Y-m-d H:i:s");
         $this->startTrans();
         $state = $this->save($_dealinfo);
@@ -133,7 +155,7 @@ class Deal_info extends Model
     
         if ($deal_sum >=0)
         {
-            $_dealinfo["deal_sum"] = $deal_sum;//Ò»°ãÕâÀïÖ»ÄÜÎª0£¬±íÊ¾ÉêÇëÌá½»£¬»¹Ã»ÉóºË
+            $_dealinfo["deal_sum"] = $deal_sum;//Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Îª0ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½á½»ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½
         }
         $_dealinfo["deal_time"] = date("Y-m-d H:i:s");
         $state = $this-> where("deal_id=$deal_id")

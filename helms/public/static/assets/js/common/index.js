@@ -176,6 +176,14 @@ $(function() {
 	// disable_search_threshold : 10
 	// });
 
+	//搜索按钮
+	$("#apply-btn").on("click",function(){
+		var points = $('#input03').val();
+		if($.trim(points) != ""){
+			alert("提示信息！");  
+			alert(points);
+		}
+	})
 })
 
 // 加载首页股价趋势

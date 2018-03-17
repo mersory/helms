@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:92:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\common\index.html";i:1511877397;s:93:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\base\frontend.html";i:1511877397;s:20:"base/common/css.html";i:1505921314;s:19:"base/common/js.html";i:1511877397;s:36:"base/common/frontend/leftAndTop.html";i:1511971111;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:92:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\common\index.html";i:1511877397;s:93:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\base\frontend.html";i:1511877397;s:20:"base/common/css.html";i:1505921314;s:19:"base/common/js.html";i:1511877397;s:36:"base/common/frontend/leftAndTop.html";i:1520658589;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -203,11 +203,11 @@
                       </li>
                     </ul>
                   </li>
-                  <!-- <li>
-                    <a href="widgets.html">
-                      <i class="fa fa-play-circle"></i> 我的积分
+				  <li>
+                    <a href="network.html">
+                      <i class="fa fa-account-create"></i> 创建账户
                     </a>
-                  </li> -->
+                  </li>
                 </ul>
               </li>
 

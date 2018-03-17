@@ -20,9 +20,10 @@ class User_info extends Model
         }
         else 
         {
-            $_where = "username = '$name'";
+            $_where = "ID = '$name'";
             $_where = "$_where and password = '$pwd'";
         }
+       
         // var_dump(urlencode($_SERVER['REQUEST_URI']));
         $_user_info = $this->where($_where)
         ->limit(4)
@@ -36,6 +37,19 @@ class User_info extends Model
         }
         else 
             return $_user_info;
+    }
+    
+    public function isUserExist($id)
+    {
+        $_where = "ID = '$id'";
+        $_user_info = $this->where($_where)->select();
+        $count = count($_user_info);
+        if ($count < 1)
+        {
+            return 0;
+        }
+        else
+            return 1;
     }
     
     public function UserinfoDel($id, $name, $pwd)//�˴���user��pwd�ǲ����˵���Ϣ����֤�������Ƿ�Ϊ��������Ա
@@ -80,20 +94,24 @@ class User_info extends Model
         return $state;
     }
     
-    public function UserinfoInsert($name, $pwd1, $pwd2)
+    public function UserinfoInsert($name, $pwd1, $pwd2, $ID)
     {
         $_userinfo = array('username'=>$name,
                            'password' => $pwd1,
-                           'minor_pwd' => $pwd2);
+                           'minor_pwd' => $pwd2,
+                           'ID' => $ID);
         $this->startTrans();
+        //var_dump("userinfoInsertstate:");
         $state = $this->save($_userinfo);
         if ($state)
         {
+            //var_dump($state);
             $this->commit();
         }
         else
         {
             $this->rollback();
+            var_dump($state);
         }
         return $state;
     }
@@ -161,7 +179,7 @@ class User_info extends Model
         $_where = '';
         if (strcmp("$_userid", "") )
         {
-            $_where = "info.ID = $_userid";   //���ﲻҪ=���ţ���Ϊ�������ݿ��е�ID����int����
+            $_where = "info.ID = '$_userid'";   //���ﲻҪ=���ţ���Ϊ�������ݿ��е�ID����int����
         }
         else 
         {

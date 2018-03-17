@@ -15,7 +15,7 @@ class User_priority extends Model
         $_where = '';
         if ($user_id != -1)
         {
-            $_where = "user_id = $user_id";
+            $_where = "user_id = '$user_id'";
         }
         $_priority_info = $this->where($_where)
         ->select();
@@ -51,7 +51,7 @@ class User_priority extends Model
         return $state;
     }
     
-    public function PriorityInsert($user_id, $priority_id = 0)
+    public function PriorityInsert($user_id, $priority_id = 1)
     {
         $_userinfo = array('user_id'=>$user_id,'priority_id' => $priority_id);
         $this->startTrans();

@@ -7,17 +7,29 @@ use app\common\model\Positionality;
 use app\common\model\Role;
 use app\common\model\Priority;
 use app\common\model\Deal_info;
-use think\Request;
 use app\common\model\User_info;
 use app\common\model\User_point;
 use app\common\model\Point_transform_record;
 use app\common\model\Withdrawal_record;
+use app\common\model\Award_record;
+use app\common\model\Award_daytime;
+use think\Request;
 
 class Adminopt extends Controller
 {
     public function index()
     {
         echo "class Admin index";
+        $use = new Award_record();
+        $use->index();
+
+        $dayuser = new Award_daytime();
+        $dayuser->index();
+        if($dayuser->isAwarddailyExist("H4463714500") == 1)
+            $dayuser->AwarddailyUpdate("H4463714500",12.7,12);
+        else 
+            $dayuser->AwarddailyInsert("H4463714500",13.7,16);
+        
     }
     
     public function UserList()

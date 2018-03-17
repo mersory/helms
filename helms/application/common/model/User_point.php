@@ -15,7 +15,7 @@ class User_point extends Model
         $_where = '';
         if ($user_id != -1)
         {
-            $_where = "ID = $user_id";
+            $_where = "ID = '$user_id'";
         }
         $_point_info = $this->where($_where)
         ->select();
@@ -113,8 +113,38 @@ class User_point extends Model
         return $state;
     }
     
-    public function PointUpdate($user_id, $shares=0, $bonus_point=0, $regist_point=0, $re_consume=0, 
-                                $universal_point=0, $re_cast=0, $remain_point=0, $blocked_point=0)
+    public function pointTransfor($user_id, $point_type, $point_change_type, $point_change_sum)
+    {
+        $_res = $this->PointQuery($user_id);
+        $_res = $_res[0];
+        $_pointinfo = array();
+        $pointtype = array();
+        $pointtype[1] = 'regist_point';//"注册分";
+        $pointtype[2] = 'bonus_point';//"奖励分";
+        $pointtype[3] = 're_consume';//"重复消费分";
+        $pointtype[4] = 'universal_point';//"万能分";
+        if($point_type == $point_change_type)
+            return false;
+        else 
+        {
+            if($_res[$pointtype[$point_type]] < $point_change_sum)
+                return false;
+           else 
+           {
+               $_pointinfo[$pointtype[$point_type]] = $_res[$pointtype[$point_type]] - $point_change_sum;
+               $_pointinfo[$pointtype[$point_change_type]] = $_res[$pointtype[$point_change_type]] + $point_change_sum;
+               $state = $this-> where("ID='$user_id'")
+               ->setField($_pointinfo);
+               $point_transfor = new Point_transform_record();
+               $point_transfor->PointTransformInsert($user_id, $pointtype[$point_type], $pointtype[$point_change_type], $point_change_sum);
+           }
+        }
+        return true;
+    }
+    
+    public function PointUpdate($user_id, $shares=-1, $bonus_point=-1, $regist_point=-1, $re_consume=-1, 
+                                $universal_point=-1, $re_cast=-1, $remain_point=-1, $blocked_point=-1,
+                                $shengyu_jing=-1, $shengyu_dong=-1)
     {
         $_pointinfo = array();
         if ($user_id >=0)
@@ -161,8 +191,36 @@ class User_point extends Model
         {
             $_pointinfo["blocked_point"] = $blocked_point;
         }
+        if ($shengyu_jing>=0)
+        {
+            $_pointinfo["shengyu_jing"] = $shengyu_jing;
+        }
+        
+        if ($shengyu_dong>=0)
+        {
+            $_pointinfo["shengyu_dong"] = $shengyu_dong;
+        }
         $state = $this-> where("ID=$user_id")
         ->setField($_pointinfo);
+        return $state;
+    }
+    
+    public function remainPointUpdate($user_id, $jing=0, $dong=0)
+    {
+        $_pointinfo = array();
+        if ($jing >=0)
+        {
+            $_pointinfo["shengyu_jing"] = $jing;
+        }
+        
+        if ($dong >=0)
+        {
+            $_pointinfo["shengyu_dong"] = $dong;
+        }
+        $state = $this-> where("ID='$user_id'")
+        ->setField($_pointinfo);
+        var_dump($user_id);
+        var_dump($state);
         return $state;
     }
     
