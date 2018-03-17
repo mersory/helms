@@ -1,5 +1,5 @@
 {extend name="base/frontend"} {block name="js"}
-<script type="text/javascript" src="_JS_/common/index.js"></script>
+<script type="text/javascript" src="_JS_/common/points/points.js"></script>
 {/block} {block name="css"} {/block} {block name="content"}
 <!-- Page content -->
 <div id="content" class="col-md-12">
@@ -25,12 +25,14 @@
 					<!-- tile header -->
 					<div class="tile-header">
 						<h1>
-							<strong>万能分</strong>
+							<strong>
+							   {if condition="$pass_data['type'] == 'universal'"}万能分 {/if}
+							   {if condition="$pass_data['type'] == 'bonus'"}奖励分{/if}
+							   {if condition="$pass_data['type'] == 'regist'"}注册分{/if}
+							   {if condition="$pass_data['type'] == 'consume'"}重复消费分{/if}
+							</strong>
 						</h1>
-						<div class="controls">
-							<a href="#" class="refresh"><i class="fa fa-refresh"></i></a> <a
-								href="#" class="remove"><i class="fa fa-times"></i></a>
-						</div>
+						<input type="hidden"  id="points_type" value="{$pass_data['type']}"/>
 					</div>
 					<!-- /tile header -->
 
@@ -38,9 +40,10 @@
 					<div class="tile-widget">
 						<span>当前余额</span> <span>500</span>
 					</div>
+					{if condition="$pass_data['type'] == 'universal' or $pass_data['type'] == 'bonus'"}
 					<div class="tile-widget">
 						<a href="#transform1Dialog" role="button" class="btn btn-cyan"
-							data-toggle="modal">转换复投分</a>
+							data-toggle="modal">积分转换</a>
 
 						<div class="modal fade" id="transform1Dialog" tabindex="-1"
 							role="dialog" aria-labelledby="modalDialogLabel"
@@ -51,14 +54,18 @@
 										<button type="button" class="close" data-dismiss="modal"
 											aria-hidden="true">关闭</button>
 										<h3 class="modal-title" id="modalDialogLabel">
-											<strong>转换复投分</strong>
+											<strong>积分转换</strong>
 										</h3>
 									</div>
 									<div class="modal-body">
-										<label for="input03" class="col-sm-2 control-label">输入金额</label>
-										<input type="text" class="form-control" id="input03">
+										<label for="input03" class="col-sm-5 text-left control-label">需要转换的积分类型</label>
+										<input type="text" class="form-control" type="regist" id="transfer_type"  value="注册分" readonly="readonly"/>
+										<label for="input03" class="col-sm-5 text-left control-label">输入金额</label>
+										<input type="text" class="form-control" id="transfer_amount">
+										<label for="input03" class="col-sm-5 text-left control-label">二级密码</label>
+										<input type="password" class="form-control" id="minor_password">
 										<div class="col-sm-2text-center">
-											<button type="submit" class="btn btn-primary" id="apply-btn">申请</button>
+											<button type="button" class="btn btn-primary" id="apply-btn">申请</button>
 										</div>
 									</div>
 								</div>
@@ -68,34 +75,8 @@
 						</div>
 						<!-- /.modal -->
 
-						<a href="#transform2Dialog" role="button" class="btn btn-cyan"
-							data-toggle="modal">转换注册分</a>
-						<div class="modal fade" id="#transform2Dialog" tabindex="-1"
-							role="dialog" aria-labelledby="modalDialogLabel"
-							aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal"
-											aria-hidden="true">关闭</button>
-										<h3 class="modal-title" id="modalDialogLabel">
-											<strong>转换注册分</strong>
-										</h3>
-									</div>
-									<div class="modal-body">
-										<label for="input03" class="col-sm-2 control-label">输入金额</label>
-										<input type="text" class="form-control" >
-										<div class="col-sm-2text-center">
-											<button type="submit" class="btn btn-primary">申请</button>
-										</div>
-									</div>
-								</div>
-								<!-- /.modal-content -->
-							</div>
-							<!-- /.modal-dialog -->
-						</div>
-						<!-- /.modal -->
 					</div>
+					{/if}
 					<!-- /tile widget -->
 
 					<!-- tile body -->

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:92:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\common\points.html";i:1505520905;s:92:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\base\frontend.html";i:1505490411;s:20:"base/common/css.html";i:1505486330;s:19:"base/common/js.html";i:1505514190;s:36:"base/common/frontend/leftAndTop.html";i:1505520944;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:92:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\common\points.html";i:1521312354;s:92:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\base\frontend.html";i:1511664072;s:20:"base/common/css.html";i:1511359924;s:19:"base/common/js.html";i:1511676215;s:36:"base/common/frontend/leftAndTop.html";i:1521301056;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -29,59 +29,60 @@
     
     
 
-	    <script src="_JS_/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
+	
+<script src="_JS_/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
 
-    <script src="_JS_/vendor/flot/jquery.flot.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.time.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.selection.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.animator.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.orderBars.js"></script>
-    <script src="_JS_/vendor/easypiechart/jquery.easypiechart.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.time.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.selection.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.animator.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.orderBars.js"></script>
+<script src="_JS_/vendor/easypiechart/jquery.easypiechart.min.js"></script>
 
-    <script src="_JS_/vendor/rickshaw/raphael-min.js"></script> 
-    <script src="_JS_/vendor/rickshaw/d3.v2.js"></script>
-    <script src="_JS_/vendor/rickshaw/rickshaw.min.js"></script>
+<script src="_JS_/vendor/rickshaw/raphael-min.js"></script>
+<script src="_JS_/vendor/rickshaw/d3.v2.js"></script>
+<script src="_JS_/vendor/rickshaw/rickshaw.min.js"></script>
 
-    <script src="_JS_/vendor/morris/morris.min.js"></script>
+<script src="_JS_/vendor/morris/morris.min.js"></script>
 
-    <script src="_JS_/vendor/tabdrop/bootstrap-tabdrop.min.js"></script>
+<script src="_JS_/vendor/tabdrop/bootstrap-tabdrop.min.js"></script>
 
-    <script src="_JS_/vendor/summernote/summernote.min.js"></script>
+<script src="_JS_/vendor/summernote/summernote.min.js"></script>
 
-    <script src="_JS_/vendor/chosen/chosen.jquery.min.js"></script>
+<script src="_JS_/vendor/chosen/chosen.jquery.min.js"></script>
+<script src="_JS_/vendor/parsley/parsley.min.js"></script>
+<script src="_JS_/vendor/wizard/jquery.bootstrap.wizard.min.js"></script>
+<script src="_JS_/minimal.min.js"></script>
+<script src="_JS_/common/main.js"></script>
 
-    <script src="_JS_/minimal.min.js"></script>
-    
-    <section class="videocontent" id="video"></section>
-
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
-
-
+<script type="text/javascript">
+	root = "__ROOT__";
+</script>
 	
 	<!-- custom css -->
 	 
 	<!-- custom js -->
 	
-<script type="text/javascript" src="_JS_/common/index.js"></script>
+<script type="text/javascript" src="_JS_/common/points/points.js"></script>
 
 
   </head>
   <body class="bg-1">
+  	<div class="mask" style="display: none;"><div id="loader" style="display: none;"></div></div>
 
     <!-- Wrap all page content here -->
     <div id="wrap">
@@ -148,17 +149,17 @@
                   <li class="divider"></li>
 
                   <li>
-                    <a href="#"><i class="fa fa-user"></i> 个人信息</a>
+                    <a href="http://localhost/public/index.php/frontend/Useropt/userinfo"><i class="fa fa-user"></i> 个人信息</a>
                   </li>
 
                   <li>
-                    <a href="#"><i class="fa fa-pencil"></i> 修改密码</a>
+                    <a href="http://localhost/public/index.php/frontend/Useropt/memberModifyPwd"><i class="fa fa-pencil"></i> 修改密码</a>
                   </li>
 
                   <li class="divider"></li>
 
                   <li>
-                    <a href="#"><i class="fa fa-power-off"></i> 登出</a>
+                    <a href="http://localhost/public/index.php/login/login/index"><i class="fa fa-power-off"></i> 登出</a>
                   </li>
                 </ul>
               </li>
@@ -194,17 +195,17 @@
                         </a>
                       </li>
                       <li>
-                        <a href="validation-elements.html">
+                        <a href="/public/index.php/frontend/common/introduce">
                           <i class="fa fa-caret-right"></i> 推荐结构
                         </a>
                       </li>
                     </ul>
                   </li>
-                  <!-- <li>
-                    <a href="widgets.html">
-                      <i class="fa fa-play-circle"></i> 我的积分
+				  <li>
+                    <a href="network.html">
+                      <i class="fa fa-account-create"></i> 创建账户
                     </a>
-                  </li> -->
+                  </li>
                 </ul>
               </li>
 
@@ -251,12 +252,11 @@
 					<!-- tile header -->
 					<div class="tile-header">
 						<h1>
-							<strong>万能分</strong>
+							<strong>
+							   <?php if($pass_data['type'] == 'universal'): ?>万能分 <?php endif; if($pass_data['type'] == 'bonus'): ?>奖励分<?php endif; if($pass_data['type'] == 'regist'): ?>注册分<?php endif; if($pass_data['type'] == 'consume'): ?>重复消费分<?php endif; ?>
+							</strong>
 						</h1>
-						<div class="controls">
-							<a href="#" class="refresh"><i class="fa fa-refresh"></i></a> <a
-								href="#" class="remove"><i class="fa fa-times"></i></a>
-						</div>
+						<input type="hidden"  id="points_type" value="<?php echo $pass_data['type']; ?>"/>
 					</div>
 					<!-- /tile header -->
 
@@ -264,9 +264,10 @@
 					<div class="tile-widget">
 						<span>当前余额</span> <span>500</span>
 					</div>
+					<?php if($pass_data['type'] == 'universal' or $pass_data['type'] == 'bonus'): ?>
 					<div class="tile-widget">
 						<a href="#transform1Dialog" role="button" class="btn btn-cyan"
-							data-toggle="modal">转换复投分</a>
+							data-toggle="modal">积分转换</a>
 
 						<div class="modal fade" id="transform1Dialog" tabindex="-1"
 							role="dialog" aria-labelledby="modalDialogLabel"
@@ -277,14 +278,18 @@
 										<button type="button" class="close" data-dismiss="modal"
 											aria-hidden="true">关闭</button>
 										<h3 class="modal-title" id="modalDialogLabel">
-											<strong>转换复投分</strong>
+											<strong>积分转换</strong>
 										</h3>
 									</div>
 									<div class="modal-body">
-										<label for="input03" class="col-sm-2 control-label">输入金额</label>
-										<input type="text" class="form-control" id="input03">
+										<label for="input03" class="col-sm-5 text-left control-label">需要转换的积分类型</label>
+										<input type="text" class="form-control" type="regist" id="transfer_type"  value="注册分" readonly="readonly"/>
+										<label for="input03" class="col-sm-5 text-left control-label">输入金额</label>
+										<input type="text" class="form-control" id="transfer_amount">
+										<label for="input03" class="col-sm-5 text-left control-label">二级密码</label>
+										<input type="password" class="form-control" id="minor_password">
 										<div class="col-sm-2text-center">
-											<button type="submit" class="btn btn-primary">申请</button>
+											<button type="button" class="btn btn-primary" id="apply-btn">申请</button>
 										</div>
 									</div>
 								</div>
@@ -294,34 +299,8 @@
 						</div>
 						<!-- /.modal -->
 
-						<a href="#transform2Dialog" role="button" class="btn btn-cyan"
-							data-toggle="modal">转换注册分</a>
-						<div class="modal fade" id="#transform2Dialog" tabindex="-1"
-							role="dialog" aria-labelledby="modalDialogLabel"
-							aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal"
-											aria-hidden="true">关闭</button>
-										<h3 class="modal-title" id="modalDialogLabel">
-											<strong>转换注册分</strong>
-										</h3>
-									</div>
-									<div class="modal-body">
-										<label for="input03" class="col-sm-2 control-label">输入金额</label>
-										<input type="text" class="form-control" >
-										<div class="col-sm-2text-center">
-											<button type="submit" class="btn btn-primary">申请</button>
-										</div>
-									</div>
-								</div>
-								<!-- /.modal-content -->
-							</div>
-							<!-- /.modal-dialog -->
-						</div>
-						<!-- /.modal -->
 					</div>
+					<?php endif; ?>
 					<!-- /tile widget -->
 
 					<!-- tile body -->
@@ -349,8 +328,7 @@
 		});
 
 		// Initialize flot chart
-		var d1 = [ [ 1, 1.0 ], [ 2, 1.1 ], [ 3, 1.3 ], [ 4, 2.0 ], [ 5, 1.2 ],
-				[ 6, 1.4 ], [ 7, 1.5 ] ];
+		var d1 = [ [ 1, 1.0 ], [ 2, 1.1 ], [ 3, 1.3 ], [ 4, 2.0 ], [ 5, 1.2 ],[ 6, 1.4 ], [ 7, 1.5 ] ];
 
 		var days = [ "03.02", "03.03", "03.04", "03.05", "03.06", "03.07",
 				"03.08" ];

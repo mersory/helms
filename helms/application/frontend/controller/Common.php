@@ -281,7 +281,7 @@ class Common extends Basecontroller
     }
 		
 		
-        public function points()
+        public function points($type)
         {
             $_session_user = Session::get(USER_SEESION);
             if(empty($_session_user)){
@@ -328,6 +328,8 @@ class Common extends Basecontroller
                     $_resdata["bonus_point"] = $_res[0]["bonus_point"];
                     $_resdata["regist_point"] = $_res[0]["regist_point"];
                 }
+                
+                $_resdata["type"] = $type;
         
                 $_user = new User_priority();
                 $_res = $_user->PriorityQuery($_user_id);

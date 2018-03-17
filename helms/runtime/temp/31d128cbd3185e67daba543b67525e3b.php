@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:102:"E:\Software\php\workspace\helms\helms\public/../application/backend\view\common\memberapplication.html";i:1505521999;s:90:"E:\Software\php\workspace\helms\helms\public/../application/backend\view\base\backend.html";i:1505490420;s:20:"base/common/css.html";i:1505486330;s:19:"base/common/js.html";i:1505514190;s:35:"base/common/backend/leftAndTop.html";i:1505521416;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:102:"E:\Software\php\workspace\helms\helms\public/../application/backend\view\common\memberapplication.html";i:1511359924;s:90:"E:\Software\php\workspace\helms\helms\public/../application/backend\view\base\backend.html";i:1511359924;s:20:"base/common/css.html";i:1511359924;s:19:"base/common/js.html";i:1511676215;s:35:"base/common/backend/leftAndTop.html";i:1512005489;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -29,49 +29,49 @@
     
     
 
-	    <script src="_JS_/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
+	
+<script src="_JS_/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
 
-    <script src="_JS_/vendor/flot/jquery.flot.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.time.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.selection.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.animator.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.orderBars.js"></script>
-    <script src="_JS_/vendor/easypiechart/jquery.easypiechart.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.time.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.selection.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.animator.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.orderBars.js"></script>
+<script src="_JS_/vendor/easypiechart/jquery.easypiechart.min.js"></script>
 
-    <script src="_JS_/vendor/rickshaw/raphael-min.js"></script> 
-    <script src="_JS_/vendor/rickshaw/d3.v2.js"></script>
-    <script src="_JS_/vendor/rickshaw/rickshaw.min.js"></script>
+<script src="_JS_/vendor/rickshaw/raphael-min.js"></script>
+<script src="_JS_/vendor/rickshaw/d3.v2.js"></script>
+<script src="_JS_/vendor/rickshaw/rickshaw.min.js"></script>
 
-    <script src="_JS_/vendor/morris/morris.min.js"></script>
+<script src="_JS_/vendor/morris/morris.min.js"></script>
 
-    <script src="_JS_/vendor/tabdrop/bootstrap-tabdrop.min.js"></script>
+<script src="_JS_/vendor/tabdrop/bootstrap-tabdrop.min.js"></script>
 
-    <script src="_JS_/vendor/summernote/summernote.min.js"></script>
+<script src="_JS_/vendor/summernote/summernote.min.js"></script>
 
-    <script src="_JS_/vendor/chosen/chosen.jquery.min.js"></script>
+<script src="_JS_/vendor/chosen/chosen.jquery.min.js"></script>
+<script src="_JS_/vendor/parsley/parsley.min.js"></script>
+<script src="_JS_/vendor/wizard/jquery.bootstrap.wizard.min.js"></script>
+<script src="_JS_/minimal.min.js"></script>
+<script src="_JS_/common/main.js"></script>
 
-    <script src="_JS_/minimal.min.js"></script>
-    
-    <section class="videocontent" id="video"></section>
-
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
-
-
+<script type="text/javascript">
+	root = "__ROOT__";
+</script>
 	
 	<!-- custom css -->
 	
@@ -79,6 +79,7 @@
 
 	<!-- custom js -->
 	
+	<script type="text/javascript" src="_JS_/common/admin/applicationlist.js"></script>
 
 
   </head>
@@ -149,17 +150,17 @@
                   <li class="divider"></li>
 
                   <li>
-                    <a href="#"><i class="fa fa-user"></i> 个人信息</a>
+                    <a href="http://localhost/public/index.php/frontend/Useropt/userinfo"><i class="fa fa-user"></i> 个人信息</a>
                   </li>
 
                   <li>
-                    <a href="#"><i class="fa fa-pencil"></i> 修改密码</a>
+                    <a href="http://localhost/public/index.php/frontend/Useropt/memberModifyPwd"><i class="fa fa-pencil"></i> 修改密码</a>
                   </li>
 
                   <li class="divider"></li>
 
                   <li>
-                    <a href="#"><i class="fa fa-power-off"></i> 登出</a>
+                    <a href="http://localhost/public/index.php/login/login/index"><i class="fa fa-power-off"></i> 登出</a>
                   </li>
                 </ul>
               </li>
@@ -195,7 +196,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="validation-elements.html">
+                        <a href="/public/index.php/frontend/common/introduce">
                           <i class="fa fa-caret-right"></i> 推荐结构
                         </a>
                       </li>
@@ -291,19 +292,24 @@
 
                   <!-- tile widget -->
                   <div class="tile-widget bg-transparent-white-2">
-                      <form class="form-horizontal" role="form">
                       <div class="form-group">
                         <label for="input01" class="col-sm-2 control-label">申请时间</label>
                         <div class="col-sm-2">
-                          <input type="text" class="form-control" id="input01">
+                          <input type="datetime-local" class="form-control" value="YYYY-MM-DDThh:mm:ss:s" id="applytime_start4">
                         </div>
                         <div class="col-sm-2">
-                          <input type="text" class="form-control" id="input01">
+                           <input type="datetime-local" class="form-control" value="YYYY-MM-DDThh:mm:ss:s" id="applytime_end4">
                         </div>
                       </div>
+                      	<div >
+                          <input type="datetime-local" class="form-control" value="YYYY-MM-DDThh:mm:ss:s" id="applytime_start">
+                        </div>
+                        <div>
+                           <input type="datetime-local" class="form-control" value="YYYY-MM-DDThh:mm:ss:s" id="applytime_end">
+                        </div>
                       <div class="form-group form-footer">
                         <div class="col-sm-10 text-center">
-                          <button type="submit" class="btn btn-primary">搜索</button>
+                          <button type="submit" class="btn btn-primary" id="btn_application_list">搜索</button>
                         </div>
                       </div>
                   </div>
@@ -322,7 +328,7 @@
                   <!-- tile body -->
                   <div class="tile-body no-vpadding">
                     
-                    <table class="table table-custom">
+                    <table class="table table-custom" id="applyList_table">
                       <thead>
                         <tr>
                           <th class="sort-numeric">序号</th>

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:93:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\common\network.html";i:1511791634;s:92:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\base\frontend.html";i:1511664072;s:20:"base/common/css.html";i:1511359924;s:19:"base/common/js.html";i:1511676215;s:36:"base/common/frontend/leftAndTop.html";i:1511359924;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:93:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\common\network.html";i:1511791634;s:92:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\base\frontend.html";i:1511664072;s:20:"base/common/css.html";i:1511359924;s:19:"base/common/js.html";i:1511676215;s:36:"base/common/frontend/leftAndTop.html";i:1520603076;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -154,17 +154,17 @@
                   <li class="divider"></li>
 
                   <li>
-                    <a href="#"><i class="fa fa-user"></i> 个人信息</a>
+                    <a href="http://localhost/public/index.php/frontend/Useropt/userinfo"><i class="fa fa-user"></i> 个人信息</a>
                   </li>
 
                   <li>
-                    <a href="#"><i class="fa fa-pencil"></i> 修改密码</a>
+                    <a href="http://localhost/public/index.php/frontend/Useropt/memberModifyPwd"><i class="fa fa-pencil"></i> 修改密码</a>
                   </li>
 
                   <li class="divider"></li>
 
                   <li>
-                    <a href="#"><i class="fa fa-power-off"></i> 登出</a>
+                    <a href="http://localhost/public/index.php/login/login/index"><i class="fa fa-power-off"></i> 登出</a>
                   </li>
                 </ul>
               </li>
@@ -206,11 +206,11 @@
                       </li>
                     </ul>
                   </li>
-                  <!-- <li>
+				  <li>
                     <a href="widgets.html">
-                      <i class="fa fa-play-circle"></i> 我的积分
+                      <i class="fa fa-account-create"></i> 创建账户
                     </a>
-                  </li> -->
+                  </li>
                 </ul>
               </li>
 

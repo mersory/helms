@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:87:"E:\Software\php\workspace\helms\helms\public/../application/login\view\login\index.html";i:1511359924;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:87:"E:\Software\php\workspace\helms\helms\public/../application/login\view\login\index.html";i:1520602932;}*/ ?>
 <html>
   <head>
     <title>HELMS</title>
@@ -52,8 +52,6 @@
               </section>
               <section class="log-in">
                 <button type="button" class="btn btn-greensea" id="login">登录</button>
-                <span>or</span>
-                <button type="button" class="btn btn-slategray" id="create">创建账户</button>
               </section>
             </form>
           </div>
