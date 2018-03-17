@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:92:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\common\index.html";i:1511877397;s:93:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\base\frontend.html";i:1511877397;s:20:"base/common/css.html";i:1505921314;s:19:"base/common/js.html";i:1511877397;s:36:"base/common/frontend/leftAndTop.html";i:1520658589;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:92:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\common\index.html";i:1521317948;s:93:"C:\Users\Administrator\git\helms\helms\public/../application/frontend\view\base\frontend.html";i:1511877397;s:20:"base/common/css.html";i:1505921314;s:19:"base/common/js.html";i:1511877397;s:36:"base/common/frontend/leftAndTop.html";i:1520658589;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -266,9 +266,9 @@
 
                   </div>
                   <div class="back">
-                    <a href="points">
+                    <a href="points?type=universal">
                       <!-- <i class="fa fa-bar-chart-o fa-4x"></i> -->
-                      <span>积分介绍</span>
+                      <span>积分明细</span>
                     </a>  
                   </div>
                 </div>
@@ -291,9 +291,9 @@
 
                   </div>
                   <div class="back">
-                    <a href="#">
+                    <a href="points?type=bonus">
                       <!-- <i class="fa fa-bar-chart-o fa-4x"></i> -->
-                      <span>积分介绍</span>
+                      <span>积分明细</span>
                     </a>
                   </div>
                 </div>
@@ -318,9 +318,9 @@
 
                   </div>
                   <div class="back">
-                    <a href="points">
+                    <a href="points?type=regist">
                       <!-- <i class="fa fa-bar-chart-o fa-4x"></i> -->
-                      <span>积分介绍</span>
+                      <span>积分明细</span>
                     </a>
                   </div>
                 </div>
@@ -344,63 +344,14 @@
 
                   </div>
                   <div class="back">
-                    <a href="#">
+                    <a href="point?type=consume">
                       <!-- <i class="fa fa-bar-chart-o fa-4x"></i> -->
-                      <span>积分介绍</span>
+                      <span>积分明细</span>
                     </a>
                   </div>
                 </div>
               </div>
               
-<!--               <div class="card-container col-lg-3 col-sm-6 col-sm-12">
-                <div class="card card-hotpink hover">
-                  <div class="front"> 
-
-                    <div class="media">
-                      <span class="pull-left">
-                        <i class="fa fa-usd media-object"></i>
-                      </span>
-
-                      <div class="media-body">
-                        <small>复投分</small>
-                        <h2 class="media-heading animate-number" data-value='<?php echo $pass_data["re_cast"]; ?>' data-animation-duration="10">0</h2>
-                      </div>
-                    </div>
-
-                  </div>
-                  <div class="back">
-                    <a href="#">
-                      <i class="fa fa-bar-chart-o fa-4x"></i>
-                      <span>积分介绍</span>
-                    </a>  
-                  </div>
-                </div>
-              </div> -->
-              
-              <div class="card-container col-lg-3 col-sm-6 col-sm-12">
-                <div class="card card-cyan hover">
-                  <div class="front"> 
-
-                    <div class="media">
-                      <span class="pull-left">
-                        <i class="fa fa-usd media-object"></i>
-                      </span>
-
-                      <div class="media-body">
-                        <small>共享分</small>
-                        <h2 class="media-heading animate-number" data-value='<?php echo $pass_data["shares"]; ?>' data-animation-duration="10">0</h2>
-                      </div>
-                    </div>
-
-                  </div>
-                  <div class="back">
-                    <a href="#">
-                      <!-- <i class="fa fa-bar-chart-o fa-4x"></i> -->
-                      <span>积分介绍</span>
-                    </a>  
-                  </div>
-                </div>
-              </div>
             </div>
 
  			<!-- row -->

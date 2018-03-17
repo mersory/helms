@@ -20,16 +20,33 @@ use app\common\model\Gp_onsale;
 use app\common\model\Gp_set;
 use app\common\model\Award_record;
 use app\common\model\Award_daytime;
+use think\Session;
 
 class Adminopt extends Controller
 {
     public function index()
     {
         echo "class Adminopt index";
-        $award = new Awardopt();
+        $strSRC="121-421-5-12";
+        $pos = strrpos($strSRC,'-');
+        $strSRC = substr($strSRC,0, $pos);
+        while ( $pos != false ){            
+            $pos = strrpos($strSRC,'-');
+            if($pos == false)
+                $tmp = $strSRC;
+            else
+                $tmp = substr($strSRC, $pos+1, strlen($strSRC));
+            $strSRC = substr($strSRC,0, $pos); 
+            echo $tmp;
+        }
+        
+        //$position  = new Positionality();
+        //$position->updateGanenInfo(21);
+        //$position->PositionInsertPrev("H5579859714",5);
+        /*$award = new Awardopt();
         $award->index();
         $userpoint = new User_point();
-        $userpoint->pointTransfor("H2568023600", 1, 2, 100);
+        $userpoint->pointTransfor("H2568023600", 1, 2, 100);*/
         //$award->tree2ds_tongji("1-2-3-4", 0);
         //$award->tree2ds_x_tongji("1-2-3-6-7", 0);
         //$userdetails = new User_details();
@@ -809,13 +826,18 @@ class Adminopt extends Controller
 	}
 	
 	//获取当前用户$userId的推荐结构
-	public function pointTransforRes($user_id, $point_type, $point_change_type, $point_change_sum)
+	public function pointTransforRes($point_type, $point_change_type, $point_change_sum, $minor_password)
     {
+        $_session_user = Session::get(USER_SEESION);
+        $_userid = $_session_user["userId"];
+        $userinfo = new User_info();
+        $_res = $userinfo->UserinfoCheckMinor($_userid, $minor_password);
+        
 	    $userpoint = new User_point();
     	//$res = $userpoint->pointTransfor("H2568023600", 1, 2, 100);
-    	$res = $userpoint->pointTransfor($user_id, $point_type, $point_change_type, $point_change_sum);
+    	$res = $userpoint->pointTransfor($_userid, $point_type, $point_change_type, $point_change_sum);
     	$_resdata = array();
-    	$_resdata["info"] = $res;
+    	$_resdata["success"] = $res;
 
 	    return json_encode($_resdata);
 	

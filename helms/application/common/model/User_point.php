@@ -52,7 +52,7 @@ class User_point extends Model
     }
     
     public function PointInsert($user_id, $shares=0, $bonus_point=0, $regist_point=0, $re_consume=0, 
-                                $universal_point=0, $re_cast=0, $remain_point=0, $blocked_point=0)
+                                $universal_point=0, $re_cast=0, $remain_point=0, $blocked_point=0, $shengyu_jing=0, $shengyu_dong=0)
     {
         $_pointinfo = array();
         if ($user_id >=0)
@@ -100,6 +100,16 @@ class User_point extends Model
             $_pointinfo["blocked_point"] = $blocked_point;
         }
             
+        if ($shengyu_jing>=0)
+        {
+            $_pointinfo["shengyu_jing"] = $shengyu_jing;
+        }
+        
+        if ($shengyu_dong>=0)
+        {
+            $_pointinfo["shengyu_dong"] = $shengyu_dong;
+        }
+        
         $this->startTrans();
         $state = $this->save($_pointinfo);
         if ($state)
@@ -133,13 +143,21 @@ class User_point extends Model
            {
                $_pointinfo[$pointtype[$point_type]] = $_res[$pointtype[$point_type]] - $point_change_sum;
                $_pointinfo[$pointtype[$point_change_type]] = $_res[$pointtype[$point_change_type]] + $point_change_sum;
+               var_dump($_pointinfo);
                $state = $this-> where("ID='$user_id'")
                ->setField($_pointinfo);
+               var_dump("state:");
+               var_dump($state);
                $point_transfor = new Point_transform_record();
                $point_transfor->PointTransformInsert($user_id, $pointtype[$point_type], $pointtype[$point_change_type], $point_change_sum);
            }
         }
         return true;
+    }
+    
+    public function activeUserOpt($user_id, $level, $regist_money, $activator)
+    {
+        
     }
     
     public function PointUpdate($user_id, $shares=-1, $bonus_point=-1, $regist_point=-1, $re_consume=-1, 

@@ -1,5 +1,6 @@
 $(function(){
 	$('#regist').on("click",function(){
+		var id = $("#fullname").val();
 		var username = $("#fullname").val();
 		var email = $("#email").val();
 		var telphone = $("#telphone").val();
@@ -39,7 +40,7 @@ $(function(){
 			return false;
 		}
 		var url =  "/public/index.php/frontend/Useropt/UserRegist";
-		$.post(url,{name:username, email:email, telphone:telphone, recommender:recommender, activator:activator, pwd1:primarypwd, pwd2:minorpwd, $userlevel:1},function(result){
+		$.post(url,{ID:id, name:username, email:email, telphone:telphone, recommender:recommender, activator:activator, pwd1:primarypwd, pwd2:minorpwd, $userlevel:1},function(result){
 			result = JSON.parse(result);
 			if(result.success){
 				alert("regist success,goto login");

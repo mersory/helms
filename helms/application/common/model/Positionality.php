@@ -14,9 +14,9 @@ class Positionality extends Model
     public function PositionQuery($user_id)//查看当前用户的网络结构
     {
         $_where = '';
-        if ($user_id > 0)
+        if (strcmp($user_id, ""))
         {
-            $_where = "user_id = $user_id";
+            $_where = "user_id = '$user_id'";
         }
         $_position_info = $this->where($_where)
         ->select();
@@ -69,7 +69,6 @@ class Positionality extends Model
         {
             $_where = "ID = $user_id";
         }
-        echo $_where;
         $this->startTrans();
         $state = $this
         ->where($_where)
@@ -77,12 +76,10 @@ class Positionality extends Model
         if ($state)
         {
             $this->commit();
-            var_dump("commit");
         }
         else
         {
             $this->rollback();
-            var_dump("rollback");
         }
         return $state;
     }
@@ -118,12 +115,55 @@ class Positionality extends Model
     //通过这个函数就可以完全更新新加节点的相应的感恩信息
     public function updateGanenInfo($ID)
     {
-        var_dump("Positionnality.php : updateGanenInfo");
         $node = $this->PositionQueryByID($ID);//node是当前新加的子节点
         $directParent = $node[0]["parent"];
         $json= $node[0]["json"];
         $preNodeID = 0;
         //本轮for循环，查找节点的ganenid和ganennextid 或者 是 ganenid和ganennextrid
+        
+        //本段代码是正确的，目前还没测试，暂时不替换
+        $strSRC=$json;
+        $pos = strrpos($strSRC,'-');
+        $strSRC = substr($strSRC,0, $pos);
+        while ( $pos != false )
+        {
+            if($pos == strrpos($json,'-') )
+            {
+                $preNodeID = $directParent;
+            }
+            
+            $pos = strrpos($strSRC,'-');
+            if($pos == false)
+                $tmp = $strSRC;
+            else
+                $tmp = substr($strSRC, $pos+1, strlen($strSRC));
+                
+            $strSRC = substr($strSRC,0, $pos);
+             
+            $curNode = $this->PositionQueryByID($tmp);
+            if($curNode[0]["rightchild"] != 0 )
+            {
+                if($curNode[0]["leftchild"] == $preNodeID)
+                {
+                    $this->updateGanenNextId($curNode[0]["ID"], $preNodeID);
+                    $this->updateGanenId($preNodeID, $curNode[0]["ID"]);
+                }
+                else if($curNode[0]["rightchild"] == $preNodeID)
+                {
+                    $this->updateGanenNextRId($curNode[0]["ID"], $preNodeID);
+                    $this->updateGanenId($preNodeID, $curNode[0]["ID"]);
+                }
+                break;
+            }
+            else
+            {
+                $i--;
+                $preNodeID = $curNode[0]["parent"];
+            }
+           
+            
+        }
+        /*
         for($i=strlen($json)-3; $i>-1; $i--)
         {
             if($i == strlen($json)-3 )
@@ -150,25 +190,25 @@ class Positionality extends Model
                 $i--;
                 $preNodeID = $curNode[0]["parent"];
             }
-        }
+        }*/
+        
         //下面的逻辑更新当前节点的所有后续子节点中第一个存在右孩子的节点
         $childid = $this->PositionQueryByID($directParent);
         $childid = $this->PositionQueryByID($childid[0]["leftchild"]);
+       
         while($childid[0]["rightchild"] == 0 && $childid[0]["leftchild"]!=0)
         {
+
             $childid = $this->PositionQueryByID($childid[0]["leftchild"]);
             if(count($childid) == 0)
             {
-                var_dump("no data");
                 return 0;
             }
                
         }
         //左右孩子都存在
         if($childid[0]["leftchild"]!=0 && $childid[0]["rightchild"] != 0)
-        {
-            var_dump("found");
-            var_dump($childid[0]["ID"]);
+        {        
             $res = $this->updateGanenId($childid[0]["ID"], $directParent);
             if(!$res)
                 return 0;
@@ -323,6 +363,7 @@ class Positionality extends Model
         return $_res;
     }
     
+    //查看是否包含当前ID的json，即是否存在子节点，如果存在则返回相应的json，否则返回空
     public function PositionQueryByJson($str)//查看当前用户的网络结构
     {
         $_where = '';
@@ -331,7 +372,6 @@ class Positionality extends Model
            // $_where = "locate('$str', json) > 0";
             $_where = "json like '%$str%'";
         }
-        echo $_where;
         $_position_info = $this->where($_where)
         ->select();
         $count = count($_position_info);
@@ -339,7 +379,6 @@ class Positionality extends Model
         {
             return ;
         }
-        var_dump($_position_info[0]["json"]);
         return $_position_info[0]["json"];
     }
     
@@ -350,65 +389,86 @@ class Positionality extends Model
         {
             $_where = "ID = $ID";
         }
-        echo $_where;
         $this->startTrans();
         $state = $this->where($_where)->delete();
         if ($state)
         {
             $this->commit();
-            var_dump("commit");
         }
         else
         {
             $this->rollback();
-            var_dump("rollback");
         }
         return $state;
     }
     
-    public function PositionInsertPrev($parent)
+    public function PositionInsertPrev($user_id, $parent)
     {
         $_positioninfo = array();
+        $res_return =false;
         if ($parent > 0)
         {
             $_positioninfo["parent"] = $parent;
         }
-        $_res = $this->PositionQuery($parent);
+        $_res = $this->PositionQueryByID($parent);
         if (count($_res) == 1)
         {
             $_json = $_res[0]["json"];
             $_curjson = $this->PositionQueryByJson($parent);
-            $_left=0;
-            if(!strcmp($_curjson, ""))
+            $_right=1;
+            if(!strcmp($_curjson, ""))//当前parent不存在孩子节点
             {
                 $_json = "$_json-$parent";//如果当前不存在，则通过字符串拼接形参新的路径
-                $_left = 1;
+                $_right = 0;
             }
             else 
+            {
                 $_json  = $_curjson;
+            }
+            
+            $res_return = $this->PositionInsert($user_id, $_json, $parent, $_right);
+            if($res_return)
+            {
+                $data = array();
+                $newID = $this->PositionQuery($user_id)[0]["ID"];
+                if($_right == 0)
+                {
+                    $data["leftchild"] = $newID;
+                }
+                else 
+                {
+                    $data["rightchild"] = $newID;
+                }
+                
+                $res_return = $this-> where("ID=$parent")
+                                   ->setField($data);
+            }
+            else
+            {
+                return false;
+            }
         }
-        return $this->PositionInsert(100048, $_json, $parent, $_left);
+        if($_right == 1)
+        {
+            $ID = $this->PositionQuery($user_id);
+            $ID = $ID[0]["ID"];
+            $this->updateGanenInfo($ID);
+        }
+            
+        return $res_return;
     }
     
     public function PositionInsert($user_id, $json, $parent, $leftchild)
     {
         $_positioninfo = array();
-        if ($user_id > 0)
-        {
-            $_positioninfo["user_id"] = $user_id;
-        }
-        if ($json > 0)
-        {
-            $_positioninfo["json"] = $json;
-        }
-        if ($parent > 0)
-        {
-            $_positioninfo["parent"] = $parent;
-        }
-        if ($parent > 0)
-        {
-            $_positioninfo["leftchild"] = $leftchild;
-        }
+        $_positioninfo["user_id"] = $user_id;
+
+        $_positioninfo["json"] = $json;
+
+        $_positioninfo["parent"] = $parent;
+
+        $_positioninfo["treeplace"] = $leftchild;
+      
         $this->startTrans();
         $state = $this->save($_positioninfo);
         if ($state)

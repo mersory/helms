@@ -39,6 +39,35 @@ class User_info extends Model
             return $_user_info;
     }
     
+    public function UserinfoCheckMinor($name, $pwd)
+    {
+        $_where = '';
+        if (!strcmp("$name", "") || !strcmp("$pwd", ""))
+        {
+            var_dump("username and password could not be null");
+            return;
+        }
+        else
+        {
+            $_where = "ID = '$name'";
+            $_where = "$_where and minor_pwd = '$pwd'";
+        }
+         
+        // var_dump(urlencode($_SERVER['REQUEST_URI']));
+        $_user_info = $this->where($_where)
+        ->limit(4)
+        ->order('ID asc')
+        ->select();
+        $count = count($_user_info);
+        if ($count != 1)
+        {
+            var_dump("username or password is not correct");
+            return ;
+        }
+        else
+            return $_user_info;
+    }
+    
     public function isUserExist($id)
     {
         $_where = "ID = '$id'";

@@ -563,10 +563,8 @@ class Common extends Basecontroller
                         for($i=0; $i<count($_recommand); $i++)
                         {
                             $tmp_ID[$tm_count+$i]=$_recommand[$i]["ID"];
-                          
                         }
                     }
-                    
                 }
                 $index = $index+1;
                 $tmp[$_res1[0]["ID"]]["children"]=$_recommand;
