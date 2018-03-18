@@ -90,12 +90,12 @@ class Point_transform_record extends Model
         if ($state)
         {
             $this->commit();
-            var_dump("pointtransform insert commit");
+            
         }
         else
         {
             $this->rollback();
-            var_dump("pointtransform insert rollback");
+            
         }
         return $state;
     }

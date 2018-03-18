@@ -143,21 +143,15 @@ class User_point extends Model
            {
                $_pointinfo[$pointtype[$point_type]] = $_res[$pointtype[$point_type]] - $point_change_sum;
                $_pointinfo[$pointtype[$point_change_type]] = $_res[$pointtype[$point_change_type]] + $point_change_sum;
-               var_dump($_pointinfo);
+               
                $state = $this-> where("ID='$user_id'")
                ->setField($_pointinfo);
-               var_dump("state:");
-               var_dump($state);
+
                $point_transfor = new Point_transform_record();
                $point_transfor->PointTransformInsert($user_id, $pointtype[$point_type], $pointtype[$point_change_type], $point_change_sum);
            }
         }
         return true;
-    }
-    
-    public function activeUserOpt($user_id, $level, $regist_money, $activator)
-    {
-        
     }
     
     public function PointUpdate($user_id, $shares=-1, $bonus_point=-1, $regist_point=-1, $re_consume=-1, 

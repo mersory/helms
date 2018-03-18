@@ -27,7 +27,8 @@ class Adminopt extends Controller
     public function index()
     {
         echo "class Adminopt index";
-        $strSRC="121-421-5-12";
+       
+        /*$strSRC="121-421-5-12";
         $pos = strrpos($strSRC,'-');
         $strSRC = substr($strSRC,0, $pos);
         while ( $pos != false ){            
@@ -38,7 +39,7 @@ class Adminopt extends Controller
                 $tmp = substr($strSRC, $pos+1, strlen($strSRC));
             $strSRC = substr($strSRC,0, $pos); 
             echo $tmp;
-        }
+        }*/
         
         //$position  = new Positionality();
         //$position->updateGanenInfo(21);
@@ -841,6 +842,26 @@ class Adminopt extends Controller
 
 	    return json_encode($_resdata);
 	
+	}
+	
+	public function activeUserOpt($user_id, $level, $regist_money, $minor_pwd)
+	{
+	    $_session_user = Session::get(USER_SEESION);
+	    $_userid = $_session_user["userId"];
+
+	    $position = new Positionality();
+	    $active = new User_info();
+	    
+	    $res = $active->UserActivate($user_id, $_userid, $minor_pwd, $level, $regist_money);
+	    if($res)
+	    {
+	        $posinfo = $position->PositionQuery($user_id);
+	        $ID = $posinfo[0]["ID"];
+	        $posinfo = $position->PositionQuery($_userid);
+	        $openid = $posinfo[0]["ID"];
+	        $res=$position->updateStatus($ID, $level, $openid, date("Y-m-d H:i:s"));
+	    }
+
 	}
 	
 	////****************************************华丽分割线**************************************************
