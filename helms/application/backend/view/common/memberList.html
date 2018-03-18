@@ -1,111 +1,115 @@
-        {extend name="base/backend"}
+ {extend name="base/backend"} {block name="js"}
+<script type="text/javascript" src="_JS_/common/admin/userlist.js"></script>
+{/block} {block name="css"} {/block} {block name="content"}
+<!-- Page content -->
+<div id="content" class="col-md-12">
+	<!-- page header -->
+	<div class="pageheader">
+		<h2>
+			<i class="fa fa-tachometer"></i> 会员信息<span></span>
+		</h2>
+		<div class="breadcrumbs">
+			<ol class="breadcrumb">
+				<li><a href="index.html">HERMS</a></li>
+				<li class="active">会员信息</li>
+			</ol>
+		</div>
+	</div>
+	<!-- /page header -->
 
-{block name="js"}
- <script type="text/javascript" src="_JS_/common/admin/userlist.js"></script>
-{/block}
+	<!-- content main container -->
+	<div class="main">
+		<div class="row">
+			<div class="col-md-10">
+				<section class="tile color transparent-white">
 
-{block name="css"}
-
-{/block}
-
-{block name="content"}
-        <!-- Page content -->
-        <div id="content" class="col-md-12">
-          <!-- page header -->
-          <div class="pageheader">
-            <h2><i class="fa fa-tachometer"></i> 会员信息<span></span></h2>
-            <div class="breadcrumbs">
-              <ol class="breadcrumb">
-                <li><a href="index.html">HERMS</a></li>
-                <li class="active">会员信息</li>
-              </ol>
-            </div>
-          </div>
-          <!-- /page header -->
-
-          <!-- content main container -->
-          <div class="main">
-          	<div class="row">
-                <div class="col-md-10">
-                 <section class="tile color transparent-white">
-
-                  <!-- tile widget -->
-                  <div class="tile-widget bg-transparent-white-2">
-                      
-                      <div class="form-group">
-                        <label for="input01" class="col-sm-3 control-label">会员ID</label>
-                        <div class="col-sm-3">
-                          <input type="text" class="form-control" id="userid">
-                        </div>
-                        <label for="input01" class="col-sm-3 control-label">会员名</label>
-                        <div class="col-sm-3">
-                          <input type="text" class="form-control" id="username">
-                        </div>
-                        <label for="input01" class="col-sm-3 control-label">手机</label>
-                        <div class="col-sm-3">
-                          <input type="text" class="form-control" id="telphone">
-                        </div>
-                        <label for="input01" class="col-sm-3 control-label">邮箱</label>
-                        <div class="col-sm-3">
-                          <input type="text" class="form-control" id="email">
-                        </div>
-                        <label for="input01" class="col-sm-3 control-label">注册时间</label>
-                        <div class="col-sm-3">
-                          <input type="text" class="form-control"  id="fromtime">
-                        </div>
-                        <div class="col-sm-3">
-                          <input type="text" class="form-control"  id="totime">
-                        </div>
-                      </div>
-                  </div>
-                  <div class="tile-widget" >
-                  		<button type="button" class="btn btn-primary" id="btn_user_list">搜索</button>
-                  </div>
-                  
-                  <!-- tile widget -->
-
-                  <!-- tile header -->
-                  <div class="tile-header">
-                    <h1><strong>会员信息</strong></h1>
-                    <div class="controls">
-                      <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
-                      <a href="#" class="remove"><i class="fa fa-times"></i></a>
-                    </div>
-                  </div>
-                  <!-- /tile header -->
-
-                  <!-- tile body -->
-                  <div class="tile-body no-vpadding">
-				  <table class="table table-custom" id="userList_table">
-					<thead>
-						<tr>
-						  <th style="width: 40px;">
-							<div class="checkbox check-transparent">
-							  <input type="checkbox" id="allchck">
-							  <label for="allchck2"></label>
+					<div class="title-body" style="height: 100px;">
+						<div class="form-group">
+							<label for="input01" class="col-sm-3 control-label">会员ID</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" id="userid">
 							</div>
-						  </th>
-						  <th class="sort-asc">会员ID</th>
-						  <th class="sort-numeric">会员名</th>
-						  <th class="sort-amount">手机号</th>
-						  <th class="sort-amount">邮箱</th>
-						  <th class="sort-amount">会员等级</th>
-						  <th class="sort-amount">注册时间</th>
-						  <td class="text-center"><a href="#" class="check-toggler checked"></a></td>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				  </table>
-                  </div>
-                  <!-- /tile body -->
+						</div>
+						<div class="form-group">
+							<label for="input01" class="col-sm-3 control-label">真实姓名</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" id="username">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="input01" class="col-sm-3 control-label">手机</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" id="telphone">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="input01" class="col-sm-3 control-label">邮箱</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" id="email">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="input01" class="col-sm-3 control-label">开通时间</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" id="fromtime">
+							</div>
+							
+							<div class="col-sm-3">
+								<input type="text" class="form-control" id="totime">
+							</div>
+						</div>
+					</div>
+					<div class="tile-widget">
+						<button type="button" class="btn btn-primary" id="btn_user_list">搜索</button>
+					</div>
+
+					<!-- tile widget -->
+					<div class="tile-widget bg-transparent-white-2">
+
+						<!-- tile header -->
+						<div class="tile-header">
+							<h1>
+								<strong>会员信息</strong>
+							</h1>
+						</div>
+						<!-- /tile header -->
+
+						<!-- tile body -->
+						<div class="tile-body no-vpadding">
+							<table class="table table-custom" id="userList_table">
+								<thead>
+									<tr>
+										<th style="width: 40px;">
+											<div class="checkbox check-transparent">
+												<input type="checkbox" id="allchck"> <label
+													for="allchck2"></label>
+											</div>
+										</th>
+										<th class="sort-asc">会员ID</th>
+										<th class="sort-numeric">真实姓名</th>
+										<th class="sort-amount">手机号</th>
+										<th class="sort-amount">邮箱</th>
+										<th class="sort-amount">会员等级</th>
+										<th class="sort-amount">推荐人ID</th>
+										<th class="sort-amount">开通人ID</th>
+										<th class="sort-amount">注册时间</th>
+										<td class="text-center"><a href="#"
+											class="check-toggler checked"></a></td>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+						<!-- /tile body -->
 
 
-                  <!-- tile footer -->
-                  <div class="tile-footer bg-transparent-white-2 rounded-bottom-corners">
-                    <div class="row">  
-                      
-                      <div class="col-sm-4">
+						<!-- tile footer -->
+						<div
+							class="tile-footer bg-transparent-white-2 rounded-bottom-corners">
+							<div class="row">
+
+								<!-- <div class="col-sm-4">
                         <small class="inline table-options paging-info">showing 1-3 of 24 items</small>
                       </div>
 
@@ -119,263 +123,309 @@
                           <li><a href="#">5</a></li>
                           <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
                         </ul>
-                      </div>
+                      </div> -->
 
-                    </div>
-                  </div>
+							</div>
+						</div>
+				</section>
+			</div>
+		</div>
+	</div>
+	<!-- /content container -->
 
-                </section>
-              </div>
-            </div>
-          </div>
-          <!-- /content container -->
-
-        </div>
-        <!-- Page content end -->
-
-
-    <script>
-    $(function(){
-
-      // Initialize card flip
-      $('.card.hover').hover(function(){
-        $(this).addClass('flip');
-      },function(){
-        $(this).removeClass('flip');
-      });
-
-      // Initialize flot chart
-      var d1 =[ [1, 1.0],
-            [2, 1.1],
-            [3, 1.3],
-            [4, 2.0],
-            [5, 1.2],
-            [6, 1.4],
-            [7, 1.5]
-      ];
-
-      var days = ["03.02", "03.03", "03.04", "03.05", "03.06", "03.07", "03.08"];
-
-      // 股价趋势
-      var plot = $.plotAnimator($("#statistics-chart"), 
-        [
-          {
-            label: 'Sales', 
-            data: d1,    
-            lines: {lineWidth:3}, 
-            shadowSize:0,
-            color: '#ffffff'
-          },
-          {
-            label: 'Sales',
-            data: d1, 
-            points: { show: true, fill: true, radius:6,fillColor:"rgba(0,0,0,.5)",lineWidth:2 }, 
-            color: '#fff',        
-            shadowSize:0
-          }
-        ],{ 
-        
-        xaxis: {
-
-          tickLength: 0,
-          tickDecimals: 0,
-          min:1,
-          ticks: [[1,"03.02"], [2, "03.03"], [3, "03.04"], [4, "03.05"], [5, "03.06"], [6, "03.07"], [7, "03.08"]],
-
-          font :{
-            lineHeight: 24,
-            weight: "300",
-            color: "#ffffff",
-            size: 14
-          }
-        },
-        
-        yaxis: {
-          ticks: 4,
-          tickDecimals: 0,
-          tickColor: "rgba(255,255,255,.3)",
-
-          font :{
-            lineHeight: 13,
-            weight: "300",
-            color: "#ffffff"
-          }
-        },
-        
-        grid: {
-          borderWidth: {
-            top: 0,
-            right: 0,
-            bottom: 1,
-            left: 1
-          },
-          borderColor: 'rgba(255,255,255,.3)',
-          margin:0,
-          minBorderMargin:0,              
-          labelMargin:20,
-          hoverable: true,
-          clickable: true,
-          mouseActiveRadius:6
-        },
-        
-        legend: { show: false}
-      });
-
-      $(window).resize(function() {
-        // redraw the graph in the correctly sized div
-        plot.resize();
-        plot.setupGrid();
-        plot.draw();
-      });
-
-      $('#mmenu').on(
-        "opened.mm",
-        function()
-        {
-          // redraw the graph in the correctly sized div
-          plot.resize();
-          plot.setupGrid();
-          plot.draw();
-        }
-      );
-
-      $('#mmenu').on(
-        "closed.mm",
-        function()
-        {
-          // redraw the graph in the correctly sized div
-          plot.resize();
-          plot.setupGrid();
-          plot.draw();
-        }
-      );
-
-      // tooltips showing
-      $("#statistics-chart").bind("plothover", function (event, pos, item) {
-        if (item) {
-          var x = item.datapoint[0],
-              y = item.datapoint[1];
-
-          $("#tooltip").html('<h1 style="color: #418bca">' + days[x - 1] + '</h1>' + '<strong>' + y + '</strong>' + ' ' + item.series.label)
-            .css({top: item.pageY-30, left: item.pageX+5})
-            .fadeIn(200);
-        } else {
-          $("#tooltip").hide();
-        }
-      });
-
-      
-      //tooltips options
-      $("<div id='tooltip'></div>").css({
-        position: "absolute",
-        //display: "none",
-        padding: "10px 20px",
-        "background-color": "#ffffff",
-        "z-index":"99999"
-      }).appendTo("body");
-
-      //generate actual pie charts
-      $('.pie-chart').easyPieChart();
+</div>
+<!-- Page content end -->
 
 
-      //server load rickshaw chart
-      var graph;
+<script>
+	$(function() {
 
-      var seriesData = [ [], []];
-      var random = new Rickshaw.Fixtures.RandomData(50);
+		// Initialize card flip
+		$('.card.hover').hover(function() {
+			$(this).addClass('flip');
+		}, function() {
+			$(this).removeClass('flip');
+		});
 
-      for (var i = 0; i < 50; i++) {
-        random.addData(seriesData);
-      }
+		// Initialize flot chart
+		var d1 = [ [ 1, 1.0 ], [ 2, 1.1 ], [ 3, 1.3 ], [ 4, 2.0 ], [ 5, 1.2 ],
+				[ 6, 1.4 ], [ 7, 1.5 ] ];
 
-      graph = new Rickshaw.Graph( {
-        element: document.querySelector("#serverload-chart"),
-        height: 150,
-        renderer: 'area',
-        series: [
-          {
-            data: seriesData[0],
-            color: '#6e6e6e',
-            name:'File Server'
-          },{
-            data: seriesData[1],
-            color: '#fff',
-            name:'Mail Server'
-          }
-        ]
-      } );
+		var days = [ "03.02", "03.03", "03.04", "03.05", "03.06", "03.07",
+				"03.08" ];
 
-      var hoverDetail = new Rickshaw.Graph.HoverDetail( {
-        graph: graph,
-      });
+		// 股价趋势
+		var plot = $.plotAnimator($("#statistics-chart"), [ {
+			label : 'Sales',
+			data : d1,
+			lines : {
+				lineWidth : 3
+			},
+			shadowSize : 0,
+			color : '#ffffff'
+		}, {
+			label : 'Sales',
+			data : d1,
+			points : {
+				show : true,
+				fill : true,
+				radius : 6,
+				fillColor : "rgba(0,0,0,.5)",
+				lineWidth : 2
+			},
+			color : '#fff',
+			shadowSize : 0
+		} ], {
 
-      setInterval( function() {
-        random.removeData(seriesData);
-        random.addData(seriesData);
-        graph.update();
+			xaxis : {
 
-      },1000);
+				tickLength : 0,
+				tickDecimals : 0,
+				min : 1,
+				ticks : [ [ 1, "03.02" ], [ 2, "03.03" ], [ 3, "03.04" ],
+						[ 4, "03.05" ], [ 5, "03.06" ], [ 6, "03.07" ],
+						[ 7, "03.08" ] ],
 
-      // Morris donut chart
-      Morris.Donut({
-        element: 'browser-usage',
-        data: [
-          {label: "Chrome", value: 25},
-          {label: "Safari", value: 20},
-          {label: "Firefox", value: 15},
-          {label: "Opera", value: 5},
-          {label: "Internet Explorer", value: 10},
-          {label: "Other", value: 25}
-        ],
-        colors: ['#00a3d8', '#2fbbe8', '#72cae7', '#d9544f', '#ffc100', '#1693A5']
-      });
+				font : {
+					lineHeight : 24,
+					weight : "300",
+					color : "#ffffff",
+					size : 14
+				}
+			},
 
-      $('#browser-usage').find("path[stroke='#ffffff']").attr('stroke', 'rgba(0,0,0,0)');
+			yaxis : {
+				ticks : 4,
+				tickDecimals : 0,
+				tickColor : "rgba(255,255,255,.3)",
 
-      //sparkline charts
-      $('#projectbar1').sparkline('html', {type: 'bar', barColor: '#22beef', barWidth: 4, height: 20});
-      $('#projectbar2').sparkline('html', {type: 'bar', barColor: '#cd97eb', barWidth: 4, height: 20});
-      $('#projectbar3').sparkline('html', {type: 'bar', barColor: '#a2d200', barWidth: 4, height: 20});
-      $('#projectbar4').sparkline('html', {type: 'bar', barColor: '#ffc100', barWidth: 4, height: 20});
-      $('#projectbar5').sparkline('html', {type: 'bar', barColor: '#ff4a43', barWidth: 4, height: 20});
-      $('#projectbar6').sparkline('html', {type: 'bar', barColor: '#a2d200', barWidth: 4, height: 20});
+				font : {
+					lineHeight : 13,
+					weight : "300",
+					color : "#ffffff"
+				}
+			},
 
-      // sortable table
-      $('.table.table-sortable th.sortable').click(function() {
-        var o = $(this).hasClass('sort-asc') ? 'sort-desc' : 'sort-asc';
-        $('th.sortable').removeClass('sort-asc').removeClass('sort-desc');
-        $(this).addClass(o);
-      });
+			grid : {
+				borderWidth : {
+					top : 0,
+					right : 0,
+					bottom : 1,
+					left : 1
+				},
+				borderColor : 'rgba(255,255,255,.3)',
+				margin : 0,
+				minBorderMargin : 0,
+				labelMargin : 20,
+				hoverable : true,
+				clickable : true,
+				mouseActiveRadius : 6
+			},
 
-      //todo's
-      $('#todolist li label').click(function() {
-        $(this).toggleClass('done');
-      });
+			legend : {
+				show : false
+			}
+		});
 
-      // Initialize tabDrop
-      $('.tabdrop').tabdrop({text: '<i class="fa fa-th-list"></i>'});
+		$(window).resize(function() {
+			// redraw the graph in the correctly sized div
+			plot.resize();
+			plot.setupGrid();
+			plot.draw();
+		});
 
-      //load wysiwyg editor
-      $('#quick-message-content').summernote({
-        toolbar: [
-          //['style', ['style']], // no style button
-          ['style', ['bold', 'italic', 'underline', 'clear']],
-          ['fontsize', ['fontsize']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['height', ['height']],
-          //['insert', ['picture', 'link']], // no insert buttons
-          //['table', ['table']], // no table button
-          //['help', ['help']] //no help button
-        ],
-        height: 143   //set editable area's height
-      });
+		$('#mmenu').on("opened.mm", function() {
+			// redraw the graph in the correctly sized div
+			plot.resize();
+			plot.setupGrid();
+			plot.draw();
+		});
 
-      //multiselect input
-      $(".chosen-select").chosen({disable_search_threshold: 10});
-      
-    })
-      
-    </script>
-      
+		$('#mmenu').on("closed.mm", function() {
+			// redraw the graph in the correctly sized div
+			plot.resize();
+			plot.setupGrid();
+			plot.draw();
+		});
+
+		// tooltips showing
+		$("#statistics-chart").bind(
+				"plothover",
+				function(event, pos, item) {
+					if (item) {
+						var x = item.datapoint[0], y = item.datapoint[1];
+
+						$("#tooltip")
+								.html(
+										'<h1 style="color: #418bca">'
+												+ days[x - 1] + '</h1>'
+												+ '<strong>' + y + '</strong>'
+												+ ' ' + item.series.label).css(
+										{
+											top : item.pageY - 30,
+											left : item.pageX + 5
+										}).fadeIn(200);
+					} else {
+						$("#tooltip").hide();
+					}
+				});
+
+		//tooltips options
+		$("<div id='tooltip'></div>").css({
+			position : "absolute",
+			//display: "none",
+			padding : "10px 20px",
+			"background-color" : "#ffffff",
+			"z-index" : "99999"
+		}).appendTo("body");
+
+		//generate actual pie charts
+		$('.pie-chart').easyPieChart();
+
+		//server load rickshaw chart
+		var graph;
+
+		var seriesData = [ [], [] ];
+		var random = new Rickshaw.Fixtures.RandomData(50);
+
+		for (var i = 0; i < 50; i++) {
+			random.addData(seriesData);
+		}
+
+		graph = new Rickshaw.Graph({
+			element : document.querySelector("#serverload-chart"),
+			height : 150,
+			renderer : 'area',
+			series : [ {
+				data : seriesData[0],
+				color : '#6e6e6e',
+				name : 'File Server'
+			}, {
+				data : seriesData[1],
+				color : '#fff',
+				name : 'Mail Server'
+			} ]
+		});
+
+		var hoverDetail = new Rickshaw.Graph.HoverDetail({
+			graph : graph,
+		});
+
+		setInterval(function() {
+			random.removeData(seriesData);
+			random.addData(seriesData);
+			graph.update();
+
+		}, 1000);
+
+		// Morris donut chart
+		Morris.Donut({
+			element : 'browser-usage',
+			data : [ {
+				label : "Chrome",
+				value : 25
+			}, {
+				label : "Safari",
+				value : 20
+			}, {
+				label : "Firefox",
+				value : 15
+			}, {
+				label : "Opera",
+				value : 5
+			}, {
+				label : "Internet Explorer",
+				value : 10
+			}, {
+				label : "Other",
+				value : 25
+			} ],
+			colors : [ '#00a3d8', '#2fbbe8', '#72cae7', '#d9544f', '#ffc100',
+					'#1693A5' ]
+		});
+
+		$('#browser-usage').find("path[stroke='#ffffff']").attr('stroke',
+				'rgba(0,0,0,0)');
+
+		//sparkline charts
+		$('#projectbar1').sparkline('html', {
+			type : 'bar',
+			barColor : '#22beef',
+			barWidth : 4,
+			height : 20
+		});
+		$('#projectbar2').sparkline('html', {
+			type : 'bar',
+			barColor : '#cd97eb',
+			barWidth : 4,
+			height : 20
+		});
+		$('#projectbar3').sparkline('html', {
+			type : 'bar',
+			barColor : '#a2d200',
+			barWidth : 4,
+			height : 20
+		});
+		$('#projectbar4').sparkline('html', {
+			type : 'bar',
+			barColor : '#ffc100',
+			barWidth : 4,
+			height : 20
+		});
+		$('#projectbar5').sparkline('html', {
+			type : 'bar',
+			barColor : '#ff4a43',
+			barWidth : 4,
+			height : 20
+		});
+		$('#projectbar6').sparkline('html', {
+			type : 'bar',
+			barColor : '#a2d200',
+			barWidth : 4,
+			height : 20
+		});
+
+		// sortable table
+		$('.table.table-sortable th.sortable').click(function() {
+			var o = $(this).hasClass('sort-asc') ? 'sort-desc' : 'sort-asc';
+			$('th.sortable').removeClass('sort-asc').removeClass('sort-desc');
+			$(this).addClass(o);
+		});
+
+		//todo's
+		$('#todolist li label').click(function() {
+			$(this).toggleClass('done');
+		});
+
+		// Initialize tabDrop
+		$('.tabdrop').tabdrop({
+			text : '<i class="fa fa-th-list"></i>'
+		});
+
+		//load wysiwyg editor
+		$('#quick-message-content').summernote(
+				{
+					toolbar : [
+					//['style', ['style']], // no style button
+					[ 'style', [ 'bold', 'italic', 'underline', 'clear' ] ],
+							[ 'fontsize', [ 'fontsize' ] ],
+							[ 'color', [ 'color' ] ],
+							[ 'para', [ 'ul', 'ol', 'paragraph' ] ],
+							[ 'height', [ 'height' ] ],
+					//['insert', ['picture', 'link']], // no insert buttons
+					//['table', ['table']], // no table button
+					//['help', ['help']] //no help button
+					],
+					height : 143
+				//set editable area's height
+				});
+
+		//multiselect input
+		$(".chosen-select").chosen({
+			disable_search_threshold : 10
+		});
+
+	})
+</script>
+
 {/block}

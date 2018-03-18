@@ -1,4 +1,26 @@
 $(function(){
+	$('#withdraw_start').datetimepicker({
+		format:"yyyy-mm-dd",
+		weekStart: 1,
+		todayBtn: 1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+		showMeridian: 1
+		});
+	
+	$('#withdraw_end').datetimepicker({
+		format:"yyyy-mm-dd",
+		weekStart: 1,
+		todayBtn: 1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+		showMeridian: 1
+		});
+	
 	$('#withdraw_application').on("click",function(){
 		clear_table();
 		alert("调用提现方法");
