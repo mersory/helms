@@ -4,6 +4,10 @@ $(function(){
 		var points_type = $("#points_type").val();
 		var transfer_amount = $("#transfer_amount").val();
 		var minor_password = $("#minor_password").val();
+		if(points_type == "universal")
+			points_type = 4;
+		else if(points_type == "bonus")
+			points_type = 2;
 		
 		if("" == $.trim(transfer_amount)){
 			alert("转换金额不能为空");

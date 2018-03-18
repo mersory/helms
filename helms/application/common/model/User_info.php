@@ -153,51 +153,46 @@ class User_info extends Model
         return $state;
     }
     
-    public function UserActivate($ID, $name, $pwd, $cost)//$ID�Ǳ�������ID������������Ϊ��������Ϣ
+    public function UserActivate($ID, $name, $minor_pwd, $level, $cost)//用户开通，激活
     {
-        $_res = $this->UserinfoQuery($name, $pwd);
-        //var_dump($_res);
+        $_res = $this->UserinfoCheckMinor($name, $minor_pwd);
         $_id = $_res[0]->getData("ID");
-        echo "ID:";
-        echo $_id;
-        echo "<br/>";
-        $_res = $this
-        ->table('Userinfo U, Userpoint P')
-        ->where("U.ID=P.ID and U.ID = $_id and P.regist_point > $cost")
-        ->field('U.ID,U.username,U.user_status,P.regist_point')//�����fieldһ��Ҫ�������forѭ����getDataһ��
-        ->select();
-        var_dump($_res[0]);
+        var_dump($_id);
+        $_res = $this->table('helms_user_info U, helms_user_point P')
+                    ->where("U.ID=P.ID and U.ID = '$_id' and P.regist_point > $cost")
+                    ->field('U.ID,U.username,U.user_status,P.regist_point')//
+                    ->select();
+        $_point_down = false;
+        $_activate = false;
         if (count($_res) == 1)
         {
             $_point = $_res[0]->getData("regist_point") - $cost;
             $_point_data = array();
             $_point_data["regist_point"] = $_point;
-            var_dump($_point_data);
-            echo "<br/>";
-            echo $_id;
-            $this->startTrans();
+            var_dump("point:");
+            var_dump($_point);
+            var_dump("ID:");
+            var_dump($_id);
+            
             $_point_info = new User_point();
-            $_point_down = $_point_info->where("ID=$_id")
+            $_point_down = $_point_info->where("ID='$_id'")
                            ->setField($_point_data);
             $_detail = array();
-            $_detail["activator"] = $_id;
+            $_detail["kaitongID"] = $_id;
+            $_detail["open_time"] =  date("Y-m-d H:i:s");
+            $_detail["user_level"] = $level;
+            $_detail["pay_gujia"] = $level;
+            $_detail["recommandlevel"] = 1;
+            $_detail["re_nums"] = 1;
+            $_detail["repath"] = 1;
+            $_detail["repath_ds"] = 1;
             $_detail_info = new User_details();
-            $_detail_info = $_detail_info->where("ID=$ID")
+            $_detail_info = $_detail_info->where("ID='$ID'")
                                        ->setField($_detail);
             $_status_info = array();
             $_status_info["user_status"] = 1; 
-            $_activate = $this->where("ID=$ID")
+            $_activate = $this->where("ID='$ID'")
                               ->setField($_status_info);
-            if ($_point_down && $_activate)
-            {
-                $this->commit();
-                var_dump("activate commit");
-            }
-            else 
-            {
-                $this->rollback();
-                var_dump("activate roll back");
-            }
         }
         return $_point_down && $_activate;
     }

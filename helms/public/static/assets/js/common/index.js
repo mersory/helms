@@ -180,7 +180,7 @@ $(function() {
 	$("#apply-btn").on("click",function(){
 		var points = $('#input03').val();
 		if($.trim(points) != ""){
-			alert("提示信息！");  
+			alert("提示信息！");
 			alert(points);
 		}
 	})
