@@ -1,7 +1,7 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:87:"E:\Software\php\workspace\helms\helms\public/../application/login\view\login\index.html";i:1520602932;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:87:"E:\Software\php\workspace\helms\helms\public/../application/login\view\login\index.html";i:1521316965;}*/ ?>
 <html>
   <head>
-    <title>HELMS</title>
+    <title>HERMS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8" />
 
@@ -28,7 +28,7 @@
 
           <div class="inside-block">
             <img src="_IMG_/logo-big.png" alt class="logo">
-            <h1>HELMS</h1>
+            <h1>HERMS</h1>
             <h5></h5>
 
             <form id="form-signin" class="form-signin">
