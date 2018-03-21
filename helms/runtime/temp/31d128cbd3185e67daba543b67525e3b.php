@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:102:"E:\Software\php\workspace\helms\helms\public/../application/backend\view\common\memberapplication.html";i:1511359924;s:90:"E:\Software\php\workspace\helms\helms\public/../application/backend\view\base\backend.html";i:1511359924;s:20:"base/common/css.html";i:1511359924;s:19:"base/common/js.html";i:1511676215;s:35:"base/common/backend/leftAndTop.html";i:1512005489;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:102:"E:\Software\php\workspace\helms\helms\public/../application/backend\view\common\memberapplication.html";i:1521411922;s:90:"E:\Software\php\workspace\helms\helms\public/../application/backend\view\base\backend.html";i:1521316965;s:20:"base/common/css.html";i:1521411207;s:19:"base/common/js.html";i:1521411088;s:35:"base/common/backend/leftAndTop.html";i:1521409860;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>HELMS - <block name="title">标题</block></title>
+    <title>HERMS - <block name="title">标题</block></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8" />
 	 	<link rel="icon" type="image/ico" href="http://tattek.com/minimal/assets/images/favicon.ico" />
@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="_JS_/vendor/summernote/css/summernote-bs3.css">
     <link rel="stylesheet" href="_JS_/vendor/chosen/css/chosen.min.css">
     <link rel="stylesheet" href="_JS_/vendor/chosen/css/chosen-bootstrap.css">
+    <link rel="stylesheet" href=" _JS_/vendor/datepicker/css/bootstrap-datetimepicker.css">
 
     <link href="_CSS_/minimal.css" rel="stylesheet">
     <link href="_CSS_/main.css" rel="stylesheet">
@@ -69,6 +70,9 @@
 <script src="_JS_/minimal.min.js"></script>
 <script src="_JS_/common/main.js"></script>
 
+<script src="_JS_/vendor/datepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="_JS_/vendor/datepicker/bootstrap-datetimepicker.zh-CN.js"></script>
+
 <script type="text/javascript">
 	root = "__ROOT__";
 </script>
@@ -97,7 +101,7 @@
           <!-- Branding -->
           <div class="navbar-header col-md-2">
             <a class="navbar-brand" href="index.html">
-              <strong>HELMS</strong>
+              <strong>HERMS</strong>
             </a>
             <div class="sidebar-collapse">
               <a href="#">
@@ -150,17 +154,17 @@
                   <li class="divider"></li>
 
                   <li>
-                    <a href="http://localhost/public/index.php/frontend/Useropt/userinfo"><i class="fa fa-user"></i> 个人信息</a>
+                    <a href="/public/index.php/frontend/Useropt/userinfo"><i class="fa fa-user"></i> 个人信息</a>
                   </li>
 
                   <li>
-                    <a href="http://localhost/public/index.php/frontend/Useropt/memberModifyPwd"><i class="fa fa-pencil"></i> 修改密码</a>
+                    <a href="/public/index.php/frontend/Useropt/memberModifyPwd"><i class="fa fa-pencil"></i> 修改密码</a>
                   </li>
 
                   <li class="divider"></li>
 
                   <li>
-                    <a href="http://localhost/public/index.php/login/login/index"><i class="fa fa-power-off"></i> 登出</a>
+                    <a href="/public/index.php/login/login/index"><i class="fa fa-power-off"></i> 登出</a>
                   </li>
                 </ul>
               </li>
@@ -185,23 +189,6 @@
                       <span class="badge badge-red">1</span>
                     </a>
                   </li>
-<!--                   <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-list"></i>我的团队 <b class="fa fa-plus dropdown-plus"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a href="/public/index.php/frontend/common/network">
-                          <i class="fa fa-caret-right"></i> 网络结构
-                        </a>
-                      </li>
-                      <li>
-                        <a href="/public/index.php/frontend/common/introduce">
-                          <i class="fa fa-caret-right"></i> 推荐结构
-                        </a>
-                      </li>
-                    </ul>
-                  </li> -->
                   <li>
                     <a href="memberList">
                       <i class="fa fa-play-circle"></i> 会员列表
@@ -277,7 +264,7 @@
             <h2><i class="fa fa-tachometer"></i> 会员申请<span></span></h2>
             <div class="breadcrumbs">
               <ol class="breadcrumb">
-                <li><a href="index.html">HELMS</a></li>
+                <li><a href="index.html">HERMS</a></li>
                 <li class="active">会员申请</li>
               </ol>
             </div>
@@ -291,30 +278,24 @@
                  <section class="tile color transparent-white">
 
                   <!-- tile widget -->
-                  <div class="tile-widget bg-transparent-white-2">
+				<div class="title-body" style="height: 35px;">
                       <div class="form-group">
                         <label for="input01" class="col-sm-2 control-label">申请时间</label>
                         <div class="col-sm-2">
-                          <input type="datetime-local" class="form-control" value="YYYY-MM-DDThh:mm:ss:s" id="applytime_start4">
+                          <input type="datetime-local" class="form-control"  id="applytime_start">
                         </div>
                         <div class="col-sm-2">
-                           <input type="datetime-local" class="form-control" value="YYYY-MM-DDThh:mm:ss:s" id="applytime_end4">
-                        </div>
-                      </div>
-                      	<div >
-                          <input type="datetime-local" class="form-control" value="YYYY-MM-DDThh:mm:ss:s" id="applytime_start">
-                        </div>
-                        <div>
-                           <input type="datetime-local" class="form-control" value="YYYY-MM-DDThh:mm:ss:s" id="applytime_end">
-                        </div>
-                      <div class="form-group form-footer">
-                        <div class="col-sm-10 text-center">
-                          <button type="submit" class="btn btn-primary" id="btn_application_list">搜索</button>
+                           <input type="datetime-local" class="form-control"  id="applytime_end">
                         </div>
                       </div>
                   </div>
+                  
+                 <div class="tile-widget">
+					<button type="button" class="btn btn-primary" id="btn_application_list">搜索</button>
+				</div>
                   <!-- tile widget -->
 
+				<div class="tile-widget bg-transparent-white-2">
                   <!-- tile header -->
                   <div class="tile-header">
                     <h1><strong>会员申请</strong></h1>
@@ -356,12 +337,11 @@
                   </div>
                   <!-- /tile body -->
 
-
                   <!-- tile footer -->
                   <div class="tile-footer bg-transparent-white-2 rounded-bottom-corners">
                     <div class="row">  
                       
-                      <div class="col-sm-4">
+                      <!-- <div class="col-sm-4">
                         <small class="inline table-options paging-info">showing 1-3 of 24 items</small>
                       </div>
 
@@ -375,10 +355,11 @@
                           <li><a href="#">5</a></li>
                           <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
                         </ul>
-                      </div>
+                      </div> -->
 
                     </div>
                   </div>
+				</div>
 
                 </section>
               </div>

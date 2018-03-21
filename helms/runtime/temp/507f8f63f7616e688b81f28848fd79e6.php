@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:91:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\common\index.html";i:1521310253;s:92:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\base\frontend.html";i:1511664072;s:20:"base/common/css.html";i:1511359924;s:19:"base/common/js.html";i:1511676215;s:36:"base/common/frontend/leftAndTop.html";i:1521301056;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:91:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\common\index.html";i:1521316965;s:92:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\base\frontend.html";i:1521316965;s:20:"base/common/css.html";i:1511359924;s:19:"base/common/js.html";i:1511676215;s:36:"base/common/frontend/leftAndTop.html";i:1521316832;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>HELMS - <block name="title">标题</block></title>
+    <title>HERMS - <block name="title">标题</block></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8" />
 	 	<link rel="icon" type="image/ico" href="http://tattek.com/minimal/assets/images/favicon.ico" />
@@ -98,7 +98,7 @@
           <!-- Branding -->
           <div class="navbar-header col-md-2">
             <a class="navbar-brand" href="index.html">
-              <strong>HELMS</strong>
+              <strong>HERMS</strong>
             </a>
             <div class="sidebar-collapse">
               <a href="#">
@@ -204,7 +204,7 @@
                     </ul>
                   </li>
 				  <li>
-                    <a href="network.html">
+                    <a href="/public/index.php/frontend/common/network">
                       <i class="fa fa-account-create"></i> 创建账户
                     </a>
                   </li>
@@ -213,14 +213,31 @@
 
               <li class="summary" id="order-summary">
                 <a href="#" class="sidebar-toggle underline" data-toggle="#order-summary">当前股价<i class="fa fa-angle-up"></i></a>
-
                 <div class="media">
                   <div class="media-body">
                     <br>
                     <h3 class="media-heading">1.50</h3>
                   </div>
                 </div>
-              </li>            
+              </li>      
+              <li class="summary" id="order-summary">
+                <a href="#" class="sidebar-toggle underline" data-toggle="#order-summary">股额<i class="fa fa-angle-up"></i></a>
+                <div class="media">
+                  <div class="media-body">
+                    <br>
+                    <h3 class="media-heading">3000</h3>
+                  </div>
+                </div>
+              </li>   
+              <li class="summary" id="order-summary">
+                <a href="#" class="sidebar-toggle underline" data-toggle="#order-summary">股数<i class="fa fa-angle-up"></i></a>
+                <div class="media">
+                  <div class="media-body">
+                    <br>
+                    <h3 class="media-heading">200</h3>
+                  </div>
+                </div>
+              </li>         
             </ul>
             <!-- Sidebar end -->
           </div>
@@ -237,7 +254,7 @@
             <h2><i class="fa fa-tachometer"></i> 个人主页<span></span></h2>
             <div class="breadcrumbs">
               <ol class="breadcrumb">
-                <li><a href="index.html">HELMS</a></li>
+                <li><a href="index.html">HERMS</a></li>
                 <li class="active">主页</li>
               </ol>
             </div>
@@ -413,7 +430,7 @@
 				  	<ul class="news-title">
   					  <li><a class="text-muted">aaaaaaa.</a></li>
   					  <li><a class="text-muted">bbbbbbbbbbbb.</a></li>
-  					  <li><a href="/public/index.php/frontend/common/news"  class="text-muted">HELMS系统开始上线.</a></li>
+  					  <li><a href="/public/index.php/frontend/common/news"  class="text-muted">HERMS系统开始上线.</a></li>
 					</ul>
 
                   </div>

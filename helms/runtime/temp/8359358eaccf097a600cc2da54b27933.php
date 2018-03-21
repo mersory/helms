@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:91:"E:\Software\php\workspace\helms\helms\public/../application/backend\view\common\notice.html";i:1505522029;s:90:"E:\Software\php\workspace\helms\helms\public/../application/backend\view\base\backend.html";i:1505490420;s:20:"base/common/css.html";i:1505486330;s:19:"base/common/js.html";i:1505514190;s:35:"base/common/backend/leftAndTop.html";i:1505521416;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:91:"E:\Software\php\workspace\helms\helms\public/../application/backend\view\common\notice.html";i:1511359924;s:90:"E:\Software\php\workspace\helms\helms\public/../application/backend\view\base\backend.html";i:1521316965;s:20:"base/common/css.html";i:1521411207;s:19:"base/common/js.html";i:1521411088;s:35:"base/common/backend/leftAndTop.html";i:1521409860;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>HELMS - <block name="title">标题</block></title>
+    <title>HERMS - <block name="title">标题</block></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8" />
 	 	<link rel="icon" type="image/ico" href="http://tattek.com/minimal/assets/images/favicon.ico" />
@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="_JS_/vendor/summernote/css/summernote-bs3.css">
     <link rel="stylesheet" href="_JS_/vendor/chosen/css/chosen.min.css">
     <link rel="stylesheet" href="_JS_/vendor/chosen/css/chosen-bootstrap.css">
+    <link rel="stylesheet" href=" _JS_/vendor/datepicker/css/bootstrap-datetimepicker.css">
 
     <link href="_CSS_/minimal.css" rel="stylesheet">
     <link href="_CSS_/main.css" rel="stylesheet">
@@ -29,49 +30,52 @@
     
     
 
-	    <script src="_JS_/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
+	
+<script src="_JS_/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
+<script type="text/javascript"
+	src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
 
-    <script src="_JS_/vendor/flot/jquery.flot.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.time.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.selection.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.animator.min.js"></script>
-    <script src="_JS_/vendor/flot/jquery.flot.orderBars.js"></script>
-    <script src="_JS_/vendor/easypiechart/jquery.easypiechart.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.time.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.selection.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.animator.min.js"></script>
+<script src="_JS_/vendor/flot/jquery.flot.orderBars.js"></script>
+<script src="_JS_/vendor/easypiechart/jquery.easypiechart.min.js"></script>
 
-    <script src="_JS_/vendor/rickshaw/raphael-min.js"></script> 
-    <script src="_JS_/vendor/rickshaw/d3.v2.js"></script>
-    <script src="_JS_/vendor/rickshaw/rickshaw.min.js"></script>
+<script src="_JS_/vendor/rickshaw/raphael-min.js"></script>
+<script src="_JS_/vendor/rickshaw/d3.v2.js"></script>
+<script src="_JS_/vendor/rickshaw/rickshaw.min.js"></script>
 
-    <script src="_JS_/vendor/morris/morris.min.js"></script>
+<script src="_JS_/vendor/morris/morris.min.js"></script>
 
-    <script src="_JS_/vendor/tabdrop/bootstrap-tabdrop.min.js"></script>
+<script src="_JS_/vendor/tabdrop/bootstrap-tabdrop.min.js"></script>
 
-    <script src="_JS_/vendor/summernote/summernote.min.js"></script>
+<script src="_JS_/vendor/summernote/summernote.min.js"></script>
 
-    <script src="_JS_/vendor/chosen/chosen.jquery.min.js"></script>
+<script src="_JS_/vendor/chosen/chosen.jquery.min.js"></script>
+<script src="_JS_/vendor/parsley/parsley.min.js"></script>
+<script src="_JS_/vendor/wizard/jquery.bootstrap.wizard.min.js"></script>
+<script src="_JS_/minimal.min.js"></script>
+<script src="_JS_/common/main.js"></script>
 
-    <script src="_JS_/minimal.min.js"></script>
-    
-    <section class="videocontent" id="video"></section>
+<script src="_JS_/vendor/datepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="_JS_/vendor/datepicker/bootstrap-datetimepicker.zh-CN.js"></script>
 
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="_JS_/vendor/bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/mmenu/js/jquery.mmenu.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/sparkline/jquery.sparkline.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/nicescroll/jquery.nicescroll.min.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/animate-numbers/jquery.animateNumbers.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/videobackground/jquery.videobackground.js"></script>
-    <script type="text/javascript" src="_JS_/vendor/blockui/jquery.blockUI.js"></script>
-
-
+<script type="text/javascript">
+	root = "__ROOT__";
+</script>
 	
 	<!-- custom css -->
 	
@@ -96,7 +100,7 @@
           <!-- Branding -->
           <div class="navbar-header col-md-2">
             <a class="navbar-brand" href="index.html">
-              <strong>HELMS</strong>
+              <strong>HERMS</strong>
             </a>
             <div class="sidebar-collapse">
               <a href="#">
@@ -149,17 +153,17 @@
                   <li class="divider"></li>
 
                   <li>
-                    <a href="#"><i class="fa fa-user"></i> 个人信息</a>
+                    <a href="/public/index.php/frontend/Useropt/userinfo"><i class="fa fa-user"></i> 个人信息</a>
                   </li>
 
                   <li>
-                    <a href="#"><i class="fa fa-pencil"></i> 修改密码</a>
+                    <a href="/public/index.php/frontend/Useropt/memberModifyPwd"><i class="fa fa-pencil"></i> 修改密码</a>
                   </li>
 
                   <li class="divider"></li>
 
                   <li>
-                    <a href="#"><i class="fa fa-power-off"></i> 登出</a>
+                    <a href="/public/index.php/login/login/index"><i class="fa fa-power-off"></i> 登出</a>
                   </li>
                 </ul>
               </li>
@@ -184,23 +188,6 @@
                       <span class="badge badge-red">1</span>
                     </a>
                   </li>
-<!--                   <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-list"></i>我的团队 <b class="fa fa-plus dropdown-plus"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a href="/public/index.php/frontend/common/network">
-                          <i class="fa fa-caret-right"></i> 网络结构
-                        </a>
-                      </li>
-                      <li>
-                        <a href="validation-elements.html">
-                          <i class="fa fa-caret-right"></i> 推荐结构
-                        </a>
-                      </li>
-                    </ul>
-                  </li> -->
                   <li>
                     <a href="memberList">
                       <i class="fa fa-play-circle"></i> 会员列表

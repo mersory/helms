@@ -1,4 +1,27 @@
 $(function(){
+	//时间插件
+	$('#income_expense_start').datetimepicker({
+		format:"yyyy-mm-dd",
+		weekStart: 1,
+		todayBtn: 1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+		showMeridian: 1
+		});
+	
+	$('#income_expense_end').datetimepicker({
+		format:"yyyy-mm-dd",
+		weekStart: 1,
+		todayBtn: 1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+		showMeridian: 1
+		});
+	
 	$('#btn_income_expend').on("click",function(){
 		clear_table()
 		alert("调用方法");
