@@ -1,7 +1,32 @@
 $(function(){
+	//时间插件
+	$('#fromtime').datetimepicker({
+		format:"yyyy-mm-dd",
+		weekStart: 1,
+		todayBtn: 1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+		showMeridian: 1
+		});
+	
+	$('#totime').datetimepicker({
+		format:"yyyy-mm-dd",
+		weekStart: 1,
+		todayBtn: 1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+		showMeridian: 1
+		});
+	
+	
+	
 	$('#btn_user_list').on("click",function(){
 		clear_table()
-		alert("调用方法");
+		//alert("调用方法");
 		var useridInput=$('#userid').val();
 		var usernameInput=$('#username').val();
 		var telphoneInput=$('#telphone').val();
@@ -10,20 +35,20 @@ $(function(){
 		var totimeInput=$('#totime').val();
 		if (validate() == true)
 		{
-			alert("valid");
+			//alert("valid");
 			var url = "/public/index.php/backend/common/SearchUserInfo";
 			$.post(url, {_userid:useridInput, _username:usernameInput, _telphone:telphoneInput, _email:emailInput, _fromtime:fromtimeInput, _totime:totimeInput}, function(msg){
 			msg=JSON.parse(msg);
 			if(msg.info == 'ok')
 			{
-			  alert('登录成功，正在转向后台主页！');
-			  for (var res_index=0;res_index<msg.res.length;res_index++)
+			  //alert('登录成功，正在转向后台主页！');
+			  for (var res_index=0; res_index<msg.res.length; res_index++)
 			  {
 				  addCol(res_index, msg.res[res_index].ID, msg.res[res_index].username, msg.res[res_index].telphone, msg.res[res_index].email, msg.res[res_index].user_level, msg.res[res_index].open_time);//查询成功，增加行和列
 			  }
 			  //window.location.href = "UserLogin.html";
 			} else {
-			  alert("登录失败");
+			  alert("查询失败");
 			  return false;
 			}
 			})
