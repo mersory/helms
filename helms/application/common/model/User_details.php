@@ -32,7 +32,7 @@ class User_details extends Model
         $_where = '';
         if ($id != -1)
         {
-            $_where = "AUTO_ID = $id";
+            $_where = "AUTO_ID = '$id'";
         }
         $_details_info = $this->where($_where)
         ->select();
@@ -105,7 +105,7 @@ class User_details extends Model
         if ($state)
         {
             $this->commit();
-            var_dump("commit");
+            var_dump("User_details.php increasRePathDS commit".__LINE__);
         }
         else
         {

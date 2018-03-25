@@ -121,8 +121,6 @@ class Positionality extends Model
         $json= $node[0]["json"];
         $preNodeID = 0;
         //本轮for循环，查找节点的ganenid和ganennextid 或者 是 ganenid和ganennextrid
-        
-        //本段代码是正确的，目前还没测试，暂时不替换
         $strSRC=$json;
         $pos = strrpos($strSRC,'-');
         $strSRC = substr($strSRC,0, $pos);
@@ -158,40 +156,10 @@ class Positionality extends Model
             }
             else
             {
-                $i--;
+                //$i--;
                 $preNodeID = $curNode[0]["parent"];
-            }
-           
-            
+            }  
         }
-        /*
-        for($i=strlen($json)-3; $i>-1; $i--)
-        {
-            if($i == strlen($json)-3 )
-            {
-                $preNodeID = $directParent;
-            }
-            $curNode = $this->PositionQueryByID($json[$i]);
-            if($curNode[0]["rightchild"] != 0 )
-            {          
-                if($curNode[0]["leftchild"] == $preNodeID)
-                {
-                    $this->updateGanenNextId($curNode[0]["ID"], $preNodeID);
-                    $this->updateGanenId($preNodeID, $curNode[0]["ID"]);
-                }
-                else if($curNode[0]["rightchild"] == $preNodeID)
-                {
-                    $this->updateGanenNextRId($curNode[0]["ID"], $preNodeID);
-                    $this->updateGanenId($preNodeID, $curNode[0]["ID"]);
-                }
-                break;
-            }
-            else 
-            {
-                $i--;
-                $preNodeID = $curNode[0]["parent"];
-            }
-        }*/
         
         //下面的逻辑更新当前节点的所有后续子节点中第一个存在右孩子的节点
         $childid = $this->PositionQueryByID($directParent);
@@ -503,7 +471,7 @@ class Positionality extends Model
         return $state;
     }
     
-    public function updateGushu($ID, $gushu=-1, $bz5=-1, $cf_count = -1)
+    public function updateGushu($ID, $gushu=-1, $bz5=-1, $cf_count = 0)
     {
         $_cureent = $this->PositionQueryByID($ID);
         if(count($_cureent) < 1)
@@ -521,6 +489,8 @@ class Positionality extends Model
             var_dump("Positionality.php the data is complete same".__LINE__);
             return 1;
         }
+        else 
+            var_dump("Positionality.php: not the same".__LINE__);
         $_positioninfo = array();
         if ($gushu > 0)
         {
@@ -536,9 +506,10 @@ class Positionality extends Model
         {
             $_positioninfo["cf_count"] = $cf_count;
         }
+        var_dump($_positioninfo);
         
         $state = $this-> where("ID=$ID")
-        ->setField($_positioninfo);
+                      ->setField($_positioninfo);
         return $state;
     }
     
