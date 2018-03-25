@@ -15,7 +15,7 @@ class Withdrawal_record extends Model
         $_where = '';
         if ($user_id != -1)
         {
-            $_where = "user_id = $user_id";
+            $_where = "user_id = '$user_id'";
         }
         $_withdrawal_info = $this->where($_where)
         ->select();
@@ -33,7 +33,7 @@ class Withdrawal_record extends Model
         $_where = '';
         if (strcmp("$user_id", ""))
         {
-            $_where = "user_id = $user_id";
+            $_where = "user_id = '$user_id'";
         }
         else 
         {
@@ -66,7 +66,7 @@ class Withdrawal_record extends Model
         $_where = '';
         if ($user_id != -1)
         {
-            $_where = "user_id = $user_id";
+            $_where = "user_id = '$user_id'";
         }
         echo $_where;
         $this->startTrans();

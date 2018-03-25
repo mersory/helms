@@ -15,7 +15,7 @@ class Gp_onsale extends Model
         $_where = '';
         if (strcmp("$id", ""))
         {
-            $_where = "ID = '$id'";
+            $_where = "AUTO_ID = '$id'";
         }
         $_award_info = $this->where($_where)
         ->select();
@@ -40,7 +40,7 @@ class Gp_onsale extends Model
         $count = count($_award_info);
         if ($count < 1)
         {
-            var_dump("status :$status not exsist");
+            var_dump("GponsaleQueryByStatus :$status not exsist");
             return ;
         }
         return $_award_info[0];
@@ -103,6 +103,19 @@ class Gp_onsale extends Model
     
     public function GponsaleUpdate($id=1, $sprice=-1, $snums=-1, $ok_nums=-1, $get_money=-1, $status=-1, $sy_nums=-1)
     {
+        $_cur = $this->GponsaleQuery($id);
+        if(count($_cur))
+        {
+            var_dump("Gp_onsale.php None ,line".__LINE__);
+            return -1;
+        }
+            
+        $_cur = $_cur[0];
+        if($sprice==$_cur["sprice"] && $snums==$_cur["snums"] && $ok_nums==$_cur["ok_nums"] && $get_money==$_cur["get_money"] && $status==$_cur["status"] && $sy_nums==$_cur["sy_nums"])
+        {
+            var_dump("Gp_onsale.php data is same,line".__LINE__);
+            return 1;
+        }
         $_detailsinfo = array();
     
         if ($sprice >=0)

@@ -33,7 +33,7 @@ class Point_transform_record extends Model
         $_where = '';
         if (strcmp("$_id", ""))
         {
-            $_where = "user_id = $_id";
+            $_where = "user_id = '$_id'";
         }
         else 
         {

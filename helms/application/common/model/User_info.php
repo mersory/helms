@@ -162,6 +162,9 @@ class User_info extends Model
                     ->where("U.ID=P.ID and U.ID = '$_id' and P.regist_point > $cost")
                     ->field('U.ID,U.username,U.user_status,P.regist_point')//
                     ->select();
+        $_gp = new Gp_set();
+        $_gpres = $_gp->GpSetQuery();
+        $now_gujia = $_gpres[0]["now_price"];
         $_point_down = false;
         $_activate = false;
         if (count($_res) == 1)
@@ -169,31 +172,51 @@ class User_info extends Model
             $_point = $_res[0]->getData("regist_point") - $cost;
             $_point_data = array();
             $_point_data["regist_point"] = $_point;
+
             var_dump("point:");
             var_dump($_point);
             var_dump("ID:");
             var_dump($_id);
-            
+            //更新帮助注册用户的注册分，消耗，减少
             $_point_info = new User_point();
             $_point_down = $_point_info->where("ID='$_id'")
                            ->setField($_point_data);
+            
+           //初始化新建用户的分数--这段可以去掉
+           $_point_data2 = array();
+           $_point_data2["regist_point"] = 5000;
+           $_point_data2["bonus_point"] = 5100;
+           $_point_data2["re_consume"] = 5200;
+           $_point_data2["universal_point"] = 5300;
+           $_point_data2["shengyu_jing"] = 3500;
+           $_point_data2["shengyu_dong"] = 5000;
+           $_point_down2 = $_point_info->where("ID='$ID'")
+           ->setField($_point_data2);
+                           
+                           
             $_detail = array();
             $_detail["kaitongID"] = $_id;
             $_detail["open_time"] =  date("Y-m-d H:i:s");
             $_detail["user_level"] = $level;
-            $_detail["pay_gujia"] = $level;
+            $_detail["pay_gujia"] = $now_gujia;
             $_detail["recommandlevel"] = 1;
             $_detail["re_nums"] = 1;
-            $_detail["repath"] = 1;
-            $_detail["repath_ds"] = 1;
+            $_detail["repath"] = 2;
+            $_detail["repath_ds"] = 2;
             $_detail_info = new User_details();
-            $_detail_info = $_detail_info->where("ID='$ID'")
+            $_detail_info_res = $_detail_info->where("ID='$ID'")
                                        ->setField($_detail);
+            var_dump("details info");
+            var_dump($_detail_info_res);
             $_status_info = array();
             $_status_info["user_status"] = 1; 
             $_activate = $this->where("ID='$ID'")
                               ->setField($_status_info);
+            var_dump("action res");
+            var_dump($_activate);
         }
+        
+        var_dump($_status_info);
         return $_point_down && $_activate;
     }
 
@@ -229,7 +252,6 @@ class User_info extends Model
         {
             $_where = "$_where and details.open_time < '$_totime'";
         }
-        
         if (strcmp("$_where", ""))
         {
             $res = $this->table('helms_user_info info, helms_user_details details')
@@ -242,12 +264,13 @@ class User_info extends Model
             ->where("info.ID=details.ID")
             ->select();
         }
-        if(count($res) == 1)
+        if(count($res) > 0)
             return $res;
         else 
             return;
     }
     
+    //获取申请注册的用户列表，仅仅列出申请了但是还未激活通过
     public function UserApplication($_start, $_end)
     {
         $_where = '';

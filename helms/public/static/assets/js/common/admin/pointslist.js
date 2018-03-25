@@ -1,18 +1,18 @@
 $(function(){
 	$('#btn_point_details').on("click",function(){
 		clear_table()
-		alert("调用方法");
 		var useridInput=$('#userid').val();
 		if (validate() == true)
 		{
-			alert("valid");
 			var url = "/public/index.php/backend/common/pointDetailsQuery";
 			$.post(url, {_user_id:useridInput}, function(msg){
 			msg=JSON.parse(msg);
 			if(msg.info == 'ok')
 			{
-			  alert('登录成功，正在转向后台主页！');
-			  addCol(msg.res[0].ID, msg.res[0].shares, msg.res[0].bonus_point, msg.res[0].regist_point, msg.res[0].re_consume, msg.res[0].universal_point, msg.res[0].re_cast, msg.res[0].remain_point, msg.res[0].blocked_point);//查询成功，增加行和列
+			  for (var res_index=0;res_index<msg.res.length;res_index++)
+			  {
+				  addCol(msg.res[res_index].ID, msg.res[res_index].shares, msg.res[res_index].bonus_point, msg.res[res_index].regist_point, msg.res[res_index].re_consume, msg.res[res_index].universal_point, msg.res[res_index].re_cast, msg.res[res_index].remain_point, msg.res[res_index].blocked_point);//查询成功，增加行和列
+			  }
 			  //window.location.href = "UserLogin.html";
 			} else {
 			  alert("登录失败");

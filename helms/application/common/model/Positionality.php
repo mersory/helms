@@ -52,6 +52,7 @@ class Positionality extends Model
         }
         $_position_info = $this->where($_where)
         ->select();
+        var_dump("where".$_where);
         $count = count($_position_info);
         if ($count < 1)
         {
@@ -67,7 +68,7 @@ class Positionality extends Model
         $_where = '';
         if ($user_id != -1)
         {
-            $_where = "ID = $user_id";
+            $_where = "ID = '$user_id'";
         }
         $this->startTrans();
         $state = $this
@@ -246,6 +247,10 @@ class Positionality extends Model
 
     public function updateStatus($ID, $status, $openid, $fenh_time)
     {
+        var_dump("updateStatus");
+        var_dump($ID);
+        var_dump($openid);
+        var_dump($fenh_time);
         $userstatus = array();
         $userstatus["status"] = $status;
         $userstatus["openid"] = $openid;
@@ -418,7 +423,10 @@ class Positionality extends Model
             $_right=1;
             if(!strcmp($_curjson, ""))//当前parent不存在孩子节点
             {
-                $_json = "$_json-$parent";//如果当前不存在，则通过字符串拼接形参新的路径
+                if(strcmp($_json,"")==0)
+                    $_json = "$parent";
+                else 
+                    $_json = "$_json-$parent";//如果当前不存在，则通过字符串拼接形参新的路径
                 $_right = 0;
             }
             else 
@@ -497,6 +505,22 @@ class Positionality extends Model
     
     public function updateGushu($ID, $gushu=-1, $bz5=-1, $cf_count = -1)
     {
+        $_cureent = $this->PositionQueryByID($ID);
+        if(count($_cureent) < 1)
+        {
+            var_dump("None data".__LINE__);
+            return -1;
+        }
+        
+        $_cureent = $_cureent[0];
+        var_dump("gushu:".$gushu);
+        var_dump("bz5:".$bz5);
+        var_dump("cf_count:".$cf_count);
+        if($gushu==$_cureent["gushu"] && $bz5==$_cureent["bz5"] && $cf_count==$_cureent["cf_count"])
+        {
+            var_dump("Positionality.php the data is complete same".__LINE__);
+            return 1;
+        }
         $_positioninfo = array();
         if ($gushu > 0)
         {

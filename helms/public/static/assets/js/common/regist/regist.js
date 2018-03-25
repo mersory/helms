@@ -1,4 +1,11 @@
 $(function(){
+	// 获取创建用户前页面传递的数据，赋值给对应的输入框
+	var info= GetQueryString("parentId");
+	var recInput = document.getElementById("recommender");
+	var actInput= document.getElementById("activator");
+	recInput.value = info;
+	actInput.value = info;
+	
 	$('#regist').on("click",function(){
 		var id = $("#fullname").val();
 		var username = $("#fullname").val();
@@ -8,6 +15,7 @@ $(function(){
 		var activator = $("#activator").val();
 		var primarypwd = $("#primarypwd").val();
 		var minorpwd = $("#minorpwd").val();
+
 		if("" == $.trim(username)){
 			showError("用户名不能为空");
 			return false;
@@ -55,7 +63,12 @@ $(function(){
 		
 });
 
-
+function GetQueryString(name)
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
 
 
 function countDown(secs,surl){        

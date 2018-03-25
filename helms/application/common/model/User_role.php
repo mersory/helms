@@ -15,7 +15,7 @@ class User_role extends Model
         $_where = '';
         if ($user_id != -1)
         {
-            $_where = "user_id = $user_id";
+            $_where = "user_id = '$user_id'";
         }
         $_role_info = $this->where($_where)
         ->select();
@@ -33,7 +33,7 @@ class User_role extends Model
         $_where = '';
         if ($user_id != -1)
         {
-            $_where = "user_id = $user_id";
+            $_where = "user_id = '$user_id'";
         }
         echo $_where;
         $this->startTrans();

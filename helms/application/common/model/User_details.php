@@ -69,7 +69,7 @@ class User_details extends Model
         $_where = '';
         if ($user_id != -1)
         {
-            $_where = "AUTO_ID = $user_id";
+            $_where = "ID = '$user_id'";
         }
         echo $_where;
         $this->startTrans();
@@ -79,12 +79,12 @@ class User_details extends Model
         if ($state)
         {
             $this->commit();
-            var_dump("commit");
+            var_dump("User_detalis.php commit,line:".__LINE__);
         }
         else
         {
             $this->rollback();
-            var_dump("rollback");
+            var_dump("User_detalis.php rollback,line:".__LINE__);
         }
         return $state;
     }
@@ -95,7 +95,7 @@ class User_details extends Model
         $_where = '';
         if ($user_id != -1)
         {
-            $_where = "AUTO_ID = $user_id";
+            $_where = "ID = '$user_id'";
         }
         echo $_where;
         $this->startTrans();
@@ -143,7 +143,7 @@ class User_details extends Model
         $_where = '';
         if ($user_id != -1)
         {
-            $_where = "ID = $user_id";
+            $_where = "ID = '$user_id'";
         }
         echo $_where;
         $this->startTrans();
@@ -209,7 +209,7 @@ class User_details extends Model
         {
             $_detailsinfo["registry"] = $registry;
         }
-        $_detailsinfo["open_time"] = date("Y-m-d H:i:s");
+        //$_detailsinfo["open_time"] = date("Y-m-d H:i:s");
         $this->startTrans();
         $state = $this->save($_detailsinfo);
         if ($state)
