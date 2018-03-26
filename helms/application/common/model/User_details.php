@@ -110,7 +110,7 @@ class User_details extends Model
         else
         {
             $this->rollback();
-            var_dump("rollback");
+            var_dump("User_details.php increasRePathDS rollback".__LINE__);
         }
         return $state;
     }

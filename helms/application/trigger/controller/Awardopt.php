@@ -37,9 +37,10 @@ class Awardopt extends Controller
             $get_money = ($res["shengyu_dong"] - $get_money)<0 ? $res['shengyu_dong']:$get_money;
             //update relative data to database
             if ($get_money > 0) {
+                var_dump("re_id:".$re_id."|bonus:".$res["bonus_point"]."getmoney:".$get_money);
                 //$this->_in_bonus($vo['id'], $inUserID, 1, $get_money);   //！！！！！！！奖金处理需要更改
                 $state = $user->PointUpdate($re_id, $res["shares"], $res["bonus_point"]+$get_money, $res["regist_point"], $res["re_consume"], 
-                                $res["universal_point"], $res["re_cast"], $res["remain_point"]-$get_money, $res["blocked_point"]);
+                                $res["universal_point"], $res["re_cast"], $res["remain_point"]-$get_money, $res["blocked_point"],-1,$res["shengyu_dong"] - $get_money);
                 if($state)
                     echo "update success";
             }
@@ -58,11 +59,30 @@ class Awardopt extends Controller
         $_dayly_point = new Award_daytime();
         $_res= $position->PositionQuery($inUserID);
         var_dump($_res[0]['json']);
-        for($i=0; $i<strlen($_res[0]['json'])/$_res[0]['json'][0]&&$i<9; $i++)
+        if(count($_res) < 1)
         {
+            var_dump("Error None, Awardopt.ph:line".__LINE__);
+            return;
+        }
+        
+        $strSRC=$_res[0]['json'];
+        $pos = strrpos($strSRC,'-');
+        $strSRC = substr($strSRC,0, $pos);
+        var_dump("Awardopt.php line:".__LINE__."string:".$strSRC);
+        while ( $pos != false ){
+            $pos = strrpos($strSRC,'-');
+            if($pos == false)
+                $tmp = $strSRC;
+            else
+                $tmp = substr($strSRC, $pos+1, strlen($strSRC));
+            $strSRC = substr($strSRC,0, $pos);
+            $ID = $tmp;
+        
+        /*for($i=0; $i<strlen($_res[0]['json'])/strlen($_res[0]['json'])&&$i<9; $i++)
+        {*/
            echo "tttttttttttttttt";
-           $_userid= $position->getUserIdByID($_res[0]['json'][$i]) ;
-           $i++;
+           $_userid= $position->getUserIdByID($ID) ;
+           //$i++;
            var_dump($_userid);
            $_pointsRes = $_points->PointQuery($_userid);
            $get_money = 10;
@@ -202,11 +222,24 @@ class Awardopt extends Controller
     //向上会员单数统计 --开通一个新人之后，向上统计,$p_path就是网络结构图，$tpl左区为0，右区1
 	public function tree2ds_tongji($p_path, $tpl, $danshu = 1) //节点路径$p_path是节点路径，参数2是当前节点是父节点的左区还是右区
 	{ 
+	    var_dump("Awardopt.php line:".__LINE__."|p_path:".$p_path."|tpl:".$tpl."|danshu:".$danshu);
 	    $position = new Positionality();
-	    for($i=strlen($p_path)-3; $i>-1; $i--)
-	    {
-	        $ID = $p_path[$i];
-	        $curNode = $position->PositionQueryByID($ID);
+	    //json 循环操作，获取每一个元素
+	    $strSRC=$p_path;
+	    $pos = strrpos($strSRC,'-');
+	    $strSRC = substr($strSRC,0, $pos);
+	    var_dump("Awardopt.php line:".__LINE__."string:".$strSRC);
+	    while ( $pos != false ){
+	        $pos = strrpos($strSRC,'-');
+	        if($pos == false)
+	            $tmp = $strSRC;
+            else
+                $tmp = substr($strSRC, $pos+1, strlen($strSRC));
+            $strSRC = substr($strSRC,0, $pos);
+            
+            $ID = $tmp;
+            var_dump("ID:".$ID);
+            $curNode = $position->PositionQueryByID($ID);
 	        $tpl = $curNode[0]['treeplace'];
 	        $data = array();
 	        $data['sum_ds'] = $curNode[0]['sum_ds'] + $danshu;
@@ -222,47 +255,44 @@ class Awardopt extends Controller
 	            $data['r_ds'] = $curNode[0]['r_ds'] + $danshu;
 	            $data['bq_rds'] = $curNode[0]['bq_rds'] + $danshu;
 	            $position->updateJiangjin($ID, -1,-1,-1,$data['r_ds'],$data['bq_rds'],-1,-1,-1,-1,-1,-1, $data['sum_ds']);
-	    
-	            /* $data['r_dse'] = array('exp','r_dse+'.$reg_money);
-	             $data['bq_rdse'] = array('exp','bq_rdse+'.$reg_money); */
 	        }
-	        //$this->where('id='.$curNode[0]['id'])->save($data);
-	        //unset($data);
-	        $i--;
 	    }
-		
 	}
 	
 	//虚的统计--修改之后      tree2ds_x_tongji
 	public function tree2ds_x_tongji($p_path, $tpl, $danshu = 1) {
-	     
 	    $position = new Positionality();
-	    for($i=strlen($p_path)-3; $i>-1; $i--)
-	    {
-	        $ID = $p_path[$i];
-	        $curNode = $position->PositionQueryByID($ID);
-	        $data = array();
-	        $tpl = $curNode[0]['treeplace'];
-	        if ($tpl == 0) {
-	            $data['l_x_ds'] = $curNode[0]['l_x_ds'] + $danshu;
-	            $data['bq_x_lds'] = $curNode[0]['bq_x_lds'] + $danshu;
-	            $position->updateJiangjin($ID, -1,-1,-1,-1,-1,$data['l_x_ds'],$data['bq_x_lds'],-1,-1,-1,-1);
-	             
-	            //平衡奖总额对碰，增加对碰额
-	            /* $data['l_dse'] = array('exp','l_dse+'.$reg_money);
-	             $data['bq_lds'] = array('exp', 'bq_ldse+'.$reg_money); */
-	        } elseif ($tpl == 1) {
-	            $data['r_x_ds'] = $curNode[0]['r_x_ds'] + $danshu;
-	            $data['bq_x_rds'] = $curNode[0]['bq_x_rds'] + $danshu;
-	            $position->updateJiangjin($ID, -1,-1,-1,-1,-1,-1,-1,-1,$data['r_x_ds'],$data['bq_x_rds'],-1);
-	             
-	            /* $data['r_dse'] = array('exp','r_dse+'.$reg_money);
-	             $data['bq_rdse'] = array('exp','bq_rdse+'.$reg_money); */
-	        }
-	        //$this->where('id='.$curNode[0]['id'])->save($data);
-	        //unset($data);
-	        $i--;
-	    }
+	    var_dump("Awardopt.php line:".__LINE__."|p_path:".$p_path."|tpl:".$tpl."|danshu:".$danshu);
+	    $position = new Positionality();
+	    //json 循环操作，获取每一个元素
+	    $strSRC=$p_path;
+	    $pos = strrpos($strSRC,'-');
+	    $strSRC = substr($strSRC,0, $pos);
+	    var_dump("Awardopt.php line:".__LINE__."string:".$strSRC);
+	    while ( $pos != false ){
+	        $pos = strrpos($strSRC,'-');
+	        if($pos == false)
+	            $tmp = $strSRC;
+            else
+                $tmp = substr($strSRC, $pos+1, strlen($strSRC));
+            $strSRC = substr($strSRC,0, $pos);
+            
+            $ID = $tmp;
+            var_dump("ID:".$ID);
+            $curNode = $position->PositionQueryByID($ID);
+            $data = array();
+            $tpl = $curNode[0]['treeplace'];
+            if ($tpl == 0) {
+                $data['l_x_ds'] = $curNode[0]['l_x_ds'] + $danshu;
+                $data['bq_x_lds'] = $curNode[0]['bq_x_lds'] + $danshu;
+                $position->updateJiangjin($ID, -1,-1,-1,-1,-1,$data['l_x_ds'],$data['bq_x_lds'],-1,-1,-1,-1);
+
+            } elseif ($tpl == 1) {
+                $data['r_x_ds'] = $curNode[0]['r_x_ds'] + $danshu;
+                $data['bq_x_rds'] = $curNode[0]['bq_x_rds'] + $danshu;
+                $position->updateJiangjin($ID, -1,-1,-1,-1,-1,-1,-1,-1,$data['r_x_ds'],$data['bq_x_rds'],-1);
+            }
+	    }	    
 	}
 	
     //奖金统计 
@@ -280,7 +310,7 @@ class Awardopt extends Controller
 		        $this->zhitui_jj($vo['user_id'], $_recommand[0]['activator'], $vo['status']*500);
 		        $this->duipeng();
 		    }else{
-		        $this->zhitui_jj($vo['user_id'],$_recommand[0]['activator'],$vo['reg_money']);
+		        $this->zhitui_jj($vo['user_id'], $_recommand[0]['activator'], $vo['status']*500);
 		        $this->futou_duipeng();
 		    }
 		}
@@ -302,10 +332,14 @@ class Awardopt extends Controller
 	    //会员ID，用户名，开通排序，推荐人ID，用户等级，上期左区单数，本期左区单数，上期右区单数，本期右区单数，对碰业绩累积，推荐路径，推荐人等级，
 	    //$frs = $this->where($where)->field($fields)->select();
 	    $_res = $position->getDuiPengInfo(1);
+	    var_dump("res:");
+	    var_dump($_res[0]["ID"]);
+	    var_dump($_res[1]["ID"]);
 	    foreach ($_res as $vo) {
 	        /*if($vo['is_lock'] != 0){
 	            continue;
 	        }*/
+	        
 	        $myids = $vo['ID'];
 	        $inUserID = $vo['user_id'];
 	        $l = $r = 0;
@@ -318,13 +352,14 @@ class Awardopt extends Controller
 	        $rs = $r - $encash[1];   //右区剩余单数
 	        $ss = $vo['status'];
 	
-	        $get_money = $dsmoney * $jj[$ss] / 100 * $nums;    //$nums为对碰单数
-	        	
+	        $get_money = $dsmoney * $jj*$ss / 100 * $nums;    //$nums为对碰单数
+	        var_dump("vo:".$vo["dp_leiji"]."|getmoney:".$get_money);;
 	        $user_point = new User_point();
 	        $_point = $user_point->PointQuery($inUserID);
 	        $_point = $_point[0];
 	        if ($ft*$ss > 0) {
 	            $get_money = $this->_fengding($get_money, $ft*$ss, $vo['dp_leiji']); //!!!!!!需要修改，加入日期，如果到封顶，则不增加
+	            $get_money = 100;
 	            $get_money = ($_point['shengyu_dong'] - $get_money)<0 ? $_point['shengyu_dong']:$get_money;
 	            $data = array();
 	            //$data['bz3'] = $_point['bz3']+round(0.1*$get_money,2);
@@ -332,15 +367,16 @@ class Awardopt extends Controller
 	            $data['shengyu_dong'] = $_point['shengyu_dong'] - $get_money;
 	            $map = array();
 	            $map['ID']=$vo['ID'];
+	            var_dump("money:".$get_money);
 	            $user_point->PointUpdate($inUserID, -1, -1, -1, $data['re_consume'], -1, -1, -1, -1, -1, $data['shengyu_dong']);
 	        }
 	        //$this->query("UPDATE __TABLE__ SET `sq_lds`={$ls},`sq_rds`={$rs},`bq_lds`=0,`bq_rds`=0 WHERE `id`=".$myids);//数据库更新左右区单数
-	        $position->updateJiangjin($vo['ID'], -1, -1, -1, $ls, -1, -1, $rs, -1, -1, -1, -1, -1, -1, -1);
+	        $_res_jiangjin = $position->updateJiangjin($vo['ID'], -1, -1, -1, $ls, -1, -1, $rs, -1, -1, -1, -1, -1, -1, -1);
 	        if ($get_money > 0) {
 	            $this->_in_bonus($myids, $inUserID, 2, $get_money);
 	            //辅导奖
 	            //$this->guanli_jj($vo['user_id'], $vo['re_path'], $vo['re_level'], $get_money);
-	            $this->tutorAward($vo['user_id'], $vo['re_path'], $vo['re_level'], $get_money,$ft);
+	            $this->tutorAward($vo['user_id'], $vo['re_path'], 2/*$vo['re_level']*/, $get_money,$ft);
 	            //感恩奖
 	            $this->thanksAward($vo['ganen_next_id'],$vo['ganen_next_r_id'],$vo['user_id'],$get_money);
 	        }
@@ -401,7 +437,7 @@ class Awardopt extends Controller
 	            $this->_in_bonus($myids, $inUserID, 2, $get_money);
 	            //辅导奖
 	            //$this->guanli_jj($vo['user_id'], $vo['re_path'], $vo['re_level'], $get_money);
-	            $this->tutorAward($vo['user_id'], $vo['re_path'], $vo['re_level'], $get_money,$ft);
+	            $this->tutorAward($vo['user_id'], $vo['re_path'], 2, $get_money,$ft);
 	            //感恩奖
 	            $this->thanksAward($vo['ganen_next_id'],$vo['ganen_next_r_id'],$vo['user_id'],$get_money);
 	        }
@@ -420,6 +456,7 @@ class Awardopt extends Controller
 	        //unset($qibonus);
 	        $_res_qibonus = $qibonus->AwarddailyQuery($myids);
 	        $_res_qibonus = $_res_qibonus[0];
+	        var_dump("Qibonus".$_res_qibonus["direct"]);
 	        $qibonus->AwarddailyUpdate($myids, -1, -1, -1, -1, -1, $_res_qibonus["sum"] + $get_money, -1, $_res_qibonus["bz0"]+$get_money);
 	        //$data['sum_jj_jingtai'] = array('exp','sum_jj_jingtai+'.$get_money);
 	        //$this->where('id='.$myids)->save($data);//静态奖的累积，一共拿了多少静态奖，不需要也可以
@@ -450,21 +487,37 @@ class Awardopt extends Controller
 	        //$qibonus->query("update __TABLE__ set b0=b0+{$ok_money},b{$bkey}=b{$bkey}+{$get_money},b6=b6+{$shui},b7=b7+{$jijin},b8=b8+{$produceCX} where id=".$myids);
 	        //unset($qibonus);
 	        $_res_qibonus = $qibonus->AwarddailyQuery($myids);
-	        $_res_qibonus = $_res_qibonus[0];
+	        if(count($_res_qibonus) < 1)
+	        {
+	            var_dump("Error None, Awardopt.php:line:".__LINE__);
+	            return;
+	        }
+	            
+	        //$_res_qibonus = $_res_qibonus[0];
 	        if($bkey == 1)
 	            $_res_qibonus[0]["direct"] = $_res_qibonus[0]["direct"] + $get_money;
+	        else 
+	            $_res_qibonus[0]["direct"] = -1;
             if($bkey == 2)
                 $_res_qibonus[0]["balance"] = $_res_qibonus[0]["balance"] + $get_money;
+            else 
+                $_res_qibonus[0]["balance"] = -1;
             if($bkey == 3)
                 $_res_qibonus[0]["tutor"] = $_res_qibonus[0]["tutor"] + $get_money;
+            else 
+                $_res_qibonus[0]["tutor"] = -1;
             if($bkey == 4)
                 $_res_qibonus[0]["appreciation"] = $_res_qibonus[0]["appreciation"] + $get_money;
+            else 
+                $_res_qibonus[0]["appreciation"] = -1;
             if($bkey == 6)
                 $_res_qibonus[0]["staticbonus"] = $_res_qibonus[0]["staticbonus"] + $get_money;
-                 
+            else 
+                $_res_qibonus[0]["staticbonus"] = -1;
+            
             $qibonus->AwarddailyUpdate($myids, $_res_qibonus[0]["direct"], $_res_qibonus[0]["balance"], $_res_qibonus[0]["tutor"],
-                $_res_qibonus[0]["appreciation"], $_res_qibonus[0]["staticbonus"], $_res_qibonus["sum"] + $get_money, -1, $_res_qibonus["bz0"]+$ok_money,
-                $_res_qibonus["bz6"]+$shui, $_res_qibonus["bz7"]+$jijin, $_res_qibonus["bz8"]+$produceCX);
+                $_res_qibonus[0]["appreciation"], $_res_qibonus[0]["staticbonus"], $_res_qibonus[0]["sum"] + $get_money, -1, $_res_qibonus[0]["bz0"]+$ok_money,
+                $_res_qibonus[0]["bz6"]+$shui, $_res_qibonus[0]["bz7"]+$jijin, $_res_qibonus[0]["bz8"]+$produceCX);
              
             /*zly 这部分是针对对碰产生奖励的逻辑，这部分是更新整个产生对碰奖的一系列的用户
              $data = array();

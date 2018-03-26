@@ -27,9 +27,9 @@ class Adminopt extends Controller
     public function index()
     {
         echo "class Adminopt index";
-        $posi = new Positionality();
-        $posi->updateGushu(3, -1, 0, -1);
-        /*$strSRC="121-421-5-12";
+        //$posi = new Positionality();
+        //$posi->updateGushu(3, -1, 0, -1);
+        $strSRC="121-421-5-12";
         $pos = strrpos($strSRC,'-');
         $strSRC = substr($strSRC,0, $pos);
         while ( $pos != false ){            
@@ -40,7 +40,7 @@ class Adminopt extends Controller
                 $tmp = substr($strSRC, $pos+1, strlen($strSRC));
             $strSRC = substr($strSRC,0, $pos); 
             echo $tmp;
-        }*/
+        }
         
         //$position  = new Positionality();
         //$position->updateGanenInfo(21);
@@ -301,7 +301,9 @@ class Adminopt extends Controller
                 $detailinfo = $details->DetailsQuery($recommonder);
                 if(count($detailinfo)<1)
                     break;
-                else
+                else if($detailinfo[0]["recommender"] == 0)
+                    break;
+                else 
                     $recommonder = $detailinfo[0]["recommender"];
                
             }
@@ -397,7 +399,7 @@ class Adminopt extends Controller
 	            }
 	            return 1;
 	        }else{
-	            $pre_gujia = 1.5;//cy_get_gpset('now_price');获取前面的最近一次的股价
+	            $pre_gujia = 1.99;//cy_get_gpset('now_price');获取前面的最近一次的股价
 	            $now_gujia = $pre_gujia + 0.01;
 	
 	            //当股价大于1.99时，要进行拆分，把等于号去掉
@@ -483,6 +485,7 @@ class Adminopt extends Controller
 	//这个函数被上面的judge_chaifen调用，股价满足超过 1.99时被调用
 	public function chaifen_act($gp,$xinzeng_sale_gushu)
 	{
+	    var_dump('Adminopt.php: Adminopt.php on line:'.__LINE__);
 	    $gptobuy = new Deal_info();//M('gptobuy');
 	    $member =  new Positionality();//M('member');
 	    $gponsale = new Gp_onsale();//M('gponsale');
@@ -524,7 +527,6 @@ class Adminopt extends Controller
 	            //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 	        }
 	    }
-	    
 	    return 3;
 	}
 	

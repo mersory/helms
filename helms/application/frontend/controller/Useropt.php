@@ -142,8 +142,8 @@ class Useropt extends Basecontroller
         if($position_res[0]["leftchild"] != 0 && $position_res[0]["rightchild"] != 0)
             return json_encode($_resdata);
 
-		$extern = new External();
-		$ID = $extern->_auto_userid();
+		//$extern = new External();
+		//$ID = $extern->_auto_userid();
         $_user_info = new User_info();
         //此处插入用的是用户名和密码，必须这样做，因为此处插入之后才会有对应得ID生成，以便后续使用，此处不需要提供ID，因为主表的ID是自增的
         $_state = $_user_info->UserinfoInsert($name, $pwd1, $pwd2, $ID);

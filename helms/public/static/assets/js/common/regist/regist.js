@@ -7,7 +7,7 @@ $(function(){
 	actInput.value = info;
 	
 	$('#regist').on("click",function(){
-		var id = $("#fullname").val();
+		var id = $("#memberId").val();
 		var username = $("#fullname").val();
 		var email = $("#email").val();
 		var telphone = $("#telphone").val();
