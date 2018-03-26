@@ -269,16 +269,18 @@ class Awardopt extends Controller
 	public function bonus_tongji($uid,  $is_agent = 0) {    //做修改
 		set_time_limit(0);
 		$position = new Positionality();
-		$_res = $position->PositionQueryByID($uid);
+		$details = new User_details();
+		$_res = $position->PositionQuery($uid);
+		$_recommand = $details->DetailsQuery($uid);
 		//用户ID，用户名，用户等级，是否开通，开通排序，网络结构父ID，网络结构路径，网络结构等级，推荐人ID，推荐路径、推荐等级、投资金额，所属报单中心ID，开通的会员ID
 		$vo = $_res[0];
 		if ($vo) 
 		{
 		    if($is_agent == 0){
-		        $this->zhitui_jj($vo['user_id'], $vo['re_id'], $vo['reg_money']);
+		        $this->zhitui_jj($vo['user_id'], $_recommand[0]['activator'], $vo['status']*500);
 		        $this->duipeng();
 		    }else{
-		        $this->zhitui_jj($vo['user_id'],$vo['re_id'],$vo['reg_money']);
+		        $this->zhitui_jj($vo['user_id'],$_recommand[0]['activator'],$vo['reg_money']);
 		        $this->futou_duipeng();
 		    }
 		}

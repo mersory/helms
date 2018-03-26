@@ -20,7 +20,7 @@ class External extends Controller
     
     //自动生成会员编号
     public function _auto_userid() {
-        $userid = 'H'.rand(10000000, 99999999).'00';
+        $userid = 'H'.rand(1000000000, 9999999999);
         $user = new User_info();
         $find = $user->isUserExist($userid);
         if ($find != 0) {

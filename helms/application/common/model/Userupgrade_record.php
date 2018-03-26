@@ -15,7 +15,7 @@ class Userupgrade_record extends Model
         $_where = '';
         if ($user_id != -1)
         {
-            $_where = "user_id = $user_id";
+            $_where = "user_id = '$user_id'";
         }
         $_upgrade_info = $this->where($_where)
         ->select();

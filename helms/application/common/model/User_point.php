@@ -13,10 +13,15 @@ class User_point extends Model
     public function PointQuery($user_id)
     {
         $_where = '';
-        if ($user_id != -1)
+        if (strcmp($user_id,""))
         {
             $_where = "ID = '$user_id'";
         }
+        else 
+        {
+            $_where = "ID != '' ";
+        }
+            
         $_point_info = $this->where($_where)
         ->select();
         $count = count($_point_info);
@@ -33,7 +38,7 @@ class User_point extends Model
         $_where = '';
         if ($user_id != -1)
         {
-            $_where = "ID = $user_id";
+            $_where = "ID = '$user_id'";
         }
         echo $_where;
         $this->startTrans();
@@ -158,6 +163,20 @@ class User_point extends Model
                                 $universal_point=-1, $re_cast=-1, $remain_point=-1, $blocked_point=-1,
                                 $shengyu_jing=-1, $shengyu_dong=-1)
     {
+        //判断数据是否一样，如果一样则不需要更新
+        $_cureent = $this->PointQuery($user_id);
+        if(count($_cureent) < 1)
+            return -1;
+        else 
+            $_cureent = $_cureent[0];
+        if($shares==$_cureent["shares"] && $bonus_point==$_cureent["bonus_point"] && $regist_point==$_cureent["regist_point"] && $re_consume== $_cureent["re_consume"] 
+           && $universal_point==$_cureent["universal_point"] && $re_cast==$_cureent["re_cast"] && $remain_point==$_cureent["remain_point"] && $blocked_point==$_cureent["blocked_point"]
+           && $shengyu_jing==$_cureent["shengyu_jing"] && $shengyu_dong==$_cureent["shengyu_dong"])
+        {
+            var_dump("User_point.php the data is complete same".__LINE__);
+            return 1;
+        }
+        
         $_pointinfo = array();
         if ($user_id >=0)
         {
@@ -212,13 +231,23 @@ class User_point extends Model
         {
             $_pointinfo["shengyu_dong"] = $shengyu_dong;
         }
-        $state = $this-> where("ID=$user_id")
+        $state = $this-> where("ID='$user_id'")
         ->setField($_pointinfo);
         return $state;
     }
     
     public function remainPointUpdate($user_id, $jing=0, $dong=0)
     {
+        $_cureent = $this->PointQuery($user_id);
+        if(count($_cureent) < 1)
+            return -1;
+        else
+            $_cureent = $_cureent[0];
+        if($jing==$_cureent["shengyu_jing"] && $dong==$_cureent["shengyu_dong"])
+        {
+            var_dump("User_point.php the data is complete same".__LINE__);
+            return 1;
+        }
         $_pointinfo = array();
         if ($jing >=0)
         {

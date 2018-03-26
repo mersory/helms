@@ -52,6 +52,7 @@ class Positionality extends Model
         }
         $_position_info = $this->where($_where)
         ->select();
+        var_dump("where".$_where);
         $count = count($_position_info);
         if ($count < 1)
         {
@@ -67,7 +68,7 @@ class Positionality extends Model
         $_where = '';
         if ($user_id != -1)
         {
-            $_where = "ID = $user_id";
+            $_where = "ID = '$user_id'";
         }
         $this->startTrans();
         $state = $this
@@ -120,8 +121,6 @@ class Positionality extends Model
         $json= $node[0]["json"];
         $preNodeID = 0;
         //本轮for循环，查找节点的ganenid和ganennextid 或者 是 ganenid和ganennextrid
-        
-        //本段代码是正确的，目前还没测试，暂时不替换
         $strSRC=$json;
         $pos = strrpos($strSRC,'-');
         $strSRC = substr($strSRC,0, $pos);
@@ -157,40 +156,10 @@ class Positionality extends Model
             }
             else
             {
-                $i--;
+                //$i--;
                 $preNodeID = $curNode[0]["parent"];
-            }
-           
-            
+            }  
         }
-        /*
-        for($i=strlen($json)-3; $i>-1; $i--)
-        {
-            if($i == strlen($json)-3 )
-            {
-                $preNodeID = $directParent;
-            }
-            $curNode = $this->PositionQueryByID($json[$i]);
-            if($curNode[0]["rightchild"] != 0 )
-            {          
-                if($curNode[0]["leftchild"] == $preNodeID)
-                {
-                    $this->updateGanenNextId($curNode[0]["ID"], $preNodeID);
-                    $this->updateGanenId($preNodeID, $curNode[0]["ID"]);
-                }
-                else if($curNode[0]["rightchild"] == $preNodeID)
-                {
-                    $this->updateGanenNextRId($curNode[0]["ID"], $preNodeID);
-                    $this->updateGanenId($preNodeID, $curNode[0]["ID"]);
-                }
-                break;
-            }
-            else 
-            {
-                $i--;
-                $preNodeID = $curNode[0]["parent"];
-            }
-        }*/
         
         //下面的逻辑更新当前节点的所有后续子节点中第一个存在右孩子的节点
         $childid = $this->PositionQueryByID($directParent);
@@ -246,6 +215,10 @@ class Positionality extends Model
 
     public function updateStatus($ID, $status, $openid, $fenh_time)
     {
+        var_dump("updateStatus");
+        var_dump($ID);
+        var_dump($openid);
+        var_dump($fenh_time);
         $userstatus = array();
         $userstatus["status"] = $status;
         $userstatus["openid"] = $openid;
@@ -418,7 +391,10 @@ class Positionality extends Model
             $_right=1;
             if(!strcmp($_curjson, ""))//当前parent不存在孩子节点
             {
-                $_json = "$_json-$parent";//如果当前不存在，则通过字符串拼接形参新的路径
+                if(strcmp($_json,"")==0)
+                    $_json = "$parent";
+                else 
+                    $_json = "$_json-$parent";//如果当前不存在，则通过字符串拼接形参新的路径
                 $_right = 0;
             }
             else 
@@ -495,8 +471,26 @@ class Positionality extends Model
         return $state;
     }
     
-    public function updateGushu($ID, $gushu=-1, $bz5=-1, $cf_count = -1)
+    public function updateGushu($ID, $gushu=-1, $bz5=-1, $cf_count = 0)
     {
+        $_cureent = $this->PositionQueryByID($ID);
+        if(count($_cureent) < 1)
+        {
+            var_dump("None data".__LINE__);
+            return -1;
+        }
+        
+        $_cureent = $_cureent[0];
+        var_dump("gushu:".$gushu);
+        var_dump("bz5:".$bz5);
+        var_dump("cf_count:".$cf_count);
+        if($gushu==$_cureent["gushu"] && $bz5==$_cureent["bz5"] && $cf_count==$_cureent["cf_count"])
+        {
+            var_dump("Positionality.php the data is complete same".__LINE__);
+            return 1;
+        }
+        else 
+            var_dump("Positionality.php: not the same".__LINE__);
         $_positioninfo = array();
         if ($gushu > 0)
         {
@@ -512,9 +506,10 @@ class Positionality extends Model
         {
             $_positioninfo["cf_count"] = $cf_count;
         }
+        var_dump($_positioninfo);
         
         $state = $this-> where("ID=$ID")
-        ->setField($_positioninfo);
+                      ->setField($_positioninfo);
         return $state;
     }
     

@@ -27,7 +27,8 @@ class Adminopt extends Controller
     public function index()
     {
         echo "class Adminopt index";
-       
+        $posi = new Positionality();
+        $posi->updateGushu(3, -1, 0, -1);
         /*$strSRC="121-421-5-12";
         $pos = strrpos($strSRC,'-');
         $strSRC = substr($strSRC,0, $pos);
@@ -171,15 +172,19 @@ class Adminopt extends Controller
         //标记感恩奖的ganen_id与ganen_next_id和ganen_next_r_id(新算法)
         ////////////////////////////////////////////////////////////////
         //id就是序号id，不是userid，parent_id是父节点的序号id，reg_money注册资金，treeplace如果是在父节点的左边就是0，反之为1，用户等级
+        var_dump($uid);
         $new_node = $member->PositionQuery($uid);//$member->where('id='.$uid)->field('id,parent_id,reg_money,treeplace,u_level')->find();
-        //var_dump($new_node[0]['user_id']);  
+        var_dump('debug : Adminopt.php on line:'.__LINE__);
+        var_dump($new_node[0]['user_id']);  
         $state = 1;
         if($new_node[0]['treeplace'] == 1 && $new_node[0]['parent'] != 0)                 //如果增加的节点是右区，则处理
         {
+            var_dump('DEBUG : Adminopt.php on line:'.__LINE__);
             $state = $member->updateGanenInfo($new_node[0]["ID"]);
             if(!$state)
             {
-                $this->error('ERROR : Adminopt.php on line:'.__LINE__);
+                var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+                //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
                 return false;
             }
             //var_dump($state);
@@ -195,7 +200,8 @@ class Adminopt extends Controller
         $state = $userdetails->DetailsUpdate($user_id, -1, -1, -1, -1, $ntime, -1, -1, -1);
         if(!$state)
             {
-                $this->error('ERROR : Adminopt.php on line:'.__LINE__);
+                var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+                //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
                 return false;
             }
         //var_dump($state);
@@ -209,7 +215,8 @@ class Adminopt extends Controller
 		$state = $member->updateStatus($new_node[0]["ID"], $status, $openid, $fenh_time);
 		if(!$state)
 		{
-		    $this->error('ERROR : Adminopt.php on line:'.__LINE__);
+		    var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+		    //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 		    return false;
 		}
 		//var_dump($state);
@@ -227,7 +234,8 @@ class Adminopt extends Controller
 		$state = $gujia->HistoricalpriceInsert($now_gujia);
 		if(!$state)
 		{
-		    $this->error('ERROR : Adminopt.php on line:'.__LINE__);
+		    var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+		    //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 		    return false;
 		}
 		//var_dump($state);
@@ -241,7 +249,8 @@ class Adminopt extends Controller
 		$state = $user_point->remainPointUpdate($user_id, $shengyu_jing, $shengyu_dong);
 		if(!$state)
 		{
-		    $this->error('ERROR : Adminopt.php on line:'.__LINE__);
+		    var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+		    //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 		    return false;
 		}
 		//var_dump("_member_open action success:");
@@ -251,47 +260,65 @@ class Adminopt extends Controller
     }
     
     //开通会员-----后台开通，前台传入的勾选的所有的需要开通的ID号
+    //开通用户的主入口函数
     public function audit_member_open($id, $openid = 1) {
+        var_dump("Adminopt.php : audit_member_open".__LINE__);
         $today = date('Y-m-d H:i:s');
         $member = new Positionality();
         $award = new Awardopt();
-        $node = $member->PositionQueryByID($id);
+        var_dump("Adminopt.php : audit_member_open".__LINE__);
+        $node = $member->PositionQuery($id);
         $vo = $node[0];
-        $is_open = $this->_member_open($vo['ID'], $openid, $vo['u_level']);
+        var_dump("Adminopt.php : audit_member_open".__LINE__);
+        var_dump("userid:".$vo['user_id']);
+        var_dump("openid:".$openid);
+        var_dump("status:".$vo['status']);
+        $is_open = $this->_member_open($vo['user_id'], $openid, $vo['status']);
+        var_dump("Adminopt.php : audit_member_open".__LINE__);
         
         if ($is_open) {
+            var_dump("Adminopt.php : audit_member_open".__LINE__);
             //判断是否拆分
             $judge = $this->judge_chaifen($vo['ID']);
             
             //更新推荐人数
             //更新直推的那个人的推荐人数
             //$member->where('id='.$vo['re_id'])->setInc('re_nums');
-            $userid = $vo[0]["user_id"];
+            $userid = $vo["user_id"];
             $details = new User_details();
             $detailinfo = $details->DetailsQuery($userid);
             $recommonder = $detailinfo[0]["recommender"];
-            $details->increasReNum($recommonder, 1);
-            
+            var_dump("Adminopt.php : audit_member_open".__LINE__."userid:".$recommonder);
+            //$details->increasReNum($recommonder, 1);
+
             //更新整个re_path路径上所有人的推荐人数
             //$member->where('id IN(0'.$vo['re_path'].'0) AND is_pay>0')->setInc('repath_ds');//更新推荐路径上所有人的repath_ds值
-            while($recommonder != 0)
+            while(true)
             {
+                var_dump("fasda");
+                var_dump("Adminopt.php : audit_member_open".__LINE__."ID:".$recommonder);
                 $details->increasRePathDS($recommonder, 1);
-                $detailinfo = $details->DetailsQueryByAutoId($recommonder);
-                $recommonder = $detailinfo[0]["recommender"];
+                $detailinfo = $details->DetailsQuery($recommonder);
+                if(count($detailinfo)<1)
+                    break;
+                else
+                    $recommonder = $detailinfo[0]["recommender"];
+               
             }
-            
             //更新左右区uid
             //$member->where('id='.$vo['parent_id'])->setField('t'.$vo['treeplace'].'_uid', $vo['id']);
             //单数和奖金统计
             //$member->where('id IN(0'.$vo['p_path'].'0) AND is_pay>0')->setInc('sum_yj', $vo['reg_money']);
-            $award->tree2ds_tongji($vo['p_path'], $vo['treeplace'], $vo['danshu']); //看函数内部
+            var_dump("Adminopt.php : audit_member_open".__LINE__);
+            $award->tree2ds_tongji($vo['json'], $vo['treeplace'], $vo['status']); //看函数内部
 
-            $award->bonus_tongji($vo['id']); //奖金统计 
+            var_dump("Adminopt.php : audit_member_open".__LINE__);
+            $award->bonus_tongji($vo['user_id']); //奖金统计 
              
 
         } else {
-            $this->error('开通失败！');
+            var_dump("Adminopt.php : audit_member_open".__LINE__);
+            //$this->error('开通失败！');
         }
 
     }
@@ -306,7 +333,7 @@ class Adminopt extends Controller
 	
 	    //$xinzeng_sale  = $member->where('id='.$uid)->field('id,gushu,bz5,reg_money,user_id')->find();
 	    $xinzeng_sale  = $member->PositionQueryByID($uid);//id和user_id，gushu是股数，bz5是总股额，都有；reg_money通过state获取
-	    $ok_money = ($xinzeng_sale[0]["status"] -4 )* 500;//status的值为5表示第1级别，为6表示第二级别，以此类推
+	    $ok_money = ($xinzeng_sale[0]["status"] )* 500;//status的值为5表示第1级别，为6表示第二级别，以此类推
 	    //$gp = $gpset->where('id=1')->find();//存放公司股票相关的，只会有一条
 	    $gp = $gpset->GpSetQuery();
 	   	var_dump($xinzeng_sale[0]["user_id"]);
@@ -317,7 +344,8 @@ class Adminopt extends Controller
 	                                   3.14, "details",1, $gp[0]["now_price"]);
 	    //$okid = $this->gptobuy_add($xinzeng_sale,$gp['now_price']);
 	    if(!$okid){
-	        $this->error('更新静态数据错误1'.$xinzeng_sale[0]['user_id']);
+	        var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	        //$this->error('更新静态数据错误1'.$xinzeng_sale[0]['user_id']);
 	        return false;
 	    }
 	    
@@ -345,11 +373,12 @@ class Adminopt extends Controller
 	    ////////////
 	    
 	    //没有找到状态为1的记录，则直接插入
-	    if(count($salers)){
+	    if(count($salers)<1){
 	        $ok = $gponsale->GponsaleInsert($gp[0]["now_price"], $xinzeng_sale[0]["gushu"], $buycount, $ok_money, 1, 0); //$this->gponsale_add($gp);//插入一条出售记录
 	        if(!$ok){
-	            $this->error('更新静态数据错误2'.$xinzeng_sale[0]['user_id']);
-	            $this->error('ERROR : Adminopt.php on line:'.__LINE__);
+	            var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	            //$this->error('更新静态数据错误2'.$xinzeng_sale[0]['user_id']);
+	            //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 	            return false;
 	        }	
 	        $salers = $gponsale->GponsaleQueryByStatus();;//$gponsale->where('status=1')->field('snums,sy_nums,status,user_id')->find();
@@ -358,11 +387,13 @@ class Adminopt extends Controller
 	    
 	    //新买入了
 	    if($update_buycount){      
-	        //若当前累计的股数<当前期数的股数，则更新当前累计的股数
-	        if($buycount < $salers['snums']){	            
+	        //若当前累计的股数<当前期数的股数，则更新当前累计的股数,这里应该修改为当前买入股数小于还差剩余股数
+	        if($buycount < $salers['snums']){	  
+	            var_dump("更新公司最新一期销售额度");
 	            $okid = $gponsale->GponsaleUpdate($salers["AUTO_ID"],-1, $update_buycount, $buycount, $ok_money);	            
 	            if(!$okid){
-	                $this->error('ERROR : Adminopt.php on line:'.__LINE__);
+	                var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	                //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 	            }
 	            return 1;
 	        }else{
@@ -380,16 +411,20 @@ class Adminopt extends Controller
 	                $data1['now_price'] = $now_gujia;
 	                $ok = $gpset->GpSetUpdate($data1['qishu'], $data1['now_price']);//$gpset->where('id=1')->save($data1);
 	                if(!$ok){
-	                    $this->error('ERROR : Adminopt.php on line:'.__LINE__);
+	                    var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	                    //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 	                }
 	                $gp = $gpset->GpSetQuery();
 	                $gp = $gp[0];
+	                var_dump("gp now price:".$gp["now_price"]);
 	
 	                $data4 = array();   //将出售完的股状态进行变更
 	                $data4['status'] = 2;
+	                var_dump("更新公司销售状态：1---2");
 	                $okid2 = $gponsale->GponsaleUpdate($salers["AUTO_ID"], -1, -1, -1, -1, 2, -1);//$gponsale->where('status=1')->save($data4);
 	                if(!$okid2){
-	                    $this->error('ERROR : Adminopt.php on line:'.__LINE__);
+	                    var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	                    //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 	                }
 	                //unset($data4);
 	
@@ -408,11 +443,12 @@ class Adminopt extends Controller
 	                $data['ctime'] = time();
 	                $data['status'] = $gp['s_isopen'];
 	                $data['uptime'] = 0;
-	                $ok = $gponsale->GponsaleUpdate($salers["AUTO_ID"], $gp['now_price'], $update_buycount, $buycount, $data['get_money'], $gp['s_isopen']);//$gponsale->add($data);
+	                $ok = $gponsale->GponsaleInsert($gp['now_price'], $update_buycount, $buycount, $data['get_money'], 1);//$gponsale->add($data);
 	                //unset($data);
 	                //unset($data1);
 	                if(!$ok){
-	                    $this->error('ERROR : Adminopt.php on line:'.__LINE__);
+	                    var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	                    //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 	                }
 	                
 	                //更新所有会员的股额
@@ -421,20 +457,26 @@ class Adminopt extends Controller
 	                #$map5['pay_gujia'] = array('neq',$gp['now_price']);
 	                $map5['id'] = array('gt',1);//需要保证管理员不参与，id=1表示管理员
 	                $frs = $member->getAllLegUser();//$member->where($map5)->field('id,user_id,gushu,bz5')->order('id ASC')->select();
-	                foreach($frs as $vo){
-	                    $gue = $vo['gushu'] * $gp['now_price'];
-	                    $curID = $vo['ID'];
-	                    $ok = $member->updateGushu($curID, $gue);//$member->where($map6)->save($data5);
-	                    if(!$ok){
-	                        $this->error('更新会员ID为'.$vo['ID'].'数据错误！');
+	                if(is_array($frs) && !empty($frs)){
+	                    foreach($frs as $vo){
+	                        var_dump($vo["ID"]);
+	                        $gue = $vo['gushu'] * $gp['now_price'];
+	                        $curID = $vo['ID'];
+	                        $ok = $member->updateGushu($curID, 12,  $gue, 0);//$member->where($map6)->save($data5);
+	                        if(!$ok){
+	                            var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	                            //$this->error('更新会员ID为'.$vo['ID'].'数据错误！');
+	                        }
 	                    }
 	                }
+	                
 	
 	                return 2;
 	            }
 	        }
 	    }else{
-	        $this->error('拆分错误.');
+	        var_dump("Adminopt.php : audit_member_open".__LINE__);
+	        //$this->error('拆分错误.');
 	    }
 	}
     
@@ -451,7 +493,8 @@ class Adminopt extends Controller
 	
 	    $okid3 = $gponsale->GponsaleChangeStatus(2);
 	    if(!$okid3){
-	        $this->error('ERROR : Adminopt.php on line:'.__LINE__);
+	        var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	        //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 	    }
 	    
 	    //增加一条公司出售信息
@@ -467,7 +510,8 @@ class Adminopt extends Controller
 	    var_dump($xinzeng_sale_gushu);
 	    $ok = $gponsale->GponsaleInsert($gp_new['now_price'], $gp_new['gp_qfhl']*2, $xinzeng_sale_gushu, 500, 1, -1);
 	    if(!$ok){
-	        $this->error('ERROR : Adminopt.php on line:'.__LINE__);
+	        var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	        //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 	    }
 	    
 	    $frs = $member->getAllLegUser();
@@ -476,7 +520,8 @@ class Adminopt extends Controller
 	        //bz5是股额，总股额永远都是通过股数乘于股价得到的，
 	        $ok = $member->updateGushu($vo['ID'], $vo['gushu']*2, 2*$vo['gushu']*$now_gujia, $vo['cf_count'] + 1);
 	        if(!$ok){
-	            $this->error('ERROR : Adminopt.php on line:'.__LINE__);
+	            var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	            //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 	        }
 	    }
 	    
@@ -523,7 +568,8 @@ class Adminopt extends Controller
 	    $ok = $ok && $points->PointUpdate($id, -1, -1, -1, -1, $data['bz6'], -1,-1,-1, $data['shengyu_jing']);
 	    $ok = $ok && $gponsale_obj->GponsaleUpdate($id, $data['pay_gujia']);
 	    if(!$ok){
-	        $this->error('复投数据第1部分更新失败id='.$id);
+	        var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	        //$this->error('复投数据第1部分更新失败id='.$id);
 	        return false;
 	    }
 	     
@@ -546,11 +592,13 @@ class Adminopt extends Controller
 	        if($gponsale['ok_nums'] < $gponsale['snums']){
 	            $okid=$deal_info->DealinfoInsert($id, $vo['gushu']*$now_gujia, $vo['gushu'], -1, -1, -1, -1, $now_gujia);//$this->gptobuy_add($vo,$now_gujia);
 	            if(!$okid){
-	                $this->error('ERROR : Adminopt.php on line:'.__LINE__);
+	                var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	                //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 	            }
 	            $okid =  $okid = $gponsale_obj->GponsaleUpdate( $id,-1,$gponsale['snums'],$new_gushu,$vo['status']*500 );//$this->gponsale_update($gp,$gponsale['snums'],$vo['reg_money'],$new_gushu);
 	            if(!$okid){
-	                $this->error('ERROR : Adminopt.php on line:'.__LINE__);
+	                var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	                //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 	            }
 	            return 1;
 	        }else{
@@ -569,14 +617,16 @@ class Adminopt extends Controller
 	                $data1['now_price'] = $now_gujia;
 	                $ok = $gp->GpSetUpdate($data1['qishu'], $data1['now_price']);//M('gpset')->where('id=1')->save($data1);
 	                if(!$ok){
-	                    $this->error('ERROR : Adminopt.php on line:'.__LINE__);
+	                    var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	                    //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 	                }
 	
 	                $data1 = array();   //将出售完的股状态进行变更
 	                $data1['status'] = 2;
 	                $okid2 = $gponsale_obj->GponsaleChangeStatus(2);//M('gponsale')->where('status=1')->save($data1);
 	                if(!$okid2){
-	                    $this->error('ERROR : Adminopt.php on line:'.__LINE__);
+	                    var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	                    //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 	                }
 
 	                //增加一条公司出售
@@ -620,7 +670,8 @@ class Adminopt extends Controller
 	                //$ok = $gponsale->add($data);
 	                $ok = $gponsale->GponsaleInsert($gp_new['now_price'], $gp_new['gp_qfhl']*2, $vo['gushu'], 0, 1, -1);
 	                if(!$ok){
-	                    $this->error('ERROR : Adminopt.php on line:'.__LINE__);
+	                    var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	                    //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 	                }
 	                //更新所有会员的股额
 	               /*
@@ -646,7 +697,8 @@ class Adminopt extends Controller
 	                    //bz5是股额，总股额永远都是通过股数乘于股价得到的，
 	                    $ok = $member->updateGushu($vo['id'], $vo['gushu']*2, 2*$vo['gushu']*$now_gujia, $vo['cf_count'] + 1);
 	                    if(!$ok){
-	                        $this->error('更新会员ID为'.$vo['id'].'数据错误！');
+	                        var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	                        //$this->error('更新会员ID为'.$vo['id'].'数据错误！');
 	                    }
 	                }
 	
@@ -776,7 +828,8 @@ class Adminopt extends Controller
 	                $data6['bz5'] = $vo['gushu']*$gp['now_price'];
 	                $ok = $position->updateGushu($vo["ID"], -1,  $data6['bz5'], -1);//M('member')->where('id='.$vo['id'])->save($data6);
 	                if(!$ok){
-	                    $this->error('ID为'.$vo['id'].'复投数据错误！');
+	                    var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	                    //$this->error('ID为'.$vo['id'].'复投数据错误！');
 	                }
 	                //当总股额到一定值时，进行复投操作
 	                if($vo['status'] == 1 && $data6['bz5'] >= 800)
@@ -809,7 +862,8 @@ class Adminopt extends Controller
 	        }*/
 	        $this->_auto_syssale();
 	    } else {
-	        $this->error($model->getError());
+	        var_dump("Adminopt.php : audit_member_open".__LINE__);
+	        //$this->error($model->getError());
 	    }
 	}
 	
@@ -844,15 +898,23 @@ class Adminopt extends Controller
 	
 	}
 	
+	//帮助开通账号总函数
 	public function activeUserOpt($user_id, $level, $regist_money, $minor_pwd)
 	{
 	    $_session_user = Session::get(USER_SEESION);
+	    if(empty($_session_user))
+	    {
+	        var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	         //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
+	    }
+	    
 	    $_userid = $_session_user["userId"];
 
 	    $position = new Positionality();
 	    $active = new User_info();
 	    
 	    $res = $active->UserActivate($user_id, $_userid, $minor_pwd, $level, $regist_money);
+	    var_dump("res:$res");
 	    if($res)
 	    {
 	        $posinfo = $position->PositionQuery($user_id);
@@ -860,7 +922,12 @@ class Adminopt extends Controller
 	        $posinfo = $position->PositionQuery($_userid);
 	        $openid = $posinfo[0]["ID"];
 	        $res=$position->updateStatus($ID, $level, $openid, date("Y-m-d H:i:s"));
+	        $this->audit_member_open($ID, $openid);//the most import logic module
+	        
 	    }
+	    else
+	       var_dump("active failed");
+	    
 
 	}
 	
