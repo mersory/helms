@@ -53,6 +53,8 @@ class Useropt extends Basecontroller
     
     public function RegistIndex()
     {
+        $external = new External();
+        $this->assign('user_id', $external->_auto_userid());
         $htmls = $this->fetch();
         return $htmls;
     }
@@ -172,30 +174,12 @@ class Useropt extends Basecontroller
         $_details_info = new User_details();
                
         //用户绩点插入
-        if($userlevel == 1)
-        {
-            $regist_point=500;
-            $shengyu_jing = 3500;
-            $shengyu_dong = 4000;
-            
-        }   
-        else if($userlevel == 2)
-        {
-            $regist_point=1000; 
-            $shengyu_jing = 3500;
-            $shengyu_dong = 4000;
-           
-        }
-        else 
-        {
-            $regist_point=1500;
-            $shengyu_jing = 3500;
-            $shengyu_dong = 4000;
-            
-        }
+        $regist_point=0;
+        $shengyu_jing = 0;
+        $shengyu_dong = 0;
         
-        $bonus_point=40;
-        $shares=300;
+        $bonus_point=0;
+        $shares=0;
         $re_consume=0;
         $universal_point=0;
         $re_cast=0;
