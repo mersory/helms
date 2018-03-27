@@ -34,7 +34,10 @@ $(function(){
 			 if(result.success){
 				 window.location.href=result.redirectUrl;
 			 }else{
-				 showError("用户名和密码不正确，请重新登录");	 
+				 if(result.error == 1)
+					 showError("用户尚未激活，请及时激活！");	 
+				 else if(result.error == 2)
+					 showError("用户名和密码不正确，请重新登录");	 
 				 return false;
 			 }
 		 });

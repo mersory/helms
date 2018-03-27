@@ -15,7 +15,6 @@ class User_info extends Model
         $_where = '';
         if (!strcmp("$name", "") || !strcmp("$pwd", ""))
         {
-            var_dump("username and password could not be null");
             return;
         }
         else 
@@ -32,7 +31,6 @@ class User_info extends Model
         $count = count($_user_info);
         if ($count != 1)
         {
-            var_dump("username or password is not correct");
             return ;
         }
         else 
@@ -280,7 +278,7 @@ class User_info extends Model
         }
         else 
         {
-            $_where = "details.open_time > '1970-01-01 00:00:00'";
+            $_where = "(details.open_time > '1970-01-01 00:00:00' or details.open_time = '0000-00-00 00:00:00')";
         }
         if (strcmp("$_end", "") )
         {
@@ -288,6 +286,7 @@ class User_info extends Model
         }
         if (strcmp("$_where", ""))
         {
+            //var_dump("where:".$_where);
             $res = $this->table('helms_user_info info, helms_user_details details')
             ->where("$_where and info.ID=details.ID and info.user_status = 0")
             ->field( 'details.user_name, details.telphone, details.email, details.open_time, helms_user_info.ID')
@@ -295,6 +294,7 @@ class User_info extends Model
         }
         else
         {
+            //var_dump("not none");
             $res = $this->table('helms_user_info info, helms_user_details details')//�˴������ݿ�ǰ׺����ʡ��
             ->where("info.ID=details.ID and info.user_status = 0")
             ->field( 'details.user_name, details.telphone, details.email, details.open_time, helms_user_info.ID')

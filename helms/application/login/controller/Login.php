@@ -104,7 +104,7 @@ class Login extends Controller
             //Session::destroy();
             $_user = new User_info();
             $_res = $_user->UserinfoQuery($_username, $_password);
-            if (count($_res) == 1)
+            if (count($_res) == 1 && $_res[0]["user_status"] != 0)
             {
                 $_resdata["success"] = true;
                 $_session_user = array();
@@ -129,8 +129,14 @@ class Login extends Controller
                     }
                 }
             }
-            else
+            else if(count($_res) == 1 && $_res[0]["user_status"] == 0)
             {
+                $_resdata["error"] = 1;
+                $_resdata["success"] = false;
+            }
+            else 
+            {
+                $_resdata["error"] = 2;
                 $_resdata["success"] = false;
             }
         }
