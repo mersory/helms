@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:98:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\useropt\registindex.html";i:1521298063;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:98:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\useropt\registindex.html";i:1522075560;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>HELMS - 主页</title>
+    <title>HERMS - 主页</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8" />
 
@@ -44,7 +44,7 @@
           <!-- Branding -->
           <div class="navbar-header col-md-2">
             <a class="navbar-brand" href="index.html">
-              <strong>HELMS</strong>
+              <strong>HERMS</strong>
             </a>
             <div class="sidebar-collapse">
               <a href="#">
@@ -255,7 +255,7 @@
             <h2><i class="fa fa-tachometer"></i> 注册会员<span></span></h2>
             <div class="breadcrumbs">
               <ol class="breadcrumb">
-                <li><a href="index.html">HELMS</a></li>
+                <li><a href="index.html">HERMS</a></li>
                 <li class="active">注册会员</li>
               </ol>
             </div>
@@ -288,7 +288,7 @@
 					  <div class="form-group">
                         <label for="fullname" class="col-sm-4 control-label">会员ID </label>
                         <div class="col-sm-8">
-                          <input type="text"  readonly="readonly" class="form-control parsley-validated" name="memberId" id="memberId" parsley-trigger="change" parsley-required="true" parsley-minlength="4" parsley-validation-minlength="1">
+                          <input type="text"  readonly="readonly" class="form-control parsley-validated" name="memberId" id="memberId" parsley-trigger="change" parsley-required="true" parsley-minlength="4" parsley-validation-minlength="1" value="<?php echo $user_id; ?>" />
                         </div>
                       </div>
                       

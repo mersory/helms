@@ -116,7 +116,7 @@ return [
     // ����������thinkphp.cn
     'url_domain_root'        => '',
     // �Ƿ��Զ�ת��URL�еĿ������Ͳ�����
-    'url_convert'            => true,
+    'url_convert'            => false,
     // Ĭ�ϵķ��ʿ�������
     'url_controller_layer'   => 'controller',
     // ����������αװ����

@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:93:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\common\network.html";i:1511791634;s:92:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\base\frontend.html";i:1511664072;s:20:"base/common/css.html";i:1511359924;s:19:"base/common/js.html";i:1511676215;s:36:"base/common/frontend/leftAndTop.html";i:1520603076;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:93:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\common\network.html";i:1521316965;s:92:"E:\Software\php\workspace\helms\helms\public/../application/frontend\view\base\frontend.html";i:1521316965;s:20:"base/common/css.html";i:1521411207;s:19:"base/common/js.html";i:1521411088;s:36:"base/common/frontend/leftAndTop.html";i:1521470971;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>HELMS - <block name="title">标题</block></title>
+    <title>HERMS - <block name="title">标题</block></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8" />
 	 	<link rel="icon" type="image/ico" href="http://tattek.com/minimal/assets/images/favicon.ico" />
@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="_JS_/vendor/summernote/css/summernote-bs3.css">
     <link rel="stylesheet" href="_JS_/vendor/chosen/css/chosen.min.css">
     <link rel="stylesheet" href="_JS_/vendor/chosen/css/chosen-bootstrap.css">
+    <link rel="stylesheet" href=" _JS_/vendor/datepicker/css/bootstrap-datetimepicker.css">
 
     <link href="_CSS_/minimal.css" rel="stylesheet">
     <link href="_CSS_/main.css" rel="stylesheet">
@@ -69,6 +70,9 @@
 <script src="_JS_/minimal.min.js"></script>
 <script src="_JS_/common/main.js"></script>
 
+<script src="_JS_/vendor/datepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="_JS_/vendor/datepicker/bootstrap-datetimepicker.zh-CN.js"></script>
+
 <script type="text/javascript">
 	root = "__ROOT__";
 </script>
@@ -101,7 +105,7 @@
           <!-- Branding -->
           <div class="navbar-header col-md-2">
             <a class="navbar-brand" href="index.html">
-              <strong>HELMS</strong>
+              <strong>HERMS</strong>
             </a>
             <div class="sidebar-collapse">
               <a href="#">
@@ -154,17 +158,17 @@
                   <li class="divider"></li>
 
                   <li>
-                    <a href="http://localhost/public/index.php/frontend/Useropt/userinfo"><i class="fa fa-user"></i> 个人信息</a>
+                    <a href="/public/index.php/frontend/Useropt/userinfo"><i class="fa fa-user"></i> 个人信息</a>
                   </li>
 
                   <li>
-                    <a href="http://localhost/public/index.php/frontend/Useropt/memberModifyPwd"><i class="fa fa-pencil"></i> 修改密码</a>
+                    <a href="/public/index.php/frontend/Useropt/frontend/memberModifyPwd"><i class="fa fa-pencil"></i> 修改密码</a>
                   </li>
 
                   <li class="divider"></li>
 
                   <li>
-                    <a href="http://localhost/public/index.php/login/login/index"><i class="fa fa-power-off"></i> 登出</a>
+                    <a href="/public/index.php/login/login/index"><i class="fa fa-power-off"></i> 登出</a>
                   </li>
                 </ul>
               </li>
@@ -184,7 +188,7 @@
                 <a href="#" class="sidebar-toggle" data-toggle="#navigation">导航 <i class="fa fa-angle-up"></i></a>
                 <ul class="menu">
                   <li class="active">
-                    <a href="index.html">
+                    <a href="index">
                       <i class="fa fa-tachometer"></i> 主页
                       <span class="badge badge-red">1</span>
                     </a>
@@ -207,7 +211,7 @@
                     </ul>
                   </li>
 				  <li>
-                    <a href="widgets.html">
+                    <a href="/public/index.php/frontend/common/network">
                       <i class="fa fa-account-create"></i> 创建账户
                     </a>
                   </li>
@@ -216,14 +220,31 @@
 
               <li class="summary" id="order-summary">
                 <a href="#" class="sidebar-toggle underline" data-toggle="#order-summary">当前股价<i class="fa fa-angle-up"></i></a>
-
                 <div class="media">
                   <div class="media-body">
                     <br>
                     <h3 class="media-heading">1.50</h3>
                   </div>
                 </div>
-              </li>            
+              </li>      
+              <li class="summary" id="order-summary">
+                <a href="#" class="sidebar-toggle underline" data-toggle="#order-summary">股额<i class="fa fa-angle-up"></i></a>
+                <div class="media">
+                  <div class="media-body">
+                    <br>
+                    <h3 class="media-heading">3000</h3>
+                  </div>
+                </div>
+              </li>   
+              <li class="summary" id="order-summary">
+                <a href="#" class="sidebar-toggle underline" data-toggle="#order-summary">股数<i class="fa fa-angle-up"></i></a>
+                <div class="media">
+                  <div class="media-body">
+                    <br>
+                    <h3 class="media-heading">200</h3>
+                  </div>
+                </div>
+              </li>         
             </ul>
             <!-- Sidebar end -->
           </div>
@@ -242,7 +263,7 @@
 		</h2>
 		<div class="breadcrumbs">
 			<ol class="breadcrumb">
-				<li><a href="index.html">HELMS</a></li>
+				<li><a href="index.html">HERMS</a></li>
 				<li class="active">网络结构</li>
 			</ol>
 		</div>

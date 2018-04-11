@@ -89,7 +89,6 @@ class Store_product extends Model
     
         $t=time();
         $_productinfo["create_time"] = date("Y-m-d H:i:s",$t);
-
     
         $this->startTrans();
         $state = $this->save($_productinfo);

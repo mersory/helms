@@ -75,6 +75,7 @@ class Store_order extends Model
         }
         
         $_orderinfo["lifecycle"] = "1";
+        
         $t=time();
         $_orderinfo["create_time"] = date("Y-m-d H:i:s",$t);
     

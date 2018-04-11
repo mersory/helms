@@ -6,12 +6,12 @@
 	<!-- page header -->
 	<div class="pageheader">
 		<h2>
-			<i class="fa fa-tachometer"></i> 积分兑换商城-结算<span></span>
+			<i class="fa fa-tachometer"></i> 订单列表<span></span>
 		</h2>
 		<div class="breadcrumbs">
 			<ol class="breadcrumb">
 				<li><a href="index.html">HERMS</a></li>
-				<li class="active">结算</li>
+				<li class="active">订单列表</li>
 			</ol>
 		</div>
 	</div>
@@ -50,16 +50,18 @@
                         </tr>
                       </thead>
                       <tbody>
+                      	{if condition="empty($pass_data) neq true"}
+						{foreach name='pass_data' item='vo'}
                         <tr>
-                          <td>
-                          </td>
-                          <td>Mark</td>
-                          <td>1772342323</td>
-                          <td>上海市静安区云立方B幢</td>
-                          <td>扫地机器人</td>
-                          <td>@2018-03-19 19:00:12</td>
-                          <td>已发货</td>
+                          <td></td>
+                          <td>{$vo.receiver}</td>
+                          <td>{$vo.mobile}</td>
+                          <td>{$vo.address}</td>
+                          <td>{$vo.product_id}</td>
+                          <td>{$vo.create_time}</td>
+                          <td>{$vo.lifecycle}</td>
                         </tr>
+                        {/foreach} {/if} 
                       </tbody>
                     </table>
 

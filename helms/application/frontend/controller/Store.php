@@ -70,6 +70,7 @@ class Store extends Controller
     {
         $_session_user = Session::get(USER_SEESION);
         $user_id = $_session_user["userId"];
+        $user_id = 2;
         if(empty($user_id)){
             return $this->redirect("/login/login/index");
         }

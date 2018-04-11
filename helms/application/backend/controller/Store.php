@@ -5,12 +5,19 @@ use think\Controller;
 use think\File;
 use think\Request;
 use app\common\model\Store_product;
+use app\common\model\Store_order;
 
 class Store extends Controller
 {
     //订单列表
     public function orderList()
     {
+        $_order = new Store_order();
+        $_order_info = $_order->OrderInfoAllQuery();
+        // 向V层传数据
+        $this->assign('pass_data', $_order_info);
+        
+        // 取回打包后的数据
         $htmls = $this->fetch();
         return $htmls;
     }
