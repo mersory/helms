@@ -258,4 +258,5 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+    'upload_path' => '/opt/apps/helms/public/static/assets/images/resources',
 ];
