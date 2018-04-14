@@ -47,7 +47,7 @@ return [
     // 锟皆讹拷写锟斤拷时锟斤拷锟斤拷侄锟�
     'auto_timestamp'  => false,
     // 时锟斤拷锟街讹拷取锟斤拷锟斤拷锟侥拷锟绞憋拷锟斤拷式
-    'datetime_format' => 'Y-m-d H:i:s',
+    'datetime_format' => false,
     // 锟角凤拷锟斤拷要锟斤拷锟斤拷SQL锟斤拷锟杰凤拷锟斤拷
     'sql_explain'     => false,
 ];
