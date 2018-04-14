@@ -13884,3 +13884,8 @@ body #content.full-page.error .search {
     body #content.full-page .search, body #content.full-page.error .search {
       right: 25%;
       top: 10px; } }
+
+  body #content .tile.color .tile-body  #chart-container .orgchart   table > tbody > tr > td{
+	border-color: rgba(217,83,79,.8);
+  } 	
+    	

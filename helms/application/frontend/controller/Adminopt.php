@@ -13,7 +13,6 @@ use app\common\model\User_point;
 use app\common\model\Point_transform_record;
 use app\common\model\Withdrawal_record;
 use app\trigger\controller\Awardopt;
-use app\trigger\controller\External;
 use app\common\model\User_details;
 use app\common\model\Historical_price;
 use app\common\model\Gp_onsale;
@@ -931,6 +930,55 @@ class Adminopt extends Controller
 	       var_dump("active failed");
 	    
 
+	}
+	
+	//获取当前节点的孩子节点信息，如果已经有了两个子节点则返回false
+	public function getNodeChild($id)
+	{
+	    $_resdata = array();
+	    $_resdata["success"] = true;
+	
+	    //在用户网络结构图中插入数据,检测当前父节点是否已经存在两个子节点
+	    $position = new Positionality();
+	    $position_res = $position->PositionQuery($id);
+	    if($position_res[0]["leftchild"] != 0 && $position_res[0]["rightchild"] != 0)
+	        $_resdata["success"] = false;
+	
+	        return json_encode($_resdata);
+	}
+	
+	//查看当前登录用户的节点的所有子孙节点中，是否包含参数1这个节点
+	public function checkNodeChild($id)
+	{
+	    $_resdata = array();
+	    $_resdata["success"] = true;
+	
+	    //在用户网络结构图中插入数据,检测当前父节点是否已经存在两个子节点
+	    $position = new Positionality();
+	    $position_res = $position->PositionQuery($id);
+	    if(count($position_res) < 1)
+	    {
+	        $_resdata["success"] = false;
+	        return json_encode($_resdata);
+	    }
+	    $nodejson = $position_res[0]["json"];
+	    //var_dump($nodejson."node");
+	    $_session_user = Session::get(USER_SEESION);
+	    $_userid = $_session_user["userId"];
+	    $position_res = $position->PositionQuery($_userid);
+	    if(count($position_res) < 1)
+	    {
+	        $_resdata["success"] = false;
+	        return json_encode($_resdata);
+	    }
+	    $loginjson = $position_res[0]["json"];
+	    //var_dump($loginjson."login");
+	    if(strcmp($loginjson,"")==0 || strpos($nodejson,$loginjson) !== false)
+	        $_resdata["success"] = true;
+	    else 
+	        $_resdata["success"] = false;
+	
+	        return json_encode($_resdata);
 	}
 	
 	////****************************************华丽分割线**************************************************
