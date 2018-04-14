@@ -8,9 +8,18 @@ $(function() {
 						// 节点人ID
 						var parentId = $('#rd-node-user').val();
 						if($.trim(parentId) != ""){
-							var url = "/public/index.php/frontend/Useropt/RegistIndex?parentId=" + parentId+"&position=left";
-							window.open(url);	
-						}else{
+							var urlres =  "/public/index.php/frontend/Adminopt/getNodeChild";
+							$.post(urlres,{id:parentId},function(result){
+								result = JSON.parse(result);
+							if(result.success){
+								var url = "/public/index.php/frontend/Useropt/RegistIndex?parentId=" + parentId+"&position=left";
+								window.open(url);
+							} else {
+								alert("输当前入的节点不能再作为父节点，请重新选择父节点");
+							}
+							});
+						}
+						else{
 							alert("请先选择父节点");
 						}
 					});
@@ -19,7 +28,16 @@ $(function() {
 	$("#network-search").on("click",function(){
 		var parentId = $('#userId').val();
 		if($.trim(parentId) != ""){
-			refreshNetworkChart(parentId);
+			var urlres =  "/public/index.php/frontend/Adminopt/checkNodeChild";
+			$.post(urlres,{id:parentId},function(result){
+				result = JSON.parse(result);
+			if(result.success){
+				refreshNetworkChart(parentId);
+			} else {
+				alert("没有权限查看当前输入节点的网络结构");
+			}
+			});
+			//refreshNetworkChart(parentId);
 		}
 	})
 	
