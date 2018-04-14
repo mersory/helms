@@ -3,23 +3,15 @@ namespace app\frontend\controller;
 
 use think\Controller;
 use app\common\model\User_info;
-use app\common\model\User_role;
 use app\common\model\User_bankinfo;
 use app\common\model\User_details;
 use app\common\model\User_point;
 use app\common\model\User_priority;
-use think\Request;
-use app\common\model\Userupgrade_record;
-use app\common\model\Withdrawal_record;
-use app\common\model\Offline_deal;
-use app\common\model\Realtime_price;
 use app\common\model\Historical_price;
-use app\common\model\Subuser_info;
 use think\Session;
 use app\common\model\Role;
 use app\common\model\Positionality;
 use app\frontend\controller\Basecontroller;
-use app\common\model\Deal_info;
 
 class Common extends Basecontroller
 {

@@ -1,4 +1,23 @@
 $(function(){
+	$("#confirmApplicationDialog").dialog({
+	    autoOpen: false,
+		resizable : false,
+		height : "auto",
+		width : 600,
+		modal : true,
+		buttons : {
+			"确定" : function() {
+				var applicationId = $("#confirmApplicationDialog #application_id").val();
+				var minorpwd = $("#confirmApplicationDialog #minorpwd").val();
+				if(isEmpty(minorpwd)){
+					alert("请输入二级密码");
+					return false;
+				}else{
+					activateAction(userId,minorpwd);
+				}
+			}
+		}
+	});
 	
 	//时间插件
 	$('#applytime_start').datetimepicker({
@@ -123,14 +142,14 @@ function addCol(_index, _username, _telphone, _email,_fromtime, _id) {
 	$("table#applyList_table tr:last").after('<tr><td>'+ _index + '</td><td> '+ _username + ' </td><td>'+ _telphone + ' </td><td>'+ _email + ' </td><td>'+ _fromtime + ' </td><td>'+ _id + '</td><td><button application_id="'+_id+'" type="button" class="btn btn-primary btn_application_list">激活</button></td>');
 	$(".btn_application_list").off("click").on("click",function(){
 		var id= $(this).attr("application_id");
-		
-		
+		$("#confirmApplicationDialog").dialog( "open" );
+		$("#confirmApplicationDialog #application_id").val(id);
 	})
 	
 	
 }
 
-function activateACT(id, minorpwd)
+function activateAction(id, minorpwd)
 {
 		var url = "/public/index.php/frontend/Adminopt/activateUser";
 	        $.post(url, {user_id:id, minor_pwd:minorpwd}, function(msg){
