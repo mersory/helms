@@ -52,9 +52,13 @@ $(function(){
 			result = JSON.parse(result);
 			if(result.success){
 				alert("regist success,goto login");
+				var start = new Date().getTime();
+			    while(true)  if(new Date().getTime()-start > 5000) break;
 				window.location.href="/public/index.php/login/login/index";
 			}else{
-				showError("填写数据不规范，请重新注册");	 
+				alert("regist failed");
+				var start = new Date().getTime();
+			    while(true)  if(new Date().getTime()-start > 5000) break;
 				return false;
 			}
 		});

@@ -152,16 +152,16 @@ class Useropt extends Basecontroller
             $_res =$_user_info->UserinfoQuery($ID, $pwd1);
             if (count($_res) != 1)
             {
-                return json_encode($_resdata);;
+                return json_encode($_resdata);
             } 
         }
 		$_resdata["success"] = true;
         //银行信息插入
         $_bank_info = new User_bankinfo();
         $user_id = $ID;
-        $bank_account_name = "白浅上仙";
-        $bank_account_num = "622718219839182";
-        $bank_name = "中国工商银行";
+        $bank_account_name = "未知";
+        $bank_account_num = "未知";
+        $bank_name = "中国建设银行";
         $sub_bank = "";
         
         //用户详情信息插入
@@ -193,7 +193,6 @@ class Useropt extends Basecontroller
         //用户角色插入
         $_role_info = new User_role();
         
-        $_user_info->startTrans();
         $_bank_insert = $_bank_info->BankinfoInsert($user_id, $bank_name, $bank_account_name, $bank_account_num, $telphone, $sub_bank);
         $_details_insert = $_details_info->DetailsInsert($user_id, $name, $email, $portrait, $user_level, $open_time, $recommender, $activator, $registry);
         $_point_insert = $_point_info->PointInsert($user_id, $shares, $bonus_point, $regist_point, $re_consume, $universal_point,-1,-1,-1,$shengyu_jing, $shengyu_dong);
@@ -201,17 +200,12 @@ class Useropt extends Basecontroller
         $_role_insert = $_role_info->RoleInsert($user_id);//默认参数列表
         $_position_res = $position->PositionInsertPrev($user_id, $position_res[0]["ID"]);
         
-        if ($_bank_insert && $_details_insert && $_point_insert && $_priority_insert &&$_role_insert && $_position_res)
-        {
-            $_user_info->commit();
-        }
-        else
+        if ( !($_bank_insert && $_details_insert && $_point_insert && $_priority_insert &&$_role_insert && $_position_res) )
         {
 			$_resdata["success"] = false;
-            $_user_info->rollback();    
         }
         
-        echo json_encode($_resdata);
+        return json_encode($_resdata);
         
     }
     
