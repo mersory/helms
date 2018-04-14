@@ -1,0 +1,97 @@
+{extend name="base/frontend"} {block name="js"}
+<script type="text/javascript" src="_JS_/common/product/checkout.js"></script>
+{/block} {block name="css"} {/block} {block name="content"}
+<!-- Page content -->
+<div id="content" class="col-md-12">
+	<!-- page header -->
+	<div class="pageheader">
+		<h2>
+			<i class="fa fa-tachometer"></i> 积分兑换商城-结算<span></span>
+		</h2>
+		<div class="breadcrumbs">
+			<ol class="breadcrumb">
+				<li><a href="index.html">HERMS</a></li>
+				<li class="active">结算</li>
+			</ol>
+		</div>
+	</div>
+	<!-- /page header -->
+
+	<!-- content main container -->
+	<div class="main">
+          	<div class="row">
+                <div class="col-md-6">
+                  <section class="tile color transparent-black">
+
+
+
+                  <!-- tile header -->
+                  <div class="tile-header">
+                    <h1><strong>填写收件信息</strong></h1>
+                    <div class="controls">
+                      <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
+                      <a href="#" class="remove"><i class="fa fa-times"></i></a>
+                    </div>
+                  </div>
+                  <!-- /tile header -->
+
+                  <!-- tile body -->
+                  <div class="tile-body">
+                    <input type="hidden" id="productId"value="{$productId}"/>
+                    <form class="form-horizontal" id="basicvalidations">
+
+					  <div class="form-group">
+                        <label for="fullname" class="col-sm-4 control-label">收货人姓名 </label>
+                        <div class="col-sm-8">
+                          <input type="text"  class="form-control parsley-validated" name="name" id="name" parsley-trigger="change" parsley-required="true" parsley-minlength="4" parsley-validation-minlength="1" />
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="fullname" class="col-sm-4 control-label">电话号码</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control parsley-validated" name="mobile" id="mobile" parsley-trigger="change" parsley-required="true" parsley-minlength="4" parsley-validation-minlength="1">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="email" class="col-sm-4 control-label">收件地址</label>
+                        <div class="col-sm-8">
+                          <textarea class="form-control" id="receive_address" rows="6"></textarea>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="minorpwd" class="col-sm-4 control-label">二级密码 *</label>
+                        <div class="col-sm-8">
+                          <input type="password" class="form-control parsley-validated" name="minorpwd" id="minorpwd" parsley-trigger="change" parsley-minlength="4" parsley-type="url" parsley-validation-minlength="1">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="minorpwd" class="col-sm-4 control-label">确认二级密码 *</label>
+                        <div class="col-sm-8">
+                          <input type="password" class="form-control parsley-validated" name="confirmMinorpwd" id="comfirmMinorpwd" parsley-trigger="change" parsley-minlength="4" parsley-type="url" parsley-validation-minlength="1">
+                        </div>
+                      </div>	                     
+                      <div class="form-group form-footer">
+                        <div class="col-sm-offset-4 col-sm-8">
+                          <button type="button" class="btn btn-primary" id="confirm_buy">确认兑换</button>
+                        </div>
+                      </div>
+
+                    </form>
+
+                  </div>
+                  <!-- /tile body -->
+                  
+                
+
+
+                </section>
+                </div>
+            </div>
+          </div>
+	<!-- /content container -->
+
+</div>
+<!-- Page content end -->
+{/block}

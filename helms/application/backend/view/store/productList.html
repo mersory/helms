@@ -1,0 +1,121 @@
+{extend name="base/frontend"} {block name="js"}
+<script type="text/javascript"
+	src="_JS_/common/product/backend_productList.js"></script>
+{/block} {block name="css"} {/block} {block name="content"}
+<!-- Page content -->
+<div id="content" class="col-md-12">
+	<!-- page header -->
+	<div class="pageheader">
+		<h2>
+			<i class="fa fa-tachometer"></i> 商品列表<span></span>
+		</h2>
+		<div class="breadcrumbs">
+			<ol class="breadcrumb">
+				<li><a href="index.html">HERMS</a></li>
+				<li class="active">商品列表</li>
+			</ol>
+		</div>
+	</div>
+	<!-- /page header -->
+
+	<!-- content main container -->
+	<div class="main">
+		<div class="row">
+			<div class="col-md-10">
+				<section class="tile color transparent-white">
+
+					<!-- tile header -->
+					<div class="tile-header">
+						<h1>
+							<strong>商品列表</strong>
+						</h1>
+						<div class="controls">
+							<a href="#" class="refresh"><i class="fa fa-refresh"></i></a> <a
+								href="#" class="remove"><i class="fa fa-times"></i></a>
+						</div>
+						<div class="text-right">
+							<button type="button" class="btn btn-primary add_product">新增商品</button>
+						</div>
+					</div>
+					<!-- /tile header -->
+
+					<!-- tile body -->
+					<div class="tile-body no-vpadding">
+
+						<table class="table table-custom">
+							<thead>
+								<tr>
+									<th class="sort-asc">商品名</th>
+									<th class="sort-numeric">商品名称</th>
+									<th class="sort-amount">商品图片地址</th>
+									<th class="sort-amount">创建时间</th>
+									<th class="sort-amount">上架时间</th>
+									<th class="sort-amount">状态</th>
+									<th class="sort-amount">操作人</th>
+									<th class="sort-amount">库存量</th>
+									<th class="sort-amount">价格</th>
+									<th class="sort-amount">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								{if condition="empty($pass_data) neq true"}
+								{foreach name='pass_data' item='vo'}
+								<tr>
+									<td>{$vo.name}</td>
+									<td>{$vo.description}</td>
+									<td>{$vo.image_url}</td>
+									<td>{$vo.create_time}</td>
+									<td>{$vo.stock_time}</td>
+									<td>{$vo.lifecycle}</td>
+									<td>{$vo.operator}</td>
+									<td>{$vo.invetory}</td>
+									<td>{$vo.price}</td>
+									<td>
+										<div class="col-sm-10 text-center">
+											{if condition="$vo.lifecycle == 1"}
+											<button type="button" product_id="{$vo.id}"
+												class="btn btn-primary down_stock_product">下架</button>
+											{/if}
+											{if condition="$vo.lifecycle != 1"}
+											<button type="button" product_id="{$vo.id}"
+												class="btn btn-primary stock_product">上架</button>
+											{/if}
+											<button type="button" product_id="{$vo.id}"
+												class="btn btn-primary modify_product">修改</button>
+										</div>
+									</td>
+								</tr>
+								{/foreach} {/if} 
+							</tbody>
+						</table>
+
+					</div>
+					<!-- /tile body -->
+
+					<div id="addProductDialog" >
+						<input type="hidden" id="product_id" value="" /> <label
+							for="input03" class="col-sm-5 text-left control-label">商品名</label>
+						<input type="text" class="form-control" type="regist"
+							id="product_name" /> <label for="input03"
+							class="col-sm-5 text-left control-label">商品描述</label> <input
+							type="text" class="form-control" id="product_description">
+						<label for="input03" class="col-sm-3 text-left control-label">商品图片</label>
+						<input type="text" class="form-control" id="product_image"><input
+							id="fileupload" type="file" name="file"> <label
+							for="input03" class="col-sm-5 text-left control-label">库存</label>
+						<input type="text" class="form-control" id="product_inventory">
+						<label
+							for="input03" class="col-sm-5 text-left control-label">价格</label>
+						<input type="text" class="form-control" id="product_price">
+					</div>
+					<!-- /.modal-dialog -->
+
+				</section>
+			</div>
+		</div>
+	</div>
+	<!-- /content container -->
+
+</div>
+<!-- Page content end -->
+{/block}
