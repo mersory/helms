@@ -900,6 +900,31 @@ class Adminopt extends Controller
 	}
 	
 	//帮助开通账号总函数
+	public function activateUser($user_id, $minor_pwd)
+	{
+	    $_details = new User_details();
+	    $_res = $_details->DetailsQuery($user_id);
+	    $_resdata = array();
+	    $_resdata["success"] = true;
+	    	        
+	    if(count($_res)<1)
+	    {
+	        $_resdata["success"] = false;
+	        return json_encode($_resdata);
+	    }
+	    else 
+	    {
+	        $_res = $_res[0];
+	    }
+	    $level = $_res["user_level"];
+	    $regist_money = $level*500;
+	    //$_resact = $this->activeUserOpt($user_id, $level, $regist_money, $minor_pwd);
+	    //$_resdata["success"] = $_resact;
+	    
+	    return json_encode($_resdata);
+	}
+	
+	//被上面总函数调用
 	public function activeUserOpt($user_id, $level, $regist_money, $minor_pwd)
 	{
 	    $_session_user = Session::get(USER_SEESION);

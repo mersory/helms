@@ -122,11 +122,29 @@ function addCol(_index, _username, _telphone, _email,_fromtime, _id) {
 	alert(_id);
 	$("table#applyList_table tr:last").after('<tr><td>'+ _index + '</td><td> '+ _username + ' </td><td>'+ _telphone + ' </td><td>'+ _email + ' </td><td>'+ _fromtime + ' </td><td>'+ _id + '</td><td><button application_id="'+_id+'" type="button" class="btn btn-primary btn_application_list">激活</button></td>');
 	$(".btn_application_list").off("click").on("click",function(){
+		var id= $(this).attr("application_id");
 		
-		alert($(this).attr("application_id"));
+		
 	})
 	
 	
+}
+
+function activateACT(id, minorpwd)
+{
+		var url = "/public/index.php/frontend/Adminopt/activateUser";
+	        $.post(url, {user_id:id, minor_pwd:minorpwd}, function(msg){
+		        msg=JSON.parse(msg);
+		        if(msg.info == 'ok')
+		        {
+		        	alert('激活成功');
+			  	} 
+		        else 
+		        {
+			  		alert("激活失败，积分不够");
+		        }
+	        })
+
 }
 
 function clear_table() {

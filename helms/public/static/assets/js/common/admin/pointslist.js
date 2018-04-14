@@ -11,7 +11,7 @@ $(function(){
 			{
 			  for (var res_index=0;res_index<msg.res.length;res_index++)
 			  {
-				  addCol(msg.res[res_index].ID, msg.res[res_index].shares, msg.res[res_index].bonus_point, msg.res[res_index].regist_point, msg.res[res_index].re_consume, msg.res[res_index].universal_point, msg.res[res_index].re_cast, msg.res[res_index].remain_point, msg.res[res_index].blocked_point);//查询成功，增加行和列
+				  addCol(msg.res[res_index].ID, msg.res[res_index].gushu, msg.res[res_index].gue, msg.res[res_index].bonus_point, msg.res[res_index].regist_point, msg.res[res_index].re_consume, msg.res[res_index].universal_point, msg.res[res_index].shengyu_dong, msg.res[res_index].blocked_point, msg.res[res_index].pay_gujia);//查询成功，增加行和列
 			  }
 			  //window.location.href = "UserLogin.html";
 			} else {
@@ -39,9 +39,9 @@ function validate()
 }  
 
 //插入行
-function addCol(ID, shares, bonus_point, regist_point, re_consume, universal_point, re_cast, remain_point, blocked_point) {
+function addCol(ID, gushu, gue, bonus_point, regist_point, re_consume, universal_point, shengyudong, blocked_point, pay_gujia) {
 	alert(ID);
-	$("table#pointlist tr:last").after('<tr><td>'+ ID + '</td><td>'+ shares + '</td><td>'+ bonus_point + '</td><td> '+ regist_point + ' </td><td>'+ re_consume + ' </td><td>'+ universal_point + ' </td><td>'+ re_cast + ' </td><td>'+ remain_point + ' </td><td>'+ blocked_point + ' </td>');
+	$("table#pointlist tr:last").after('<tr><td>'+ ID + '</td><td>'+ gushu+ '</td><td>'+ gue + '</td><td>'+ bonus_point + '</td><td> '+ regist_point + ' </td><td>'+ re_consume + ' </td><td>'+ universal_point + ' </td><td>'+ shengyudong + ' </td><td>'+ blocked_point + ' </td><td>'+ pay_gujia + ' </td>');
   /*$th = $("<th>增加的列头</th>");
   $col = $("<td>增加的列</td>");
   $("#userlist>thead>tr").append($th);

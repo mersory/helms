@@ -138,7 +138,7 @@ class User_info extends Model
         else
         {
             $this->rollback();
-            var_dump($state);
+            //var_dump($state);
         }
         return $state;
     }

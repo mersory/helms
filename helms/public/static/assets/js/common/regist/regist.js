@@ -51,18 +51,14 @@ $(function(){
 		$.post(url,{ID:id, name:username, email:email, telphone:telphone, recommender:recommender, activator:activator, pwd1:primarypwd, pwd2:minorpwd, $userlevel:1},function(result){
 			result = JSON.parse(result);
 			if(result.success){
-				alert("regist success,goto login");
-				var start = new Date().getTime();
-			    while(true)  if(new Date().getTime()-start > 5000) break;
-				window.location.href="/public/index.php/login/login/index";
+				alert("注册成功，点击确定回到主页");
+				window.location.href="/public/index.php/frontend/common/network";
 			}else{
-				alert("regist failed");
-				var start = new Date().getTime();
-			    while(true)  if(new Date().getTime()-start > 5000) break;
-				return false;
+				alert("注册失败，请重新注册");
+				window.location.href="/public/index.php/frontend/common/network";
 			}
 		});
-		event.stopPropagation();
+//		event.stopPropagation();
 	 	});
 		
 });

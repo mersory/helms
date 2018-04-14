@@ -20,6 +20,7 @@ use think\Session;
 use app\common\model\Role;
 use app\common\model\Income_expenditure;
 use app\backend\controller\Basecontroller;
+use app\common\model\Positionality;
 
 class Common extends Basecontroller
 {       
@@ -332,6 +333,30 @@ class Common extends Basecontroller
         }else{
 			$_user_point = new User_point();
 			$_res = $_user_point->PointQuery($_user_id);
+			if(count($_res) < 1)
+			{
+			    $_resdata["info"] = "error";
+			    return json_encode($_resdata);
+			}
+			$_position = new Positionality();
+			$_res_pos = $_position->PositionQuery($_user_id);
+			if(count($_res_pos) < 1)
+			{
+			    $_resdata["info"] = "error";
+			    return json_encode($_resdata);
+			}
+			$_res_pos = $_res_pos[0];
+			$_res[0]["gushu"]=$_res_pos["gushu"];
+			$_res[0]["gue"]=$_res_pos["bz5"];
+			$_details =new User_details();
+			$_res_dt = $_details->DetailsQuery($_user_id);
+			if(count($_res_dt) < 1)
+			{
+			    $_resdata["info"] = "error";
+			    return json_encode($_resdata);
+			}
+			$_res_dt = $_res_dt[0];
+			$_res[0]["pay_gujia"]=$_res_dt["pay_gujia"];
 			$_resdata["info"] = "ok";
 			$_resdata["res"] = $_res;
 

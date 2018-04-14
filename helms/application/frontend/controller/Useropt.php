@@ -167,7 +167,7 @@ class Useropt extends Basecontroller
         //用户详情信息插入
         $portrait = -1;
         $user_level = $userlevel; 
-        $open_time = time();
+        $open_time = date("Y-m-d H:i:s");//time();
         //$recommender = intval($recommender); 
         //$activator = intval($activator);
         $registry = -1;

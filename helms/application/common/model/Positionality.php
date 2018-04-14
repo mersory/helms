@@ -52,7 +52,7 @@ class Positionality extends Model
         }
         $_position_info = $this->where($_where)
         ->select();
-        var_dump("where".$_where);
+        //var_dump("where".$_where);
         $count = count($_position_info);
         if ($count < 1)
         {
