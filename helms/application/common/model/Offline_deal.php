@@ -10,7 +10,7 @@ class Offline_deal extends Model
         var_dump("Userdetails");
     }
     
-    public function OfflineQuery($ID)//还有其他的查找方式，此处只列出这一个
+    public function OfflineQuery($ID)//锟斤拷锟斤拷锟斤拷锟斤拷锟侥诧拷锟揭凤拷式锟斤拷锟剿达拷只锟叫筹拷锟斤拷一锟斤拷
     {
         $_where = '';
         if ($ID != -1)
@@ -22,7 +22,7 @@ class Offline_deal extends Model
         $count = count($_offline_info);
         if ($count < 1)
         {
-            var_dump("ID :$ID not exsist");
+            var_dump("Offline_deal.php ID :$ID not exsist".__LINE__);
             return ;
         }
         return $_offline_info;

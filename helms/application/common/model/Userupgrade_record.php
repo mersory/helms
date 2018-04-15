@@ -22,7 +22,7 @@ class Userupgrade_record extends Model
         $count = count($_upgrade_info);
         if ($count < 1)
         {
-            var_dump("user_id :$user_id not exsist");
+            var_dump("Userupgrade.php user_id :$user_id not exsist".__LINE__);
             return ;
         }
         return $_upgrade_info;

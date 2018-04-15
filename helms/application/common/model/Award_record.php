@@ -22,7 +22,7 @@ class Award_record extends Model
         $count = count($_award_info);
         if ($count < 1)
         {
-            var_dump("ID :$id not exsist");
+            var_dump("Award_record.php ID :$id not exsist".__LINE__);
             return ;
         }
         return $_award_info;

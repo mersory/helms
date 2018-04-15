@@ -13,7 +13,7 @@ $(function(){
 					alert("请输入二级密码");
 					return false;
 				}else{
-					activateAction(userId,minorpwd);
+					activateAction(applicationId,minorpwd);
 				}
 			}
 		}
@@ -49,7 +49,6 @@ $(function(){
 	 	    var totimeInput=$('#applytime_end').val();
 	 	   	if (validate() == true)
  	   		{
- 	   			alert("valid");
 	 	   		var url = "/public/index.php/backend/common/memberApplicationQueryByTime";
 	 	        $.post(url, {_start:fromtimeInput, _end:totimeInput}, function(msg){
 				msg=JSON.parse(msg);
@@ -154,7 +153,7 @@ function activateAction(id, minorpwd)
 		var url = "/public/index.php/frontend/Adminopt/activateUser";
 	        $.post(url, {user_id:id, minor_pwd:minorpwd}, function(msg){
 		        msg=JSON.parse(msg);
-		        if(msg.info == 'ok')
+		        if(msg.success == true)
 		        {
 		        	alert('激活成功');
 			  	} 

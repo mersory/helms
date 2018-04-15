@@ -188,6 +188,11 @@ class User_info extends Model
            $_point_data2["universal_point"] = 5300;
            $_point_data2["shengyu_jing"] = 3500;
            $_point_data2["shengyu_dong"] = 5000;
+           if(count($_point_info->PointQuery($ID)) < 1)
+           {
+               var_dump("User_info.php ERROR ar line:".__LINE__);
+               return false;
+           }
            $_point_down2 = $_point_info->where("ID='$ID'")
            ->setField($_point_data2);
                            
@@ -202,6 +207,11 @@ class User_info extends Model
             $_detail["repath"] = 2;
             $_detail["repath_ds"] = 2;
             $_detail_info = new User_details();
+            if(count($_detail_info->DetailsQuery($ID)) < 1)
+            {
+                var_dump("User_info.php ERROR ar line:".__LINE__);
+                return false;
+            }
             $_detail_info_res = $_detail_info->where("ID='$ID'")
                                        ->setField($_detail);
             var_dump("details info");
@@ -215,7 +225,7 @@ class User_info extends Model
         }
         
         var_dump($_status_info);
-        return $_point_down && $_activate;
+        return true;
     }
 
     //根据提供信息，查询当前用户信息

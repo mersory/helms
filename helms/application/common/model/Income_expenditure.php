@@ -10,7 +10,7 @@ class Income_expenditure extends Model
         var_dump("Userdetails");
     }
     
-    public function IncomeExpenditureQuery($record_id)//»¹ÓÐÆäËûµÄ²éÕÒ·½Ê½£¬´Ë´¦Ö»ÁÐ³öÕâÒ»¸ö
+    public function IncomeExpenditureQuery($record_id)//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½Ò·ï¿½Ê½ï¿½ï¿½ï¿½Ë´ï¿½Ö»ï¿½Ð³ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
     {
         $_where = '';
         if ($record_id != -1)
@@ -22,7 +22,7 @@ class Income_expenditure extends Model
         $count = count($_withdrawal_info);
         if ($count < 1)
         {
-            var_dump("ID :$record_id not exsist");
+            var_dump("Income_expence.php ID :$record_id not exsist".__LINE__);
             return ;
         }
         return $_withdrawal_info;
@@ -33,7 +33,7 @@ class Income_expenditure extends Model
         $_where = '';
         if (strcmp("$_start", "") )
         {
-            $_where = "count_time > '$_start'";   //ÕâÀï²»Òª=ÒýºÅ£¬ÒòÎª´«ÈëÊý¾Ý¿âÖÐµÄID¾ÍÊÇintÀàÐÍ
+            $_where = "count_time > '$_start'";   //ï¿½ï¿½ï¿½ï²»Òª=ï¿½ï¿½ï¿½Å£ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ðµï¿½IDï¿½ï¿½ï¿½ï¿½intï¿½ï¿½ï¿½ï¿½
         }
         else
         {
@@ -41,7 +41,7 @@ class Income_expenditure extends Model
         }
         if (strcmp("$_end", "") )
         {
-            $_where = "$_where and count_time < '$_end'";//ÕâÀïÐèÒªÌí¼ÓÒýºÅ
+            $_where = "$_where and count_time < '$_end'";//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         }
         if (strcmp("$_where", ""))
         {
@@ -101,7 +101,7 @@ class Income_expenditure extends Model
     
         if ($current_profit >=0)
         {
-            $_inandoutinfo["current_profit"] = $current_profit;//Ò»°ãÕâÀïÖ»ÄÜÎª0£¬±íÊ¾ÉêÇëÌá½»£¬»¹Ã»ÉóºË
+            $_inandoutinfo["current_profit"] = $current_profit;//Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Îª0ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½á½»ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½
         }
         if ($out_contrast_in >=0)
         {
@@ -143,7 +143,7 @@ class Income_expenditure extends Model
     
         if ($current_profit >=0)
         {
-            $_inandoutinfo["current_profit"] = $current_profit;//Ò»°ãÕâÀïÖ»ÄÜÎª0£¬±íÊ¾ÉêÇëÌá½»£¬»¹Ã»ÉóºË
+            $_inandoutinfo["current_profit"] = $current_profit;//Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Îª0ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½á½»ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½
         }
         if ($out_contrast_in >=0)
         {

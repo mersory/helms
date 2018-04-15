@@ -19,7 +19,7 @@ class User_point extends Model
         }
         else 
         {
-            $_where = "ID != '' ";
+            $_where = "ID is not NULL";
         }
             
         $_point_info = $this->where($_where)
@@ -27,7 +27,7 @@ class User_point extends Model
         $count = count($_point_info);
         if ($count < 1)
         {
-            var_dump("ID :$user_id not exsist");
+            var_dump("User_point.php ID :$user_id not exsist".__LINE__);
             return ;
         }
         return $_point_info;

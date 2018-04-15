@@ -23,7 +23,7 @@ class Award_daytime extends Model
         $count = count($_award_info);
         if ($count < 1)
         {
-            var_dump("ID :$id not exsist");
+            var_dump("Award_daytime.php ID :$id not exsist".__LINE__);
             return ;
         }
         return $_award_info;
