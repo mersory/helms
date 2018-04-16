@@ -37,7 +37,7 @@
                   <img src="_IMG_/profile-photo.jpg" alt />
                 </div>
                 <a class="dropdown-toggle options" data-toggle="dropdown" href="#">
-                  {$Think.session.session_user['userId']} <i class="fa fa-caret-down"></i>
+                  {$Think.session.session_user['username']} <i class="fa fa-caret-down"></i>
                 </a>
                 
                 <ul class="dropdown-menu arrow settings">
@@ -53,18 +53,6 @@
                     </ul>
 
                   </li>
-
-                  <li class="divider"></li>
-
-                  <li>
-                    <a href="/public/index.php/frontend/Useropt/userinfo"><i class="fa fa-user"></i> 个人信息</a>
-                  </li>
-
-                  <li>
-                    <a href="/public/index.php/frontend/Useropt/frontend/memberModifyPwd"><i class="fa fa-pencil"></i> 修改密码</a>
-                  </li>
-
-                  <li class="divider"></li>
 
                   <li>
                     <a href="/public/index.php/login/login/index"><i class="fa fa-power-off"></i> 登出</a>
@@ -85,69 +73,20 @@
 
               <li class="navigation" id="navigation">
                 <a href="#" class="sidebar-toggle" data-toggle="#navigation">导航 <i class="fa fa-angle-up"></i></a>
+               
+                {if condition="empty($menu_data) neq true"} 
                 <ul class="menu">
-                  <li class="active">
-                    <a href="index">
-                      <i class="fa fa-tachometer"></i> 主页
-                      <span class="badge badge-red">1</span>
+                	{foreach name='menu_data' item='vo' key="k"}
+                    {if condition='$k eq 0'}<li  class="active">
+                    {else /} <li>
+                    {/if}
+                    <a href="{$vo.url}">
+                      <i class="fa fa-tachometer"></i> {$vo.name}
                     </a>
                   </li>
-                  <li>
-                    <a href="memberList">
-                      <i class="fa fa-play-circle"></i> 会员列表
-                    </a>
-                  </li>
-                                    <li>
-                    <a href="memberApplication">
-                      <i class="fa fa-play-circle"></i> 会员申请
-                    </a>
-                  </li> 
-                                    <li>
-                    <a href="pointsDetails">
-                      <i class="fa fa-play-circle"></i> 积分明细
-                    </a>
-                  </li> 
-                                    <li>
-                    <a href="pointsTransfer">
-                      <i class="fa fa-play-circle"></i> 积分互转
-                    </a>
-                  </li> 
-                                    <li>
-                    <a href="incomeAndExpense">
-                      <i class="fa fa-play-circle"></i> 收支明细
-                    </a>
-                  </li> 
-                                    <li>
-                    <a href="presentApplication">
-                      <i class="fa fa-play-circle"></i> 提现申请
-                    </a>
-                  </li> 
-                                    <li>
-                    <a href="notice">
-                      <i class="fa fa-play-circle"></i> 公告管理
-                    </a>
-                  </li>
-                                                      <li>
-                    <a href="option">
-                      <i class="fa fa-play-circle"></i> 参数设置
-                    </a>
-                  </li>    
-                                                      <li>
-                    <a href="log">
-                      <i class="fa fa-play-circle"></i> 操作日志
-                    </a>
-                  </li>  
-                                                                        <li>
-                    <a href="/public/index.php/backend/store/orderlist">
-                      <i class="fa fa-play-circle"></i> 商城订单
-                    </a>
-                  </li>  
-                                                                        <li>
-                    <a href="/public/index.php/backend/store/productlist">
-                      <i class="fa fa-play-circle"></i> 商城商品
-                    </a>
-                  </li>  
+                  {/foreach}
                 </ul>
+                {/if}
               </li>
 
               <li class="summary" id="order-summary">

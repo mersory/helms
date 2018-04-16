@@ -12,6 +12,7 @@ $(function(){
 	$("#login").on("click",function(event){
 		var username = $("#username").val();
 		var password = $("#password").val();
+		var isAdmin = $("#isAdmin").prop("checked");
 		
 		if("" == $.trim(username)){
 			showError("用户名不能为空");
@@ -23,13 +24,13 @@ $(function(){
 			return false;
 		}
 		
-		if( !validate() ){
+		if(!isAdmin && !validate() ){
 			showError("输入密码用户名或错误");
 			return false;
 		}
 		
 		var url =  "/public/index.php/login/login/login";
-		 $.post(url,{_username:username,_password:password},function(result){
+		 $.post(url,{_username:username,_password:password,isAdmin:isAdmin},function(result){
 			 result = JSON.parse(result);
 			 if(result.success){
 				 window.location.href=result.redirectUrl;

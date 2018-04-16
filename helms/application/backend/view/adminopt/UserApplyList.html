@@ -332,29 +332,23 @@
                   </div>
                   <!-- /tile body -->
 
-
-                  <!-- tile footer -->
-                  <div class="tile-footer bg-transparent-white-2 rounded-bottom-corners">
-                    <div class="row">  
-                      
-                      <div class="col-sm-4">
-                        <small class="inline table-options paging-info">showing 1-3 of 24 items</small>
-                      </div>
-
-                      <div class="col-sm-4 text-center sm-center">
-                        <ul class="pagination pagination-xs nomargin pagination-custom">
-                          <li class="disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                          <li class="active"><a href="#">1</a></li>
-                          <li><a href="#">2</a></li>
-                          <li><a href="#">3</a></li>
-                          <li><a href="#">4</a></li>
-                          <li><a href="#">5</a></li>
-                          <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
-                        </ul>
-                      </div>
-
-                    </div>
-                  </div>
+                 <div id="confirmApplicationDialog" >
+						<input type="hidden" id="product_id" value="" /> <label
+							for="input03" class="col-sm-5 text-left control-label">商品名</label>
+						<input type="text" class="form-control" type="regist"
+							id="product_name" /> <label for="input03"
+							class="col-sm-5 text-left control-label">商品描述</label> <input
+							type="text" class="form-control" id="product_description">
+						<label for="input03" class="col-sm-3 text-left control-label">商品图片</label>
+						<input type="text" class="form-control" id="product_image"><input
+							id="fileupload" type="file" name="file"> <label
+							for="input03" class="col-sm-5 text-left control-label">库存</label>
+						<input type="text" class="form-control" id="product_inventory">
+						<label
+							for="input03" class="col-sm-5 text-left control-label">价格</label>
+						<input type="text" class="form-control" id="product_price">
+					</div>
+					<!-- /.modal-dialog -->
 
                 </section>
               </div>
