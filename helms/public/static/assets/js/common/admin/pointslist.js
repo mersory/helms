@@ -2,7 +2,7 @@ $(function(){
 	$('#btn_point_details').on("click",function(){
 		clear_table()
 		var useridInput=$('#userid').val();
-		if (validate() == true)
+		if (validate(useridInput) == true)
 		{
 			var url = "/public/index.php/backend/common/pointDetailsQuery";
 			$.post(url, {_user_id:useridInput}, function(msg){
@@ -15,7 +15,7 @@ $(function(){
 			  }
 			  //window.location.href = "UserLogin.html";
 			} else {
-			  alert("登录失败");
+			  alert("输入ID不合法，查询结果为空");
 			  return false;
 			}
 			})
@@ -23,8 +23,7 @@ $(function(){
 		}
 		else
 		{
-			//$("#username").focus();
-			alert("not valid");
+			alert("输入ID不能为空，请输入正确ID号");
 			return false;
 		}
 	 });
@@ -32,9 +31,10 @@ $(function(){
 });
 
 //输入序列合法性检测
-function validate() 
+function validate(input) 
 {
-   alert("输入序列合法");
+   if(input=="")
+	   return false;
    return true;
 }  
 

@@ -22,7 +22,7 @@ class Deal_info extends Model
         $count = count($_deal_info);
         if ($count < 1)
         {
-            var_dump("ID :$deal_id not exsist");
+            var_dump("Deal_info.php ID :$deal_id not exsist".__LINE__);
             return ;
         }
         return $_deal_info;

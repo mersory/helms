@@ -22,7 +22,7 @@ class User_bankinfo extends Model
         $count = count($_bank_info);
         if ($count < 1)
         {
-            var_dump("user_id :$user_id not exsist");
+            var_dump("User_bank.php user_id :$user_id not exsist".__LINE__);
             return ;
         }
         return $_bank_info;

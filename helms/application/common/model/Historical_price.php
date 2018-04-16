@@ -23,7 +23,7 @@ class Historical_price extends Model
         $count = count($_price_info);
         if ($count < 1)
         {
-            var_dump("ID :$time not exsist");
+            var_dump("Historical.php ID :$time not exsist".__LINE__);
             return ;
         }
         return $_price_info;

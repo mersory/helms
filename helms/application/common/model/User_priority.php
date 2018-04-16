@@ -22,7 +22,7 @@ class User_priority extends Model
         $count = count($_priority_info);
         if ($count < 1)
         {
-            var_dump("id :$user_id not exsist");
+            var_dump("User_priority.php id :$user_id not exsist".__LINE__);
             return ;
         }
         return $_priority_info;

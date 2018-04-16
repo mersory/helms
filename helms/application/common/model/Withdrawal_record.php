@@ -22,7 +22,7 @@ class Withdrawal_record extends Model
         $count = count($_withdrawal_info);
         if ($count < 1)
         {
-            var_dump("ID :$user_id not exsist");
+            var_dump("Withdrawal_record.php ID :$user_id not exsist".__LINE__);
             return ;
         }
         return $_withdrawal_info;

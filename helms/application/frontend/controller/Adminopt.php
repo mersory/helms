@@ -153,7 +153,7 @@ class Adminopt extends Controller
     //开通会员过程处理2018-02-28
     //参数1是将要开通的userid，参数2是登录的那个人的userid，开通等级
     //本函数被audit_member_open函数调用，在开通过程中，需要本函数处理一些事情，然后会能够顺利完成audit_member_open函数的整个逻辑
-    public function _member_open($uid, $open_uid = 0, $lv)  
+    public function _member_open($uid, $openid = 0, $lv)  
     {
         $member = new Positionality();//M('member');
         var_dump("_member_open");
@@ -197,15 +197,9 @@ class Adminopt extends Controller
         var_dump($user_id);
         //var_dump($user_id);
         $state = $userdetails->DetailsUpdate($user_id, -1, -1, -1, -1, $ntime, -1, -1, -1);
-        if(!$state)
-            {
-                var_dump('ERROR : Adminopt.php on line:'.__LINE__);
-                //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
-                return false;
-            }
         //var_dump($state);
 		$status = 1;
-		$openid = $open_uid;//当前登录的用户id，与网络结构和推荐结构无关
+		//$openid = $open_uid;//当前登录的用户id，与网络结构和推荐结构无关
 		//var_dump("openid:");
 		//var_dump($openid);
 		$fenh_time =  date("Y-m-d H:i:s",strtotime("+1 day"));//
@@ -259,14 +253,14 @@ class Adminopt extends Controller
     }
     
     //开通会员-----后台开通，前台传入的勾选的所有的需要开通的ID号
-    //开通用户的主入口函数
+    //被本文件的函数调用
     public function audit_member_open($id, $openid = 1) {
         var_dump("Adminopt.php : audit_member_open".__LINE__);
         $today = date('Y-m-d H:i:s');
         $member = new Positionality();
         $award = new Awardopt();
         var_dump("Adminopt.php : audit_member_open".__LINE__);
-        $node = $member->PositionQuery($id);
+        $node = $member->PositionQueryByID($id);
         $vo = $node[0];
         var_dump("Adminopt.php : audit_member_open".__LINE__);
         var_dump("userid:".$vo['user_id']);
@@ -577,7 +571,7 @@ class Adminopt extends Controller
 	    //************************
 	    //这部分还没改写
 	    //更新奖金，5表示的就是什么奖，这里是静态奖
-	    $this->_in_bonus($vo['ID'], $vo['user_id'], 5, $wanneng_money);                    //将静态奖金录入
+	    $this->_in_bonus($vo['user_id'], $vo['user_id'], 5, $wanneng_money);                    //将静态奖金录入
 	    $awardopt = new Awardopt();
 	    $awardopt->tree2ds_x_tongji($vo['json'], $vo['treeplace'],$vo['status'] * 500);
 	    $awardopt->bonus_tongji($vo['ID'],1);                                                  //复投所有奖金要重新计算

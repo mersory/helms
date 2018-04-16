@@ -22,7 +22,7 @@ class Gp_onsale extends Model
         $count = count($_award_info);
         if ($count < 1)
         {
-            var_dump("ID :$id not exsist");
+            var_dump("Gp_onsale.php ID :$id not exsist".__LINE__);
             return ;
         }
         return $_award_info;
@@ -44,7 +44,7 @@ class Gp_onsale extends Model
         $count = count($_award_info);
         if ($count < 1)
         {
-            var_dump("GponsaleQueryByStatus :$status not exsist");
+            var_dump("GponsaleQueryByStatus :$status not exsist".__LINE__);
             return ;
         }
         return $_award_info[0];

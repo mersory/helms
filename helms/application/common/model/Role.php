@@ -10,7 +10,7 @@ class Role extends Model
         var_dump("Userdetails");
     }
     
-    public function RoleQuery($ID)//»¹ÓÐÆäËûµÄ²éÕÒ·½Ê½£¬´Ë´¦Ö»ÁÐ³öÕâÒ»¸ö
+    public function RoleQuery($ID)//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½Ò·ï¿½Ê½ï¿½ï¿½ï¿½Ë´ï¿½Ö»ï¿½Ð³ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
     {
         $_where = '';
         if ($ID > 0)
@@ -21,8 +21,7 @@ class Role extends Model
         ->select();
         $count = count($_role_info);
         if ($count < 1)
-        {
-            var_dump("ID :$ID not exsist");
+        {           
             return ;
         }
         return $_role_info;

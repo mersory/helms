@@ -22,7 +22,7 @@ class Gp_set extends Model
         $count = count($_award_info);
         if ($count < 1)
         {
-            var_dump("ID :$id not exsist");
+            var_dump("Gp_set.php ID :$id not exsist".__LINE__);
             return ;
         }
         return $_award_info;

@@ -22,7 +22,7 @@ class User_role extends Model
         $count = count($_role_info);
         if ($count < 1)
         {
-            var_dump("id :$user_id not exsist");
+            var_dump("User_role.php id :$user_id not exsist".__LINE__);
             return ;
         }
         return $_role_info;

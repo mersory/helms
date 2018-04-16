@@ -23,7 +23,7 @@ class Realtime_price extends Model
         $count = count($_offline_info);
         if ($count < 1)
         {
-            var_dump("ID :$time not exsist");
+            var_dump("Realtime.php ID :$time not exsist".__LINE__);
             return ;
         }
         return $_offline_info;

@@ -7,6 +7,7 @@ use app\common\model\User_details;
 use app\trigger\controller\External;
 use app\common\model\Positionality;
 use app\common\model\Award_daytime;
+use app\common\model\Award_record;
 
 class Awardopt extends Controller
 {
@@ -339,8 +340,9 @@ class Awardopt extends Controller
 	        /*if($vo['is_lock'] != 0){
 	            continue;
 	        }*/
-	        
-	        $myids = $vo['ID'];
+	        if($vo["parent"] == 0)//当前节点是管理员账号，不进行积分计算
+	            continue;
+	        $myids = $vo['user_id'];
 	        $inUserID = $vo['user_id'];
 	        $l = $r = 0;
 	        $l = $vo['sq_lds'] + $vo['bq_lds'];     //左区单数
@@ -378,7 +380,9 @@ class Awardopt extends Controller
 	            //$this->guanli_jj($vo['user_id'], $vo['re_path'], $vo['re_level'], $get_money);
 	            $this->tutorAward($vo['user_id'], $vo['re_path'], 2/*$vo['re_level']*/, $get_money,$ft);
 	            //感恩奖
-	            $this->thanksAward($vo['ganen_next_id'],$vo['ganen_next_r_id'],$vo['user_id'],$get_money);
+	            $ganenForthanks = $position->getUserIdByID($vo['ganen_next_id']);
+	            $ganenRidForthanks = $position->getUserIdByID($vo['ganen_next_r_id']);
+	            $this->thanksAward($ganenForthanks,$ganenRidForthanks,$vo['user_id'],$get_money);
 	        }
 	    }
 
@@ -404,7 +408,9 @@ class Awardopt extends Controller
 	        /*if($vo['is_lock'] != 0){
 	         continue;
 	         }*/
-	        $myids = $vo['ID'];
+	        if($vo["parent"] == 0)//当前节点是管理员账号，不进行积分计算
+	            continue;
+	        $myids = $vo['user_id'];
 	        $inUserID = $vo['user_id'];
             $l = $vo['sq_lds']+$vo['sq_x_lds'] + $vo['bq_x_lds'];     //左区虚单数
 			$r = $vo['sq_rds']+$vo['sq_x_rds'] + $vo['bq_x_rds'];     //右区虚单数
@@ -439,7 +445,9 @@ class Awardopt extends Controller
 	            //$this->guanli_jj($vo['user_id'], $vo['re_path'], $vo['re_level'], $get_money);
 	            $this->tutorAward($vo['user_id'], $vo['re_path'], 2, $get_money,$ft);
 	            //感恩奖
-	            $this->thanksAward($vo['ganen_next_id'],$vo['ganen_next_r_id'],$vo['user_id'],$get_money);
+	            $ganenForthanks = $position->getUserIdByID($vo['ganen_next_id']);
+	            $ganenRidForthanks = $position->getUserIdByID($vo['ganen_next_r_id']);
+	            $this->thanksAward($ganenForthanks,$ganenRidForthanks,$vo['user_id'],$get_money);
 	        }
 	    }
 	    
@@ -466,7 +474,8 @@ class Awardopt extends Controller
 	        //unset($data);
 	         
 	        //添加奖金纪录
-	        $_res_award_record = $this->AwardRecordInsert($myids, "万能奖", $get_money, $fuserid);
+	        $award_record = new Award_record();
+	        $_res_award_record = $award_record->AwardRecordInsert($myids, "万能奖", $get_money, $fuserid);
 	    }else{
 	        $shui_bl = 5;//cy_get_conf('bl_shui'); //5
 	        $jijin_bl = 1;//cy_get_conf('bl_jijin');//1
@@ -531,7 +540,8 @@ class Awardopt extends Controller
              
             //添加奖金记录
             $minfo = '实发（'.$ok_money.'）重消分（'.$produceCX.'）税收（'.$shui.'）基金（'.$jijin.'）。';
-            $this->AwardRecordInsert($myids, "重复消费分", $get_money, $fuserid, $minfo);
+            $award_record = new Award_record();
+	        $_res_award_record = $award_record->AwardRecordInsert($myids, "重复消费分", $get_money, $fuserid, $minfo);
             //$this->award_history($myids, $fuserid, $get_money, $bkey, $btime, $minfo);//$fuserid，拿了谁的奖，对碰和静态都是自己的，辅导就是被辅导的那个人，
             //if ($shui > 0) {
             //	$this->award_history($myids, $fuserid, $shui, 6, $btime);

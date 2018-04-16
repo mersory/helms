@@ -22,7 +22,7 @@ class Subuser_info extends Model
         $count = count($_subuer_info);
         if ($count < 1)
         {
-            var_dump("ID :$sub_user_id not exsist");
+            var_dump("Subuser.php ID :$sub_user_id not exsist".__LINE__);
             return ;
         }
         return $_subuer_info;
