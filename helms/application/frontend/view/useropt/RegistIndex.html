@@ -1,0 +1,129 @@
+{extend name="base/frontend"} {block name="js"}
+<script type="text/javascript" src="_JS_/common/regist/regist.js"></script>
+{/block} {block name="css"}
+{/block} {block name="content"}
+        <!-- Page content -->
+        <div id="content" class="col-md-12">
+          <!-- page header -->
+          <div class="pageheader">
+            <h2><i class="fa fa-tachometer"></i> 注册会员<span></span></h2>
+            <div class="breadcrumbs">
+              <ol class="breadcrumb">
+                <li><a href="index.html">HERMS</a></li>
+                <li class="active">注册会员</li>
+              </ol>
+            </div>
+          </div>
+          <!-- /page header -->
+
+          <!-- content main container -->
+          <div class="main">
+          	<div class="row">
+                <div class="col-md-6">
+                  <section class="tile color transparent-black">
+
+
+
+                  <!-- tile header -->
+                  <div class="tile-header">
+                    <h1><strong>注册会员</strong></h1>
+                    <div class="controls">
+                      <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
+                      <a href="#" class="remove"><i class="fa fa-times"></i></a>
+                    </div>
+                  </div>
+                  <!-- /tile header -->
+
+                  <!-- tile body -->
+                  <div class="tile-body">
+                    
+                    <form class="form-horizontal" id="basicvalidations">
+
+					  <div class="form-group">
+                        <label for="memberId" class="col-sm-4 control-label">会员ID </label>
+                        <div class="col-sm-8">
+                          <input type="text"  readonly="readonly" class="form-control parsley-validated" name="memberId" id="memberId" parsley-trigger="change" parsley-required="true" parsley-minlength="4" parsley-validation-minlength="1" value="{$user_id}" />
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="fullname" class="col-sm-4 control-label">真实姓名 *</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control parsley-validated" name="fullname" id="fullname" parsley-trigger="change" parsley-required="true" parsley-minlength="4" parsley-validation-minlength="1">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="email" class="col-sm-4 control-label">邮箱 *</label>
+                        <div class="col-sm-8">
+                          <input type="email" class="form-control parsley-validated" name="email" id="email" parsley-trigger="change" parsley-required="true" parsley-minlength="4" parsley-type="email" parsley-validation-minlength="1">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="telphone" class="col-sm-4 control-label">手机号 *</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control parsley-validated" name="telphone" id="telphone" parsley-trigger="change" parsley-required="true" parsley-minlength="6" parsley-type="alphanum" parsley-validation-minlength="1">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="recommender" class="col-sm-4 control-label">推荐人 *</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control parsley-validated" name="recommender" id="recommender" parsley-trigger="change" parsley-required="true" parsley-minlength="6" parsley-type="alphanum" parsley-validation-minlength="1" parsley-equalto="#password">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="activator" class="col-sm-4 control-label">节点人 *</label>
+                        <div class="col-sm-8">
+                          <input type="text"  readonly="readonly" class="form-control parsley-validated" name="activator" id="activator" parsley-trigger="change" parsley-minlength="4" parsley-type="url" parsley-validation-minlength="1">
+                        </div>
+                      </div>
+					  <div class="form-group">
+                        <label for="primarypwd" class="col-sm-4 control-label">一级密码 *</label>
+                        <div class="col-sm-8">
+                          <input type="password" class="form-control parsley-validated" name="primarypwd" id="primarypwd" parsley-trigger="change" parsley-minlength="4" parsley-type="url" parsley-validation-minlength="1">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="primarypwd" class="col-sm-4 control-label">确认一级密码 *</label>
+                        <div class="col-sm-8">
+                          <input type="password" class="form-control parsley-validated" name="confirmPrimarypwd" id="confirmPrimarypwd" parsley-trigger="change" parsley-minlength="4" parsley-type="url" parsley-validation-minlength="1">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="minorpwd" class="col-sm-4 control-label">二级密码 *</label>
+                        <div class="col-sm-8">
+                          <input type="password" class="form-control parsley-validated" name="minorpwd" id="minorpwd" parsley-trigger="change" parsley-minlength="4" parsley-type="url" parsley-validation-minlength="1">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="minorpwd" class="col-sm-4 control-label">确认二级密码 *</label>
+                        <div class="col-sm-8">
+                          <input type="password" class="form-control parsley-validated" name="confirmMinorpwd" id="comfirmMinorpwd" parsley-trigger="change" parsley-minlength="4" parsley-type="url" parsley-validation-minlength="1">
+                        </div>
+                      </div>
+                      	                     
+                      <div class="form-group form-footer">
+                        <div class="col-sm-offset-4 col-sm-8">
+                          <button type="submit" class="btn btn-primary" id="regist">注册</button>
+                        </div>
+                      </div>
+
+                    </form>
+
+                  </div>
+                  <!-- /tile body -->
+                  
+                
+
+
+                </section>
+                </div>
+            </div>
+          </div>
+          <!-- /content container -->
+
+</div>
+{/block}
