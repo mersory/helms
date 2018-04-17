@@ -40,7 +40,6 @@ function validate(input)
 
 //插入行
 function addCol(ID, gushu, gue, bonus_point, regist_point, re_consume, universal_point, shengyudong, blocked_point, pay_gujia) {
-	alert(ID);
 	$("table#pointlist tr:last").after('<tr><td>'+ ID + '</td><td>'+ gushu+ '</td><td>'+ gue + '</td><td>'+ bonus_point + '</td><td> '+ regist_point + ' </td><td>'+ re_consume + ' </td><td>'+ universal_point + ' </td><td>'+ shengyudong + ' </td><td>'+ blocked_point + ' </td><td>'+ pay_gujia + ' </td>');
   /*$th = $("<th>增加的列头</th>");
   $col = $("<td>增加的列</td>");

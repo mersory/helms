@@ -24,19 +24,16 @@ $(function(){
 	
 	$('#btn_point_transform').on("click",function(){
 		clear_table();
-		alert("调用方法");
 		var useridInput=$('#userid').val();
 		var fromtimeInput=$('#point_transform_start').val();
  	    var totimeInput=$('#point_transform_end').val();
 		if (validate() == true)
 		{//pointTransformQuery($_user_id, $_start, $_end)
-			alert("valid");
 			var url = "/public/index.php/backend/common/pointTransformQuery";
 			$.post(url, {_user_id:useridInput, _start:fromtimeInput, _end:totimeInput}, function(msg){
 			msg=JSON.parse(msg);
 			if(msg.info == 'ok')
 			{
-			  alert('登录成功，正在转向后台主页！');
 			  for (var res_index=0;res_index<msg.res.length;res_index++)
 			  {
 				  addCol(res_index, msg.res[res_index].user_id, msg.res[res_index].point_change_type, msg.res[res_index].point_change_sum, msg.res[res_index].point_change_time);//查询成功，增加行和列
@@ -61,20 +58,17 @@ $(function(){
 //输入序列合法性检测
 function validate() 
 {
-   alert("输入序列合法");
    return true;
 }  
 
 function pointtran() 
 {
-   alert("pointtran");
    return true;
 }  
 
 
 //插入行
 function addCol(res_index, user_id, point_change_type, point_change_sum, point_change_time) {
-	alert(user_id);
 	$("table#point_transform_list tr:last").after('<tr><td>'+ res_index + '</td><td>'+ user_id + '</td><td>'+ point_change_type + '</td><td> '+ point_change_sum + ' </td><td>'+ point_change_time + '</td>');
   /*$th = $("<th>增加的列头</th>");
   $col = $("<td>增加的列</td>");

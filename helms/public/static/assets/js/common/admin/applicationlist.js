@@ -44,7 +44,6 @@ $(function(){
 	
 	$('#btn_application_list').on("click",function(){
 			clear_table()
-	 		alert("调用方法");
 			var fromtimeInput=$('#applytime_start').val();
 	 	    var totimeInput=$('#applytime_end').val();
 	 	   	if (validate() == true)
@@ -54,7 +53,6 @@ $(function(){
 				msg=JSON.parse(msg);
 	 	        if(msg.info == 'ok')
 	 	        {
-	 	          alert('登录成功，正在转向后台主页！');
 				  for (var res_index=0;res_index<msg.res.length;res_index++)
 				  {
 					  addCol(res_index, msg.res[res_index].user_name, msg.res[res_index].telphone, msg.res[res_index].email, msg.res[res_index].open_time, msg.res[res_index].ID);//查询成功，增加行和列
@@ -80,7 +78,6 @@ $(function(){
 //输入序列合法性检测
 function validate() 
 {
-   alert("输入序列合法");
    return true;
 }  
 
@@ -104,7 +101,6 @@ var user =[
     {  
        if(o.value == user[index].name)  
        {  
-         alert ("干一些"+user[index].name+"相关的事情");  
          break;  
        }  
     }     
@@ -137,7 +133,6 @@ o = null;
 
 //插入行
 function addCol(_index, _username, _telphone, _email,_fromtime, _id) {
-	alert(_id);
 	$("table#applyList_table tr:last").after('<tr><td>'+ _index + '</td><td> '+ _username + ' </td><td>'+ _telphone + ' </td><td>'+ _email + ' </td><td>'+ _fromtime + ' </td><td>'+ _id + '</td><td><button application_id="'+_id+'" type="button" class="btn btn-primary btn_application_list">激活</button></td>');
 	$(".btn_application_list").off("click").on("click",function(){
 		var id= $(this).attr("application_id");

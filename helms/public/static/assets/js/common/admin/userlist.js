@@ -67,13 +67,11 @@ $(function(){
 //输入序列合法性检测
 function validate() 
 {
-   alert("输入序列合法");
    return true;
 }  
 
 //插入行
 function addCol(_index, _id, _username, _telphone, _email, _level, _fromtime) {
-	alert(_id);
 	$("table#userList_table tr:last").after('<tr><td>'+ _index + '</td><td>'+ _id + '</td><td> '+ _username + ' </td><td>'+ _telphone + ' </td><td>'+ _email + ' </td><td>'+ _level + ' </td><td>'+ _fromtime + ' </td>');
   /*$th = $("<th>增加的列头</th>");
   $col = $("<td>增加的列</td>");

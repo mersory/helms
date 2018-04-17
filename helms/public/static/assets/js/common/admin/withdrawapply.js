@@ -23,19 +23,16 @@ $(function(){
 	
 	$('#withdraw_application').on("click",function(){
 		clear_table();
-		alert("调用提现方法");
 		var useridInput=$('#userid').val();
 		var fromtimeInput=$('#withdraw_start').val();
  	    var totimeInput=$('#withdraw_end').val();
 		if (validate() == true)
 		{
-			alert("valid");
 			var url = "/public/index.php/backend/common/presentApplicationQuery";
 			$.post(url, {_user_id:useridInput, _start:fromtimeInput, _end:totimeInput}, function(msg){
 			msg=JSON.parse(msg);
 			if(msg.info == 'ok')
 			{
-			  alert('登录成功，正在转向后台主页！');
 			  for (var res_index=0;res_index<msg.res.length;res_index++)
 			  {
 				  addCol(res_index, msg.res[res_index].user_id, msg.res[res_index].withdrawal_type, msg.res[res_index].withdraw_sum, msg.res[res_index].apply_time, msg.res[res_index].withdrawal_status, msg.res[res_index].verifier_id, msg.res[res_index].approve_time);//查询成功，增加行和列
@@ -60,7 +57,6 @@ $(function(){
 //输入序列合法性检测
 function validate() 
 {
-   alert("输入序列合法");
    return true;
 }  
 
