@@ -16,6 +16,10 @@ $(function() {
 						product_url : $("#addProductDialog #product_image").val(),
 						product_inventory : $("#addProductDialog #product_inventory").val(),
 						product_price : $("#addProductDialog #product_price").val(),
+						product_cur_price : $("#addProductDialog #product_cur_price").val(),
+						product_category : $("#addProductDialog #product_category").val(),
+						product_category_name : $("#addProductDialog #product_category_name").val(),
+						product_order : $("#addProductDialog #product_order").val()
 					}, function(result) {
 						result = JSON.parse(result);
 						if(result.result){
@@ -35,6 +39,10 @@ $(function() {
 						product_url : $("#addProductDialog #product_image").val(),
 						product_inventory : $("#addProductDialog #product_inventory").val(),
 						product_price : $("#addProductDialog #product_price").val(),
+						product_cur_price : $("#addProductDialog #product_cur_price").val(),
+						product_category : $("#addProductDialog #product_category").val(),
+						product_category_name : $("#addProductDialog #product_category_name").val(),
+						product_order : $("#addProductDialog #product_order").val()
 					}, function(result) {
 						result = JSON.parse(result);
 						if(result.result){
@@ -103,6 +111,10 @@ $(function() {
 				$("#addProductDialog #product_image").val(result[0].image_url);
 				$("#addProductDialog #product_inventory").val(result[0].invetory);
 				$("#addProductDialog #product_price").val(result[0].price);
+				$("#addProductDialog #product_cur_price").val(result[0].cur_pirce),
+				$("#addProductDialog #product_category").val(result[0].category),
+				$("#addProductDialog #product_category_name").val(result[0].category_name),
+				$("#addProductDialog #product_order").val(result[0].order)
 				$("#addProductDialog #product_id").val(productId);
 				$("#addProductDialog").dialog( "open" );
 			}

@@ -46,7 +46,7 @@
 							<thead>
 								<tr>
 									<th class="sort-asc">商品名</th>
-									<th class="sort-numeric">商品名称</th>
+									<th class="sort-numeric">商品描述</th>
 									<th class="sort-amount">商品图片地址</th>
 									<th class="sort-amount">创建时间</th>
 									<th class="sort-amount">上架时间</th>
@@ -54,6 +54,10 @@
 									<th class="sort-amount">操作人</th>
 									<th class="sort-amount">库存量</th>
 									<th class="sort-amount">价格</th>
+									<th class="sort-amount">销售价格(兑换积分)</th>
+									<th class="sort-amount">分类编码</th>
+									<th class="sort-amount">分类名称</th>
+									<th class="sort-amount">排序号</th>
 									<th class="sort-amount">操作</th>
 								</tr>
 							</thead>
@@ -63,13 +67,17 @@
 								<tr>
 									<td>{$vo.name}</td>
 									<td>{$vo.description}</td>
-									<td>{$vo.image_url}</td>
+									<td><img src="_IMG_/resources{$vo.image_url}" class="img-responsive" style="width:100px;height:120px;"alt="Berry Lace Dress"></td>
 									<td>{$vo.create_time}</td>
 									<td>{$vo.stock_time}</td>
 									<td>{$vo.lifecycle}</td>
 									<td>{$vo.operator}</td>
 									<td>{$vo.invetory}</td>
 									<td>{$vo.price}</td>
+									<td>{$vo.cur_price}</td>
+									<td>{$vo.category}</td>
+									<td>{$vo.category_name}</td>
+									<td>{$vo.order}</td>
 									<td>
 										<div class="col-sm-10 text-center">
 											{if condition="$vo.lifecycle == 1"}
@@ -107,6 +115,18 @@
 						<label
 							for="input03" class="col-sm-5 text-left control-label">价格</label>
 						<input type="text" class="form-control" id="product_price">
+						<label
+							for="input03" class="col-sm-5 text-left control-label">销售价格(兑换积分)</label>
+						<input type="text" class="form-control" id="product_cur_price">
+						<label
+							for="input03" class="col-sm-5 text-left control-label">分类编码</label>
+						<input type="text" class="form-control" id="product_category">
+						<label
+							for="input03" class="col-sm-5 text-left control-label">分类名称</label>
+						<input type="text" class="form-control" id="product_category_name">
+						<label
+							for="input03" class="col-sm-5 text-left control-label">排序号</label>
+						<input type="text" class="form-control" id="product_order">
 					</div>
 					<!-- /.modal-dialog -->
 

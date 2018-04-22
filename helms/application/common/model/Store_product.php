@@ -10,9 +10,22 @@ class Store_product extends Model
         var_dump("Storeproductinfo");
     }
     
+    public function CategorytInfoAllQuery(){
+        
+        $_productinfo = $this->field('category,category_name')->group('category')->select();
+        $count = count($_productinfo);
+        if ($count < 1)
+        {
+            var_dump("ProductInfo not exsist");
+            return ;
+        }
+        return $_productinfo;
+    }
+    
     public function ProductInfoAllQuery()
     {
-        $_productinfo = $this->select();
+        $_where = '';
+        $_productinfo = $this->where($_where)->order("id desc")->select();
         $count = count($_productinfo);
         if ($count < 1)
         {
@@ -54,7 +67,7 @@ class Store_product extends Model
         return $_productinfo;
     }
     
-    public function StoreProductInsert($name, $description, $image_url, $operator, $invetory,$price)
+    public function StoreProductInsert($name, $description, $image_url, $operator, $invetory,$price,$curPrice,$category,$categoryName,$order)
     {
         $_productinfo = array();
         if ($name >=0)
@@ -86,7 +99,27 @@ class Store_product extends Model
         {
             $_productinfo["price"] = $price;
         }
-    
+        
+        if ($curPrice >=0)
+        {
+            $_productinfo["curPrice"] = $curPrice;
+        }
+        
+        if ($category >=0)
+        {
+            $_productinfo["category"] = $category;
+        }
+        
+        if ($categoryName >=0)
+        {
+            $_productinfo["categoryName"] = $categoryName;
+        }
+        
+        if ($order >=0)
+        {
+            $_productinfo["order"] = $order;
+        }
+        
         $t=time();
         $_productinfo["create_time"] = date("Y-m-d H:i:s",$t);
     
@@ -103,7 +136,7 @@ class Store_product extends Model
         return $state;
     }
     
-    public function StoreProductUpdate($id, $name, $description, $image_url, $operator, $invetory,$price)
+    public function StoreProductUpdate($id, $name, $description, $image_url, $operator, $invetory,$price,$curPrice,$category,$categoryName,$order)
     {
         $_productinfo = array();
         if ($name >=0)
@@ -134,6 +167,26 @@ class Store_product extends Model
         if ($price >=0)
         {
             $_productinfo["price"] = $price;
+        }
+        
+        if ($curPrice >=0)
+        {
+            $_productinfo["curPrice"] = $curPrice;
+        }
+        
+        if ($category >=0)
+        {
+            $_productinfo["category"] = $category;
+        }
+        
+        if ($categoryName >=0)
+        {
+            $_productinfo["categoryName"] = $categoryName;
+        }
+        
+        if ($order >=0)
+        {
+            $_productinfo["order"] = $order;
         }
     
         $state = $this-> where("id=$id")

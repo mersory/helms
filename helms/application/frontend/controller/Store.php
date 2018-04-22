@@ -12,11 +12,35 @@ class Store extends Controller
     //商城主页
     public function index()
     {
+/*         $category=$_REQUEST['cc'];
+        if('all'==$category){
+            $category = null;
+        } */
+
         $_product = new Store_product();
+        
+        //获取所有类别
+        $_category_info = $_product->CategorytInfoAllQuery();
+        
         $_product_info = $_product->ProductInfoAllQuery();
         // 向V层传数据
         $this->assign('pass_data', $_product_info);
         
+        $this->assign('category_info', $_category_info);
+        
+        // 取回打包后的数据
+        $htmls = $this->fetch();
+        return $htmls;
+    }
+    
+    //商城详情
+    public function detail($productId)
+    {
+        $_product = new Store_product();
+        $_product_info = $_product->ProductInfoByIdQuery($productId);
+        // 向V层传数据
+        $this->assign('pass_data', $_product_info);
+    
         // 取回打包后的数据
         $htmls = $this->fetch();
         return $htmls;

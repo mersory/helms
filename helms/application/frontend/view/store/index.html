@@ -6,12 +6,12 @@
 	<!-- page header -->
 	<div class="pageheader">
 		<h2>
-			<i class="fa fa-tachometer"></i> 积分兑换商城<span></span>
+			<i class="fa fa-tachometer"></i> 一亩阳光商城<span></span>
 		</h2>
 		<div class="breadcrumbs">
 			<ol class="breadcrumb">
 				<li><a href="index.html">HERMS</a></li>
-				<li class="active">积分兑换商城</li>
+				<li class="active">一亩阳光商城</li>
 			</ol>
 		</div>
 	</div>
@@ -21,6 +21,26 @@
 	<div class="main">
 		<!-- cards -->
 		<div class="row margin-bottom-40">
+			<!--  -->
+				<div class="input-group input-group-sm margin-bottom-20 margion-left-20">
+                          <div class="input-group-btn">
+                            <button type="button" class="btn btn-default" tabindex="-1">全部</button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+                              <span class="caret"></span>
+                              <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                            	{if condition="empty($category_info) neq true"}
+								{foreach name='category_info' item='vo'}
+                              <li><a href="index?cc={$vo.category}">{$vo.category_name}</a></li>
+                              {/foreach}
+                              {/if}
+                            </ul>
+                          </div>
+                          
+                        </div>
+			
+			
 			<!-- BEGIN SALE PRODUCT -->
 			<div class="col-md-12 sale-product">
 				<div class="bxslider-wrapper">
@@ -37,8 +57,9 @@
 									class="bx-clone">
 									<div class="product-item">
 										<div class="pi-img-wrapper">
+											<a href="detail?productId={$vo.id}" >
 											<img src="_IMG_/resources{$vo.image_url}" class="img-responsive" style="width:220px;height:290px;"
-												alt="Berry Lace Dress">
+												alt="Berry Lace Dress"></a>
 										</div>
 										<h3>{$vo.name}</h3>
 										<div class="pi-price">{$vo.price}</div>

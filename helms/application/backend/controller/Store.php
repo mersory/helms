@@ -68,8 +68,12 @@ class Store extends Controller
         $description = $_post["product_description"]; //
         $image_url = $_post["product_url"]; //
         $inventory = $_post["product_inventory"]; //
-        $price = $_post["product_price"]; //
-        $_res = $_product_info->StoreProductInsert($name, $description, $image_url, "", $inventory, $price);
+        $price = $_post["price"]; //
+        $curPrice = $_post["product_cur_price"]; //
+        $category = $_post["product_category"]; //
+        $categoryName = $_post["product_category_name"]; //
+        $order = $_post["product_order"]; //
+        $_res = $_product_info->StoreProductInsert($name, $description, $image_url, "", $inventory, $price,$curPrice,$category,$categoryName,$order);
         if (count($_res) == 1) {
             $_resdata["result"] = true;
             $_product_info->commit();
@@ -92,7 +96,11 @@ class Store extends Controller
         $image_url = $_post["product_url"]; //
         $inventory = $_post["product_inventory"]; //
         $price = $_post["product_price"]; //
-        $_res = $_product_info->StoreProductUpdate($id, $name, $description, $image_url, "", $inventory, $price);
+        $curPrice = $_post["product_cur_price"]; //
+        $category = $_post["product_category"]; //
+        $categoryName = $_post["product_category_name"]; //
+        $order = $_post["product_order"]; //
+        $_res = $_product_info->StoreProductUpdate($id, $name, $description, $image_url, "", $inventory, $price,$curPrice,$category,$categoryName,$order);
         if (count($_res) == 1) {
             $_resdata["result"] = true;
             $_product_info->commit();
