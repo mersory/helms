@@ -403,7 +403,15 @@ class Common extends Basecontroller
         $_resdata["info"] = "no";
         if(parent::include_special_characters($userId))
             return json_encode($_resdata) ;
+        $_session_user = Session::get(USER_SEESION);
+        $_userid = $_session_user["userId"];
         $_user = new Positionality();
+        if($_userid < "1000")
+        {
+            $_CURuserId = $_user->PositionRoot();
+            if($userId < "1000")
+                $userId = $_CURuserId;
+        }
         $_curid = $_user->PositionQuery($userId);
         $_userinfo =new User_details();
         if(count($_curid) < 1)

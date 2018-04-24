@@ -355,6 +355,20 @@ class Positionality extends Model
         return $_position_info[0]["json"];
     }
     
+    public function PositionRoot()//查看当前用户的网络结构
+    {
+        $_where = '';
+        $_where = "json like ''";
+        $_position_info = $this->where($_where)
+        ->select();
+        $count = count($_position_info);
+        if ($count < 1)
+        {
+            return ;
+        }
+        return $_position_info[0]["user_id"];
+    }
+    
     public function PositionDel($ID)
     {
         $_where = '';
