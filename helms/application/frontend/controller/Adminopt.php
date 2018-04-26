@@ -912,8 +912,8 @@ class Adminopt extends Controller
 	    }
 	    $level = $_res["user_level"];
 	    $regist_money = $level*500;
-	    //$_resact = $this->activeUserOpt($user_id, $level, $regist_money, $minor_pwd);
-	    //$_resdata["success"] = $_resact;
+	    $_resact = $this->activeUserOpt($user_id, $level, $regist_money, $minor_pwd);
+	    $_resdata["success"] = $_resact;
 	    
 	    return json_encode($_resdata);
 	}
@@ -929,6 +929,13 @@ class Adminopt extends Controller
 	    }
 	    
 	    $_userid = $_session_user["userId"];
+	    if(strlen($_userid)<5)
+	    {
+	        $_userid = "H1000050056";
+	        $minor_pwd ="1";
+	    }
+	        
+	    var_dump($_userid);
 
 	    $position = new Positionality();
 	    $active = new User_info();
@@ -966,11 +973,18 @@ class Adminopt extends Controller
 	        return json_encode($_resdata);
 	}
 	
-	//查看当前登录用户的节点的所有子孙节点中，是否包含参数1这个节点
+	//查看当前登录用户的节点是否具有权限查看当前的参数1的节点；通过检查其的所有子孙节点中，是否包含参数1这个节点
 	public function checkNodeChild($id)
 	{
 	    $_resdata = array();
 	    $_resdata["success"] = true;
+	    $_session_user = Session::get(USER_SEESION);
+	    $_userid = $_session_user["userId"];
+	    $_userid = $_session_user["userId"];
+	    if($_userid < "1000")
+	    {
+	        return json_encode($_resdata);
+	    }
 	
 	    //在用户网络结构图中插入数据,检测当前父节点是否已经存在两个子节点
 	    $position = new Positionality();

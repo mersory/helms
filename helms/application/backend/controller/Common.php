@@ -27,11 +27,8 @@ class Common extends Basecontroller
         }else{
             $_user_id = $_session_user["userId"];
             $subscriber = new System_subscriber();
-            $res = $subscriber ->SubscriberQueryMenu($_user_id);
-            
+            $res = $subscriber ->SubscriberQueryMenu($_user_id);           
             $this->assign('menu_data', $res);
-            
-            // 取回打包后的数据
             $htmls = $this->fetch();
             return $htmls;
         }
@@ -111,8 +108,13 @@ class Common extends Basecontroller
             
             $subscriber = new System_subscriber();
             $res = $subscriber ->SubscriberQueryMenu($_user_id);
+            if(count($res)>0)
+            {
+                $this->assign('menu_data', $res);
+                $htmls = $this->fetch();
+                return $htmls;
+            }
             
-            $this->assign('menu_data', $res);
             
 //             $_role_id = $_session_user["roleId"];
     
@@ -176,7 +178,7 @@ class Common extends Basecontroller
     {
 		$_session_user = Session::get(USER_SEESION);
 		$_resdata = array();
-        if(empty($_session_user) || $_session_user["roleId"] != 1111){
+        if(empty($_session_user)){
 			$_resdata["info"] = "priority error";
         }else{          
 				$tel = preg_match("/1[3458]{1}\d{9}$/",$_telphone)?true:false;
@@ -208,7 +210,12 @@ class Common extends Basecontroller
             $subscriber = new System_subscriber();
             $res = $subscriber ->SubscriberQueryMenu($_user_id);
             
-            $this->assign('menu_data', $res);
+            if(count($res)>0)
+            {
+                $this->assign('menu_data', $res);
+                $htmls = $this->fetch();
+                return $htmls;
+            }
             
 //             $_role_id = $_session_user["roleId"];
     
@@ -271,7 +278,7 @@ class Common extends Basecontroller
     {
         $_session_user = Session::get(USER_SEESION);
 		$_resdata = array();
-        if(empty($_session_user) || $_session_user["roleId"] != 1111){
+        if(empty($_session_user)){
             $_resdata["info"] = "priority error";
         }else{
 				if((strtotime($_start)==false && strcmp($_start,"")) || (strtotime($_end)==false && strcmp($_end,""))){
@@ -298,7 +305,12 @@ class Common extends Basecontroller
             $subscriber = new System_subscriber();
             $res = $subscriber ->SubscriberQueryMenu($_user_id);
             
-            $this->assign('menu_data', $res);
+            if(count($res)>0)
+            {
+                $this->assign('menu_data', $res);
+                $htmls = $this->fetch();
+                return $htmls;
+            }
 //             $_role_id = $_session_user["roleId"];
     
             $_user = new User_details();
@@ -360,7 +372,7 @@ class Common extends Basecontroller
     {
 		$_session_user = Session::get(USER_SEESION);
 		$_resdata = array();
-        if(empty($_session_user) || $_session_user["roleId"] != 1111){
+        if(empty($_session_user)){
             $_resdata["info"] = "priority error";
         }else{
 			$_user_point = new User_point();
@@ -406,7 +418,12 @@ class Common extends Basecontroller
             $subscriber = new System_subscriber();
             $res = $subscriber ->SubscriberQueryMenu($_user_id);
             
-            $this->assign('menu_data', $res);
+            if(count($res)>0)
+            {
+                $this->assign('menu_data', $res);
+                $htmls = $this->fetch();
+                return $htmls;
+            }
             
 //             $_role_id = $_session_user["roleId"];
     
@@ -469,7 +486,7 @@ class Common extends Basecontroller
     {
 		$_session_user = Session::get(USER_SEESION);
 		$_resdata = array();
-        if(empty($_session_user) || $_session_user["roleId"] != 1111){
+        if(empty($_session_user)){
              $_resdata["info"] = "priority error";
         }else{
 			$_user_point = new Point_transform_record();
@@ -490,7 +507,12 @@ class Common extends Basecontroller
             $subscriber = new System_subscriber();
             $res = $subscriber ->SubscriberQueryMenu($_user_id);
             
-            $this->assign('menu_data', $res);
+            if(count($res)>0)
+            {
+                $this->assign('menu_data', $res);
+                $htmls = $this->fetch();
+                return $htmls;
+            }
             
 //             $_role_id = $_session_user["roleId"];
     
@@ -553,7 +575,7 @@ class Common extends Basecontroller
     {
 		$_session_user = Session::get(USER_SEESION);
 		$_resdata = array();
-        if(empty($_session_user) || $_session_user["roleId"] != 1111){
+        if(empty($_session_user)){
             $_resdata["info"] = "priority error";
         }else{	
 			$_income_expense = new Income_expenditure();
@@ -574,8 +596,12 @@ class Common extends Basecontroller
             $subscriber = new System_subscriber();
             $res = $subscriber ->SubscriberQueryMenu($_user_id);
             
-            $this->assign('menu_data', $res);
-//             $_role_id = $_session_user["roleId"];
+            if(count($res)>0)
+            {
+                $this->assign('menu_data', $res);
+                $htmls = $this->fetch();
+                return $htmls;
+            }
     
             $_user = new User_details();
             $_res = $_user->DetailsQuery($_user_id);
@@ -636,7 +662,7 @@ class Common extends Basecontroller
     {
 		$_session_user = Session::get(USER_SEESION);
 		$_resdata = array();
-        if(empty($_session_user) || $_session_user["roleId"] != 1111){
+        if(empty($_session_user)){
             $_resdata["info"] = "priority error";
         }else{
 			$_withdraw = new Withdrawal_record();
@@ -655,7 +681,7 @@ class Common extends Basecontroller
             return false;
         $_session_user = Session::get(USER_SEESION);
         
-        if(empty($_session_user) || $_session_user["roleId"] != 1111){
+        if(empty($_session_user)){
             return false;
         }else{
             $_user = new Realtime_price();
@@ -673,8 +699,12 @@ class Common extends Basecontroller
             $subscriber = new System_subscriber();
             $res = $subscriber ->SubscriberQueryMenu($_user_id);
             
-            $this->assign('menu_data', $res);
-//             $_role_id = $_session_user["roleId"];
+            if(count($res)>0)
+            {
+                $this->assign('menu_data', $res);
+                $htmls = $this->fetch();
+                return $htmls;
+            }
     
             $_user = new User_details();
             $_res = $_user->DetailsQuery($_user_id);
@@ -731,6 +761,45 @@ class Common extends Basecontroller
         }
     }
     
+    //根据提供的用户userid，查找用户userID的子孙节点的json，编号，parent的userid，左区性质，真实姓名
+    public function get_all_children($userId)
+    {
+        $_resdata = array();
+        $_resdata["info"] = "no";
+        if(parent::include_special_characters($userId))
+            return json_encode($_resdata) ;
+            $_user = new Positionality();
+            $_curid = $_user->PositionQuery($userId);
+            $_userinfo =new User_details();
+            if(count($_curid) < 1)
+                return json_encode($_resdata) ;
+                else
+                {
+                    $_resdata["info"] = "ok";
+                    $parent = $_curid[0]["ID"];//
+                    $_res = $_user->getAllChildByJson($parent);
+                    $_res[$_curid[0]["user_id"]]["currentId"] = $_curid[0]["user_id"];
+                    $_res[$_curid[0]["user_id"]]["childrenId"] = $_user->getDirectChildrenByJson($_curid[0]["ID"]);
+                    $_res[$_curid[0]["user_id"]]["ID"] = $_curid[0]["ID"];
+                    $_res[$_curid[0]["user_id"]]["json"] = $_curid[0]["json"];
+                    $_res[$_curid[0]["user_id"]]["parent"] = $_curid[0]["parent"];
+                    $_res[$_curid[0]["user_id"]]["left"] = $_curid[0]["leftchild"];
+                    $_user_realname = $_userinfo->DetailsQuery($_curid[0]["user_id"]);
+                    $_user_realname = $_user_realname[0]["user_name"];
+                    $_res[$_curid[0]["user_id"]]["realname"] = $_user_realname;
+                    $_keys = array_keys($_res);
+                    $_values = array_values($_res);
+                    for($i=0; $i<count($_res); $i++)
+                    {
+                        $_user_realname = $_userinfo->DetailsQuery($_keys[$i]);
+                        $_user_realname = $_user_realname[0]["user_name"];
+                        $_res[$_keys[$i]]["realname"] = $_user_realname;
+                    }
+                    $_resdata["res"] = $_res;
+                    return json_encode($_resdata) ;
+                }
+    }
+    
     public function option()
     {
         $_session_user = Session::get(USER_SEESION);
@@ -741,8 +810,12 @@ class Common extends Basecontroller
             $subscriber = new System_subscriber();
             $res = $subscriber ->SubscriberQueryMenu($_user_id);
             
-            $this->assign('menu_data', $res);
-//             $_role_id = $_session_user["roleId"];
+            if(count($res)>0)
+            {
+                $this->assign('menu_data', $res);
+                $htmls = $this->fetch();
+                return $htmls;
+            }
     
             $_user = new User_details();
             $_res = $_user->DetailsQuery($_user_id);
@@ -809,8 +882,12 @@ class Common extends Basecontroller
             $subscriber = new System_subscriber();
             $res = $subscriber ->SubscriberQueryMenu($_user_id);
             
-            $this->assign('menu_data', $res);
-//             $_role_id = $_session_user["roleId"];
+            if(count($res)>0)
+            {
+                $this->assign('menu_data', $res);
+                $htmls = $this->fetch();
+                return $htmls;
+            }
     
             $_user = new User_details();
             $_res = $_user->DetailsQuery($_user_id);
