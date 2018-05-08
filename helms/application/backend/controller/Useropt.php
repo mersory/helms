@@ -16,6 +16,7 @@ use app\common\model\Realtime_price;
 use app\common\model\Historical_price;
 use app\common\model\Subuser_info;
 use app\backend\controller\Basecontroller;
+use app\trigger\controller\External;
 
 class Useropt extends Basecontroller
 {
@@ -49,6 +50,8 @@ class Useropt extends Basecontroller
     
     public function RegistIndex()
     {
+        $external = new External();
+        $this->assign('user_id', $external->_auto_userid());
         $htmls = $this->fetch();
         return $htmls;
     }

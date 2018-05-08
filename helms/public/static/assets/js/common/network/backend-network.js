@@ -47,11 +47,19 @@ $(function() {
 function refreshNetworkChart(_userId){
 	//var userId = "100042";
 	$.post(loadNetworkUrl, {
-		userId : _userId
+		applyuserId : _userId
 	}, function(result) {
 		result = JSON.parse(result);
 		if (result.info == 'ok') {
-			var dataSource = handleNetworkData(result.res,userId);
+			if(_userId < "1000")
+			{
+				for(var index in result.res)
+				{
+					if(result.res[index].json == "")
+						_userId = result.res[index]["currentId"]
+				}
+			}
+			var dataSource = handleNetworkData(result.res,_userId);
 			if(null == dataSource){
 				$('#chart-container').empty();
 			}else{

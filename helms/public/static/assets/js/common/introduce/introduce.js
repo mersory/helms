@@ -3,9 +3,18 @@ $(function() {
 
 	//搜索按钮
 	$("#network-search").on("click",function(){
+
 		var CurrentId = $('#userId').val();
-		if($.trim(CurrentId) != ""){
-			refreshIntroduceTree(CurrentId);
+		if($.trim(CurrentId) != ""){			
+			var urlres =  "/public/index.php/frontend/Common/checkRecommondChild";
+			$.post(urlres,{id:CurrentId},function(result){
+				result = JSON.parse(result);
+			if(result.success){
+				refreshNetworkChart(CurrentId);
+			} else {
+				alert("没有权限查看当前输入节点的网络结构");
+			}
+			});
 		}
 	})
 	

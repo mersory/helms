@@ -577,7 +577,7 @@ class Common extends Basecontroller
         return json_encode($_resdata);
     }
     
-    //获取当前用户$userId的推荐结构
+    //获取当前用户$userId的推荐结构,只返回当前层
     public function get_introducer_tree_single($userId)
     {
         $_resdata = array();
@@ -630,6 +630,42 @@ class Common extends Basecontroller
                 $_resdata["res"] = $tmp;
             }
             return json_encode($_resdata);
+    }
+    
+    //查看当前登录用户的节点是否具有权限查看当前的参数1的推荐结构；通过检查其的所有推荐的子孙节点中，是否包含参数1这个节点
+    public function checkRecommondChild($id)
+    {
+        $_resdata = array();
+        $_resdata["success"] = false;
+        $_session_user = Session::get(USER_SEESION);
+        $_userid = $_session_user["userId"];
+
+        if($_userid < "1000")
+        {
+            $_resdata["success"] = true;
+            return json_encode($_resdata);
+        }
+        
+        if($_userid == $id)
+        {
+            $_resdata["success"] = true;
+            return json_encode($_resdata);
+        }
+    
+        $_details = new User_details();
+        $_details_info = $_details->DetailsQuery($id);
+        while(count($_details_info))
+        {
+            $_recomm = $_details_info[0]["recommender"];
+            if(strcmp($_recomm, $_userid)==0)
+            {
+                $_resdata["success"] = true;
+                break;
+            }
+            $_details_info = $_details->DetailsQuery($_recomm);
+        }
+        
+        return json_encode($_resdata);
     }
     
 }

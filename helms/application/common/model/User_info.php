@@ -182,12 +182,12 @@ class User_info extends Model
             
            //初始化新建用户的分数--这段可以去掉
            $_point_data2 = array();
-           $_point_data2["regist_point"] = 5000;
-           $_point_data2["bonus_point"] = 5100;
-           $_point_data2["re_consume"] = 5200;
-           $_point_data2["universal_point"] = 5300;
-           $_point_data2["shengyu_jing"] = 3500;
-           $_point_data2["shengyu_dong"] = 5000;
+           //$_point_data2["regist_point"] = 5000;
+           //$_point_data2["bonus_point"] = 5100;
+           $_point_data2["re_consume"] = 0;//重消分是0，产生动态奖励才会有
+           $_point_data2["universal_point"] = 0;//万能分，产生静态奖金时会产生
+           $_point_data2["shengyu_jing"] = 3500;//7倍，比例由参数配置
+           $_point_data2["shengyu_dong"] = 5000;//10倍
            if(count($_point_info->PointQuery($ID)) < 1)
            {
                var_dump("User_info.php ERROR ar line:".__LINE__);
@@ -202,10 +202,10 @@ class User_info extends Model
             $_detail["open_time"] =  date("Y-m-d H:i:s");
             $_detail["user_level"] = $level;
             $_detail["pay_gujia"] = $now_gujia;
-            $_detail["recommandlevel"] = 1;
-            $_detail["re_nums"] = 1;
-            $_detail["repath"] = 2;
-            $_detail["repath_ds"] = 2;
+            $_detail["recommandlevel"] = 1;//1，2，3，5 1的推荐等级是1，5的推荐等级是4，由re_path确定
+            $_detail["re_nums"] = 0;//他推荐的人数是0，此时需要加一行，推荐他的这个人的re_nums需要加一
+            $_detail["repath"] = 0;//推荐结构图
+            $_detail["repath_ds"] = 2;//他自己是0，整个推荐关系表中所有上级人的repath加一
             $_detail_info = new User_details();
             if(count($_detail_info->DetailsQuery($ID)) < 1)
             {

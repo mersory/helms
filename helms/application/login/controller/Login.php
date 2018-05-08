@@ -7,6 +7,7 @@ use app\common\model\User_priority;
 use think\Session;
 use app\common\model\Subuser_info;
 use app\common\model\System_subscriber;
+use app\common\model\User_point;
 
 class Login extends Controller
 {
@@ -105,15 +106,20 @@ class Login extends Controller
                     $_session_user = array();
                     $_session_user["userId"] = $_res[0]["ID"];
             
-                    //璁剧疆瑙掕壊ID
                     $_priority = new User_priority();
                     $_priority_info = $_priority->PriorityQuery($_res[0]["ID"]);
-                    if(empty($_priority_info)){
+                    
+                    $_points  = new User_point();
+                    $_point_info = $_points->PointQuery($_res[0]["ID"]);
+                    
+                    if(empty($_priority_info) || empty($_point_info)){
                         $_resdata["success"] = false;
                     }else{
                         if (count($_priority_info) == 1)
                         {
                             $_resdata["priority_id"] = $_priority_info[0]["priority_id"];
+                            $_resdata["reststatic"] = $_point_info[0]["shengyu_jing"];
+                            $_resdata["restdynamic"] = $_point_info[0]["shengyu_dong"];
                         }
                         $_session_user["roleId"] = $_priority_info[0]["priority_id"];
                         Session::set(USER_SEESION,$_session_user);

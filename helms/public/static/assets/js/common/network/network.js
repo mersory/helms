@@ -15,7 +15,7 @@ $(function() {
 								var url = "/public/index.php/frontend/Useropt/RegistIndex?parentId=" + parentId+"&position=left";
 								window.open(url);
 							} else {
-								alert("输当前入的节点不能再作为父节点，请重新选择父节点");
+								alert("当前点位已存在两个子点位，不可再产生子点位，请重新选择");
 							}
 							});
 						}
@@ -47,7 +47,7 @@ $(function() {
 function refreshNetworkChart(_userId){
 	//var userId = "100042";
 	$.post(loadNetworkUrl, {
-		userId : _userId
+		applyuserId : _userId
 	}, function(result) {
 		result = JSON.parse(result);
 		if (result.info == 'ok') {
