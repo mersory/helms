@@ -1,4 +1,4 @@
-var loadNetworkUrl = "/public/index.php/frontend/common/get_introducer_tree";
+var loadNetworkUrl = "/public/index.php/frontend/common/get_introducer_tree_single";
 $(function() {
 
 	//搜索按钮
@@ -10,7 +10,7 @@ $(function() {
 			$.post(urlres,{id:CurrentId},function(result){
 				result = JSON.parse(result);
 			if(result.success){
-				refreshNetworkChart(CurrentId);
+				refreshIntroduceTree(CurrentId);
 			} else {
 				alert("没有权限查看当前输入节点的网络结构");
 			}
@@ -61,10 +61,10 @@ function refreshIntroduceTree(userId) {
 			} else {
 				$('#introduce-tree').treeview({
 					data : dataSource,
-					icon:"glyphicon glyphicon-stop",
+					icon:"glyphicon glyphicon-plus",
 					selectedIcon:"glyphicon glyphicon-stop",
 					color:"#000000",
-					backColor:"#FFFFFF",
+					backColor:"transparent",
 					selectable:true,
 					state:{
 						checked:true,
@@ -102,14 +102,14 @@ function getIntroduceTreeData(mapData,userId) {
 		var dataArray = new Array();
 		var data = mapData[userId];
 		var originObject = new Object();
-		originObject.text = data.userName;
-		originObject.userId = data.userId;
+		originObject.text = userId;
+		originObject.userId = userId;
 		
 		var userArray = new Array();
 		for(var i in mapData){
 			if(i != userId){
 				var object = new Object();
-				object.text = mapData[i].userName;
+				object.text = mapData[i].user_name;
 				object.userId = mapData[i].userId;
 				userArray.push(object);
 			}
