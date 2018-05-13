@@ -7,7 +7,7 @@ class Preference extends Model
 {
     public function PreferenceQueryByCode($code)
     {
-        $_where = "code = $code";
+        $_where = "code = '$code'";
         $_preference_info = $this->where($_where)->select();
         $count = count($_preference_info);
         if ($count < 1)
