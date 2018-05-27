@@ -292,26 +292,8 @@ class Useropt extends Basecontroller
             return $this->redirect("/login/login/index");
         }else{
             $_user_id = $_session_user["userId"];
-            $_role_id = $_session_user["roleId"];
-            parent::include_special_characters($_role_id);
             $_user = new User_details();
             $_res = $_user->DetailsQuery($_user_id);
-            if (count($_res) == 1)
-            {
-                $_session_user["userName"] = $_res[0]["user_name"];
-                $_session_user["email"] = $_res[0]["email"];
-                $_session_user["userLevel"] = $_res[0]["user_level"];
-            }
-            
-            $_role = new Role();
-            $_res = $_role->RoleQuery($_role_id);
-            if (count($_res) == 1)
-            {
-                $_session_user["role_type"] = $_res[0]["role_type"];
-            }
-            
-            //更新session
-            Session::set(USER_SEESION,$_session_user);
             
             $_resdata = array();
             $_resdata["userId"] = $_user_id;

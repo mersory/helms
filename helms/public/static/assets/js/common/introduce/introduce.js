@@ -61,7 +61,7 @@ function refreshIntroduceTree(userId) {
 			} else {
 				$('#introduce-tree').treeview({
 					data : dataSource,
-					icon:"glyphicon glyphicon-plus",
+					icon:"glyphicon glyphicon-stop",
 					selectedIcon:"glyphicon glyphicon-stop",
 					color:"#000000",
 					backColor:"transparent",
@@ -72,7 +72,15 @@ function refreshIntroduceTree(userId) {
 						expanded:true,
 						selected:true
 					},
-					onNodeSelected:function(event,node){
+					tags: ['available'],
+					onNodeExpanded:function(event,node){
+						//删除子节点
+						if (node.nodes != undefined && node.nodes != null) {
+							for(var i in node.nodes){
+								$("#introduce-tree").treeview("deleteNode", [node.nodes[i].nodeId, { silent: true }]);	
+							}
+						}
+						
 						$.post(loadNetworkUrl, {
 							userId : node.userId
 						}, function(result) {
@@ -88,8 +96,12 @@ function refreshIntroduceTree(userId) {
 								}
 							}
 						});
+					},
+					onNodeSelected:function(event,node){
+//							userId : node.userId
 					}
 				});
+				$('#introduce-tree').treeview('collapseAll', { silent: true });
 			}
 		} else {
 			alert("未查询该会员的推荐结构");
@@ -111,6 +123,15 @@ function getIntroduceTreeData(mapData,userId) {
 				var object = new Object();
 				object.text = mapData[i].user_name;
 				object.userId = mapData[i].userId;
+				if(mapData[i].haschildren){
+					var childObject = new Object();
+					var childArray = new Array();
+					childObject.text = "child";
+					childObject.userId = "child";
+					childArray.push(childObject);
+					object.nodes = childArray;
+				}
+				
 				userArray.push(object);
 			}
 		}

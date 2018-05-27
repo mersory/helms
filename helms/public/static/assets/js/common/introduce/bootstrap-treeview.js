@@ -98,11 +98,8 @@
 
 			// Initialize / destroy methods
 			init: $.proxy(this.init, this),
-			remove: $.proxy(this.addNode, this),
+			remove: $.proxy(this.remove, this),
 
-			//add nodes
-			addNode:$.proxy(this.getNode, this),
-			
 			// Get methods
 			getNode: $.proxy(this.getNode, this),
 			getParent: $.proxy(this.getParent, this),
@@ -145,7 +142,11 @@
 
 			// Search methods
 			search: $.proxy(this.search, this),
-			clearSearch: $.proxy(this.clearSearch, this)
+			clearSearch: $.proxy(this.clearSearch, this),
+			
+			//添加节点
+			addNode: $.proxy(this.addNode, this),
+            deleteNode: $.proxy(this.deleteNode, this)
 		};
 	};
 
@@ -1034,48 +1035,11 @@
 
 		this.render();
 	};
-	
-
-		 /**
-			 * 给节点添加子节点
-			 * 
-			 * @param {Object|Number}
-			 *            identifiers - A valid node, node id or array of node
-			 *            identifiers
-			 * @param {optional
-			 *            Object} options.node;
-			 */
-	Tree.prototype.addNode = function(identifiers, options) {
-
-		this.forEachIdentifier(identifiers, options, $.proxy(function(node,
-				options) {
-			this.setAddNode(node, options);
-		}, this));
-
-		this.setInitialStates({
-			nodes : this.tree
-		}, 0);
-		this.render();
-	}
 
 	/**
-	 * 添加子节点
-	 */
-	Tree.prototype.setAddNode = function(node, options) {
-		if (node.nodes == null)
-			node.nodes = [];
-		if (options.node) {
-			node.nodes.push(options.node);
-		}
-		;
-	}; 
-
-	/**
-	 * Enable all tree nodes
-	 * 
-	 * @param {optional
-	 *            Object} options
-	 */
+		Enable all tree nodes
+		@param {optional Object} options
+	*/
 	Tree.prototype.enableAll = function (options) {
 		var identifiers = this.findNodes('true', 'g', 'state.disabled');
 		this.forEachIdentifier(identifiers, options, $.proxy(function (node, options) {
@@ -1246,6 +1210,61 @@
 			}
 		}
 	};
+	
+
+		/**
+		 * 给节点添加子节点
+		 * 
+		 * @param {Object|Number}
+		 *            identifiers - A valid node, node id or array of node
+		 *            identifiers
+		 * @param {optional
+		 *            Object} options.node;
+		 */
+	Tree.prototype.addNode = function(identifiers, options) {
+
+		this.forEachIdentifier(identifiers, options, $.proxy(function(node,
+				options) {
+			this.setAddNode(node, options);
+		}, this));
+
+		this.setInitialStates({
+			nodes : this.tree
+		}, 0);
+		this.render();
+	}
+
+	/**
+	 * 添加子节点
+	 */
+	Tree.prototype.setAddNode = function(node, options) {
+		if (node.nodes == null)
+			node.nodes = [];
+		if (options.node) {
+			node.nodes.push(options.node);
+		}
+		;
+	};  
+	
+    Tree.prototype.deleteNode = function (identifiers, options) {
+        this.forEachIdentifier(identifiers, options, $.proxy(function (node, options) {
+            var parentNode = this.getParent(node);
+            this.setDeleteNode(parentNode, node, options);
+        }, this));
+    };
+
+    Tree.prototype.setDeleteNode = function (node, deletenode, options) {
+        if (node.nodes != null) {
+            for (var i = node.nodes.length - 1; i >= 0; i--) {
+                var mynode = node.nodes[i];
+                if (mynode.id === deletenode.id) {
+                    node.nodes.splice(i, 1);
+                }
+            }
+            this.setInitialStates({ nodes: this.tree }, 0);
+            this.render();
+        }
+    };
 
 	var logError = function (message) {
 		if (window.console) {

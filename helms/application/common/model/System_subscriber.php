@@ -29,7 +29,7 @@ class System_subscriber extends Model
     // 根据用户ID查询所有的角色
     public function SubscriberQueryMenu($id)
     {
-        $sql = "select m.* from helms_system_menu m   where m.id in (select mr.menu_id from helms_system_role_menu_rlat mr where mr.role_id in (select urr.role_id from helms_system_user_role_rlat urr where urr.user_id = $id))";
+        $sql = "select m.* from helms_system_menu m   where m.id in (select mr.menu_id from helms_system_role_menu_rlat mr where mr.role_id in (select urr.role_id from helms_system_user_role_rlat urr where urr.user_id = '$id'))";
         $_menu_info = $this->query($sql);
         return $_menu_info;
     }
