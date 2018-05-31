@@ -180,4 +180,26 @@ class Store extends Controller
         
         return json_encode($data);
     }
+    
+    //用户确认收货
+    public function confirmSend(){
+        $_session_user = Session::get(USER_SEESION);
+        $user_id = $_session_user["userId"];
+        $_resdata = array();
+        $_resdata["result"]=true;
+    
+        if(empty($user_id)){
+            $_resdata["result"]=false;
+            $_resdata["message"]="请先登录用户";
+            return json_encode($_resdata);
+        }
+    
+        $_post = Request::instance()->post();
+        $orderId = $_post["orderId"];
+    
+        $orderInfo = new Store_order();
+        $orderInfo->StoreOrderStatusUpdate($orderId, 2);
+    
+        return json_encode($_resdata);
+    }
 }

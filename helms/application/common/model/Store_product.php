@@ -262,6 +262,26 @@ class Store_product extends Model
         return $state;
     }
     
+    /**
+     * 扣减库存
+     * @param unknown $productId
+     * @param unknown $num
+     */
+    public function StoreReduceInvetory($productId,$num){
+        $sql = "update helms_store_product set invetory=invetory-$num where id = $productId and invetory>=$num";
+        $this->startTrans();
+        $state =  $this->query($sql);
+        if ($state)
+        {
+            $this->commit();
+        }
+        else
+        {
+            $this->rollback();
+        }
+        return $state;
+    }
+    
     //返回原有数据  不自动进行时间转换
     public function getCreateTimeAttr($time)
     {

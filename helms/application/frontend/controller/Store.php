@@ -7,6 +7,11 @@ use think\Session;
 use app\common\model\Store_product;
 use app\common\model\Store_shoppingcart;
 use app\common\model\Store_order;
+use app\common\model\Store_user_address;
+use app\common\model\Store_area;
+use app\common\model\Store_area_fee;
+use phpDocumentor\Reflection\Types\This;
+use app\common\model\Store_order_line;
 
 class Store extends Controller
 {
@@ -46,7 +51,7 @@ class Store extends Controller
     //结算页
     public function checkout()
     {
-            $_session_user = Session::get(USER_SEESION);
+        $_session_user = Session::get(USER_SEESION);
         $user_id = $_session_user["userId"];
         $_resdata = array();
         $_resdata["result"]=true;
@@ -56,48 +61,217 @@ class Store extends Controller
             return $this->redirect("/login/login/index");
         }
         
+        //查询当前用户的送货地址列表
+       $_address = new Store_user_address();
+       $_address_data = $_address->AddressQueryByUserId($user_id);
+        
+        //查询省列表
+       $_province = new Store_area();
+       $_province_data = $_province->StorePorvinceAllQuery();
+        
+        //查询购物车数据,
+       $_shoppingcart = new Store_shoppingcart();
+       $_shoppingcart_data = $_shoppingcart->ShoppingcartInfoAllQuery($user_id);
+       
+       //为空时，返回到购物车页面
+       if(count($_shoppingcart_data) < 1){
+           return $this->redirect("/frontend/store/shoppingcart");
+       }
+        
+       $this->assign('address_data', $_address_data);
+       $this->assign('province_data', $_province_data);
+       $this->assign('shoppingcart_data', $_shoppingcart_data);
         
         $htmls = $this->fetch();
         return $htmls;
     }
     
+    //提交订单
     public function goToPay()
     {
         $_session_user = Session::get(USER_SEESION);
         $user_id = $_session_user["userId"];
         $_resdata = array();
-        $_post = Request::instance()->post();
-        $_order_info = new Store_order();
-        $product_id = $_post["product_id"];
-        $receiver = $_post["receiver"];//
-        $mobile = $_post["mobile"];//
-        $address = $_post["address"];//
+        $_resdata["result"] = true;
         
-        $_product = new Store_product();
-        $_product_info = $_product->ProductInfoByIdQuery($product_id);
-        if(count($_product_info) !=1){
-            $_resdata["result"]=false;
+        //未登录用户不予许进入结算页
+        if(empty($user_id)){
+            $_resdata['result']=false;
+            $_resdata['message']="请登录后在下单";
             return json_encode($_resdata);
         }
-        $total=$_product_info[0]["price"];
         
-        $_res = $_order_info->StoreOrderInsert($user_id, $product_id, $receiver, $mobile, $address, $total);
-        if (count($_res) == 1){
-            $_resdata["result"]=true;
-            $_order_info->commit();
+        $_post = Request::instance()->post();
+        $addressId = $_post["addressId"];
+        $province = null;
+        $city = null;
+        $area = null;
+        $receiver = null;
+        $mobile = null;
+        $address = null;
+        $saveAddress = false;
+        
+        if("new" == $addressId){
+            $receiver = $_post["receiver"];//
+            $mobile = $_post["mobile"];//
+            $address = $_post["address"];//
+            $province =  $_post["province"];//
+            $city =  $_post["city"];//
+            $area =  $_post["area"];//
+            $saveAddress = true;
         }else{
-            $_resdata["result"]=false;
-            $_order_info->rollback();
+            $address = new Store_user_address();
+            $addressInfo = $address->AddressQueryById($user_id, $addressId);
+            if(count($addressInfo) >= 1){
+                $receiver = $addressInfo[0]["receiver"];
+                $mobile = $addressInfo[0]["mobile"];
+                $address = $addressInfo[0]["address"];
+                $province = $addressInfo[0]["province"];
+                $city = $addressInfo[0]["city"];
+                $area = $addressInfo[0]["area"];
+            }
+        }
+        
+        //校验购物车
+        $_shoppingcart = new Store_shoppingcart();
+        $_shoppingcart_data = $_shoppingcart->ShoppingcartInfoAllQuery($user_id);
+        $total = null;
+        if(count($_shoppingcart_data)>0){
+            for($i=0;$i<count($_shoppingcart_data);++$i){ 
+                $productNum = $_shoppingcart_data[$i]["product_num"];
+                $productId = $_shoppingcart_data[$i]["product_id"];
+                $productPrice = $_shoppingcart_data[$i]["cur_price"];
+                
+                $product = new Store_product();
+                $productInfo = $product->ProductInfoValidQuery($productId);
+                if(count($productInfo) < 1 || $productInfo[0]["lifecycle"] != 1){
+                    $_resdata['result']=false;
+                    $_resdata['message']="商品已下架或不存在";
+                    return json_encode($_resdata);
+                    break;
+                }
+                
+                if($productInfo[0]["invetory"] < $productNum){
+                    $_resdata['result']=false;
+                    $_resdata['message']="商品库存不足";
+                    return json_encode($_resdata);
+                    break;
+                }
+                
+                $total = $total + $productNum*$productPrice;
+            }
+            
+            //计算运费
+            $shippingFee = 25;
+            $areaFee = new Store_area_fee();
+            $shippingFeeInfo = $areaFee->StoreAreaFeeByAreaQuery($province, $city, $area);
+            if(count($shippingFeeInfo) == 1){
+                $shippingFee = $shippingFeeInfo[0]["shipping_fee"];
+            }
+            
+            //创建订单
+            //生成订单编码
+            $orderCode = $this->generateOrderCode();
+            
+            $order = new  Store_order();
+            $order->StoreOrderInsert($orderCode, $user_id, $total, $shippingFee, $receiver, $mobile, $address, $province, $city, $area);
+            
+            //扣减库存以及创建订单行            
+            for($i=0;$i<count($_shoppingcart_data);++$i){
+                $productNum = $_shoppingcart_data[$i]["product_num"];
+                $productId = $_shoppingcart_data[$i]["product_id"];
+                $productPrice = $_shoppingcart_data[$i]["cur_price"];
+            
+                $product = new Store_product();
+                $state = $product->StoreReduceInvetory($productId, $productNum);
+                if($state < 1){
+                    $_resdata['result']=false;
+                    $_resdata['message']="商品库存不足";
+                    return json_encode($_resdata);
+                    break;
+                }
+                
+                $orderLine = new Store_order_line();
+                $orderLine->StoreOrderLineInsert($orderCode, $productId, $productNum, $productPrice*$productNum, $user_id);
+            }
+            
+            //扣减积分
+            
+            
+            //清空购物车
+            $_shoppingcart->StoreShoppingcartEmpty($user_id);
+
+            //保存用户地址
+            if($saveAddress){
+                $addressUser = new Store_user_address();
+                $addressUser ->AddressInsert($receiver, $mobile, "", $province, $city, $area, $address, $user_id);
+            }
+        }else{
+            $_resdata['result']=false;
+            $_resdata['message']="购物车为空";
+            return json_encode($_resdata);
         }
         return json_encode($_resdata);
     }
     
-    //结算页
+    //获取运费
+    public function getShippingFee(){
+        $_session_user = Session::get(USER_SEESION);
+        $user_id = $_session_user["userId"];
+        $_resdata = array();
+        $_resdata["result"] = true;
+        
+        $shippingFee = 25;
+        
+        //未登录用户不予许进入结算页
+        if(empty($user_id)){
+            $_resdata['shippingFee']=$shippingFee;
+            return json_encode($_resdata);
+        }
+        
+        $_post = Request::instance()->post();
+        $addressId = $_post["addressId"];
+        $province = null;
+        $city = null;
+        $area = null;
+        
+        if("new" == $addressId){
+            $receiver = $_post["receiver"];//
+            $mobile = $_post["mobile"];//
+            $address = $_post["address"];//
+            $province =  $_post["province"];//
+            $city =  $_post["city"];//
+            $area =  $_post["area"];//
+            $saveAddress = true;
+        }else{
+            $address = new Store_user_address();
+            $addressInfo = $address->AddressQueryById($user_id, $addressId);
+            if(count($addressInfo) >= 1){
+                $receiver = $addressInfo[0]["receiver"];
+                $mobile = $addressInfo[0]["mobile"];
+                $address = $addressInfo[0]["address"];
+                $province = $addressInfo[0]["province"];
+                $city = $addressInfo[0]["city"];
+                $area = $addressInfo[0]["area"];
+            }
+        }
+        
+        
+        $areaFee = new Store_area_fee();
+        $shippingFeeInfo = $areaFee->StoreAreaFeeByAreaQuery($province, $city, $area);
+        if(count($shippingFeeInfo) == 1){
+            $shippingFee = $shippingFeeInfo[0]["shipping_fee"];
+        }
+        
+        $_resdata['shippingFee']=$shippingFee;
+        return json_encode($_resdata);
+    }
+    
+    //我的订单
     public function orderlist()
     {
         $_session_user = Session::get(USER_SEESION);
         $user_id = $_session_user["userId"];
-        $user_id = 2;
         if(empty($user_id)){
             return $this->redirect("/login/login/index");
         }
@@ -254,4 +428,60 @@ class Store extends Controller
         return json_encode($_resdata);
     }
     
+    /**
+     * 查询市
+     * @return string
+     */
+    public function getCityByProvince(){
+        $_post = Request::instance()->post();
+        $provinceId = $_post["provinceId"];
+        
+        $_area = new Store_area();
+        $_res = $_area -> StoreCityByProvinceIdQuery($provinceId);
+        
+        return json_encode($_res);
+    }
+    
+    /**
+     * 查询区县
+     * @return string
+     */
+    public function getAreaByCity(){
+        $_post = Request::instance()->post();
+        $cityId = $_post["cityId"];
+    
+        $_area = new Store_area();
+        $_res = $_area -> StoreAreaByCityIdQuery($cityId);
+    
+        return json_encode($_res);
+    }
+    
+    protected function generateOrderCode(){
+        $t=time();
+        $orderSuffix = date("YmdHis",$t);
+        return "HERMS".$orderSuffix;
+    }
+    
+    //用户确认收货
+    public function confirmReceive(){
+        $_session_user = Session::get(USER_SEESION);
+        $user_id = $_session_user["userId"];
+        $_resdata = array();
+        $_resdata["result"]=true;
+        
+        //未登录用户不予许加入购物车
+        if(empty($user_id)){
+            $_resdata["result"]=false;
+            $_resdata["message"]="请先登录用户";
+            return json_encode($_resdata);
+        }
+        
+        $_post = Request::instance()->post();
+        $orderId = $_post["orderId"];
+        
+        $orderInfo = new Store_order();
+        $orderInfo->StoreOrderStatusUpdate($orderId, 3);
+        
+        return json_encode($_resdata);
+    }
 }

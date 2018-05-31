@@ -1,12 +1,21 @@
 {extend name="base/frontend"} {block name="js"}
-<script type="text/javascript" src="_JS_/common/product/checkout.js"></script>
-{/block} {block name="css"} {/block} {block name="content"}
+<script
+	type="text/javascript"
+	src="_JS_/common/product/checkout.js"></script>
+{/block} {block name="css"}
+<link
+	rel="stylesheet"
+	href="_CSS_/checkout/checkout.css">
+{/block} {block name="content"}
 <!-- Page content -->
-<div id="content" class="col-md-12">
+<div
+	id="content"
+	class="col-md-12">
 	<!-- page header -->
 	<div class="pageheader">
 		<h2>
-			<i class="fa fa-tachometer"></i> 积分兑换商城-结算<span></span>
+			<i class="fa fa-tachometer"></i> 积分兑换商城-结算
+			<span></span>
 		</h2>
 		<div class="breadcrumbs">
 			<ol class="breadcrumb">
@@ -19,75 +28,241 @@
 
 	<!-- content main container -->
 	<div class="main">
-          	<div class="row">
-                <div class="col-md-6">
-                  <section class="tile color transparent-black">
+		<div class="row">
+			<div class="col-md-12">
+				<section class="tile color transparent-black checkout">
 
-                  <!-- tile header -->
-                  <div class="tile-header">
-                    <h1><strong>填写订单信息</strong></h1>
-                    <div class="controls">
-                      <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
-                      <a href="#" class="remove"><i class="fa fa-times"></i></a>
-                    </div>
-                  </div>
-                  <!-- /tile header -->
+					<!-- tile header -->
+					<div class="tile-header">
+						<h1>
+							<strong>填写订单信息</strong>
+						</h1>
+						<div class="controls">
+							<a
+								href="#"
+								class="refresh">
+								<i class="fa fa-refresh"></i>
+							</a>
+							<a
+								href="#"
+								class="remove">
+								<i class="fa fa-times"></i>
+							</a>
+						</div>
+					</div>
+					<!-- /tile header -->
 
-                  <!-- tile body -->
-                  <div class="tile-body">
-                    <input type="hidden" id="productId"value="{$productId}"/>
-                    <form class="form-horizontal" id="basicvalidations">
+					<!-- tile body -->
+					<div class="tile-body">
 
-					  <div class="form-group">
-                        <label for="fullname" class="col-sm-4 control-label">收货人姓名 </label>
-                        <div class="col-sm-8">
-                          <input type="text"  class="form-control parsley-validated" name="name" id="name" parsley-trigger="change" parsley-required="true" parsley-minlength="4" parsley-validation-minlength="1" />
-                        </div>
-                      </div>
-                      
-                      <div class="form-group">
-                        <label for="fullname" class="col-sm-4 control-label">电话号码</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control parsley-validated" name="mobile" id="mobile" parsley-trigger="change" parsley-required="true" parsley-minlength="4" parsley-validation-minlength="1">
-                        </div>
-                      </div>
+						<!-- 收货信息 -->
+						<div class="shopping-address">
+							<div class="headtitle">
+								<p class="info">
+									<span class="confirm-address">确认收货地址</span>
+									<!-- <span class="manage-address">管理收货地址</span> -->
+								</p>
+							</div>
+							<div class="address-title">
+								<strong>寄送至</strong>
+							</div>
+							<div class="address">
+								<ul id="proaddress">
+									{if condition="empty($address_data) neq true"}
+										{foreach name='address_data' item='vo' key="k"}
+										<li class="address-line" address_id="{$vo.id}"><i class="adress"></i>
+											<span>
+											<input
+												name="radio_cds"
+												{if condition="$k eq 0"}
+												checked="checked"
+												{/if}
+												type="radio"
+												value="{$vo.id}">
+											<span>{$vo.province}{$vo.city}{$vo.area}{$vo.address}{$vo.receiver}{$vo.mobile}</span>
+										</span></li>
+										{/foreach}
+										<li class="address-line"><i class="adress"></i>
+											<span>
+											<input
+												name="radio_cds"
+												type="radio"
+												value="">
+											<span>使用新地址</span>
+										</span></li>	
+									{else}
+									<li class="address-line"><i class="adress"></i>
+									<span>
+											<input
+												name="radio_cds"
+												type="radio"
+												checked=“checked”
+												value="new">
+											<span>使用新地址</span>
+										</span></li>									
+									{/if}
+								</ul>
+							</div>
+						</div>
 
-                      <div class="form-group">
-                        <label for="email" class="col-sm-4 control-label">收件地址</label>
-                        <div class="col-sm-8">
-                          <textarea class="form-control" id="receive_address" rows="6"></textarea>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="minorpwd" class="col-sm-4 control-label">二级密码 *</label>
-                        <div class="col-sm-8">
-                          <input type="password" class="form-control parsley-validated" name="minorpwd" id="minorpwd" parsley-trigger="change" parsley-minlength="4" parsley-type="url" parsley-validation-minlength="1">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="minorpwd" class="col-sm-4 control-label">确认二级密码 *</label>
-                        <div class="col-sm-8">
-                          <input type="password" class="form-control parsley-validated" name="confirmMinorpwd" id="comfirmMinorpwd" parsley-trigger="change" parsley-minlength="4" parsley-type="url" parsley-validation-minlength="1">
-                        </div>
-                      </div>	                     
-                      <div class="form-group form-footer">
-                        <div class="col-sm-offset-4 col-sm-8">
-                          <button type="button" class="btn btn-primary" id="confirm_buy">确认兑换</button>
-                        </div>
-                      </div>
+						<!-- 使用新的地址信息 -->
+						<div class="address-info">
+							<div class="address-info-line">
+								<span>收件人：</span><input type="text" name="receiver" required/>
+							</div>
+							<div class="address-info-line">
+								<span>手机号：</span><input type="text" name="receiver_mobile" required/>
+							</div>
+							<div class="address-info-line">
+								<span>省：</span>
+								<select name="receiver_province">
+									<option value="">请选择</option>
+										{if condition="empty($province_data) neq true"}
+										{foreach name='province_data' item='vo'}
+										<option value="{$vo.province_id}">{$vo.province}</option>
+										{/foreach}
+										{/if}
+								</select>
+							</div>
+							
+							<div class="address-info-line">
+								<span>市：</span>
+								<select name="receiver_city">
+									<option value="">请选择</option>
+								</select>
+							</div>
+							
+							<div class="address-info-line">
+								<span>区县：</span>
+								<select name="receiver_area">
+									<option value="">请选择</option>
+								</select>
+							</div>
+							
+							<div class="address-info-line">
+								<span>详细地址：</span>
+								<textarea name="receiver_address" style="height:100px;">
+								</textarea>
+							</div>
+						</div>
 
-                    </form>
+						<!-- 订单信息 -->
+						<div class="order-info">
+							<div class="headtitle">
+								<p class="info">
+									<span class="confirm-order-info">确认订单信息</span>
+								</p>
+							</div>
+							<div class="order-product-list">
+								<table class="pro_shop_list">
+									<tbody>
+										<tr class="title">
+											<td width="5%"></td>
+											<td width="40%">商品</td>
+											<td width="20%">数量</td>
+											<td width="20%">单价</td>
+											<td width="25%">小计</td>
+										</tr>
 
-                  </div>
-                  <!-- /tile body -->
-                  
-                
+										<!--产品标题e--->
+										<!--店铺产品列表S--->
+										{if condition="empty($shoppingcart_data) neq true"}
+										{foreach name='shoppingcart_data' item='vo'}
+										<tr class="shop_porlist ">
+											<td class="borderside_L">1</td>
+											<td>
+												<div class="pro_info">
+													<div class="pro_L float_L">
+														<a href="#">
+															<img
+																class="pro_pic "
+																src="_IMG_/resources{$vo.image_url}">
+														</a>
+													</div>
+													<div class="pro_R float_L">
+														<a href="#">{$vo.name}</a>
+													</div>
+												</div>
+											</td>
+											<td>{$vo.product_num}</td>
+											<td>{$vo.cur_price}</td>
+											<td class="borderside_R">{$vo.product_num * $vo.cur_price}</td>
+										</tr>
+										{/foreach}
+										{/if}
+										<tr class="shopOrder ">
+											<td
+												class="textL borderside_T borderside_L borderside_R borderside_D"
+												colspan="4">
+												<span class="float_R">
+													商品总计
+												</span>
+											</td>
+											<td
+												class="textL borderside_T borderside_L borderside_R borderside_D"
+												colspan="4">
+												<span class="float_R product-total">
+												</span>
+											</td>
+										</tr>
+										<tr class="shopOrder text-align-right">
+											<td
+												class="textL borderside_T borderside_L borderside_R"
+												colspan="4">运费：</td>
+											<td
+												class="textL borderside_T borderside_L borderside_R "
+												colspan="4">
+												<span class="float_R shipping-fee">
+													25
+												</span>
+											</td>	
+										</tr>
+										<tr class="shopOrder ">
+											<td
+												class="textL borderside_T borderside_L borderside_R"
+												colspan="4">积分可用：</td>
+											<td
+												class="textL borderside_T borderside_L borderside_R"
+												colspan="4">200</td>
+										</tr>
+										<tr class="shopOrder ">
+											<td
+												class="textL borderside_T borderside_L borderside_R borderside_D"
+												colspan="4">
+												<span class="float_R">
+													总计（包含运费）
+												</span>
+											</td>
+											<td
+												class="textL borderside_T borderside_L borderside_R borderside_D"
+												colspan="4">
+												<span class="float_R summary-total">
+													1333
+												</span>
+											</td>
+										</tr>
+										<tr>
+											<td
+												colspan="7"
+												class="empty borderside_T"></td>
+										</tr>
 
+										<!--结算信息提示S-->
+										<tr class="sum">
+											<td class="sum_total borderside_T borderside_D" colspan="4"></td>
+											<td class="sum_total borderside_T borderside_D" colspan="4"><button type="button" class="btn btn-confirm submit-order" style="margin-top: 40px;">提交订单</button></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!-- /tile body -->
 
-                </section>
-                </div>
-            </div>
-          </div>
+				</section>
+			</div>
+		</div>
+	</div>
 	<!-- /content container -->
 
 </div>

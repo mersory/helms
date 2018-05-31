@@ -1,0 +1,93 @@
+.checkout{
+	padding: 0 50px 0 50px;
+    margin: 0px auto;
+    width: 1000px;
+}
+
+.checkout .shopping-address p.info span.confirm-address{
+	color:#060606;
+}
+
+.checkout .shopping-address p.info span.manage-address{
+	float:right;
+}
+.address-title{
+	float: left;
+    position: absolute;
+	padding-left: 40px;
+	margin-right: 10px;
+}
+
+ .address ul li{
+	padding-left:50px;
+ 	list-style:none;
+}
+
+.order-info table.pro_shop_list{
+	width:100%;
+}
+
+.address-info{
+	padding: 0px 90px 0px 90px;
+}
+
+.address-info .address-info-line{
+	margin:5px 0px 5px 0px;
+}
+
+.address-info .address-info-line span{
+	display:block;
+}
+
+.address-info .address-info-line input{
+	width:400px;
+}
+.address-info .address-info-line textarea{
+	width:400px;
+	
+}
+.address-info .address-info-line select{
+	width:200px;
+}
+
+.order-product-list{
+	padding:40px 0px 40px 0px;
+}
+.headtitle{
+	margin-top:20px;
+	color:#000;
+	font-size:15px;
+	font-weight:700;
+	background-color:#826767;
+}
+
+.btn-confirm{
+	background:#fb5400;
+	color:#FFFFFF;
+	border-radius: 2px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,0);
+}
+
+.btn-confirm:hover{
+	background:#fb5400;
+	color:#FFFFFF;
+}
+
+.pro_info img{
+	width:60px;
+	height:60px;
+}
+
+.address-info select{
+	width:240px;
+	color:#000;
+}
+
+/*
+.address ul li:first-child{
+	padding-left:30px;
+}
+
+.address ul li strong{
+	padding:0 10px 0 10px;
+} */
