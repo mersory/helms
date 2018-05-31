@@ -67,13 +67,14 @@ class Store extends Controller
         $name = $_post["product_name"];
         $description = $_post["product_description"]; //
         $image_url = $_post["product_url"]; //
+        $description_url = $_post["product_description_url"]; //
         $inventory = $_post["product_inventory"]; //
-        $price = $_post["price"]; //
+        $price = $_post["product_price"]; //
         $curPrice = $_post["product_cur_price"]; //
         $category = $_post["product_category"]; //
         $categoryName = $_post["product_category_name"]; //
         $order = $_post["product_order"]; //
-        $_res = $_product_info->StoreProductInsert($name, $description, $image_url, "", $inventory, $price,$curPrice,$category,$categoryName,$order);
+        $_res = $_product_info->StoreProductInsert($description_url,$name, $description, $image_url, "", $inventory, $price,$curPrice,$category,$categoryName,$order);
         if (count($_res) == 1) {
             $_resdata["result"] = true;
             $_product_info->commit();
@@ -92,15 +93,16 @@ class Store extends Controller
         $_product_info = new Store_product();
         $id = $_post["product_id"];
         $name = $_post["product_name"];
-        $description = $_post["product_description"]; //
+        $description = $_post["product_description_url"]; //
         $image_url = $_post["product_url"]; //
+        $description_url = $_post["description_url"]; //
         $inventory = $_post["product_inventory"]; //
         $price = $_post["product_price"]; //
         $curPrice = $_post["product_cur_price"]; //
         $category = $_post["product_category"]; //
         $categoryName = $_post["product_category_name"]; //
         $order = $_post["product_order"]; //
-        $_res = $_product_info->StoreProductUpdate($id, $name, $description, $image_url, "", $inventory, $price,$curPrice,$category,$categoryName,$order);
+        $_res = $_product_info->StoreProductUpdate($description_url,$id, $name, $description, $image_url, "", $inventory, $price,$curPrice,$category,$categoryName,$order);
         if (count($_res) == 1) {
             $_resdata["result"] = true;
             $_product_info->commit();

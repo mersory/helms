@@ -50,26 +50,21 @@ class Store_product extends Model
         return $_productinfo;
     }
     
-    public function ProductInfoByIdQuery($id)
+    public function ProductInfoByIdQuery($ID)
     {
-        $_where = '';
-        if ($id != -1)
-        {
-            $_where = "id =$id";
-        }
+        $_where = "ID = $ID";
         $_productinfo = $this->where($_where)->select();
-        $count = count($_productinfo);
-        if ($count < 1)
-        {
-            var_dump("ProductInfo not exsist");
-            return ;
-        }
         return $_productinfo;
     }
     
-    public function StoreProductInsert($name, $description, $image_url, $operator, $invetory,$price,$curPrice,$category,$categoryName,$order)
+    public function StoreProductInsert($descriptionUrl,$name, $description, $image_url, $operator, $invetory,$price,$curPrice,$category,$categoryName,$order)
     {
         $_productinfo = array();
+        if ($descriptionUrl >=0)
+        {
+            $_productinfo["description_url"] = $descriptionUrl;
+        }
+        
         if ($name >=0)
         {
             $_productinfo["name"] = $name;
@@ -102,7 +97,7 @@ class Store_product extends Model
         
         if ($curPrice >=0)
         {
-            $_productinfo["curPrice"] = $curPrice;
+            $_productinfo["cur_price"] = $curPrice;
         }
         
         if ($category >=0)
@@ -112,7 +107,7 @@ class Store_product extends Model
         
         if ($categoryName >=0)
         {
-            $_productinfo["categoryName"] = $categoryName;
+            $_productinfo["category_name"] = $categoryName;
         }
         
         if ($order >=0)
@@ -136,9 +131,14 @@ class Store_product extends Model
         return $state;
     }
     
-    public function StoreProductUpdate($id, $name, $description, $image_url, $operator, $invetory,$price,$curPrice,$category,$categoryName,$order)
+    public function StoreProductUpdate($descriptionUrl,$id, $name, $description, $image_url, $operator, $invetory,$price,$curPrice,$category,$categoryName,$order)
     {
         $_productinfo = array();
+        if (descriptionUrl >=0)
+        {
+            $_productinfo["description_url"] = descriptionUrl;
+        }
+        
         if ($name >=0)
         {
             $_productinfo["name"] = $name;
@@ -171,7 +171,7 @@ class Store_product extends Model
         
         if ($curPrice >=0)
         {
-            $_productinfo["curPrice"] = $curPrice;
+            $_productinfo["cur_price"] = $curPrice;
         }
         
         if ($category >=0)
@@ -181,7 +181,7 @@ class Store_product extends Model
         
         if ($categoryName >=0)
         {
-            $_productinfo["categoryName"] = $categoryName;
+            $_productinfo["category_name"] = $categoryName;
         }
         
         if ($order >=0)
@@ -211,8 +211,20 @@ class Store_product extends Model
         $t=time();
         $_productinfo["stock_time"] = date("Y-m-d H:i:s",$t);
     
-        $state = $this-> where("id=$id")
-        ->setField($_productinfo);
+        $this->startTrans();
+        $state = $this-> where("id=$id")->setField($_productinfo);
+        
+        if ($state)
+        {
+            $this->commit();
+            var_dump("commit");
+        }
+        else
+        {
+            $this->rollback();
+            var_dump("rollback");
+        }
+        
         return $state;
     }
     
@@ -234,8 +246,19 @@ class Store_product extends Model
         $t=time();
         $_productinfo["stock_time"] = date("Y-m-d H:i:s",$t);
     
-        $state = $this-> where("id=$id")
-        ->setField($_productinfo);
+        $this->startTrans();
+        $state = $this-> where("id=$id") ->setField($_productinfo);
+        
+        if ($state)
+        {
+            $this->commit();
+            var_dump("commit");
+        }
+        else
+        {
+            $this->rollback();
+            var_dump("rollback");
+        }
         return $state;
     }
     

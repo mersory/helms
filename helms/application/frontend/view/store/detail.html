@@ -1,5 +1,5 @@
 {extend name="base/frontend"} {block name="js"}
-<script type="text/javascript" src="_JS_/common/index.js"></script>
+<script type="text/javascript" src="_JS_/common/store/index.js"></script>
 {/block} {block name="css"} {/block} {block name="content"}
 <!-- Page content -->
 <div id="content" class="col-md-12">
@@ -22,7 +22,7 @@
 		<!-- cards -->
 		<div class="row margin-bottom-40">
 			<!-- BEGIN SALE PRODUCT -->
-			<div class="col-md-12 sale-product">
+			<div class="col-md-6 sale-product">
 				<div class="bxslider-wrapper">
 					<div class="bx-wrapper">
 						<div class="bx-viewport"
@@ -34,21 +34,27 @@
 										class="img-responsive" style="width: 220px; height: 290px;"
 										alt="Berry Lace Dress">
 								</div>
-								<h3>{$pass_data[0]['name']}</h3>
-								<h3>{$pass_data[0]['description']}</h3>
-								<div class="pi-price" ><label style="text-decoration:line-through;">{$pass_data[0]['price']}</label>&nbsp;&nbsp;<label>{$pass_data[0]['cur_price']}积分</label></div>
+								<div class="pi-price">
+									<label style="text-decoration: line-through;">{$pass_data[0]['price']}</label>&nbsp;&nbsp;<label>{$pass_data[0]['cur_price']}积分</label>
+								</div>
 								{if condition="$pass_data[0]['lifecycle'] == 1"} <a
 									href="checkout?productId={$pass_data[0]['id']}" href="#"
-									class="btn btn-default buy">兑换</a> {/if} {if
-								condition="$pass_data[0]['lifecycle'] == 3"} <label>已下架</a> {/if}
-									{if condition="$pass_data[0]['lifecycle'] == 0"} <label>未上架</a>
+									class="btn btn-default add_shoppingcart">加入购物车</a> {/if} {if
+								condition="$pass_data[0]['lifecycle'] == 3"} <label>已下架</a>
+									{/if} {if condition="$pass_data[0]['lifecycle'] == 0"} <label>未上架</a>
 										{/if} 
 							</div>
+
+							<h3>{$pass_data[0]['name']}</h3>
+							<h3>{$pass_data[0]['description']}</h3>
+							<img src="_IMG_/resources{$pass_data[0]['description_url']}" class="img-responsive" style="" alt="Berry Lace Dress">
 						</div>
 					</div>
 				</div>
 			</div>
+
 			<!-- END SALE PRODUCT -->
+
 		</div>
 
 	</div>

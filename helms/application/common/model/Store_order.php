@@ -5,13 +5,10 @@ use think\Model;
 
 class Store_order extends Model
 {
-    public function index()
-    {
-        var_dump("Storeproductinfo");
-    }
-    
+    //查询所有订单
     public function OrderInfoAllQuery()
     {
+        $sql = "select * from helms_store_order";
         $_where = '';
         $_orderinfo = $this->where($_where)
         ->select();
@@ -24,6 +21,7 @@ class Store_order extends Model
         return $_orderinfo;
     }
     
+    //用户查询所有订单
     public function OrderInfoMemberQuery($userId)
     {
         $_where = '';

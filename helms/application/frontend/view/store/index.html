@@ -1,5 +1,5 @@
 {extend name="base/frontend"} {block name="js"}
-<script type="text/javascript" src="_JS_/common/index.js"></script>
+<script type="text/javascript" src="_JS_/common/store/index.js"></script>
 {/block} {block name="css"} {/block} {block name="content"}
 <!-- Page content -->
 <div id="content" class="col-md-12">
@@ -64,7 +64,7 @@
 										<h3>{$vo.name}</h3>
 										<div class="pi-price">{$vo.price}</div>
 										{if condition="$vo.lifecycle == 1"}
-										<a href="checkout?productId={$vo.id}" href="#" class="btn btn-default buy">兑换</a>
+										<a href="#" product_id="{$vo.id}" href="#" class="btn btn-default add_shoppingcart">加入购物车</a>
 										{/if}
 										{if condition="$vo.lifecycle == 3"}
 										<label>已下架</a>

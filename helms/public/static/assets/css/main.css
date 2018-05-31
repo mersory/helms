@@ -236,3 +236,8 @@ li.remove_frame a:hover { background-position: 0 -21px }
 .fdl { float: left; font-family: Arial; font-size: 12px; padding-left: 5px; color: #ccc; line-height: 20px }
 .fdr { float: right; font-family: Arial; font-size: 16px; padding-left: 5px; padding-right: 5px; background-color: #ccc; cursor: pointer }
 .fdadnr {}
+
+
+.shoppingcart-list{
+	
+}

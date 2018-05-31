@@ -13,25 +13,23 @@
             </div>
           </div>
           <!-- Branding end -->
+          
+          <!-- hidden value area-->
+		 <input type="hidden"  id="userId" value="{$Think.session.session_user['userId']}"/>
+		 <input type="hidden"  id="roleId" value="{$Think.session.session_user['roleId']}"/>
 
           <!-- .nav-collapse -->
           <div class="navbar-collapse">
                         
-            <!-- Page refresh -->
-            <ul class="nav navbar-nav refresh">
-              <li class="divided">
-                <a href="#" class="page-refresh"><i class="fa fa-refresh"></i></a>
-              </li>
-            </ul>
-            <!-- /Page refresh -->
-
             <!-- Quick Actions -->
             <ul class="nav navbar-nav quick-actions">
-              
-              <li class="dropdown divided">
-                <a class="dropdown-toggle button" data-toggle="dropdown" href="#"></a>
+            
+              <li class="divided">
+              	<a href="/public/index.php/frontend/store/shoppingcart" >
+                <img style="width:50px;height:45px;" src="_IMG_/checkout/shoppingcart.jpg"></img>
+                </a>
               </li>
-
+              
               <li class="dropdown divided user" id="current-user">
                 <div class="profile-photo">
                   <img src="_IMG_/profile-photo.jpg" alt />

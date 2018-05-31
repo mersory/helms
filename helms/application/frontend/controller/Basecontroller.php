@@ -2,6 +2,7 @@
 namespace app\frontend\controller;
 
 use think\Controller;
+use think\Session;
 
 class Basecontroller extends Controller
 {
@@ -58,6 +59,13 @@ class Basecontroller extends Controller
     function isDatetime($param = '', $format = 'Y-m-d')
     {
         return date($format, strtotime($param)) === $param;
+    }
+    public function _initialize(){
+        error_log("进入拦截器");
+            $_session_user = Session::get(USER_SEESION);
+            if (empty($_session_user) || empty($_session_user['userId'])){
+                return $this->redirect("/login/login/index");
+            }
     }
     
 }
