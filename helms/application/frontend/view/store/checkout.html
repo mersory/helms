@@ -219,14 +219,6 @@
 										</tr>
 										<tr class="shopOrder ">
 											<td
-												class="textL borderside_T borderside_L borderside_R"
-												colspan="4">积分可用：</td>
-											<td
-												class="textL borderside_T borderside_L borderside_R"
-												colspan="4">200</td>
-										</tr>
-										<tr class="shopOrder ">
-											<td
 												class="textL borderside_T borderside_L borderside_R borderside_D"
 												colspan="4">
 												<span class="float_R">
@@ -237,10 +229,38 @@
 												class="textL borderside_T borderside_L borderside_R borderside_D"
 												colspan="4">
 												<span class="float_R summary-total">
-													1333
 												</span>
 											</td>
 										</tr>
+										<tr class="shopOrder ">
+											<td
+												class="textL borderside_T borderside_L borderside_R"
+												colspan="4">可选积分：</td>
+											<td
+												class="textL borderside_T borderside_L borderside_R"
+												colspan="4">
+												
+												<select class="user-points">
+												<option value="none">请选择</option>
+												{if condition="empty($points_data) neq true"}
+												<option value="bonus"  val="{$points_data[0]['bonus_point']}">奖励分</option>
+												<option value="regist"  val="{$points_data[0]['regist_point']}">注册分</option>
+												<option value="consume" val="{$points_data[0]['re_consume']}" >重复消费分</option>
+												<option value="universal"  val="{$points_data[0]['universal_point']}">万能分</option>
+												{/if}
+												</select>
+												</td>
+										</tr>
+										<tr class="shopOrder ">
+											<td
+												class="textL borderside_T borderside_L borderside_R"
+												colspan="4">可用积分：</td>
+											<td
+												class="textL borderside_T borderside_L borderside_R user-point"
+												colspan="4">0
+												</td>
+										</tr>
+										
 										<tr>
 											<td
 												colspan="7"

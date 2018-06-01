@@ -8,6 +8,13 @@ $(function(){
 		var province = $("select[name='receiver_province'] option:selected").text();
 		var city = $("select[name='receiver_city'] option:selected").text();
 		var area = $("select[name='receiver_area'] option:selected").text();
+		var pointType = $("select.user-points option:selected").val();
+		var point = $(".user-point").text();
+		
+		if(parseInt(point) <parseInt( $(".summary-total").text())){
+			alert("积分余额不足");
+			return false;
+		}
 		
 //		if(isEmpty(productId) || isEmpty(receiver) || isEmpty(mobile) || isEmpty(address) || isEmpty(password) ){
 //			alert("参数为空，请检查后重新提交");
@@ -21,7 +28,8 @@ $(function(){
 			address:address,
 			province:province,
 			city:city,
-			area:area
+			area:area,
+			pointType:pointType
 		}, function(result) {
 			result = JSON.parse(result);
 			if(result.result==1){
@@ -92,7 +100,16 @@ $(function(){
 				$(".summary-total").html(parseInt($(".product-total").text())+parseInt(result.shippingFee));
 			});
 		}
-	})
+	});
+	
+	//积分选择
+	$(".user-points").on("change",function(){
+		if($(this).find("option:selected").val() != "none"){
+			$(".user-point").html($(this).find("option:selected").attr("val"));
+		}else{
+			$(".user-point").html(0);
+		}
+	});
 	
 	//初始化小结信息
 	initSummary();

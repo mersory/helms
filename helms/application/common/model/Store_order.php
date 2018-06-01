@@ -9,7 +9,7 @@ class Store_order extends Model
     //查询所有订单
     public function OrderInfoAllQuery()
     {
-        $sql = "select * from helms_store_order order by update_time";
+        $sql = "select * from helms_store_order order by update_time desc";
         $_orderinfo = $this->query($sql);
         if(count($_orderinfo) > 0){
             for($i=0;$i<count($_orderinfo);++$i){
@@ -23,7 +23,7 @@ class Store_order extends Model
     //用户查询所有订单
     public function OrderInfoMemberQuery($userId)
     {
-        $sql = "select * from helms_store_order where user_id = '$userId' order by update_time";
+        $sql = "select * from helms_store_order where user_id = '$userId' order by update_time desc";
         $_orderinfo = $this->query($sql);
         if(count($_orderinfo) > 0){
             for($i=0;$i<count($_orderinfo);++$i){
