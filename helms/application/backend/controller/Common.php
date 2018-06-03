@@ -42,7 +42,7 @@ class Common extends Basecontroller
             return $this->redirect("/login/login/index");
         }else{
             $_user_id = $_session_user["userId"];
-            $_role_id = $_session_user["roleId"];
+//             $_role_id = $_session_user["roleId"];
     
             $_user = new User_details();
             $_res = $_user->DetailsQuery($_user_id);
@@ -53,7 +53,7 @@ class Common extends Basecontroller
                 $_session_user["userLevel"] = $_res[0]["user_level"];
             }
     
-            $_role = new Role();
+/*             $_role = new Role();
             $_res = $_role->RoleQuery($_role_id);
             if (count($_res) == 1)
             {
@@ -90,7 +90,7 @@ class Common extends Basecontroller
                 $_resdata["priority_id"] = $_res[0]["priority_id"];
             }
     
-            $this->assign('pass_data', $_resdata);//真正传递的是前面那个变量，这也是html中可以使用的
+            $this->assign('pass_data', $_resdata);//真正传递的是前面那个变量，这也是html中可以使用的 */
     
             // 取回打包后的数据
             $htmls = $this->fetch();

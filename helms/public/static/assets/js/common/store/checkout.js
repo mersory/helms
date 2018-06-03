@@ -1,17 +1,17 @@
 $(function(){
 	//提交订单
 	$(".submit-order").on("click",function(){
-		var addressId = $("input[name='radio_cds']").val();
-		var receiver = $("input[name='receiver']").val();
-		var mobile = $("input[name='receiver_mobile']").val();
-		var address = $("textarea[name='receiver_address']").val();
-		var province = $("select[name='receiver_province'] option:selected").text();
-		var city = $("select[name='receiver_city'] option:selected").text();
-		var area = $("select[name='receiver_area'] option:selected").text();
-		var pointType = $("select.user-points option:selected").val();
-		var point = $(".user-point").text();
+		var addressId = $("input[name='radio_cds']").val().trim();
+		var receiver = $("input[name='receiver']").val().trim();
+		var mobile = $("input[name='receiver_mobile']").val().trim();
+		var address = $("textarea[name='receiver_address']").val().trim();
+		var province = $("select[name='receiver_province'] option:selected").text().trim();
+		var city = $("select[name='receiver_city'] option:selected").text().trim();
+		var area = $("select[name='receiver_area'] option:selected").text().trim();
+		var pointType = $("select.user-points option:selected").val().trim();
+		var point = $(".user-point").text().trim();
 		
-		if(parseInt(point) <parseInt( $(".summary-total").text())){
+		if(parseInt(point) <parseInt( $(".summary-total").text().trim())){
 			alert("积分余额不足");
 			return false;
 		}

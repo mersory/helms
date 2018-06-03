@@ -60,6 +60,7 @@ class Store_shoppingcart extends Model
         
         $t=time();
         $_shoppingcartinfo["create_time"] = date("Y-m-d H:i:s",$t);
+        $_shoppingcartinfo["update_time"] = date("Y-m-d H:i:s",$t);
     
         $this->startTrans();
         $state = $this->save($_shoppingcartinfo);
