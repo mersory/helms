@@ -69,7 +69,7 @@ class Award_daytime extends Model
         return $state;
     }
     
-    public function AwarddailyInsert($id, $direct=0, $balance=0, $tutor=0, $appreciation=0, $staticbonus=0, $sum=0, $Sactualsalary=0)
+    public function AwarddailyInsert($id, $direct=0, $balance=0, $tutor=0, $appreciation=0, $staticbonus=0, $sum=0, $Sactualsalary=0, $income = 0)
     {
         $_record = array();
         if (strcmp("$id", ""))
@@ -91,6 +91,8 @@ class Award_daytime extends Model
         
         $_record["actualsalary"] = $Sactualsalary;
         
+        $_record["income"] = $income;
+        
         $_record["date"] = date("Y-m-d");;
         
         $this->startTrans();
@@ -106,7 +108,7 @@ class Award_daytime extends Model
         return $state;
     }
     
-    public function AwarddailyUpdate($id, $direct=-1, $balance=-1, $tutor=-1, $appreciation=-1, $staticbonus=-1, $sum=-1, $actualsalary=-1, $bz0=-1, $bz6=-1, $bz7=-1, $bz8=-1)
+    public function AwarddailyUpdate($id, $direct=-1, $balance=-1, $tutor=-1, $appreciation=-1, $staticbonus=-1, $sum=-1, $actualsalary=-1, $bz0=-1, $bz6=-1, $bz7=-1, $bz8=-1, $income=-1)
     {
         $_record = array();
         $date = date("Y-m-d");
@@ -142,6 +144,9 @@ class Award_daytime extends Model
         
         if($bz8 != -1)
             $_record["bz8"] = $bz8;
+        
+        if($income != -1)
+            $_record["income"] = $income;
     
         $this->startTrans();
         $state = $this-> where("ID='$id'  and date = '$date'")

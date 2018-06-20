@@ -13,6 +13,7 @@ use app\common\model\User_point;
 use app\common\model\Point_transform_record;
 use app\common\model\Withdrawal_record;
 use app\trigger\controller\Awardopt;
+use app\common\model\Preference;
 use app\common\model\User_details;
 use app\common\model\Historical_price;
 use app\common\model\Gp_onsale;
@@ -20,26 +21,61 @@ use app\common\model\Gp_set;
 use app\common\model\Award_record;
 use app\common\model\Award_daytime;
 use think\Session;
+use app\trigger\controller\External;
+use phpDocumentor\Reflection\DocBlock\Tags\Param;
 
 class Adminopt extends Controller
 {
     public function index()
     {
+        //$userinfo = new User_info();
+        //var_dump("user state: ".$userinfo->getUserstate("H1400517071"));
+        $awardOBJ = new Awardopt();
+        $awardOBJ->tutorAward("H1168190890", $re_path="1", $re_level=1, 35, $ft=0);
+        return;
+        $awardOBJ->duipeng();
+        
+        $positionobj = new Positionality();
+        $positionobj->updateGanenInfo(11);
+        
+        $extern = new External();
+        $po = $extern->cy_encode("140416");
+        
+        $passwd = md5("140416hermes");
+        var_dump("encode pwd:".$passwd);
+        var_dump("end");
+        /*
+        $ec = new External();
+        $res= $ec->getParam("dynamic_max", $level=4, "H1000050056");
+        var_dump("param now:".$res);
+        
+        $str = "1,2,3";
+        $strArr =  explode(",",$str);  //获取推荐等级
+        var_dump($strArr);
+        var_dump("数组长度：".count($strArr));
+        $_detail_info = new User_details();
+
+            $_detail_info_res = $_detail_info->where('AUTO_ID ','in',$strArr)
+            ->setInc('repath_ds',2);
+
         echo "class Adminopt index";
         //$posi = new Positionality();
         //$posi->updateGushu(3, -1, 0, -1);
         $strSRC="121-421-5-12";
         $pos = strrpos($strSRC,'-');
+        var_dump("pos:".$pos);
         $strSRC = substr($strSRC,0, $pos);
+        var_dump("strSRC:".$strSRC);
         while ( $pos != false ){            
             $pos = strrpos($strSRC,'-');
             if($pos == false)
                 $tmp = $strSRC;
             else
                 $tmp = substr($strSRC, $pos+1, strlen($strSRC));
-            $strSRC = substr($strSRC,0, $pos); 
+            $strSRC = substr($strSRC,0, $pos);
+            var_dump("  |  ");
             echo $tmp;
-        }
+        }*/
         
         //$position  = new Positionality();
         //$position->updateGanenInfo(21);
@@ -165,8 +201,8 @@ class Adminopt extends Controller
         $bb = 500;//$rm[$lv];
         $ds = 1;//$ds[$lv];
         $bz5_bl = 0.05;//_get_conf('s1', 1);//s1是指配股比例
-        $bz3_al = 1;//_get_conf('s2', 1);//s2是指
-    
+        $bz3_al = 1;//_get_conf('s2', 1);//s2是指,5.9号讨论可删除
+        
         ////////////////////////////////////////////////////////////////
         //标记感恩奖的ganen_id与ganen_next_id和ganen_next_r_id(新算法)
         ////////////////////////////////////////////////////////////////
@@ -174,7 +210,7 @@ class Adminopt extends Controller
         var_dump($uid);
         $new_node = $member->PositionQuery($uid);//$member->where('id='.$uid)->field('id,parent_id,reg_money,treeplace,u_level')->find();
         var_dump('debug : Adminopt.php on line:'.__LINE__);
-        var_dump($new_node[0]['user_id']);  
+        var_dump($new_node[0]['user_id']);
         $state = 1;
         if($new_node[0]['treeplace'] == 1 && $new_node[0]['parent'] != 0)                 //如果增加的节点是右区，则处理
         {
@@ -221,7 +257,6 @@ class Adminopt extends Controller
 		//bz5是总股额，$bb是注册资金； 总股额是注册资金*配股比例
 		//$data['bz5'] = $bb * $bz5_bl[$lv] / 100 ;
 		$gujia = new Historical_price();
-		$data['bz5'] = 450 ;
 		$new_gujia = $gujia->HistoricalpriceQueryByTiem("2017-09-04 00:00:05", $ntime);
 		$now_gujia = number_format($new_gujia[0]["share_price"], 2, '.', '') / 100;//获取当前股价
 		$state = $gujia->HistoricalpriceInsert($now_gujia);
@@ -236,7 +271,7 @@ class Adminopt extends Controller
 		//$data['gushu'] = floor($data['bz5'] / $now_gujia);
 		//7和10要放在配置参数，最大静态和最大动态倍数，这个是通过参数列表获取的
 		//更新用户的point表
-		$user_point = new User_point();
+		/*$user_point = new User_point();
 		$shengyu_jing = 7 * $new_node[0]['status'] * 500;
 		$shengyu_dong = 10 * $new_node[0]['status'] * 500;
 		$state = $user_point->remainPointUpdate($user_id, $shengyu_jing, $shengyu_dong);
@@ -245,7 +280,7 @@ class Adminopt extends Controller
 		    var_dump('ERROR : Adminopt.php on line:'.__LINE__);
 		    //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 		    return false;
-		}
+		}*/
 		//var_dump("_member_open action success:");
 		//var_dump($state);
 		return $state;
@@ -266,14 +301,17 @@ class Adminopt extends Controller
         var_dump("userid:".$vo['user_id']);
         var_dump("openid:".$openid);
         var_dump("status:".$vo['status']);
-        $is_open = $this->_member_open($vo['user_id'], $openid, $vo['status']);
+        //$is_open = $this->_member_open($vo['user_id'], $openid, $vo['status']);//2018-05-23本函数所做事物在其他地方已全部做了
+       
         var_dump("Adminopt.php : audit_member_open".__LINE__);
         
-        if ($is_open) {
+        if (count($node) >= 0) {
             var_dump("Adminopt.php : audit_member_open".__LINE__);
             //判断是否拆分
             $judge = $this->judge_chaifen($vo['ID']);
+            //return true;
             
+            /*------------------------这部分功能已经在User_info.php中的UserActivate函数实现了---------------------
             //更新推荐人数
             //更新直推的那个人的推荐人数
             //$member->where('id='.$vo['re_id'])->setInc('re_nums');
@@ -300,6 +338,7 @@ class Adminopt extends Controller
                     $recommonder = $detailinfo[0]["recommender"];
                
             }
+            */
             //更新左右区uid
             //$member->where('id='.$vo['parent_id'])->setField('t'.$vo['treeplace'].'_uid', $vo['id']);
             //单数和奖金统计
@@ -318,6 +357,45 @@ class Adminopt extends Controller
 
     }
     
+    //升级会员
+    public function audit_member_update($id, $openid = 1, $cost_money) {
+        var_dump("Adminopt.php : audit_member_open".__LINE__);
+        $today = date('Y-m-d H:i:s');
+        $member = new Positionality();
+        $award = new Awardopt();
+        var_dump("Adminopt.php : audit_member_open".__LINE__);
+        $node = $member->PositionQueryByID($id);
+        $vo = $node[0];
+        var_dump("Adminopt.php : audit_member_open".__LINE__);
+        var_dump("userid:".$vo['user_id']);
+        var_dump("openid:".$openid);
+        var_dump("status:".$vo['status']);
+        //$is_open = $this->_member_open($vo['user_id'], $openid, $vo['status']);//2018-05-23本函数所做事物在其他地方已全部做了
+         
+        var_dump("Adminopt.php : audit_member_open".__LINE__);
+    
+        if (count($node) >= 0) {
+            var_dump("Adminopt.php : audit_member_open".__LINE__);
+            //判断是否拆分
+            $judge = $this->judge_chaifen_update($vo['ID'], $cost_money);
+            //return true;
+    
+             //单数和奖金统计
+             //$member->where('id IN(0'.$vo['p_path'].'0) AND is_pay>0')->setInc('sum_yj', $vo['reg_money']);
+             var_dump("Adminopt.php : audit_member_open".__LINE__);
+             $danshu = $cost_money / 500;
+             $award->tree2ds_tongji_update($vo['json'], $vo['treeplace'], $danshu); //看函数内部
+    
+             var_dump("Adminopt.php : audit_member_open".__LINE__);
+             $award->bonus_tongji_update($vo['user_id'], $cost_money); //奖金统计
+    
+        } else {
+            var_dump("Adminopt.php : audit_member_open".__LINE__);
+            //$this->error('开通失败！');
+        }
+    
+    }
+    
     //判断是否拆分，参数1是当前要开通的userid
     //本函数被audit_member_open调用，当新注册客户成功开通之后置is_open为1，调用本函数
 	public function judge_chaifen($uid){   //**********注意这里传递的是：1，2，3，4而不是100042这种
@@ -325,31 +403,34 @@ class Adminopt extends Controller
 	    $gponsale = new Gp_onsale();//M('gponsale');//公司出售记录表
 	    $member = new Positionality();//M('member');//网络结构图表对象
 	    $gpset = new Gp_set(); //M('gpset');//当前的股价，出售的期数，当前出售价格时需要售卖的股数，只会有一条记录
-	
+	    
 	    //$xinzeng_sale  = $member->where('id='.$uid)->field('id,gushu,bz5,reg_money,user_id')->find();
 	    $xinzeng_sale  = $member->PositionQueryByID($uid);//id和user_id，gushu是股数，bz5是总股额，都有；reg_money通过state获取
-	    $ok_money = ($xinzeng_sale[0]["status"] )* 500;//status的值为5表示第1级别，为6表示第二级别，以此类推
+	    $paramOBJ = new External();
+	    $param = $paramOBJ->getParam("register_total", $xinzeng_sale[0]["status"], "");
+	    $ok_money = $param;//
 	    //$gp = $gpset->where('id=1')->find();//存放公司股票相关的，只会有一条
 	    $gp = $gpset->GpSetQuery();
 	   	var_dump($xinzeng_sale[0]["user_id"]);
-	    
+	    //$deal_gushu = intval($ok_money /  $gp[0]["now_price"]);
 	    //更新产品交易记录，deal_info表
 	    $deal = new Deal_info();
 	    $okid = $deal->DealinfoInsert( $xinzeng_sale[0]["user_id"], 1, $ok_money,$xinzeng_sale[0]["gushu"], 
 	                                   3.14, "details",1, $gp[0]["now_price"]);
 	    //$okid = $this->gptobuy_add($xinzeng_sale,$gp['now_price']);
-	    if(!$okid){
+	    if($okid < 0){
 	        var_dump('ERROR : Adminopt.php on line:'.__LINE__);
 	        //$this->error('更新静态数据错误1'.$xinzeng_sale[0]['user_id']);
 	        return false;
 	    }
 	    
-	    
-	    //gponsale这个表没有
-	    $buycount2 = $gponsale->GponsaleQueryByStatus();//M('gponsale')->where('status = 1')->field('ok_nums')->find();
-	    $buycount = $buycount2['ok_nums'];
-	    $salers = $gponsale->GponsaleQueryByStatus();;//$gponsale->where('status=1')->field('snums,sy_nums,status,user_id')->find();
-	    $update_buycount = $xinzeng_sale[0]['gushu']+$buycount;//这个人新买的股数加上之前已经累计的股数
+	    $salers = $gponsale->GponsaleQueryByStatus();//M('gponsale')->where('status = 1')->field('ok_nums')->find();
+	    if(count($salers) > 0)
+	       $buycount = $salers['ok_nums'];
+	    else 
+	       $buycount = 0;
+	    //$salers = $gponsale->GponsaleQueryByStatus();//$gponsale->where('status=1')->field('snums,sy_nums,status,user_id')->find();
+	    $update_buycount = $xinzeng_sale[0]["gushu"] + $buycount;//这个人新买的股数加上之前已经累计的股数
 	
 	    ///////更新总股额----这段代码有点问题，待定,这部分代码都是没有注销的，后面需要重新取消注释
 	    /*$map4 = array();
@@ -368,135 +449,302 @@ class Adminopt extends Controller
 	    ////////////
 	    
 	    //没有找到状态为1的记录，则直接插入
-	    if(count($salers)<1){
-	        $ok = $gponsale->GponsaleInsert($gp[0]["now_price"], $xinzeng_sale[0]["gushu"], $buycount, $ok_money, 1, 0); //$this->gponsale_add($gp);//插入一条出售记录
+	    /*if(count($salers)<1){
+	        $ok = $gponsale->GponsaleInsert($gp[0]["now_price"], $gp[0]["gp_qfhl"], $xinzeng_sale[0]["gushu"], $ok_money, 1, 0); //$this->gponsale_add($gp);//插入一条出售记录
 	        if(!$ok){
 	            var_dump('ERROR : Adminopt.php on line:'.__LINE__);
-	            //$this->error('更新静态数据错误2'.$xinzeng_sale[0]['user_id']);
-	            //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 	            return false;
-	        }	
-	        $salers = $gponsale->GponsaleQueryByStatus();;//$gponsale->where('status=1')->field('snums,sy_nums,status,user_id')->find();
-	        $update_buycount = $xinzeng_sale[0]['gushu']+$buycount;	       
-	    }
-	    
-	    //新买入了
-	    if($update_buycount){      
-	        //若当前累计的股数<当前期数的股数，则更新当前累计的股数,这里应该修改为当前买入股数小于还差剩余股数
-	        if($buycount < $salers['snums']){	  
-	            var_dump("更新公司最新一期销售额度");
-	            $okid = $gponsale->GponsaleUpdate($salers["AUTO_ID"],-1, $update_buycount, $buycount, $ok_money);	            
-	            if(!$okid){
-	                var_dump('ERROR : Adminopt.php on line:'.__LINE__);
-	                //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
-	            }
-	            return 1;
-	        }else{
-	            $pre_gujia = 1.99;//cy_get_gpset('now_price');获取前面的最近一次的股价
-	            $now_gujia = $pre_gujia + 0.01;
-	
-	            //当股价大于1.99时，要进行拆分，把等于号去掉
-	            if($now_gujia > 1.99){        //拆分
-	                $this->chaifen_act($gp[0],$xinzeng_sale[0]['gushu']);//后面再讨论
-	                
-	                
-	            }else{        //不拆分
-	                $data1 = array();
-	                $data1['qishu'] = $gp[0]['qishu'] + 1;
-	                $data1['now_price'] = $now_gujia;
-	                $ok = $gpset->GpSetUpdate($data1['qishu'], $data1['now_price']);//$gpset->where('id=1')->save($data1);
-	                if(!$ok){
-	                    var_dump('ERROR : Adminopt.php on line:'.__LINE__);
-	                    //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
-	                }
-	                $gp = $gpset->GpSetQuery();
-	                $gp = $gp[0];
-	                var_dump("gp now price:".$gp["now_price"]);
-	
-	                $data4 = array();   //将出售完的股状态进行变更
-	                $data4['status'] = 2;
-	                var_dump("更新公司销售状态：1---2");
-	                $okid2 = $gponsale->GponsaleUpdate($salers["AUTO_ID"], -1, -1, -1, -1, 2, -1);//$gponsale->where('status=1')->save($data4);
-	                if(!$okid2){
-	                    var_dump('ERROR : Adminopt.php on line:'.__LINE__);
-	                    //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
-	                }
-	                //unset($data4);
-	
-	
-	                //增加一条公司出售
-	                $data = array();
-	                $data['stype'] = $gp['qishu'];
-	                //$data['uid'] = 0;
-	                //$data['user_id'] = 'system';
-	                $data['sprice'] = $gp['now_price'];
-	                //$data['sprice_m'] = $gp['now_price'] * $gp['up_price'];
-	                $data['snums'] = $gp['gp_qfhl'];//只有拆分了才会翻倍
-	                //$data['sy_nums'] = $gp['gp_qfhl'] * $gp['qishu'] - $gp['gp_zxsl'];
-	                $data['ok_nums'] = $xinzeng_sale[0]['gushu'];
-	                $data['get_money'] = 0;
-	                $data['ctime'] = time();
-	                $data['status'] = $gp['s_isopen'];
-	                $data['uptime'] = 0;
-	                $ok = $gponsale->GponsaleInsert($gp['now_price'], $update_buycount, $buycount, $data['get_money'], 1);//$gponsale->add($data);
-	                //unset($data);
-	                //unset($data1);
-	                if(!$ok){
-	                    var_dump('ERROR : Adminopt.php on line:'.__LINE__);
-	                    //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
-	                }
-	                
-	                //更新所有会员的股额
-	                $map5 = array();
-	                $map5['is_pay'] = array('gt',0);
-	                #$map5['pay_gujia'] = array('neq',$gp['now_price']);
-	                $map5['id'] = array('gt',1);//需要保证管理员不参与，id=1表示管理员
-	                $frs = $member->getAllLegUser();//$member->where($map5)->field('id,user_id,gushu,bz5')->order('id ASC')->select();
-	                if(is_array($frs) && !empty($frs)){
-	                    foreach($frs as $vo){
-	                        var_dump($vo["ID"]);
-	                        $gue = $vo['gushu'] * $gp['now_price'];
-	                        $curID = $vo['ID'];
-	                        $ok = $member->updateGushu($curID, 12,  $gue, 0);//$member->where($map6)->save($data5);
-	                        if(!$ok){
-	                            var_dump('ERROR : Adminopt.php on line:'.__LINE__);
-	                            //$this->error('更新会员ID为'.$vo['ID'].'数据错误！');
-	                        }
-	                    }
-	                }
-	                
-	
-	                return 2;
-	            }
 	        }
+	        $salers = $gponsale->GponsaleQueryByStatus();//$gponsale->where('status=1')->field('snums,sy_nums,status,user_id')->find();
+  
+	    }else*/
+	        if($update_buycount){
+    	        var_dump("Adminopt.php line:".__LINE__."gushu:".$update_buycount);
+    	        
+    	        //若当前累计的股数<当前期数的股数，则更新当前累计的股数,这里应该修改为当前买入股数小于还差剩余股数
+    	        if($salers['ok_nums'] < $salers['snums']){
+    	            var_dump("更新公司最新一期销售额度");
+    	            $okid = $gponsale->GponsaleUpdate($salers["AUTO_ID"],-1, -1, $update_buycount, $ok_money);	            
+    	            if(!$okid){
+    	                var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+    	                //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
+    	            }
+    	            return true;
+    	        }else {
+        	            $pre_gujia = $gp[0]["now_price"];//cy_get_gpset('now_price');获取前面的最近一次的股价
+        	            $now_gujia = $pre_gujia + 0.01;
+        	            var_dump("Adminopt.php , 涨价了：line".__LINE__);
+        	
+        	            //当股价大于1.99时，要进行拆分，把等于号去掉
+        	            if($now_gujia > 1.99){//拆分
+        	                $okid2 = $gponsale->GponsaleChangeStatus(2);//$gponsale->where('status=1')->save($data4);
+        	                $okid2 = $okid2 && $gponsale->GponsaleInsert(1, 2*$gp[0]["gp_qfhl"], $xinzeng_sale[0]["gushu"], $ok_money, 1, 0);
+        	                
+        	                $this->chaifen_act($gp[0],$xinzeng_sale[0]['gushu']);//
+        	            }else{        //不拆分
+        	                $data1 = array();
+        	                $data1['qishu'] = $gp[0]['qishu'] + 1;
+        	                $data1['now_price'] = $now_gujia;
+        	                $ok = $gpset->GpSetUpdate($data1['qishu'], $data1['now_price']);//$gpset->where('id=1')->save($data1);
+        	                if(!$ok){
+        	                    var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+        	                    //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
+        	                }
+        	                $gp = $gpset->GpSetQuery();
+        	                $gp = $gp[0];
+        	                var_dump("line:".__LINE__."gp now price:".$gp["now_price"]);
+
+        	                var_dump("更新公司销售状态：1---2");
+        	                $okid2 = $gponsale->GponsaleChangeStatus(2);//$gponsale->GponsaleUpdate($salers["AUTO_ID"], -1, -1, -1, -1, 2, -1);//$gponsale->where('status=1')->save($data4);
+        	                $okid2 = $okid2 && $gponsale->GponsaleInsert($gp["now_price"], $gp["gp_qfhl"], $xinzeng_sale[0]["gushu"], $ok_money, 1, 0);
+        	                if(!$okid2){
+        	                    var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+        	                    //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
+        	                }
+        	                //unset($data4);
+        	
+        	
+        	                //增加一条公司出售,新增记录每次都是在上面做，检查到没有状态值等于1的记录时，才插入新纪录
+        	                /*
+        	                $data = array();
+        	                $data['stype'] = $gp['qishu'];
+        	                //$data['uid'] = 0;
+        	                //$data['user_id'] = 'system';
+        	                $data['sprice'] = $gp['now_price'];
+        	                //$data['sprice_m'] = $gp['now_price'] * $gp['up_price'];
+        	                $data['snums'] = $gp['gp_qfhl'];//只有拆分了才会翻倍
+        	                //$data['sy_nums'] = $gp['gp_qfhl'] * $gp['qishu'] - $gp['gp_zxsl'];
+        	                $data['ok_nums'] = $xinzeng_sale[0]['gushu'];
+        	                $data['get_money'] = 0;//此处值不重要，不更新
+        	                $data['ctime'] = time();
+        	                $data['status'] = $gp['s_isopen'];
+        	                $data['uptime'] = 0;
+        	                $ok = $gponsale->GponsaleInsert($gp['now_price'], $gp[0]["gp_qfhl"], $data['ok_nums'], $data['get_money'], 1);//$gponsale->add($data);
+        	                //unset($data);
+        	                //unset($data1);
+        	                if(!$ok){
+        	                    var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+        	                    //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
+        	                }*/
+        	                
+        	                //更新所有会员的股额,获取所有有效用户，并剔除管理员，虚拟根节点
+        	                $frs = $member->getAllLegUser();//$member->where($map5)->field('id,user_id,gushu,bz5')->order('id ASC')->select();
+        	                if(is_array($frs) && !empty($frs)){
+        	                    foreach($frs as $vo){
+        	                        var_dump($vo["ID"]);
+        	                        $gue = $vo['gushu'] * $gp['now_price'];
+        	                        $curID = $vo['ID'];
+        	                        var_dump("Adminopt.php , line:".__LINE__."update bz5".$gue);
+        	                        $ok = $member->updateGushu($curID, $vo['gushu'],  $gue, 0);//$member->where($map6)->save($data5);
+                                    $futouJine = $paramOBJ->getParam("register_total", $vo["status"], "") * $paramOBJ->getParam("share_proportion", $vo["status"], "") * 4 /100;
+                                    
+                                    if($gue >= $futouJine) //reg_money*配股比例*4
+                                        $this->futou($curID, $futouJine); //reg_money*配股比例*4-reg_money
+                                    
+        	                        if(!$ok){
+        	                            var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+        	                            //$this->error('更新会员ID为'.$vo['ID'].'数据错误！');
+        	                        }
+        	                    }
+        	                }
+        	                return 2;
+        	            }
+    	        }
 	    }else{
 	        var_dump("Adminopt.php : audit_member_open".__LINE__);
 	        //$this->error('拆分错误.');
 	    }
 	}
     
+	//升级时调用
+	public function judge_chaifen_update($uid, $cost_money){   //**********注意这里传递的是：1，2，3，4而不是100042这种
+	    $gptobuy = new Deal_info(); //M('gptobuy');//交易记录表
+	    $gponsale = new Gp_onsale();//M('gponsale');//公司出售记录表
+	    $member = new Positionality();//M('member');//网络结构图表对象
+	    $gpset = new Gp_set(); //M('gpset');//当前的股价，出售的期数，当前出售价格时需要售卖的股数，只会有一条记录
+	    $gp = $gpset->GpSetQuery();
+	    //var_dump($xinzeng_sale[0]["user_id"]);
+	    //$xinzeng_sale  = $member->where('id='.$uid)->field('id,gushu,bz5,reg_money,user_id')->find();
+	    $xinzeng_sale  = $member->PositionQueryByID($uid);//id和user_id，gushu是股数，bz5是总股额，都有；reg_money通过state获取
+	    $paramOBJ = new External();
+	    //$param = $paramOBJ->getParam("register_total", $xinzeng_sale[0]["status"], "");
+	    $xinzeng_gushu = ($cost_money * $paramOBJ->getParam("share_proportion", -1, $xinzeng_sale[0]["user_id"]) / 100) / $gp[0]["now_price"];
+	    $ok_money = $cost_money;//
+	    //$gp = $gpset->where('id=1')->find();//存放公司股票相关的，只会有一条
+
+	    //$deal_gushu = intval($ok_money /  $gp[0]["now_price"]);
+	    //更新产品交易记录，deal_info表
+	    $deal = new Deal_info();
+	    $okid = $deal->DealinfoInsert( $xinzeng_sale[0]["user_id"], 1, $ok_money,$xinzeng_gushu, 3.14, "details",1, $gp[0]["now_price"]);
+	    //$okid = $this->gptobuy_add($xinzeng_sale,$gp['now_price']);
+	    if($okid < 0){
+	        var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	        //$this->error('更新静态数据错误1'.$xinzeng_sale[0]['user_id']);
+	        return false;
+	    }
+	     
+	    $salers = $gponsale->GponsaleQueryByStatus();//M('gponsale')->where('status = 1')->field('ok_nums')->find();
+	    if(count($salers) > 0)
+	        $buycount = $salers['ok_nums'];
+        else
+            $buycount = 0;
+        //$salers = $gponsale->GponsaleQueryByStatus();//$gponsale->where('status=1')->field('snums,sy_nums,status,user_id')->find();
+        $update_buycount = $xinzeng_gushu + $buycount;//这个人新买的股数加上之前已经累计的股数
+
+        ///////更新总股额----这段代码有点问题，待定,这部分代码都是没有注销的，后面需要重新取消注释
+        /*$map4 = array();
+         $map4['is_pay']=1;
+         $now_price_temp = cy_get_gpset('now_price');
+         $map4['pay_gujia']=array('neq',$now_price_temp);
+         $frs2 = $member->where($map4)->field('id,user_id,bz5,gushu,pay_gujia')->order('id ASC')->select();
+         foreach($frs2 as $vo2){
+         $data3 = array();
+         $gue = $vo2['gushu']*$now_price_temp;
+         $data3['bz5'] = round($gue,2);
+         $member->where('id='.$vo2['id'])->save($data3);
+         unset($data3);
+         }
+         unset($map4);*/
+        ////////////
+         
+        //没有找到状态为1的记录，则直接插入
+        /*if(count($salers)<1){
+         $ok = $gponsale->GponsaleInsert($gp[0]["now_price"], $gp[0]["gp_qfhl"], $xinzeng_sale[0]["gushu"], $ok_money, 1, 0); //$this->gponsale_add($gp);//插入一条出售记录
+         if(!$ok){
+         var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+         return false;
+         }
+         $salers = $gponsale->GponsaleQueryByStatus();//$gponsale->where('status=1')->field('snums,sy_nums,status,user_id')->find();
+
+         }else*/
+            if($update_buycount){
+                var_dump("Adminopt.php line:".__LINE__."gushu:".$update_buycount);
+                 
+                //若当前累计的股数<当前期数的股数，则更新当前累计的股数,这里应该修改为当前买入股数小于还差剩余股数
+                if($salers['ok_nums'] < $salers['snums']){
+                    var_dump("更新公司最新一期销售额度");
+                    $okid = $gponsale->GponsaleUpdate($salers["AUTO_ID"],-1, -1, $update_buycount, $ok_money);
+                    if(!$okid){
+                        var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+                        //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
+                    }
+                    return true;
+                }else {
+                    $pre_gujia = $gp[0]["now_price"];//cy_get_gpset('now_price');获取前面的最近一次的股价
+                    $now_gujia = $pre_gujia + 0.01;
+                    var_dump("Adminopt.php , 涨价了：line".__LINE__);
+                     
+                    //当股价大于1.99时，要进行拆分，把等于号去掉
+                    if($now_gujia > 1.99){//拆分
+                        $okid2 = $gponsale->GponsaleChangeStatus(2);//$gponsale->where('status=1')->save($data4);
+                        $okid2 = $okid2 && $gponsale->GponsaleInsert(1, 2*$gp[0]["gp_qfhl"], $xinzeng_gushu, $ok_money, 1, 0);
+                         
+                        $this->chaifen_act($gp[0],$xinzeng_gushu);//
+                    }else{        //不拆分
+                        $data1 = array();
+                        $data1['qishu'] = $gp[0]['qishu'] + 1;
+                        $data1['now_price'] = $now_gujia;
+                        $ok = $gpset->GpSetUpdate($data1['qishu'], $data1['now_price']);//$gpset->where('id=1')->save($data1);
+                        if(!$ok){
+                            var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+                            //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
+                        }
+                        $gp = $gpset->GpSetQuery();
+                        $gp = $gp[0];
+                        var_dump("line:".__LINE__."gp now price:".$gp["now_price"]);
+
+                        var_dump("更新公司销售状态：1---2");
+                        $okid2 = $gponsale->GponsaleChangeStatus(2);//$gponsale->GponsaleUpdate($salers["AUTO_ID"], -1, -1, -1, -1, 2, -1);//$gponsale->where('status=1')->save($data4);
+                        $okid2 = $okid2 && $gponsale->GponsaleInsert($gp["now_price"], $gp["gp_qfhl"], $xinzeng_gushu, $ok_money, 1, 0);
+                        if(!$okid2){
+                            var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+                            //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
+                        }
+                        //unset($data4);
+                         
+                         
+                        //增加一条公司出售,新增记录每次都是在上面做，检查到没有状态值等于1的记录时，才插入新纪录
+                        /*
+        	                $data = array();
+        	                $data['stype'] = $gp['qishu'];
+        	                //$data['uid'] = 0;
+        	                //$data['user_id'] = 'system';
+        	                $data['sprice'] = $gp['now_price'];
+        	                //$data['sprice_m'] = $gp['now_price'] * $gp['up_price'];
+        	                $data['snums'] = $gp['gp_qfhl'];//只有拆分了才会翻倍
+        	                //$data['sy_nums'] = $gp['gp_qfhl'] * $gp['qishu'] - $gp['gp_zxsl'];
+        	                $data['ok_nums'] = $xinzeng_sale[0]['gushu'];
+        	                $data['get_money'] = 0;//此处值不重要，不更新
+        	                $data['ctime'] = time();
+        	                $data['status'] = $gp['s_isopen'];
+        	                $data['uptime'] = 0;
+        	                $ok = $gponsale->GponsaleInsert($gp['now_price'], $gp[0]["gp_qfhl"], $data['ok_nums'], $data['get_money'], 1);//$gponsale->add($data);
+        	                //unset($data);
+        	                //unset($data1);
+        	                if(!$ok){
+        	                var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+        	                //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
+        	                }*/
+                         
+                        //更新所有会员的股额,获取所有有效用户，并剔除管理员，虚拟根节点
+                        $frs = $member->getAllLegUser();//$member->where($map5)->field('id,user_id,gushu,bz5')->order('id ASC')->select();
+                        if(is_array($frs) && !empty($frs)){
+                            foreach($frs as $vo){
+                                var_dump($vo["ID"]);
+                                $gue = $vo['gushu'] * $gp['now_price'];
+                                $curID = $vo['ID'];
+                                var_dump("Adminopt.php , line:".__LINE__."update bz5".$gue);
+                                $detailsOBJ = new User_details();
+                                $detailsRES = $detailsOBJ->DetailsQuery($curID);
+                                $userstatus = array();
+                                $userstatus["status"] = $detailsRES[0]["user_level"];
+                                $userstatus["gushu"] = $vo['gushu'];
+                                $userstatus["bz5"] = $gue;
+                                //2018--06-19为了同时修改网络结构图中的status，而改变此处逻辑
+                                //$ok = $member->updateGushu($curID, $vo['gushu'],  $gue, 0);//$member->where($map6)->save($data5);
+                                $ok = $member-> where("ID=$curID")
+                                                ->setField($userstatus);
+                                
+                                $futouJine = $paramOBJ->getParam("register_total", $vo["status"], "") * $paramOBJ->getParam("share_proportion", $vo["status"], "") * 4 /100;
+
+                                if($gue >= $futouJine) //reg_money*配股比例*4
+                                    $this->futou($curID, $futouJine); //reg_money*配股比例*4-reg_money
+
+                                    if(!$ok){
+                                        var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+                                        //$this->error('更新会员ID为'.$vo['ID'].'数据错误！');
+                                    }
+                            }
+                        }
+                        return 2;
+                    }
+                }
+            }else{
+                var_dump("Adminopt.php : audit_member_open".__LINE__);
+                //$this->error('拆分错误.');
+            }
+	}
+	
 	//这个函数被上面的judge_chaifen调用，股价满足超过 1.99时被调用
 	public function chaifen_act($gp,$xinzeng_sale_gushu)
 	{
-	    var_dump('Adminopt.php: Adminopt.php on line:'.__LINE__);
 	    $gptobuy = new Deal_info();//M('gptobuy');
 	    $member =  new Positionality();//M('member');
 	    $gponsale = new Gp_onsale();//M('gponsale');
 	    $gpset = new Gp_set();//M('gpset');
 	    $now_gujia = 1;
 	    $cf_time = date("Y-m-d H:i:s");
-	    $ok = $gpset->GpSetUpdate(-1, $now_gujia, -1, -1);
-	
-	    $okid3 = $gponsale->GponsaleChangeStatus(2);
-	    if(!$okid3){
-	        var_dump('ERROR : Adminopt.php on line:'.__LINE__);
-	        //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
-	    }
+	    $gp = $gpset->GpSetQuery();
+	    $ok = $gpset->GpSetUpdate($gp[0]["qishu"]+1, $now_gujia, $gp[0]["gp_qfhl"]*2, -1);
+	    var_dump('Adminopt.php:  on line:'.__LINE__);
+	    //$okid3 = $gponsale->GponsaleChangeStatus(2);
 	    
+	    /*
+	    //此处的插入新的记录也被删除，这一步不需要在这里做
 	    //增加一条公司出售信息
 	    $gp_new = $gpset->GpSetQuery();
 	    $gp_new = $gp_new[0];
-	   
+
 	    //$ok = $gponsale->add($data);
 	    var_dump("now_price:");
 	    var_dump($gp_new['now_price']);
@@ -504,17 +752,74 @@ class Adminopt extends Controller
 	    var_dump( $gp_new['gp_qfhl']);
 	    var_dump("xinzeng_sale_gushu:");
 	    var_dump($xinzeng_sale_gushu);
-	    $ok = $gponsale->GponsaleInsert($gp_new['now_price'], $gp_new['gp_qfhl']*2, $xinzeng_sale_gushu, 500, 1, -1);
+	    //$ok = $gponsale->GponsaleInsert($gp_new['now_price'], $gp_new['gp_qfhl'], $xinzeng_sale_gushu, 0, 1, -1);
+	    */
 	    if(!$ok){
 	        var_dump('ERROR : Adminopt.php on line:'.__LINE__);
 	        //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 	    }
-	    
+	    $paramOBJ = new External();
 	    $frs = $member->getAllLegUser();
 	    foreach($frs as $vo){
 	        //$ok = $member->where('id='.$vo['id'])->save($data6);
 	        //bz5是股额，总股额永远都是通过股数乘于股价得到的，
-	        $ok = $member->updateGushu($vo['ID'], $vo['gushu']*2, 2*$vo['gushu']*$now_gujia, $vo['cf_count'] + 1);
+	        var_dump("Adminopt.php line:".__LINE__);
+	        $gushu = $vo["gushu"]*2;
+	        $gue = $gushu * $now_gujia;
+	        $curID = $vo['ID'];
+	        var_dump("Adminopt.php line:".__LINE__."ID:".$curID."gue:".$gue."gushu:".$gushu);
+	        $ok = $member->updateGushu($curID, $gushu, $gue, $vo['cf_count'] + 1);
+	        $futouJine = $paramOBJ->getParam("register_total", $vo["status"], "") * $paramOBJ->getParam("share_proportion", $vo["status"], "") * 4 / 100;
+	        var_dump("curID:".$curID."gue:".$gue."futoujine:".$futouJine);
+	        if($gue >= $futouJine)   //reg_money*配股比例*4
+	            $this->futou($curID, $futouJine); //reg_money*配股比例*4-reg_money
+	        
+	        /*
+	        switch($vo["status"])
+	        {
+	            case 1:
+	                var_dump("switch jin_ru ! Adminopt.php line:".__LINE__."futou jin_e:".$futouJine);
+	                if($gue >= $futouJine)   //reg_money*配股比例*4
+	                    $this->futou($curID, $futouJine);   //reg_money*配股比例*4
+	                break;
+	            case 2:
+	                if($gue >= 1800)
+	                    $this->futou($curID, $futouJine);
+	                break;
+	            case 3:
+	                if($gue >= 2800)
+	                    $this->futou($curID, $futouJine);
+	                break;
+                case 4:
+                    if($gue >= 800)   //reg_money*配股比例*4
+                        $this->futou($curID, $futouJine);   //reg_money*配股比例*4
+                    break;
+                case 5:
+                    if($gue >= 1800)
+                        $this->futou($curID, $futouJine);
+                        break;
+                case 6:
+                    if($gue >= 2800)
+                        $this->futou($curID, $futouJine);
+                    break;
+                case 7:
+                    if($gue >= 2800)
+                        $this->futou($curID, $futouJine);
+                        break;
+                case 8:
+                    if($gue >= 800)   //reg_money*配股比例*4
+                        $this->futou($curID, $futouJine);   //reg_money*配股比例*4
+                        break;
+                case 9:
+                    if($gue >= 1800)
+                        $this->futou($curID, $futouJine);
+                        break;
+                case 10:
+                    if($gue >= 2800)
+                        $this->futou($curID, $futouJine);
+                        break;
+	        }*/
+                    
 	        if(!$ok){
 	            var_dump('ERROR : Adminopt.php on line:'.__LINE__);
 	            //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
@@ -530,59 +835,89 @@ class Adminopt extends Controller
 	//4、公司交易记录
 	//5、产品交易记录Deal_info
 	//参数1是当前复投人的id，参数2是复投的钱
-	public function futou($id,$futou_money){
+	public function futou($ID,$futou_money){
 	    //更新member表
+	    var_dump("Adminopt.php line:".__LINE__."ID:".$ID);
+	    $member = new Positionality();//M('member');
+	    $pos = strrpos($ID,'H');
+	    if( $pos != false )
+	    {
+	       $vo = $member->PositionQuery($ID);
+	    }
+	    else
+	    {
+	        $vo = $member->PositionQueryByID($ID);
+	    }
+	    
+	    $vo = $vo[0];
+	    $id = $vo["user_id"];
+	    $paramOBJ  = new External();
+	    $resDanshu = $paramOBJ->getParam("register_order_num", -1, $vo["user_id"]);
 	    $award = new Award_record();//D('Award');//操作奖金
 	    $deal_info = new Deal_info();
-	    $member = new Positionality();//M('member');
-	    $gponsale_obj = new Gp_onsale();//M('gponsale')->where('status=1')->find();
+	    $gponsale_obj = new Gp_onsale();//这里一定可以得到，如果没有的话，就不会进入这里
 	    $gponsale = $gponsale_obj->GponsaleQueryByStatus();
 	    $gptobuy = new Deal_info();//M('gptobuy');
 	    $gp = new Gp_set();//M('gpset')->where('id=1')->find();
 	    $_res_pgset = $gp->GpSetQuery();
-	    $res_set = $gp->GpSetQuery();
+	    $now_gujia = $_res_pgset[0]["now_price"];//M('gpset')->where('id=1')->field('now_price')->find();
+	    $details = new User_details();
+	    $_detail = array();
+        $_detail["pay_gujia"] = $now_gujia;
+        
+        if(count($details->DetailsQuery($id)) < 1)
+        {
+            var_dump("User_info.php ERROR ar line:".__LINE__);
+            return false;
+        }
+        $_detail_info_res = $details->where("ID='$id'")
+        ->setField($_detail);
+
+	    //$res_set = $gp->GpSetQuery();
 	     
 	    //更新member相关数据
 	    $data = array();
-	    $vo = $member->PositionQueryByID($id); //>where('id='.$id)->field('id,user_id,reg_money,bz5,bz6,pay_gujia,shengyu_jing,gushu,u_level,p_path,treeplace,danshu')->find();
-	    $vo = $vo[0];
-	    $now_gujia = $_res_pgset[0]["now_price"];//M('gpset')->where('id=1')->field('now_price')->find();
-	    $bl_peigu = 40;//cy_get_conf('s1');//1星是40， 2星是45，后面会除于100
+	    
+	    $bl_peigu = $paramOBJ->getParam("share_proportion", -1, $vo["user_id"]) / 100;
 	    $ss = $vo['status'];
 	    
 	    $points = new User_point();
-	    $_res_points = $points->PointQuery($id);
+	    $_res_points = $points->PointQuery($vo["user_id"]);
 	    $_res_points = $_res_points[0];
-	    $wanneng_money = $futou_money - $vo['status'] * 500;
-	    $data['bz6'] = $_res_points["universal_point"] + $wanneng_money;                                        //更新万能分
-	    $data['bz5'] = $vo['status'] * 500 * $bl_peigu/100;                                //更新股额
+	    $wanneng_money = $futou_money - $paramOBJ->getParam("register_total", -1, $vo["user_id"]);//$vo['status'] * 500是注册资金，读参数
+	    $data['bz6'] = $_res_points["universal_point"] + $wanneng_money; //更新万能分
+	    $data['bz5'] = $paramOBJ->getParam("register_total", $vo["status"], "") * $bl_peigu;//此处只记录新增的股额
 	    $data['shengyu_jing'] = $_res_points['shengyu_jing'] - $wanneng_money;                      //更新剩余静态奖金额度
 	    $data['pay_gujia'] = $now_gujia;
-	    $data['gushu'] = floor($data['bz5'] / $now_gujia);//只有一开始和升级是通过股额计算股数，其他时候都是通过股数计算股额      //更新股数
-	    $ok = $member->updateGushu($id, $data['gushu'], $data['bz5']);//>where('id='.$id)->save($data);
-	    $ok = $ok && $points->PointUpdate($id, -1, -1, -1, -1, $data['bz6'], -1,-1,-1, $data['shengyu_jing']);
-	    $ok = $ok && $gponsale_obj->GponsaleUpdate($id, $data['pay_gujia']);
+	    $data['gushu'] = floor($data['bz5'] / $now_gujia);//只计算新加的股数；只有一开始和升级是通过股额计算股数，其他时候都是通过股数计算股额      //更新股数
+	    $ok = $member->updateGushu($vo["ID"], $data['gushu'], $data['bz5']);//>where('id='.$id)->save($data);
+	    //$ok = $ok && $details
+	    $ok = $points->PointUpdate($id, -1, -1, -1, -1, $data['bz6'], -1,-1,-1, $data['shengyu_jing']);
+	    $ok = $gponsale_obj->GponsaleUpdate($id, $now_gujia, -1, $data['gushu']+$gponsale["ok_nums"]);
 	    if(!$ok){
 	        var_dump('ERROR : Adminopt.php on line:'.__LINE__);
 	        //$this->error('复投数据第1部分更新失败id='.$id);
 	        return false;
 	    }
-	     
+
 	    //************************
-	    //这部分还没改写
-	    //更新奖金，5表示的就是什么奖，这里是静态奖
-	    $this->_in_bonus($vo['user_id'], $vo['user_id'], 5, $wanneng_money);                    //将静态奖金录入
 	    $awardopt = new Awardopt();
-	    $awardopt->tree2ds_x_tongji($vo['json'], $vo['treeplace'],$vo['status'] * 500);
-	    $awardopt->bonus_tongji($vo['ID'],1);                                                  //复投所有奖金要重新计算
+	    //更新奖金，5表示的就是什么奖，这里是静态奖
+	    $awardopt->_in_bonus($vo['user_id'], $vo['user_id'], 5, $wanneng_money); //将静态奖金录入
 	    
+	    //-----------------------5.14--------------------
+	    var_dump("JSON:".$vo['json']."danshu:".$resDanshu);
+	    $awardopt->tree2ds_x_tongji($vo['json'], $vo['treeplace'],$resDanshu);//计算平衡奖所需要做的准备
+	    $awardopt->bonus_tongji($vo['user_id'],1);//复投所有奖金要重新计算
+	    
+	    //return 0;
 	    //*************************
 	    
-	    $vo = $member->PositionQueryByID($id);//>where('id='.$id)->field('id,user_id,reg_money,bz5,bz6,pay_gujia,shengyu_jing,gushu,u_level')->find();
+	    $vo = $member->PositionQueryByID($ID);//>where('id='.$id)->field('id,user_id,reg_money,bz5,bz6,pay_gujia,shengyu_jing,gushu,u_level')->find();
 	    $vo = $vo[0];
 	    //更新出售股数
-	    $new_gushu = $gponsale['ok_nums'] + $vo['gushu'];
-	    if($new_gushu){
+	    $now_gushu = $gponsale['ok_nums'] + $vo['gushu'];
+	    if($now_gushu){
 	        //若当前累计的股数<当前期数的股数，则更新当前累计的股数
 	        if($gponsale['ok_nums'] < $gponsale['snums']){
 	            $okid=$deal_info->DealinfoInsert($id, $vo['gushu']*$now_gujia, $vo['gushu'], -1, -1, -1, -1, $now_gujia);//$this->gptobuy_add($vo,$now_gujia);
@@ -590,7 +925,7 @@ class Adminopt extends Controller
 	                var_dump('ERROR : Adminopt.php on line:'.__LINE__);
 	                //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 	            }
-	            $okid =  $okid = $gponsale_obj->GponsaleUpdate( $id,-1,$gponsale['snums'],$new_gushu,$vo['status']*500 );//$this->gponsale_update($gp,$gponsale['snums'],$vo['reg_money'],$new_gushu);
+	            $okid =  $okid = $gponsale_obj->GponsaleUpdate( $id,-1,$gponsale['snums'],$now_gushu,$vo['status']*500 );//$this->gponsale_update($gp,$gponsale['snums'],$vo['reg_money'],$new_gushu);
 	            if(!$okid){
 	                var_dump('ERROR : Adminopt.php on line:'.__LINE__);
 	                //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
@@ -605,7 +940,7 @@ class Adminopt extends Controller
 	            //当股价大于1.99时，要进行拆分
 	            if($now_gujia >= 1.99){        //拆分
 	                $this->chaifen_act($_res_pgset[0],$vo['gushu']);
-	                 
+	            
 	            }else{        //不拆分
 	                $data1 = array();
 	                $data1['qishu'] = $_res_pgset[0]['qishu'] + 1;
@@ -663,7 +998,7 @@ class Adminopt extends Controller
 	                $data['status'] = $gp_new['s_isopen'];
 	                $data['uptime'] = 0;
 	                //$ok = $gponsale->add($data);
-	                $ok = $gponsale->GponsaleInsert($gp_new['now_price'], $gp_new['gp_qfhl']*2, $vo['gushu'], 0, 1, -1);
+	                $ok = $gponsale->GponsaleInsert($gp_new['now_price'], $gp_new['gp_qfhl'], $vo['gushu'], 0, 1, -1);
 	                if(!$ok){
 	                    var_dump('ERROR : Adminopt.php on line:'.__LINE__);
 	                    //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
@@ -706,35 +1041,35 @@ class Adminopt extends Controller
 	
 	}
 	
-	//处理奖金记录
+	//----------------------------------------本函数已经停止使用，在Awardopt中有相同的函数--------------------------------
 	//参数1表示谁拿奖金，参数2表示谁注册之后产生了奖金，参数3表示是哪种奖，参数4是奖金数量，
 	public function _in_bonus($myids, $fuserid, $bkey, $get_money, $btime = 0, $minfo = '') {
-	    $qibonus = new Award_daytime();//M('qibonus');//人每天表
-	    //$bid = $this->_get_bonus_id($myids);//获取id
-	    //扣税处理
-	    if($bkey == 5){                                                             //静态奖金的处理，人每天表
-	        //$qibonus->query("update __TABLE__ set b0=b0+{$get_money},b{$bkey}=b{$bkey}+{$get_money},b6=b6,b7=b7,b8=b8 where id=".$bid);
-	        //unset($qibonus);
-	        $_res_qibonus = $qibonus->AwarddailyQuery($myids);
-	        $_res_qibonus = $_res_qibonus[0];
-	        $qibonus->AwarddailyUpdate($myids, -1, -1, -1, -1, -1, $_res_qibonus["sum"] + $get_money, -1, $_res_qibonus["bz0"]+$get_money);
-	        //$data['sum_jj_jingtai'] = array('exp','sum_jj_jingtai+'.$get_money);
-	        //$this->where('id='.$myids)->save($data);//静态奖的累积，一共拿了多少静态奖，不需要也可以
-	        
-	        //$minfo = '万能分（'.$get_money.'）。';
-	        //$this->award_history($myids, $fuserid, $get_money, $bkey, $btime, $minfo);//奖金表，有一条奖金就插入一个，有一条就插入一个
-	        //unset($data);
-	        
+	    $qibonus = new Award_daytime();//M('qibonus');
+	    if($bkey == 5){ //$bkey等于5表示万能分
+	        //静态奖金的处理，人/每天表
+	        $IsDayly = $qibonus->isAwarddailyExist($myids);
+	        if ($IsDayly)
+	        {
+	            $_res_qibonus = $qibonus->AwarddailyQuery($myids);
+	            $_res_qibonus = $_res_qibonus[0];
+	            $qibonus->AwarddailyUpdate($myids, -1, -1, -1, -1, $_res_qibonus["staticbonus"] + $get_money, $_res_qibonus["sum"] + $get_money, $_res_qibonus["actualsalary"]+$get_money);
+	        } 
+	        else
+	        {
+	            $qibonus->AwarddailyInsert($myids, 0, 0, 0, 0, $get_money, $get_money, $get_money);
+	        }
 	        //添加奖金纪录
 	        $award_record = new Award_record();
-	        $_res_award_record = $award_record->AwardRecordInsert($myids, "万能奖", $get_money, $fuserid);
+	        $_res_award_record = $award_record->AwardRecordInsert($myids, "静态奖", $get_money, $fuserid);
 	    }else{
-	        $shui_bl = 5;//cy_get_conf('bl_shui'); //5
-	        $jijin_bl = 1;//cy_get_conf('bl_jijin');//1
-	        $shui = $this->_wei2($get_money * $shui_bl / 100);//保留两位小数
-	        $jijin = $this->_wei2($get_money * $jijin_bl / 100);
-	        $produceCX = $this->_wei2($get_money*0.1);
-	        $ok_money = $this->_wei2($get_money - $shui-$jijin - $produceCX);
+	        //这部分处理动态奖金
+	        $paramOBJ = new External();
+	        $shui_bl = $paramOBJ->getParam("tax_proportion", -1, $myids);
+	        $jijin_bl = $paramOBJ->getParam("foundation_proportion", -1, $myids);//cy_get_conf('bl_jijin');//1
+	        $shui = $this->_wei2($get_money * $shui_bl / 100);//保留两位小数，税
+	        $jijin = $this->_wei2($get_money * $jijin_bl / 100);//基金
+	        $produceCX = $this->_wei2($get_money*0.1); //重复消费分
+	        $ok_money = $this->_wei2($get_money - $shui-$jijin - $produceCX);//实际发放金额
 	
 	        //添加奖金表--人每天表--原先的代码也没有验证当前是否已经存在相应纪录，默认是已经存在了
 	        /*
@@ -747,40 +1082,49 @@ class Adminopt extends Controller
 	         */
 	        //$qibonus->query("update __TABLE__ set b0=b0+{$ok_money},b{$bkey}=b{$bkey}+{$get_money},b6=b6+{$shui},b7=b7+{$jijin},b8=b8+{$produceCX} where id=".$myids);
 	        //unset($qibonus);
+	        $IsDayly = $qibonus->isAwarddailyExist($myids);
+	        if (!$IsDayly)
+	        {
+	            $qibonus->AwarddailyInsert($myids);
+	        }
+	        
 	        $_res_qibonus = $qibonus->AwarddailyQuery($myids);
 	        $_res_qibonus = $_res_qibonus[0];
-	        if($bkey == 1)
+	        if($bkey == 1)//直推
+	        {
 	           $_res_qibonus[0]["direct"] = $_res_qibonus[0]["direct"] + $get_money;
-	        if($bkey == 2)
-	           $_res_qibonus[0]["balance"] = $_res_qibonus[0]["balance"] + $get_money;
-	        if($bkey == 3)
-	           $_res_qibonus[0]["tutor"] = $_res_qibonus[0]["tutor"] + $get_money;
-	        if($bkey == 4)
-	           $_res_qibonus[0]["appreciation"] = $_res_qibonus[0]["appreciation"] + $get_money;
-	        if($bkey == 6)
-	           $_res_qibonus[0]["staticbonus"] = $_res_qibonus[0]["staticbonus"] + $get_money;
-	        
-	        $qibonus->AwarddailyUpdate($myids, $_res_qibonus[0]["direct"], $_res_qibonus[0]["balance"], $_res_qibonus[0]["tutor"],
-	                                   $_res_qibonus[0]["appreciation"], $_res_qibonus[0]["staticbonus"], $_res_qibonus["sum"] + $get_money, -1, $_res_qibonus["bz0"]+$ok_money,
-	                                   $_res_qibonus["bz6"]+$shui, $_res_qibonus["bz7"]+$jijin, $_res_qibonus["bz8"]+$produceCX);
-	        
-	        /*zly 这部分是针对对碰产生奖励的逻辑，这部分是更新整个产生对碰奖的一系列的用户
-	        $data = array();
-	        $data['bz1'] = array('exp', 'bz1+'.$ok_money);
-	        $data['sum_jj'] = array('exp', 'sum_jj+'.$ok_money);
-	        if ($bkey == 2) {
-	            $data['dp_leiji'] = array('exp', 'dp_leiji+'.$get_money);
+	           //添加奖金记录
+	           $minfo = '实发（'.$ok_money.'）重消分（'.$produceCX.'）税收（'.$shui.'）基金（'.$jijin.'）。';
+	           $award_record->AwardRecordInsert($myids, "直推奖", $get_money, $fuserid, $minfo);
 	        }
-	        $this->where('id='.$myids)->save($data);
-	        */
-	        
-	        //添加奖金记录
-	        $minfo = '实发（'.$ok_money.'）重消分（'.$produceCX.'）税收（'.$shui.'）基金（'.$jijin.'）。';
-	        $award_record->AwardRecordInsert($myids, "重复消费分", $get_money, $fuserid, $minfo);
-	        //$this->award_history($myids, $fuserid, $get_money, $bkey, $btime, $minfo);//$fuserid，拿了谁的奖，对碰和静态都是自己的，辅导就是被辅导的那个人，
-	        //if ($shui > 0) {
-	        //	$this->award_history($myids, $fuserid, $shui, 6, $btime);
-	        //}
+	        if($bkey == 2)//平衡
+	        {
+	           $_res_qibonus[0]["balance"] = $_res_qibonus[0]["balance"] + $get_money;
+	           $minfo = '实发（'.$ok_money.'）重消分（'.$produceCX.'）税收（'.$shui.'）基金（'.$jijin.'）。';
+	           $award_record->AwardRecordInsert($myids, "平衡奖", $get_money, $fuserid, $minfo);
+	        }
+	        if($bkey == 3)//辅导
+	        {
+	           $_res_qibonus[0]["tutor"] = $_res_qibonus[0]["tutor"] + $get_money;
+	           $minfo = '实发（'.$ok_money.'）重消分（'.$produceCX.'）税收（'.$shui.'）基金（'.$jijin.'）。';
+	           $award_record->AwardRecordInsert($myids, "辅导奖", $get_money, $fuserid, $minfo);
+	        }
+	        if($bkey == 4)//感恩
+	        {
+	           $_res_qibonus[0]["appreciation"] = $_res_qibonus[0]["appreciation"] + $get_money;
+	           $minfo = '实发（'.$ok_money.'）重消分（'.$produceCX.'）税收（'.$shui.'）基金（'.$jijin.'）。';
+	           $award_record->AwardRecordInsert($myids, "感恩奖", $get_money, $fuserid, $minfo);
+	        }
+
+	        /*--------------------这里不做积分处理，因为其他地方已经做了-------------------
+	        $pointOBJ = new User_point();
+	        $pointRes = $pointOBJ->PointQuery($myids);
+	        $pointRes = $pointRes[0];
+	        $pointOBJ->PointUpdate($myids, -1,$pointRes["bonus_point"] + $get_money, 0, 0, 0, 0, 0,0,0,$pointRes["shengyu_dong"] - $get_money);
+	        ----------------------这里不做积分处理，因为其他地方已经做了------------------*/
+	        $qibonus->AwarddailyUpdate($myids, $_res_qibonus[0]["direct"], $_res_qibonus[0]["balance"], $_res_qibonus[0]["tutor"],
+	                                   $_res_qibonus[0]["appreciation"], -1, -1, -1, $_res_qibonus["bz0"]+$ok_money,
+	                                   $_res_qibonus["bz6"]+$shui, $_res_qibonus["bz7"]+$jijin, $_res_qibonus["bz8"]+$produceCX);
 	    }
 
 	}
@@ -931,7 +1275,7 @@ class Adminopt extends Controller
 	    $_userid = $_session_user["userId"];
 	    if(strlen($_userid)<5)
 	    {
-	        $_userid = "H1000050056";
+	        $_userid = "H6395385700";
 	        $minor_pwd ="1";
 	    }
 	        
@@ -939,16 +1283,42 @@ class Adminopt extends Controller
 
 	    $position = new Positionality();
 	    $active = new User_info();
-	    
+	    //更新新注册用户的details表数据，points表数据，消耗帮助开通用户的注册分
 	    $res = $active->UserActivate($user_id, $_userid, $minor_pwd, $level, $regist_money);
+	    
 	    var_dump("res:$res");
 	    if($res)
 	    {
-	        $posinfo = $position->PositionQuery($user_id);
+	        $posinfo = $position->PositionQuery($user_id); //待开通的网络结构信息
 	        $ID = $posinfo[0]["ID"];
-	        $posinfo = $position->PositionQuery($_userid);
+	        $posinfo = $position->PositionQuery($_userid); //帮助开通的网络结构信息
 	        $openid = $posinfo[0]["ID"];
+	        //更新新注册用户的网络结构表positionality表数据，用户等级，开通人，开通时间
 	        $res=$position->updateStatus($ID, $level, $openid, date("Y-m-d H:i:s"));
+	        //开通时最先增加一条收入记录，在人每天表，用于计算收支比时的数据源
+	        $paramOBJ = new External();
+	        $param = $paramOBJ->getParam("register_total", $level, "");
+	        var_dump("income:".$param);
+	        $awardday = new Award_daytime();
+	        $_res_qibonus = $awardday->AwarddailyQuery($ID);
+	        if(count($_res_qibonus) < 1)
+	            $awardday->AwarddailyInsert($ID,0,0,0,0,0,0,0,$param);
+            else
+            {
+                $_res_qibonus = $_res_qibonus[0];
+                $awardday->AwarddailyUpdate($ID,0,0,0,0,0,0,0,0,0,0,0,$param);
+            }
+	        
+            //2018-5-6 激活时才更新感恩信息
+            $positionOBJ = new Positionality();
+            $positionRes = $positionOBJ->PositionQuery($user_id);
+            $positionRes = $positionRes[0];
+            if($positionRes["treeplace"]==1)
+            {
+                $positionOBJ->updateGanenInfo($positionRes["ID"]);
+            }
+            
+	        //奖金处理等系列操作
 	        $this->audit_member_open($ID, $openid);//the most import logic module
 	        
 	    }
@@ -958,19 +1328,132 @@ class Adminopt extends Controller
 
 	}
 	
-	//获取当前节点的孩子节点信息，如果已经有了两个子节点则返回false
+	//用户升级,参数2是目标等级， 参数3是当前等级和目标等之间注册资金的差值
+	public function updateUserOpt($user_id, $level, $cost_money, $minor_pwd)
+	{
+	    $_session_user = Session::get(USER_SEESION);
+	    if(empty($_session_user))
+	    {
+	        var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	        //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
+	    }
+	     
+	    $_userid = $_session_user["userId"];
+        var_dump($_userid);
+	
+	    $position = new Positionality();
+	    $active = new User_info();
+	    //更新新注册用户的details表数据，points表数据，消耗帮助开通用户的注册分
+	    $res = $active->UserUpdate($user_id, $_userid, $minor_pwd, $level, $cost_money);
+	    
+	    var_dump("res:$res");
+	    if($res)
+	    {
+	        $posinfo = $position->PositionQuery($user_id); //待开通的网络结构信息
+	        $ID = $posinfo[0]["ID"];
+	        $posinfo = $position->PositionQuery($_userid); //帮助开通的网络结构信息
+	        $openid = $posinfo[0]["ID"];
+	        $base_gushu = $posinfo[0]["gushu"];
+	        //更新新注册用户的网络结构表positionality表数据，用户等级，开通人，开通时间
+	        $res=$position->updateStatusBY($ID, $level, $cost_money, $base_gushu);
+	        
+	        //开通时最先增加一条收入记录，在人每天表，用于计算收支比时的数据源
+	        $paramOBJ = new External();
+	        $param = $paramOBJ->getParam("register_total", $level, "");
+	        var_dump("income:".$param);
+	        $awardday = new Award_daytime();
+	        $_res_qibonus = $awardday->AwarddailyQuery($ID);
+	        if(count($_res_qibonus) < 1)
+	            $awardday->AwarddailyInsert($ID,0,0,0,0,0,0,0,$cost_money);
+            else
+            {
+                //$_res_qibonus = $_res_qibonus[0];
+                $awardday->AwarddailyUpdate($ID,0,0,0,0,0,0,0,0,0,0,0,$param);
+            }
+            
+            //奖金处理等系列操作----针对用户升级
+            $this->audit_member_update($ID, $openid, $cost_money);//the most import logic module
+	             
+	    }
+	    else
+	        var_dump("active failed");
+	         
+	
+	}
+	
+	//获取当前节点的孩子节点信息，如果已经有了两个子节点则返回false，已经有了左孩子，但是不存在任何直推节点，则返回-1
 	public function getNodeChild($id)
 	{
 	    $_resdata = array();
-	    $_resdata["success"] = true;
+	    $_resdata["success"] = 1;
 	
 	    //在用户网络结构图中插入数据,检测当前父节点是否已经存在两个子节点
 	    $position = new Positionality();
 	    $position_res = $position->PositionQuery($id);
 	    if($position_res[0]["leftchild"] != 0 && $position_res[0]["rightchild"] != 0)
-	        $_resdata["success"] = false;
-	
+	    {
+	        $_resdata["success"] = 0;
 	        return json_encode($_resdata);
+	    }
+	    
+	    //当前节点尚未开通
+	    if($position_res[0]["status"] < 1 )
+	    {
+	        $_resdata["success"] = 2;
+	        return json_encode($_resdata);
+	    }
+	    
+	    //左右区都没有注册，则可以正常注册
+	    if($position_res[0]["leftchild"] == 0 && $position_res[0]["rightchild"] == 0)
+	    {
+	        $_resdata["success"] = 1;
+	        return json_encode($_resdata);
+	    }
+	    
+	    //检查当前节点直接左区已经注册，且整个左区不存在直推的节点，则返回-1
+	    if(!$this->getDirectLeft($id))
+	    {
+	        $_resdata["success"] = -1;
+	        return json_encode($_resdata);
+	    }
+	    
+	    return json_encode($_resdata);
+	}
+	
+	//检测是否有左子孙，如果有，是否存在直接推荐的子孙，如果有，该子孙是否激活
+	public function getDirectLeft($id)
+	{
+	    $detailsOBJ = new User_details();
+	    $resDetails = $detailsOBJ->RecommanderQuery($id);
+	    if(count($resDetails) < 1)
+	        return 0;
+	    //var_dump("recmmand:".$resDetails[0]["ID"]."re:".$id);
+	    $positionOBJ = new Positionality();
+	    $currentID = $positionOBJ->PositionQuery($id);
+	    if($currentID[0]["leftchild"] == 0)
+	    {
+	        return 0;
+	    }
+	    
+	    $currentID = $currentID[0]["ID"];//获取auto_id
+	    $currentID = (string)($currentID);
+	    foreach ($resDetails as $position)
+	    {
+	        //var_dump("position:".$position["ID"]);
+	        $resPos = $positionOBJ->PositionQuery($position["ID"]);//
+	        $status = $resPos[0]["status"];
+	        $resPos = $resPos[0]["json"];
+	        
+	        if($status < 1) //如果该节点没激活，则直接看下一个
+	            continue;
+	        if(strpos($resPos, (string)($currentID)) != false || strcmp($resPos, $currentID) == 0)
+	        {
+	            return 1;
+	        }
+	        else
+	            var_dump("Adminopt.php line:".__LINE__);
+	    }
+	    return 0;
 	}
 	
 	//查看当前登录用户的节点是否具有权限查看当前的参数1的节点；通过检查其的所有子孙节点中，是否包含参数1这个节点
@@ -1013,6 +1496,71 @@ class Adminopt extends Controller
 	
 	        return json_encode($_resdata);
 	}
+	
+	//修改股价
+	public function change_gujia($use_gujia)
+	{
+	    $awardOBJ = new Awardopt();
+	    $use_gujia = $awardOBJ->_wei2($use_gujia);
+	    if($use_gujia > 1 && $use_gujia < 2)
+	    {
+	        $gpSetOBJ = new Gp_set();
+	        $gpsetRES = $gpSetOBJ->GpSetQuery();
+	        $gpsetRES = $gpsetRES[0];
+	        $currentGujia = $gpsetRES["now_price"];
+	        if($currentGujia >= $use_gujia)
+	            return false;
+	                 
+            $gpSetOBJ->GpSetUpdate(-1, $use_gujia);
+             
+            $gpOnsaleOBJ = new Gp_onsale();
+            $okid2 = $gpOnsaleOBJ->GponsaleChangeStatus(2);//$gponsale->GponsaleUpdate($salers["AUTO_ID"], -1, -1, -1, -1, 2, -1);//$gponsale->where('status=1')->save($data4);
+            $okid2 = $okid2 && $gpOnsaleOBJ->GponsaleInsert($use_gujia, $gpsetRES["gp_qfhl"], 0, 0, 1, 0);
+            
+            //更新所有会员的股额,获取所有有效用户，并剔除管理员，虚拟根节点
+            $member = new Positionality();
+            $paramOBJ = new External();
+            $frs = $member->getAllLegUser();//$member->where($map5)->field('id,user_id,gushu,bz5')->order('id ASC')->select();
+            if(is_array($frs) && !empty($frs)){
+                
+                foreach($frs as $vo){
+                    var_dump($vo["ID"]);
+                    $gue = $vo['gushu'] * $use_gujia;
+                    $curID = $vo['ID'];
+                    var_dump("Adminopt.php , line:".__LINE__."update bz5".$gue);
+                    $ok = $member->updateGushu($curID, $vo['gushu'],  $gue, 0);//$member->where($map6)->save($data5);
+                    $futouJine = $paramOBJ->getParam("register_total", $vo["status"], "") * $paramOBJ->getParam("share_proportion", $vo["status"], "") * 4 /100;
+                    var_dump("futou 所需金额:".$futouJine);
+                    if($gue >= $futouJine) //reg_money*配股比例*4
+                        $this->futou($curID, $futouJine); //reg_money*配股比例*4-reg_money
+            
+                    if(!$ok){
+                        var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+                        //$this->error('更新会员ID为'.$vo['ID'].'数据错误！');
+                    }
+                }
+            }
+	    }
+	    elseif($use_gujia == 2)
+	    {
+	        $gpSetOBJ = new Gp_set();
+	        $gpsetRES = $gpSetOBJ->GpSetQuery();
+	        $gpsetRES = $gpsetRES[0];
+	        
+	        $gpOnsaleOBJ = new Gp_onsale();
+	        $okid2 = $gpOnsaleOBJ->GponsaleChangeStatus(2);//$gponsale->where('status=1')->save($data4);
+	        $okid2 = $okid2 && $gpOnsaleOBJ->GponsaleInsert(1, 2*$gpsetRES["gp_qfhl"], 0, 0, 1, 0);
+	        
+	        $this->chaifen_act($gpsetRES,0);//
+	    }else 
+	    {
+	        return false;
+	    }
+        
+        
+	}
+	
+	
 	
 	////****************************************华丽分割线**************************************************
     public function RevenueExpenditure()

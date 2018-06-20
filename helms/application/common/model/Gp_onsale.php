@@ -150,6 +150,7 @@ class Gp_onsale extends Model
         {
             $_detailsinfo["sy_nums"] = $sy_nums;
         }
+        $_detailsinfo["uptime"] = date("Y-m-d H:i:s");
         var_dump("id:".$id);
         var_dump($_detailsinfo);
         $state = $this-> where("AUTO_ID='$id'")

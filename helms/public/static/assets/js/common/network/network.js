@@ -11,11 +11,15 @@ $(function() {
 							var urlres =  "/public/index.php/frontend/Adminopt/getNodeChild";
 							$.post(urlres,{id:parentId},function(result){
 								result = JSON.parse(result);
-							if(result.success){
+							if(result.success == 1){
 								var url = "/public/index.php/frontend/Useropt/RegistIndex?parentId=" + parentId+"&position=left";
 								window.open(url);
-							} else {
+							} else if(result.success == 0){
 								alert("当前点位已存在两个子点位，不可再产生子点位，请重新选择");
+							} else if(result.success == -1){
+								alert("当前点位左区不存在直推的用户，请重新选择");
+							} else if(result.success == 2){
+								alert("当前点位尚未激活不能注册子节点，请重新选择");
 							}
 							});
 						}
@@ -91,7 +95,10 @@ function getUserInfo(mapData,userId){
 		if(typeof( userId ) == "string")
 			var data = mapData[userId];
 		else
-			var data = mapData[userId.value];
+			{
+				var data = mapData[userId[0].value];
+			}
+			
 		var originObject = new Object();
 		originObject.userId = data.currentId;
 		originObject.realname = data.realname;

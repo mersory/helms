@@ -50,7 +50,7 @@ class Award_record extends Model
         return $state;
     }
     
-    public function AwardRecordInsert($id, $award="直推奖", $money, $f_userID, $comment="扣除一切税收之后的实际得到奖励")
+    public function AwardRecordInsert($id, $award="直推奖", $money, $f_userID, $comment="静态奖实际发放金额")
     {
         $_record = array();
         if (strcmp("$id", ""))
@@ -66,7 +66,10 @@ class Award_record extends Model
         
         $_record["f_userID"] = $f_userID ;
         
-        $_record["comment"] = $comment;
+        if(strcmp($comment,"静态奖实际发放金额") == 0)
+            $_record["comment"] = $comment.":".$money;
+        else
+            $_record["comment"] = $comment;
         
         $this->startTrans();
         $state = $this->save($_record);

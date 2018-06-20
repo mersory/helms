@@ -2,6 +2,8 @@
 namespace app\common\model;
 
 use think\Model;
+use app\trigger\controller\External;
+use function think\commit;
 
 class User_info extends Model
 {
@@ -37,12 +39,38 @@ class User_info extends Model
             return $_user_info;
     }
     
+    public function getUserstate($userid)
+    {
+        $_where = '';
+        if (!strcmp("$userid", ""))
+        {
+             var_dump("User_info.php :username and password could not be null,line:".__LINE__);
+            return;
+        }
+        else
+        {
+            $_where = "ID = '$userid'";
+        }
+         
+        // var_dump(urlencode($_SERVER['REQUEST_URI']));
+        $_user_info = $this->where($_where)
+        ->select();
+        $count = count($_user_info);
+        if ($count != 1)
+        {
+            var_dump("username or password is not correct");
+            return ;
+        }
+        else
+            return $_user_info[0]["user_status"];
+    }
+    
     public function UserinfoCheckMinor($name, $pwd)
     {
         $_where = '';
         if (!strcmp("$name", "") || !strcmp("$pwd", ""))
         {
-            var_dump("username and password could not be null");
+            var_dump("User_info.php :username and password could not be null,line:".__LINE__);
             return;
         }
         else
@@ -155,6 +183,197 @@ class User_info extends Model
     {
         $_res = $this->UserinfoCheckMinor($name, $minor_pwd);
         $_id = $_res[0]->getData("ID");
+        var_dump("_id".$_id);
+        var_dump($_id);
+        $_res = $this->table('helms_user_info U, helms_user_point P')
+        ->where("U.ID=P.ID and U.ID = '$_id' and P.regist_point > $cost")
+        ->field('U.ID,U.username,U.user_status,P.regist_point')//
+        ->select();
+        $_gp = new Gp_set();
+        $_gpres = $_gp->GpSetQuery();
+        $now_gujia = $_gpres[0]["now_price"];
+        $_point_down = false;
+        $_activate = false;
+        var_dump("Position : User_info.cpp".__LINE__);
+        var_dump("count:".count($_res));
+        if (count($_res) == 1)
+        {
+            $_point = $_res[0]->getData("regist_point") - $cost;
+            $_point_data = array();
+            $_point_data["regist_point"] = $_point;
+    
+            var_dump("point:");
+            var_dump($_point);
+            var_dump("ID:");
+            var_dump($_id);
+            //更新帮助注册用户的注册分，消耗，减少
+            $_point_info = new User_point();
+            $_point_down = $_point_info->where("ID='$_id'")
+            ->setField($_point_data);
+    
+            //初始化新建用户的分数
+            $paramOBJ= new External();
+             
+            $_point_data2 = array();
+            //$_point_data2["regist_point"] = 5000;
+            //$_point_data2["bonus_point"] = 5100;
+            $_point_data2["re_consume"] = 0;//重消分是0，产生动态奖励才会有
+            $_point_data2["universal_point"] = 0;//万能分，产生静态奖金时会产生
+            $_point_data2["shengyu_jing"] = $paramOBJ->getParam("register_total", $level, "") * $paramOBJ->getParam("static_max", $level, "");//7倍，比例由参数配置
+            $_point_data2["shengyu_dong"] = $paramOBJ->getParam("register_total", $level, "") * $paramOBJ->getParam("dynamic_max", $level, "");//10倍
+            if(count($_point_info->PointQuery($ID)) < 1)
+            {
+                var_dump("User_info.php ERROR ar line:".__LINE__);
+                return false;
+            }
+            $_point_down2 = $_point_info->where("ID='$ID'")
+            ->setField($_point_data2);
+             
+            $_detail_info = new User_details();
+            $_details_parent = $_detail_info->DetailsQuery($ID);//get current user, for get recommender;
+            $_details_parent = $_detail_info->DetailsQuery($_details_parent[0]["recommender"]);
+            //帮助注册人的推荐人数和路径推荐人数加一
+            $parent_re_nums = $_details_parent[0]["re_nums"] + 1;
+            //$parent_repath_ds = $_details_parent[0]["repath_ds"] + 1;
+            $_parent_detail = array();
+            $_parent_detail["re_nums"] = $parent_re_nums;
+            $recommender = $_details_parent[0]["ID"];
+            //$_parent_detail["repath_ds"] = $parent_repath_ds;
+            $_detail_info_res = $_detail_info->where("ID='$recommender'")
+            ->setField($_parent_detail);
+    
+            //获取当前待激活人的推荐路径
+            $_details_current = $_detail_info->DetailsQuery($ID);
+            if(strcmp($_details_parent[0]["repath"],"")!=0)
+                $_repath = $_details_parent[0]["repath"].','.$_details_parent[0]["AUTO_ID"];
+                else
+                    $_repath = $_details_parent[0]["AUTO_ID"];
+    
+                    var_dump("repath:".$_repath);
+                    //进行拆分，去除逗号
+                    $strArr =  explode(",",$_repath);
+                    $recommondLevel = count($strArr);//本来需要加一，但是去除根节点之后，正好不需要加一
+                    var_dump($strArr);
+                    $_detail_info = new User_details();
+    
+                    //更新整条推荐路径上所有节点的repath_ds
+                    var_dump("更新推荐结构信息",$level."level");
+                    var_dump("更新推荐数组",$strArr);
+                     
+                    switch ($level)
+                    {
+                        case 1:
+                            foreach ($strArr as $cur)
+                            {
+                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                                ->setInc('repath_ds');
+                            }
+    
+                            break;
+                        case 2:
+                            foreach ($strArr as $cur)
+                            {
+                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                                ->setInc('repath_ds',2);
+                            }
+                            break;
+                        case 3:
+                            foreach ($strArr as $cur)
+                            {
+                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                                ->setInc('repath_ds',6);
+                            }
+                            break;
+                        case 4:
+                            foreach ($strArr as $cur)
+                            {
+                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                                ->setInc('repath_ds',6);
+                            }
+                            break;
+                        case 5:
+                            foreach ($strArr as $cur)
+                            {
+                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                                ->setInc('repath_ds',6);
+                            }
+                            break;
+                        case 6:
+                            foreach ($strArr as $cur)
+                            {
+                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                                ->setInc('repath_ds',6);
+                            }
+                            break;
+                        case 7:
+                            foreach ($strArr as $cur)
+                            {
+                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                                ->setInc('repath_ds',6);
+                            }
+                            break;
+                        case 8:
+                            foreach ($strArr as $cur)
+                            {
+                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                                ->setInc('repath_ds',6);
+                            }
+                            break;
+                        case 9:
+                            foreach ($strArr as $cur)
+                            {
+                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                                ->setInc('repath_ds',6);
+                            }
+                            break;
+                        case 10:
+                            foreach ($strArr as $cur)
+                            {
+                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                                ->setInc('repath_ds',6);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                     
+                    $_detail = array();
+                    $_detail["kaitongID"] = $_id;
+                    $_detail["open_time"] =  date("Y-m-d H:i:s");
+                    $_detail["user_level"] = $level;
+                    $_detail["pay_gujia"] = $now_gujia;
+                    $_detail["recommandlevel"] = $recommondLevel;//1，2，3，5 1的推荐等级是1，5的推荐等级是4，由re_path确定
+                    $_detail["re_nums"] = 0;//他推荐的人数是0，此时需要加一行，推荐他的这个人的re_nums需要加一
+                    $_detail["repath"] = $_repath;//推荐结构图
+                    $_detail["repath_ds"] = 0;//他自己是0，整个推荐关系表中所有上级人的repath加一
+                    $_detail["open_time"] = date("Y-m-d H:i:s");
+    
+                    if(count($_detail_info->DetailsQuery($ID)) < 1)
+                    {
+                        var_dump("User_info.php ERROR ar line:".__LINE__);
+                        return false;
+                    }
+                    $_detail_info_res = $_detail_info->where("ID='$ID'")
+                    ->setField($_detail);
+                    var_dump("details info");
+                    var_dump($_detail_info_res);
+                    $_status_info = array();
+                    $_status_info["user_status"] = 1;
+                    $_activate = $this->where("ID='$ID'")
+                    ->setField($_status_info);
+                    var_dump("action res");
+                    var_dump($_activate);
+        }
+    
+        var_dump($_status_info);
+        return true;
+    }
+    
+    public function UserUpdate($ID, $name, $minor_pwd, $level, $cost)//用户开通，激活
+    {
+        $_res = $this->UserinfoCheckMinor($name, $minor_pwd);
+        $_id = $_res[0]->getData("ID");
+        var_dump("_id".$_id);
         var_dump($_id);
         $_res = $this->table('helms_user_info U, helms_user_point P')
                     ->where("U.ID=P.ID and U.ID = '$_id' and P.regist_point > $cost")
@@ -165,6 +384,8 @@ class User_info extends Model
         $now_gujia = $_gpres[0]["now_price"];
         $_point_down = false;
         $_activate = false;
+        var_dump("Position : User_info.cpp".__LINE__);
+        var_dump("count:".count($_res));
         if (count($_res) == 1)
         {
             $_point = $_res[0]->getData("regist_point") - $cost;
@@ -180,33 +401,59 @@ class User_info extends Model
             $_point_down = $_point_info->where("ID='$_id'")
                            ->setField($_point_data);
             
-           //初始化新建用户的分数--这段可以去掉
-           $_point_data2 = array();
-           //$_point_data2["regist_point"] = 5000;
-           //$_point_data2["bonus_point"] = 5100;
-           $_point_data2["re_consume"] = 0;//重消分是0，产生动态奖励才会有
-           $_point_data2["universal_point"] = 0;//万能分，产生静态奖金时会产生
-           $_point_data2["shengyu_jing"] = 3500;//7倍，比例由参数配置
-           $_point_data2["shengyu_dong"] = 5000;//10倍
-           if(count($_point_info->PointQuery($ID)) < 1)
+           //初始化新建用户的分数
+           $paramOBJ= new External();
+           $pointRES = $_point_info->PointQuery($ID);
+           if(count($pointRES) < 1)
            {
                var_dump("User_info.php ERROR ar line:".__LINE__);
                return false;
            }
+           $_point_data2 = array();
+           //$_point_data2["regist_point"] = 5000;
+           //$_point_data2["bonus_point"] = 5100;
+           $base_syj = $pointRES[0]["shengyu_jing"];
+           $base_syd = $pointRES[0]["shengyu_dong"];
+           $_point_data2["shengyu_jing"] = $cost * $paramOBJ->getParam("static_max", $level, "") + $base_syj;//7倍，比例由参数配置
+           $_point_data2["shengyu_dong"] = $cost * $paramOBJ->getParam("dynamic_max", $level, "") + $base_syd;//10倍
+           
            $_point_down2 = $_point_info->where("ID='$ID'")
            ->setField($_point_data2);
                            
                            
+            $_detail_info = new User_details();
+            $_details_parent = $_detail_info->DetailsQuery($ID);//get current user, for get recommender;
+            $_details_parent = $_detail_info->DetailsQuery($_details_parent[0]["recommender"]);
+            
+            if(strcmp($_details_parent[0]["repath"],"")!=0)
+                $_repath = $_details_parent[0]["repath"].','.$_details_parent[0]["AUTO_ID"];
+            else 
+                $_repath = $_details_parent[0]["AUTO_ID"];
+            
+            var_dump("repath:".$_repath);
+            //进行拆分，去除逗号
+            $strArr =  explode(",",$_repath);
+            $recommondLevel = count($strArr);//本来需要加一，但是去除根节点之后，正好不需要加一
+            var_dump($strArr);
+            $_detail_info = new User_details();
+
+            //更新整条推荐路径上所有节点的repath_ds
+            var_dump("更新推荐结构信息",$level."level");
+            var_dump("更新推荐数组",$strArr);
+            
+            
+            $addRecmNums = $cost / 500;
+            
+            foreach ($strArr as $cur)
+            {
+                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                                                 ->setInc('repath_ds', $addRecmNums);
+            }
+ 
             $_detail = array();
-            $_detail["kaitongID"] = $_id;
-            $_detail["open_time"] =  date("Y-m-d H:i:s");
             $_detail["user_level"] = $level;
             $_detail["pay_gujia"] = $now_gujia;
-            $_detail["recommandlevel"] = 1;//1，2，3，5 1的推荐等级是1，5的推荐等级是4，由re_path确定
-            $_detail["re_nums"] = 0;//他推荐的人数是0，此时需要加一行，推荐他的这个人的re_nums需要加一
-            $_detail["repath"] = 0;//推荐结构图
-            $_detail["repath_ds"] = 2;//他自己是0，整个推荐关系表中所有上级人的repath加一
-            $_detail_info = new User_details();
+
             if(count($_detail_info->DetailsQuery($ID)) < 1)
             {
                 var_dump("User_info.php ERROR ar line:".__LINE__);
@@ -216,15 +463,10 @@ class User_info extends Model
                                        ->setField($_detail);
             var_dump("details info");
             var_dump($_detail_info_res);
-            $_status_info = array();
-            $_status_info["user_status"] = 1; 
-            $_activate = $this->where("ID='$ID'")
-                              ->setField($_status_info);
             var_dump("action res");
             var_dump($_activate);
         }
         
-        var_dump($_status_info);
         return true;
     }
 
@@ -263,13 +505,13 @@ class User_info extends Model
         if (strcmp("$_where", ""))
         {
             $res = $this->table('helms_user_info info, helms_user_details details')
-            ->where("$_where and info.ID=details.ID")
+            ->where("$_where and info.ID=details.ID and info.user_status > 0")
             ->select();
         }
         else 
         {
             $res = $this->table('helms_user_info info, helms_user_details details')//�˴������ݿ�ǰ׺����ʡ��
-            ->where("info.ID=details.ID")
+            ->where("info.ID=details.ID and info.user_status > 0")
             ->select();
         }
         if(count($res) > 0)

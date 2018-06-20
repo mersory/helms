@@ -96,7 +96,7 @@ class Deal_info extends Model
     
         if ($ok_money >=0)
         {
-            $_dealinfo["ok_money"] = $ok_money;//һ������ֻ��Ϊ0����ʾ�����ύ����û���
+            $_dealinfo["ok_money"] = $ok_money;//
         }
         
         if ($ok_nums >=0)
@@ -116,12 +116,12 @@ class Deal_info extends Model
         
         if ($status >=0)
         {
-            $_dealinfo["status"] = $status;//һ������ֻ��Ϊ0����ʾ�����ύ����û���
+            $_dealinfo["status"] = $status;
         }
         
         if ($pay_gujia >=0)
         {
-            $_dealinfo["pay_gujia"] = $pay_gujia;//һ������ֻ��Ϊ0����ʾ�����ύ����û���
+            $_dealinfo["pay_gujia"] = $pay_gujia;//
         }
         
         $_dealinfo["deal_time"] = date("Y-m-d H:i:s");
@@ -130,12 +130,12 @@ class Deal_info extends Model
         if ($state)
         {
             $this->commit();
-            var_dump("Details insert commit");
+            var_dump("Deal_info.php line:".__LINE__);
         }
         else
         {
             $this->rollback();
-            var_dump("Details insert rollback");
+            var_dump("Deal_info.php line:".__LINE__);
         }
         return $state;
     }

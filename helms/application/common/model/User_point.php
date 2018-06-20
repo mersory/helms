@@ -161,7 +161,7 @@ class User_point extends Model
     
     public function PointUpdate($user_id, $shares=-1, $bonus_point=-1, $regist_point=-1, $re_consume=-1, 
                                 $universal_point=-1, $re_cast=-1, $remain_point=-1, $blocked_point=-1,
-                                $shengyu_jing=-1, $shengyu_dong=-1)
+                                $shengyu_jing=-1, $shengyu_dong=-1, $dp_leiji = -1)
     {
         //判断数据是否一样，如果一样则不需要更新
         $_cureent = $this->PointQuery($user_id);
@@ -171,7 +171,7 @@ class User_point extends Model
             $_cureent = $_cureent[0];
         if($shares==$_cureent["shares"] && $bonus_point==$_cureent["bonus_point"] && $regist_point==$_cureent["regist_point"] && $re_consume== $_cureent["re_consume"] 
            && $universal_point==$_cureent["universal_point"] && $re_cast==$_cureent["re_cast"] && $remain_point==$_cureent["remain_point"] && $blocked_point==$_cureent["blocked_point"]
-           && $shengyu_jing==$_cureent["shengyu_jing"] && $shengyu_dong==$_cureent["shengyu_dong"])
+           && $shengyu_jing==$_cureent["shengyu_jing"] && $shengyu_dong==$_cureent["shengyu_dong"] && $dp_leiji==$_cureent["dp_leiji"])
         {
             var_dump("User_point.php the data is complete same".__LINE__);
             return 1;
@@ -231,6 +231,12 @@ class User_point extends Model
         {
             $_pointinfo["shengyu_dong"] = $shengyu_dong;
         }
+        
+        if ($dp_leiji>=0)
+        {
+            $_pointinfo["dp_leiji"] = $dp_leiji;
+        }
+        
         $state = $this-> where("ID='$user_id'")
         ->setField($_pointinfo);
         return $state;

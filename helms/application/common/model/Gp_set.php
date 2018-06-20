@@ -30,6 +30,7 @@ class Gp_set extends Model
     
     public function GpSetUpdate($qishu=-1, $cur_price=-1, $gp_qfhl=-1, $s_isopen=-1)
     {
+        var_dump("gp_qfhl:".$gp_qfhl);
         $_detailsinfo = array();
     
         if ($qishu >=0)
