@@ -262,6 +262,30 @@ class Common extends Basecontroller
 		return json_encode($_resdata);
     }
 	
+    //根据具体参数查询
+    public function SearchUserInfoByPage($_userid, $_username, $_telphone, $_email, $_fromtime, $_totime, $pagesize=25, $pageindex=0)
+    {
+        $_session_user = Session::get(USER_SEESION);
+        $_resdata = array();
+        if(empty($_session_user)){
+            $_resdata["info"] = "priority error";
+        }else{
+            $tel = preg_match("/1[3458]{1}\d{9}$/",$_telphone)?true:false;
+            if(filter_var($_email, FILTER_VALIDATE_EMAIL)== false && strcmp($_email,"")){
+                $_resdata["info"] = "email error";
+            }else if((strtotime($_fromtime)==false && strcmp($_fromtime,"")) || (strtotime($_totime)==false && strcmp($_totime,""))){
+                $_resdata["info"] = "time error";
+            }else if( strcmp($_telphone,"") && !$tel){
+                $_resdata["info"] = "telphone error";
+            }else{
+                $_admin = new User_info();
+                $_res = $_admin->UserSearchWithLimit($_userid, $_username, $_telphone, $_email, $_fromtime, $_totime,$pagesize,$pageindex);
+                $_resdata["info"] = "ok";
+                $_resdata["res"] = $_res;
+            }
+        }
+        return json_encode($_resdata);
+    }
     
     public function memberApplication()
     {
@@ -355,6 +379,26 @@ class Common extends Basecontroller
 				}
 		}
 		//var_dump($_resdata);
+        return json_encode($_resdata);
+    }
+    
+    public function memberApplicationQueryByTimeWithLimit($_start, $_end,$_pagesize=25, $_pageindex=0)
+    {
+        $_session_user = Session::get(USER_SEESION);
+        $_resdata = array();
+        if(empty($_session_user)){
+            $_resdata["info"] = "priority error";
+        }else{
+            if((strtotime($_start)==false && strcmp($_start,"")) || (strtotime($_end)==false && strcmp($_end,""))){
+                $_resdata["info"] = "error";
+            }else {
+                $_admin = new User_info();
+                $_res = $_admin->UserApplicationWithLimit($_start, $_end, $_pagesize, $_pageindex);
+                $_resdata["info"] = "ok";
+                $_resdata["res"] = $_res;
+            }
+        }
+        //var_dump($_resdata);
         return json_encode($_resdata);
     }
     
@@ -472,6 +516,46 @@ class Common extends Basecontroller
 		return json_encode($_resdata);
     }
     
+    public function pointDetailsQueryWithLimit($_user_id,$_pagesize=25, $_pageindex=0)
+    {
+        $_session_user = Session::get(USER_SEESION);
+        $_resdata = array();
+        if(empty($_session_user)){
+            $_resdata["info"] = "priority error";
+        }else{
+            $_user_point = new User_point();
+            $_res = $_user_point->PointQuery($_user_id);
+            if(count($_res) < 1)
+            {
+                $_resdata["info"] = "error";
+                return json_encode($_resdata);
+            }
+            $_position = new Positionality();
+            $_res_pos = $_position->PositionQueryWithLimit($_user_id,$_pagesize, $_pageindex);
+            if(count($_res_pos) < 1)
+            {
+                $_resdata["info"] = "error";
+                return json_encode($_resdata);
+            }
+            $_res_pos = $_res_pos[0];
+            $_res[0]["gushu"]=$_res_pos["gushu"];
+            $_res[0]["gue"]=$_res_pos["bz5"];
+            $_details =new User_details();
+            $_res_dt = $_details->DetailsQuery($_user_id);
+            if(count($_res_dt) < 1)
+            {
+                $_resdata["info"] = "error";
+                return json_encode($_resdata);
+            }
+            $_res_dt = $_res_dt[0];
+            $_res[0]["pay_gujia"]=$_res_dt["pay_gujia"];
+            $_resdata["info"] = "ok";
+            $_resdata["res"] = $_res;
+    
+        }
+        return json_encode($_resdata);
+    }
+    
     public function pointsTransfer()
     {
         $_session_user = Session::get(USER_SEESION);
@@ -559,6 +643,21 @@ class Common extends Basecontroller
 			$_resdata["res"] = $_res;
 		}
 		return json_encode($_resdata);
+    }
+    
+    public function pointTransformQueryWithLimit($_user_id, $_start, $_end, $_pagesize=25, $_pageindex=0)
+    {
+        $_session_user = Session::get(USER_SEESION);
+        $_resdata = array();
+        if(empty($_session_user)){
+            $_resdata["info"] = "priority error";
+        }else{
+            $_user_point = new Point_transform_record();
+            $_res = $_user_point->PointTransformQueryByWithLimit($_user_id, $_start, $_end, $_pagesize, $_pageindex);
+            $_resdata["info"] = "ok";
+            $_resdata["res"] = $_res;
+        }
+        return json_encode($_resdata);
     }
     
     public function incomeAndExpense()
@@ -649,6 +748,21 @@ class Common extends Basecontroller
 		}
 		return json_encode($_resdata);
     }
+    
+    public function incomeAndExpenseQueryWithLimit($_start, $_end, $_pagesize=25, $_pageindex=0)
+    {
+        $_session_user = Session::get(USER_SEESION);
+        $_resdata = array();
+        if(empty($_session_user)){
+            $_resdata["info"] = "priority error";
+        }else{
+            $_income_expense = new Income_expenditure();
+            $_res = $_income_expense->IncomeExpenditureQueryByTimeWithLimit($_start, $_end, $_pagesize, $_pageindex);
+            $_resdata["info"] = "ok";
+            $_resdata["res"] = $_res;
+        }
+        return json_encode($_resdata);
+    }
 	
     public function presentApplication()
     {
@@ -735,6 +849,21 @@ class Common extends Basecontroller
 			$_resdata["res"] = $_res;
 		}
 		return json_encode($_resdata);
+    }
+    
+    public function presentApplicationQueryWithLimit($_user_id, $_start, $_end, $_pagesize=25, $_pageindex=0)
+    {
+        $_session_user = Session::get(USER_SEESION);
+        $_resdata = array();
+        if(empty($_session_user)){
+            $_resdata["info"] = "priority error";
+        }else{
+            $_withdraw = new Withdrawal_record();
+            $_res = $_withdraw->WithdrawalApplicationByTimeWithLimit($_user_id, $_start, $_end, $_pagesize, $_pageindex);
+            $_resdata["info"] = "ok";
+            $_resdata["res"] = $_res;
+        }
+        return json_encode($_resdata);
     }
     
     public function setCurrentPrice($id, $price)

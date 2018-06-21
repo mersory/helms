@@ -5,6 +5,7 @@ use think\Controller;
 use app\common\model\User_info;
 use app\common\model\Preference;
 use app\common\model\User_details;
+use app\common\model\Preference_option;
 
 class External extends Controller
 {
@@ -33,7 +34,7 @@ class External extends Controller
     
     public function getParam($code, $level=-1, $userid)
     {
-        $param = new Preference();
+        $param = new Preference_option();
         $strParam = $param->getPreferenceByCode($code);
         $strArr =  explode("|",$strParam);
         if($level >= 1)
@@ -43,11 +44,11 @@ class External extends Controller
             else 
                 return $strArr[sizeof($strArr)-1];
         }
-        else 
+        else
         {
             $userinfo = new User_details();
             $info = $userinfo->where("ID='$userid'")->field('user_level')->find();
-            $info = intval($info["user_level"]);  
+            $info = intval($info["user_level"]);
             //var_dump("id , get level:".$strArr[$info-1]);
             if($info <= sizeof($strArr))
                 return $strArr[$info-1];

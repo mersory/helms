@@ -520,6 +520,58 @@ class User_info extends Model
             return;
     }
     
+    //根据提供信息，查询当前用户信息,设置每页大小和查询的是第几页
+    public function UserSearchWithLimit($_userid, $_username, $_telphone, $_email, $_fromtime, $_totime, $pagesize=25, $pageindex=0)
+    {
+        $_where = '';
+        if (strcmp("$_userid", "") )
+        {
+            $_where = "info.ID = '$_userid'";   //
+        }
+        else
+        {
+            $_where = "info.ID != -1";
+        }
+        if (strcmp("$_username", "") )
+        {
+            $_where = "$_where and info.username = '$_username'";//������Ҫ�������
+        }
+        if (strcmp("$_telphone", "") )
+        {
+            $_where = "$_where and details.telphone = '$_telphone'";//�������������������ݿ����
+        }
+        if (strcmp("$_email", "") )
+        {
+            $_where = "$_where and details.email = '$_email'";
+        }
+        if (strcmp("$_fromtime", "") )
+        {
+            $_where = "$_where and details.open_time > '$_fromtime'";
+        }
+        if (strcmp("$_totime", "") )
+        {
+            $_where = "$_where and details.open_time < '$_totime'";
+        }
+        if (strcmp("$_where", ""))
+        {
+            $res = $this->table('helms_user_info info, helms_user_details details')
+            ->limit($pagesize * $pageindex, $pagesize)
+            ->where("$_where and info.ID=details.ID and info.user_status > 0")
+            ->select();
+        }
+        else
+        {
+            $res = $this->table('helms_user_info info, helms_user_details details')
+            ->limit($pagesize * $pageindex, $pagesize)
+            ->where("info.ID=details.ID and info.user_status > 0")
+            ->select();
+        }
+        if(count($res) > 0)
+            return $res;
+            else
+                return;
+    }
+    
     //获取申请注册的用户列表，仅仅列出申请了但是还未激活通过
     public function UserApplication($_start, $_end)
     {
@@ -556,7 +608,42 @@ class User_info extends Model
     }
     
     
-    
+    //获取申请注册的用户列表，仅仅列出申请了但是还未激活通过
+    public function UserApplicationWithLimit($_start, $_end, $_pagesize=25, $_pageindex=0)
+    {
+        $_where = '';
+        if (strcmp("$_start", "") )
+        {
+            $_where = "details.open_time > '$_start'";   //���ﲻҪ=���ţ���Ϊ�������ݿ��е�ID����int����
+        }
+        else
+        {
+            $_where = "(details.open_time > '1970-01-01 00:00:00' or details.open_time = '0000-00-00 00:00:00')";
+        }
+        if (strcmp("$_end", "") )
+        {
+            $_where = "$_where and details.open_time < '$_end'";//������Ҫ�������
+        }
+        if (strcmp("$_where", ""))
+        {
+            //var_dump("where:".$_where);
+            $res = $this->table('helms_user_info info, helms_user_details details')
+            ->limit($_pagesize * $_pageindex, $_pagesize)
+            ->where("$_where and info.ID=details.ID and info.user_status = 0")
+            ->field( 'details.user_name, details.telphone, details.email, details.open_time, helms_user_info.ID')
+            ->select();
+        }
+        else
+        {
+            //var_dump("not none");
+            $res = $this->table('helms_user_info info, helms_user_details details')
+            ->limit($_pagesize * $_pageindex, $_pagesize)
+            ->where("info.ID=details.ID and info.user_status = 0")
+            ->field( 'details.user_name, details.telphone, details.email, details.open_time, helms_user_info.ID')
+            ->select();
+        }
+        return $res;
+    }
     
     
     

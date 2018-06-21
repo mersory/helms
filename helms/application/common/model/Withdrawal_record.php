@@ -61,6 +61,41 @@ class Withdrawal_record extends Model
         return $res;
     }
     
+    public function WithdrawalApplicationByTimeWithLimit($user_id, $_start, $_end, $_pagesize=25, $_pageindex=0)
+    {
+        $_where = '';
+        if (strcmp("$user_id", ""))
+        {
+            $_where = "user_id = '$user_id'";
+        }
+        else
+        {
+            $_where = "user_id != -1";
+        }
+        if (strcmp("$_start", "") )
+        {
+            $_where = "apply_time > '$_start'";   //���ﲻҪ=���ţ���Ϊ�������ݿ��е�ID����int����
+        }
+        if (strcmp("$_end", "") )
+        {
+            $_where = "$_where and apply_time < '$_end'";//������Ҫ�������
+        }
+        if (strcmp("$_where", ""))
+        {
+            $res = $this->limit($_pagesize * $_pageindex, $_pagesize)
+            ->where($_where)
+            ->field( 'user_id, withdrawal_type, withdraw_sum, apply_time, withdrawal_status, verifier_id, approve_time, to_account_time, point_consume')
+            ->select();
+        }
+        else
+        {
+            $res = $this->limit($_pagesize * $_pageindex, $_pagesize)
+            ->field( 'user_id, withdrawal_type, withdraw_sum, apply_time, withdrawal_status, verifier_id, approve_time, to_account_time, point_consume')
+            ->select();
+        }
+        return $res;
+    }
+    
     public function WithdrawalDel($user_id)
     {
         $_where = '';

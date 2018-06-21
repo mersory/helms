@@ -616,16 +616,16 @@ class Common extends Basecontroller
                     if(!empty($_res1))
                     {
                         //每次查询之后，只会有一条记录，所以下标一定是0
-                        $tmp[$_res1[0]["ID"]]["userId"] = $_res1[0]["ID"];
-                        $tmp[$_res1[0]["ID"]]["user_name"] = $_res1[0]["user_name"];
-                        $tmp[$_res1[0]["ID"]]["user_level"] = $_res1[0]["user_level"];
+                        $tmp["children"][$_res1[0]["ID"]]["userId"] = $_res1[0]["ID"];
+                        $tmp["children"][$_res1[0]["ID"]]["user_name"] = $_res1[0]["user_name"];
+                        $tmp["children"][$_res1[0]["ID"]]["user_level"] = $_res1[0]["user_level"];
                     }
                     $index = $index+1;
-                    $_recommand = $_user->RecommanderQuery($tmp[$_res1[0]["ID"]]["userId"]);
+                    $_recommand = $_user->RecommanderQuery($tmp["children"][$_res1[0]["ID"]]["userId"]);
                     if(count($_recommand) > 0)
-                        $tmp[$_res1[0]["ID"]]["haschildren"]=true;
+                        $tmp["children"][$_res1[0]["ID"]]["haschildren"]=true;
                     else 
-                        $tmp[$_res1[0]["ID"]]["haschildren"]=false;
+                        $tmp["children"][$_res1[0]["ID"]]["haschildren"]=false;
                 }
                 $_resdata["res"] = $tmp;
             }

@@ -29,6 +29,24 @@ class Positionality extends Model
         return $_position_info;
     }
     
+    public function PositionQueryWithLimit($user_id,$_pagesize=25, $_pageindex=0)//查看当前用户的网络结构
+    {
+        $_where = '';
+        if (strcmp($user_id, ""))
+        {
+            $_where = "user_id = '$user_id'";
+        }
+        $_position_info = $this->where($_where)
+        ->limit($_pagesize * $_pageindex, $_pagesize)
+        ->select();
+        $count = count($_position_info);
+        if ($count < 1)
+        {
+            return ;
+        }
+        return $_position_info;
+    }
+    
     //获取当前所有的合法的用户，状态必须大于0才是合法的
     public function getAllLegUser()
     {

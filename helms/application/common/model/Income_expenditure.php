@@ -57,6 +57,37 @@ class Income_expenditure extends Model
         return $res;
     }
     
+    public function IncomeExpenditureQueryByTimeWithLimit($_start, $_end, $_pagesize, $_pageindex)
+    {
+        $_where = '';
+        if (strcmp("$_start", "") )
+        {
+            $_where = "count_time > '$_start'";   //���ﲻҪ=���ţ���Ϊ�������ݿ��е�ID����int����
+        }
+        else
+        {
+            $_where = "count_time > '1970-01-01 00:00:00'";
+        }
+        if (strcmp("$_end", "") )
+        {
+            $_where = "$_where and count_time < '$_end'";//������Ҫ�������
+        }
+        
+        if (strcmp("$_where", ""))
+        {
+            $res = $this->limit($_pagesize * $_pageindex, $_pagesize)
+            ->where($_where)
+            ->field( 'user_id, deal_count, current_profit, count_time, comment')
+            ->select();
+        }
+        else
+        {
+            $res = $this->limit($_pagesize * $_pageindex, $_pagesize)
+            ->field( 'user_id, deal_count, current_profit, count_time')
+            ->select();
+        }
+        return $res;
+    }
     
     public function IncomeExpenditureDel($record_id)
     {

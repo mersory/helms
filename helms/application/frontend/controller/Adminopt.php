@@ -13,7 +13,7 @@ use app\common\model\User_point;
 use app\common\model\Point_transform_record;
 use app\common\model\Withdrawal_record;
 use app\trigger\controller\Awardopt;
-use app\common\model\Preference;
+use app\common\model\Preference_option;
 use app\common\model\User_details;
 use app\common\model\Historical_price;
 use app\common\model\Gp_onsale;
@@ -28,9 +28,12 @@ class Adminopt extends Controller
 {
     public function index()
     {
+        $user = new User_info();
+        $res= $user->UserSearchWithLimit("", "", "", "", "", "");
+        var_dump(count($res));
         //$userinfo = new User_info();
         //var_dump("user state: ".$userinfo->getUserstate("H1400517071"));
-        $awardOBJ = new Awardopt();
+        /*$awardOBJ = new Awardopt();
         $awardOBJ->tutorAward("H1168190890", $re_path="1", $re_level=1, 35, $ft=0);
         return;
         $awardOBJ->duipeng();
@@ -44,7 +47,7 @@ class Adminopt extends Controller
         $passwd = md5("140416hermes");
         var_dump("encode pwd:".$passwd);
         var_dump("end");
-        /*
+        
         $ec = new External();
         $res= $ec->getParam("dynamic_max", $level=4, "H1000050056");
         var_dump("param now:".$res);

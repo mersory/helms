@@ -125,7 +125,7 @@ class Preference_option extends Model
 
     //获取指定CODE的参数值，后续改为从缓存中获取
     public function getPreferenceByCode($code){
-        $_res = PreferenceQueryByCode($code);
+        $_res = $this->PreferenceQueryByCode($code);
         if(count($_res) >= 1){
             return $_res[0]['value'];
         }else{

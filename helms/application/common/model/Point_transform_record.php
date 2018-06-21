@@ -60,6 +60,41 @@ class Point_transform_record extends Model
         }
         return $res;
     }
+    
+    public function PointTransformQueryByWithLimit($_id, $_start, $_end, $_pagesize=25, $_pageindex=0)
+    {
+        $_where = '';
+        if (strcmp("$_id", ""))
+        {
+            $_where = "user_id = '$_id'";
+        }
+        else
+        {
+            $_where = "user_id != -1";
+        }
+        if (strcmp("$_start", ""))
+        {
+            $_where = "$_where and point_change_time >= '$_start'";//������Ҫ�������   //���ﲻҪ=���ţ���Ϊ�������ݿ��е�ID����int����
+        }
+        if (strcmp("$_end", "") )
+        {
+            $_where = "$_where and point_change_time <= '$_end'";//������Ҫ�������
+        }
+        if (strcmp("$_where", ""))
+        {
+            $res = $this->limit($_pagesize * $_pageindex, $_pagesize)
+            ->where($_where)
+            ->field( 'user_id, 	point_change_type, 	point_change_sum, point_change_time')
+            ->select();
+        }
+        else
+        {
+            $res = $this->limit($_pagesize * $_pageindex, $_pagesize)
+            ->field( 'user_id, 	point_change_type, 	point_change_sum, point_change_time')
+            ->select();
+        }
+        return $res;
+    }
 
     public function PointTransformInsert($user_id, $point_type, $point_change_type, $point_change_sum)
     {
