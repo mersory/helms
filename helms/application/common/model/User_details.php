@@ -50,10 +50,12 @@ class User_details extends Model
         $_where = '';
         if ($recommend != -1)
         {
-            $_where = "recommender = '$recommend'";
+            $_where = "details.recommender = '$recommend'";
         }
-        $_details_info = $this->where($_where)
-        ->field('ID,user_name,user_level')
+        
+        $_details_info = $this->table('helms_user_info info, helms_user_details details')
+        ->where("$_where and info.ID=details.ID and info.user_status > 0")
+        ->field('details.ID,details.user_name,details.user_level')
         ->select();
         $count = count($_details_info);
         if ($count < 1)
@@ -71,21 +73,11 @@ class User_details extends Model
         {
             $_where = "ID = '$user_id'";
         }
-        echo $_where;
-        $this->startTrans();
+
         $state = $this
                  ->where($_where)
                  ->setInc('re_nums',$num);
-        if ($state)
-        {
-            $this->commit();
-            var_dump("User_detalis.php commit,line:".__LINE__);
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("User_detalis.php rollback,line:".__LINE__);
-        }
+        
         return $state;
     }
     
@@ -97,21 +89,11 @@ class User_details extends Model
         {
             $_where = "ID = '$user_id'";
         }
-        echo $_where;
-        $this->startTrans();
+
         $state = $this
         ->where($_where)
         ->setInc('repath_ds',$num);
-        if ($state)
-        {
-            $this->commit();
-            var_dump("User_details.php increasRePathDS commit".__LINE__);
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("User_details.php increasRePathDS rollback".__LINE__);
-        }
+        
         return $state;
     }
     
@@ -145,19 +127,9 @@ class User_details extends Model
         {
             $_where = "ID = '$user_id'";
         }
-        echo $_where;
-        $this->startTrans();
+
         $state = $this->where($_where)->delete();
-        if ($state)
-        {
-            $this->commit();
-            var_dump("commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("rollback");
-        }
+        
         return $state;
     }
     
@@ -209,17 +181,9 @@ class User_details extends Model
         {
             $_detailsinfo["registry"] = $registry;
         }
-        //$_detailsinfo["open_time"] = date("Y-m-d H:i:s");
-        $this->startTrans();
+
         $state = $this->save($_detailsinfo);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        
         return $state;
     }
     
@@ -237,7 +201,7 @@ class User_details extends Model
         {
             $_detailsinfo["email"] = $email;
         }
-         
+        
         if ($portrait >=0)
         {
             $_detailsinfo["portrait"] = $portrait;

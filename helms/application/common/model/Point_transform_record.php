@@ -120,18 +120,9 @@ class Point_transform_record extends Model
             $_pointtransform["point_change_sum"] = $point_change_sum;//һ������ֻ��Ϊ0����ʾ�����ύ����û���
         }
         $_pointtransform["point_change_time"] = date("Y-m-d H:i:s");
-        $this->startTrans();
+        
         $state = $this->save($_pointtransform);
-        if ($state)
-        {
-            $this->commit();
-            
-        }
-        else
-        {
-            $this->rollback();
-            
-        }
+        
         return $state;
     }
 

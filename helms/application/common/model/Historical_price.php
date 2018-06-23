@@ -55,18 +55,9 @@ class Historical_price extends Model
             $_historicalpriceinfo["share_price"] = $share_price;
         }
         $_historicalpriceinfo["current_time"] = date("Y-m-d H:i:s");
-        $this->startTrans();
+        
         $state = $this->save($_historicalpriceinfo);
-        if ($state)
-        {
-            $this->commit();
-            var_dump("HistoricalpriceInsert commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("HistoricalpriceInsert rollback");
-        }
+        
         return $state;
     }
     

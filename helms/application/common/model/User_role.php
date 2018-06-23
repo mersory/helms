@@ -35,35 +35,18 @@ class User_role extends Model
         {
             $_where = "user_id = '$user_id'";
         }
-        echo $_where;
-        $this->startTrans();
+
         $state = $this->where($_where)->delete();
-        if ($state)
-        {
-            $this->commit();
-            var_dump("commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("rollback");
-        }
+        
         return $state;
     }
     
     public function RoleInsert($user_id, $role_id = 0)
     {
         $_userinfo = array('user_id'=>$user_id,'role_id' => $role_id);
-        $this->startTrans();
+        
         $state = $this->save($_userinfo);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        
         return $state;
     }
     

@@ -103,19 +103,9 @@ class Withdrawal_record extends Model
         {
             $_where = "user_id = '$user_id'";
         }
-        echo $_where;
-        $this->startTrans();
+
         $state = $this->where($_where)->delete();
-        if ($state)
-        {
-            $this->commit();
-            var_dump("commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("rollback");
-        }
+       
         return $state;
     }
     
@@ -147,18 +137,9 @@ class Withdrawal_record extends Model
             $_withdrawalinfo["withdrawal_status"] = $withdrawal_status;//һ������ֻ��Ϊ0����ʾ�����ύ����û���
         }
         $_withdrawalinfo["apply_time"] = date("Y-m-d H:i:s");
-        $this->startTrans();
+
         $state = $this->save($_withdrawalinfo);
-        if ($state)
-        {
-            $this->commit();
-            var_dump("Details insert commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("Details insert rollback");
-        }
+        
         return $state;
     }
     

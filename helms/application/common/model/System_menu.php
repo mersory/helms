@@ -50,16 +50,8 @@ class System_menu extends Model
         $t=time();
         $_menuInfo["create_time"] = date("Y-m-d H:i:s",$t);
     
-        $this->startTrans();
         $state = $this->save($_menuInfo);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        
         return $state;
     }
     
@@ -98,16 +90,9 @@ class System_menu extends Model
         {
             $_where = "ID = $ID";
         }
-        $this->startTrans();
+
         $state = $this->where($_where)->delete();
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        
         return $state;
     }
     

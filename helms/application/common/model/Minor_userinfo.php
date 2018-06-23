@@ -62,19 +62,9 @@ class Minor_userinfo extends Model
             'opentime' => $opentime,
             'last_static_time' => $last_static_time,
             'remain_static' => $remain_static);
-        $this->startTrans();
-        //var_dump("userinfoInsertstate:");
+
         $state = $this->save($_userinfo);
-        if ($state)
-        {
-            //var_dump($state);
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-            //var_dump($state);
-        }
+        
         return $state;
     }
     

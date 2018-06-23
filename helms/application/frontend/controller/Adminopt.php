@@ -28,9 +28,10 @@ class Adminopt extends Controller
 {
     public function index()
     {
-        $user = new User_info();
-        $res= $user->UserSearchWithLimit("", "", "", "", "", "");
-        var_dump(count($res));
+
+        $user = new User_details();
+        $res= $user->RecommanderQuery("H6395385700");
+        return json_encode($res);
         //$userinfo = new User_info();
         //var_dump("user state: ".$userinfo->getUserstate("H1400517071"));
         /*$awardOBJ = new Awardopt();

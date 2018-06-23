@@ -62,16 +62,8 @@ class Store_shoppingcart extends Model
         $_shoppingcartinfo["create_time"] = date("Y-m-d H:i:s",$t);
         $_shoppingcartinfo["update_time"] = date("Y-m-d H:i:s",$t);
     
-        $this->startTrans();
         $state = $this->save($_shoppingcartinfo);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        
         return $state;
     }
     
@@ -91,18 +83,8 @@ class Store_shoppingcart extends Model
             $_shoppingcartinfo["product_num"] = $productNum;
         }
         
-        $this->startTrans();
-        
         $state = $this-> where("id=$shoppingcartId")->where("user_id='$userId'")->where("product_id='$productId'")->setField($_shoppingcartinfo);
         
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
         return $state;
     }
     
@@ -116,17 +98,9 @@ class Store_shoppingcart extends Model
     public function StoreShoppingcartDelete($shoppingcartId,$userId)
     {
         $_where = "id = $shoppingcartId  and user_id = '$userId'";
-        $this->startTrans();
+
         $state = $this->where($_where)->delete();
         
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
         return $state;
     }
     
@@ -140,7 +114,7 @@ class Store_shoppingcart extends Model
     public function StoreShoppingcartEmpty($userId)
     {
         $_where = "user_id = '$userId'";
-        $this->startTrans();
+
         $state = $this->where($_where)->delete();
     
         if ($state)

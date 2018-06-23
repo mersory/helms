@@ -35,19 +35,9 @@ class Priority extends Model
         {
             $_where = "ID = $ID";
         }
-        echo $_where;
-        $this->startTrans();
+
         $state = $this->where($_where)->delete();
-        if ($state)
-        {
-            $this->commit();
-            var_dump("commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("rollback");
-        }
+       
         return $state;
     }
     
@@ -70,16 +60,9 @@ class Priority extends Model
         {
             $_priority_info["to_intercept"] = $to_intercept;
         }
-        $this->startTrans();
+        
         $state = $this->save($_priority_info);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        
         return $state;
     }
     

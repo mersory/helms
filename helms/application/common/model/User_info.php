@@ -130,16 +130,7 @@ class User_info extends Model
             $role = ($res[0]->getData("role_id"));
             if($role == 15)
             {
-                $this->startTrans();
                 $state = $this->where("ID = $id")->delete();
-                if ($state)
-                {
-                    $this->commit();
-                }
-                else
-                {
-                    $this->rollback();
-                }
             }
             else 
             {
@@ -155,19 +146,9 @@ class User_info extends Model
                            'password' => $pwd1,
                            'minor_pwd' => $pwd2,
                            'ID' => $ID);
-        $this->startTrans();
-        //var_dump("userinfoInsertstate:");
+
         $state = $this->save($_userinfo);
-        if ($state)
-        {
-            //var_dump($state);
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-            //var_dump($state);
-        }
+        
         return $state;
     }
     
@@ -469,7 +450,23 @@ class User_info extends Model
         
         return true;
     }
+    
+    public function updateUserPwd($ID, $pwd)
+    {
+        $data = array('password'=>"$pwd");
+        
+        $state = $this-> where("ID='$ID'")
+        ->setField($data);
+    }
 
+    public function updateUserMinorPwd($ID, $minor_pwd)
+    {
+        $data = array('minor_pwd'=>"$minor_pwd");
+    
+        $state = $this-> where("ID='$ID'")
+        ->setField($data);
+    }
+    
     //根据提供信息，查询当前用户信息
     public function UserSearch($_userid, $_username, $_telphone, $_email, $_fromtime, $_totime)
     {

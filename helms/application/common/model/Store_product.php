@@ -118,16 +118,8 @@ class Store_product extends Model
         $t=time();
         $_productinfo["create_time"] = date("Y-m-d H:i:s",$t);
     
-        $this->startTrans();
         $state = $this->save($_productinfo);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        
         return $state;
     }
     
@@ -211,19 +203,7 @@ class Store_product extends Model
         $t=time();
         $_productinfo["stock_time"] = date("Y-m-d H:i:s",$t);
     
-        $this->startTrans();
         $state = $this-> where("id=$id")->setField($_productinfo);
-        
-        if ($state)
-        {
-            $this->commit();
-            var_dump("commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("rollback");
-        }
         
         return $state;
     }
@@ -246,19 +226,8 @@ class Store_product extends Model
         $t=time();
         $_productinfo["stock_time"] = date("Y-m-d H:i:s",$t);
     
-        $this->startTrans();
         $state = $this-> where("id=$id") ->setField($_productinfo);
-        
-        if ($state)
-        {
-            $this->commit();
-            var_dump("commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("rollback");
-        }
+
         return $state;
     }
     
@@ -269,16 +238,8 @@ class Store_product extends Model
      */
     public function StoreReduceInvetory($productId,$num){
         $sql = "update helms_store_product set invetory=invetory-$num where id = $productId and invetory>=$num";
-        $this->startTrans();
-        $state =  $this->execute($sql);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        $state =  $this->query($sql);
+        
         return $state;
     }
     

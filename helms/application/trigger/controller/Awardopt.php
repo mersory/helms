@@ -546,6 +546,16 @@ class Awardopt extends Controller
     	         }*/
     	        if($vo["parent"] == 0)//当前节点是管理员账号，不进行积分计算
     	            continue;
+	            $paramOBJ = new External();
+	            $jj = $paramOBJ->getParam("pingheng_proportion", -1, $vo["user_id"]);
+	            $ft = $paramOBJ->getParam("pingheng_max", -1, $vo["user_id"]);
+	            //$ft = 500;//cy_get_conf('ft01');	//100|500|1000|3000|5000|10000  封顶额 美元
+	            $bb_list = $paramOBJ->getParam("register_total", -1, $vo["user_id"]);//
+	            //$bb_list = 500;//_get_conf('bb_list', 1);     //投资金额
+	            $ds_list = $paramOBJ->getParam("register_order_num", -1, $vo["user_id"]);//_get_conf('ds_list', 1);//投资单数
+	            $dsmoney = intval($bb_list / $ds_list);//$bb_list[1] / $ds_list[1]; //200    每一单价格
+	            var_dump("jj:".$jj."ft:".$ft."bblist:".$bb_list."dslist:".$ds_list);
+	            
     	        $myids = $vo['user_id'];
     	        $inUserID = $vo['user_id'];
                 $l = $vo['sq_lds']+$vo['sq_x_lds'] + $vo['bq_x_lds'];     //左区虚单数
@@ -557,33 +567,60 @@ class Awardopt extends Controller
     	        $rs = $r - $encash[1]-$vo['sq_rds'];   //右区剩余单数
     	        $ss = $vo['status'];
     	
-    	        $get_money = $dsmoney * $jj[$ss] / 100 * $nums;    //$nums为对碰单数
+    	        $get_money = 500 * $jj / 100 * $nums;    //$nums为对碰单数
     	
     	        $user_point = new User_point();
     	        $_point = $user_point->PointQuery($inUserID);
     	        $_point = $_point[0];
-    	        if ($ft*$ss > 0) {
-    	            $get_money = $this->_fengding($get_money, $ft*$ss, $vo['dp_leiji']); //!!!!!!需要修改，加入日期，如果到封顶，则不增加
+    	        if ($ft > 0) {
+    	            $get_money = $this->_fengding($get_money, $ft, $vo['dp_leiji']); //
     	            $get_money = ($_point['shengyu_dong'] - $get_money)<0 ? $_point['shengyu_dong']:$get_money;
     	            $data = array();
     	            //$data['bz3'] = $_point['bz3']+round(0.1*$get_money,2);
     	            $data['re_consume'] = $_point['re_consume']+round(0.1*$get_money,2);
     	            $data['shengyu_dong'] = $_point['shengyu_dong'] - $get_money;
-    	            $map = array();
-    	            $map['ID']=$vo['ID'];
-    	            $user_point->PointUpdate($inUserID, -1, -1, -1, $data['re_consume'], -1, -1, -1, -1, -1, $data['shengyu_dong']);
+    	            
+    	            var_dump("money:".$get_money);
+    	            
+    	            $paramOBJ = new External();
+    	            $shui_bl = $paramOBJ->getParam("tax_proportion", -1, $myids);
+    	            $jijin_bl = $paramOBJ->getParam("foundation_proportion", -1, $myids);//cy_get_conf('bl_jijin');//1
+    	            $shui = $this->_wei2($get_money * $shui_bl / 100);//保留两位小数，税
+    	            $jijin = $this->_wei2($get_money * $jijin_bl / 100);//基金
+    	            $produceCX = $this->_wei2($get_money*0.1); //重复消费分
+    	            $ok_money = $this->_wei2($get_money - $shui-$jijin - $produceCX);//实际发放金额
+    	            $data['bonus_point'] = $_point['bonus_point'] + $ok_money;
+    	            $minfo = '实发（'.$ok_money.'）重消分（'.$produceCX.'）税收（'.$shui.'）基金（'.$jijin.'）。';
+    	            $award_record = new Award_record();
+    	            //$_res_award_record = $award_record->AwardRecordInsert($myids, "平衡奖", $get_money, $myids, $minfo);
+    	            
+    	            $user_point->PointUpdate($inUserID, -1, $data['bonus_point'], -1, $data['re_consume'], -1, -1, -1, -1, -1, $data['shengyu_dong']);
     	        }
     	        //$this->query("UPDATE __TABLE__ SET `sq_lds`={$ls},`sq_rds`={$rs},`bq_lds`=0,`bq_rds`=0 WHERE `id`=".$myids);//数据库更新左右区单数
     	        $position->updateJiangjin($vo['ID'], -1, -1, -1, -1, -1, -1, -1, -1, -1, $ls, -1, -1, $rs, -1);
     	        if ($get_money > 0) {
     	            var_dump("inbonus Awardopt.php line:".__LINE__);
-    	            $this->_in_bonus($myids, $inUserID, 2, $get_money);
+    	            $this->_in_bonus($myids, $inUserID, 2, $get_money);// 参数3等于2表示添加平衡奖，只有平衡对于积分的修改在in_bonus内部，其他的都在外面
+    	            
     	            //辅导奖
     	            //$this->guanli_jj($vo['user_id'], $vo['re_path'], $vo['re_level'], $get_money);
-    	            $this->tutorAward($vo['user_id'], $vo['re_path'], 2, $get_money,$ft);
+    	            $detailsOBJ = new User_details();
+    	            $_resDetails = $detailsOBJ->DetailsQuery($vo["user_id"]);
+    	            $_resDetails = $_resDetails[0];
+    	            $this->tutorAward($vo['user_id'], $_resDetails['repath'], $_resDetails["recommandlevel"]/*$vo['re_level']*/, $get_money,$ft);
+    	            
     	            //感恩奖
+    	            var_dump("Awardopt line:".__LINE__."id:".$vo['user_id']);
     	            $ganenForthanks = $position->getUserIdByID($vo['ganen_next_id']);
+    	            if(count($ganenForthanks) < 1)
+    	                $ganenForthanks = 0;
+    	            
     	            $ganenRidForthanks = $position->getUserIdByID($vo['ganen_next_r_id']);
+    	            if(count($ganenRidForthanks) < 1)
+    	                $ganenRidForthanks = 0;
+    	            
+                    var_dump("ganenid:".$ganenForthanks);
+                    var_dump("ganen_r_id:".$ganenRidForthanks);
     	            $this->thanksAward($ganenForthanks,$ganenRidForthanks,$vo['user_id'],$get_money);
     	        }
     	    }

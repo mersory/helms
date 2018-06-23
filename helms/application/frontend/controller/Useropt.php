@@ -377,6 +377,52 @@ class Useropt extends Basecontroller
         
     }
     
+    public function updatePwdSingle($pwd, $newpwd)
+    {
+        $_session_user = Session::get(USER_SEESION);
+        $resData = array();
+        $resData["ok"] = 1;
+        if(empty($_session_user)){
+            return $this->redirect("/login/login/index");
+        }else{
+            $_user_id = $_session_user["userId"];
+            $user = new User_info();
+            $res = $user->UserinfoQuery($_user_id, $pwd);
+            if(count($res) < 1)//输入的用户名或者密码错误
+            {
+                $resData["ok"] = 0;
+            }
+            else
+            {
+                $resUpdate = $user->updateUserPwd($_user_id, $newpwd);
+            }
+        }
+        return json_encode($resData);
+    }
+    
+    public function updateMinorPwdSingle($pwd, $newpwd)
+    {
+        $_session_user = Session::get(USER_SEESION);
+        $resData = array();
+        $resData["ok"] = 1;
+        if(empty($_session_user)){
+            return $this->redirect("/login/login/index");
+        }else{
+            $_user_id = $_session_user["userId"];
+            $user = new User_info();
+            $res = $user->UserinfoCheckMinor($_user_id, $pwd);
+            if(count($res) < 1)//输入的用户名或者密码错误
+            {
+                $resData["ok"] = 0;
+            }
+            else
+            {
+                $resUpdate = $user->updateUserMinorPwd($_user_id, $newpwd);
+            }
+        }
+        return json_encode($resData);
+    }
+    
 //---------------------------------单个接口测试--------------------------------
 //---------------------------------单个接口测试--------------------------------
 //---------------------------------单个接口测试--------------------------------

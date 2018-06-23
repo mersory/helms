@@ -41,18 +41,9 @@ class User_point extends Model
             $_where = "ID = '$user_id'";
         }
         echo $_where;
-        $this->startTrans();
+        
         $state = $this->where($_where)->delete();
-        if ($state)
-        {
-            $this->commit();
-            var_dump("commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("rollback");
-        }
+        
         return $state;
     }
     
@@ -114,17 +105,9 @@ class User_point extends Model
         {
             $_pointinfo["shengyu_dong"] = $shengyu_dong;
         }
-        
-        $this->startTrans();
+
         $state = $this->save($_pointinfo);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        
         return $state;
     }
     

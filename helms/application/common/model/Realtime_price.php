@@ -37,16 +37,9 @@ class Realtime_price extends Model
             $_realtimepriceinfo["latest_price"] = $latest_price;
         }
         $_realtimepriceinfo["current_time"] = date("Y-m-d H:i:s");
-        $this->startTrans();
+
         $state = $this->save($_realtimepriceinfo);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        
         return $state;
     }
     

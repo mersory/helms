@@ -57,18 +57,9 @@ class Gp_onsale extends Model
         {
             $_where = "ID = '$id'";
         }
-        $this->startTrans();
+
         $state = $this->where($_where)->delete();
-        if ($state)
-        {
-            $this->commit();
-            var_dump("commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("rollback");
-        }
+       
         return $state;
     }
     
@@ -92,16 +83,8 @@ class Gp_onsale extends Model
         
         $_record["sy_nums"] = $sy_nums;
         
-        $this->startTrans();
         $state = $this->save($_record);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+       
         return $state;
     }
     

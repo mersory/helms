@@ -64,19 +64,9 @@ class Deal_info extends Model
         {
             $_where = "deal_id = $deal_id";
         }
-        echo $_where;
-        $this->startTrans();
+
         $state = $this->where($_where)->delete();
-        if ($state)
-        {
-            $this->commit();
-            var_dump("commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("rollback");
-        }
+       
         return $state;
     }
     
@@ -125,18 +115,9 @@ class Deal_info extends Model
         }
         
         $_dealinfo["deal_time"] = date("Y-m-d H:i:s");
-        $this->startTrans();
+       
         $state = $this->save($_dealinfo);
-        if ($state)
-        {
-            $this->commit();
-            var_dump("Deal_info.php line:".__LINE__);
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("Deal_info.php line:".__LINE__);
-        }
+        
         return $state;
     }
     

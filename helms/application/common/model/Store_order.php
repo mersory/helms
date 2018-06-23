@@ -93,16 +93,8 @@ class Store_order extends Model
         $_orderinfo["create_time"] = date("Y-m-d H:i:s",$t);
         $_orderinfo["update_time"] = date("Y-m-d H:i:s",$t);
     
-        $this->startTrans();
         $state = $this->save($_orderinfo);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        
         return $state;
     }
     
@@ -121,17 +113,9 @@ class Store_order extends Model
         $t=time();
         $_orderinfo["update_time"] = date("Y-m-d H:i:s",$t);
     
-        $this->startTrans();
         $state = $this-> where("id=$id")
         ->setField($_orderinfo);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        
         return $state;
     }
     

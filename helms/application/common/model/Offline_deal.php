@@ -36,18 +36,9 @@ class Offline_deal extends Model
             $_where = "ID = $ID";
         }
         echo $_where;
-        $this->startTrans();
+        
         $state = $this->where($_where)->delete();
-        if ($state)
-        {
-            $this->commit();
-            var_dump("commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("rollback");
-        }
+        
         return $state;
     }
     
@@ -69,18 +60,9 @@ class Offline_deal extends Model
             $_offlineinfo["transaction_details"] = $transaction_details;
         }
         $_offlineinfo["transaction_time"] = date("Y-m-d H:i:s");
-        $this->startTrans();
+        
         $state = $this->save($_offlineinfo);
-        if ($state)
-        {
-            $this->commit();
-            var_dump("Offline deal insert commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("Details insert rollback");
-        }
+        
         return $state;
     }
     

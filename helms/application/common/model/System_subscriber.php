@@ -69,16 +69,8 @@ class System_subscriber extends Model
         $t=time();
         $_subscriberInfo["create_time"] = date("Y-m-d H:i:s",$t);
     
-        $this->startTrans();
         $state = $this->save($_subscriberInfo);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+       
         return $state;
     }
     

@@ -12,16 +12,8 @@ class System_role_menu_rlat extends Model
         $_roleInfo["role_id"] = $roleId;
         $_roleInfo["menu_id"] = $menuId;
     
-        $this->startTrans();
         $state = $this->save($_roleInfo);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        
         return $state;
     }
     
@@ -31,16 +23,8 @@ class System_role_menu_rlat extends Model
         $_where = '';
         $_where = "role_id = $roleId and menu_id = $menuId";
         
-        $this->startTrans();
         $state = $this->where($_where)->delete();
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+       
         return $state;
     }
     

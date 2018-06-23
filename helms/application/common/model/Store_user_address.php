@@ -64,16 +64,8 @@ class Store_user_address extends Model
         $_addressInfo["create_time"] = date("Y-m-d H:i:s",$t);
         $_addressInfo["update_time"] = date("Y-m-d H:i:s",$t);
     
-        $this->startTrans();
         $state = $this->save($_addressInfo);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+
         return $state;
     }
 

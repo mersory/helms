@@ -49,16 +49,8 @@ class Preference_option extends Model
         $t=time();
         $_preferenceinfo["update_time"] = date("Y-m-d H:i:s",$t);
     
-        $this->startTrans();
         $state = $this->save($_preferenceinfo);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+       
         return $state;
     }
     

@@ -47,19 +47,9 @@ class User_bankinfo extends Model
         {
             $_where = "user_id = $user_id";
         }
-        echo $_where;
-        $this->startTrans();
+        
         $state = $this->where($_where)->delete();
-        if ($state)
-        {
-            $this->commit();
-            var_dump("commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("rollback");
-        }
+        
         return $state;
     }
     
@@ -96,16 +86,8 @@ class User_bankinfo extends Model
             $_bankinfo["sub_bank"] = $sub_bank;
         }
     
-        $this->startTrans();
         $state = $this->save($_bankinfo);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        
         return $state;
     }
     

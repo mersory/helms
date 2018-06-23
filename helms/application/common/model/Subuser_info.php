@@ -35,19 +35,9 @@ class Subuser_info extends Model
         {
             $_where = "sub_user_id = $sub_user_id";
         }
-        echo $_where;
-        $this->startTrans();
+
         $state = $this->where($_where)->delete();
-        if ($state)
-        {
-            $this->commit();
-            var_dump("commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("rollback");
-        }
+        
         return $state;
     }
     
@@ -64,18 +54,8 @@ class Subuser_info extends Model
             $_subuserinfo["user_id"] = $user_id;
         }
          
-        $this->startTrans();
         $state = $this->save($_subuserinfo);
-        if ($state)
-        {
-            $this->commit();
-            var_dump("Details insert commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("Details insert rollback");
-        }
+        
         return $state;
     }
     

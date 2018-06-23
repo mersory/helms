@@ -54,18 +54,7 @@ class Award_daytime extends Model
         {
             $_where = "ID = '$id'";
         }
-        $this->startTrans();
         $state = $this->where($_where)->delete();
-        if ($state)
-        {
-            $this->commit();
-            var_dump("commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("rollback");
-        }
         return $state;
     }
     
@@ -94,17 +83,9 @@ class Award_daytime extends Model
         $_record["income"] = $income;
         
         $_record["date"] = date("Y-m-d");;
-        
-        $this->startTrans();
+
         $state = $this->save($_record);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+       
         return $state;
     }
     
@@ -148,17 +129,9 @@ class Award_daytime extends Model
         if($income != -1)
             $_record["income"] = $income;
     
-        $this->startTrans();
         $state = $this-> where("ID='$id'  and date = '$date'")
         ->setField($_record);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+       
         return $state;
     }
     

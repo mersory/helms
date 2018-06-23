@@ -89,18 +89,11 @@ class Positionality extends Model
         {
             $_where = "ID = '$user_id'";
         }
-        $this->startTrans();
+        
         $state = $this
         ->where($_where)
         ->setInc('lds',$lds);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        
         return $state;
     }
     
@@ -428,16 +421,9 @@ class Positionality extends Model
         {
             $_where = "ID = $ID";
         }
-        $this->startTrans();
+       
         $state = $this->where($_where)->delete();
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        
         return $state;
     }
     
@@ -513,16 +499,8 @@ class Positionality extends Model
 
         $_positioninfo["treeplace"] = $leftchild;
       
-        $this->startTrans();
         $state = $this->save($_positioninfo);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        
         return $state;
     }
     

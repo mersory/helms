@@ -39,16 +39,8 @@ class Store_order_line extends Model
         $t=time();
         $_storeOrderLineInfo["create_time"] = date("Y-m-d H:i:s",$t);
     
-        $this->startTrans();
         $state = $this->save($_storeOrderLineInfo);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        
         return $state;
     }
     

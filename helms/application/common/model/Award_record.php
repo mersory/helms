@@ -35,18 +35,8 @@ class Award_record extends Model
         {
             $_where = "ID = '$id'";
         }
-        $this->startTrans();
         $state = $this->where($_where)->delete();
-        if ($state)
-        {
-            $this->commit();
-            var_dump("commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("rollback");
-        }
+       
         return $state;
     }
     
@@ -71,16 +61,8 @@ class Award_record extends Model
         else
             $_record["comment"] = $comment;
         
-        $this->startTrans();
         $state = $this->save($_record);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        
         return $state;
     }
     

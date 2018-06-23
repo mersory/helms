@@ -49,25 +49,15 @@ class Userupgrade_record extends Model
         } 
         $_upgradeinfo["upgrade_time"] = date("Y-m-d H:i:s");
 
-        $this->startTrans();
         $state = $this->save($_upgradeinfo);
-        if ($state)
-        {
-            $this->commit();
-            var_dump("Details insert commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("Details insert rollback");
-        }
+        
         return $state;
     }
     
     public function UserupgradeAct($user_id, $cost)
     {
-        $_pointinfo = new Userpoint();
-        $_detailsinfo = new Userdetails();
+        $_pointinfo = new User_point();
+        $_detailsinfo = new User_details();
         $_point = $_pointinfo->PointQuery($user_id);
         if (count($_point) == 1)
         {
@@ -88,22 +78,13 @@ class Userupgrade_record extends Model
                 $_details_data = array();
                 $_point_data["regist_point"] = $_point[0]["regist_point"] - $cost;
                 $_details_data["user_level"] = 3;
-                $this->startTrans();
+
                 $point = $_pointinfo-> where("ID=$user_id")
                                     ->setField($_point_data);
                 $details = $_detailsinfo-> where("ID=$user_id")
                                         ->setField($_details_data);
                 $state = $this->UpgradeInsert($user_id, $current_level + 1, $current_level);
-                if ($point && $details && $state)
-                {
-                    $this->commit();
-                    var_dump("upgrade success");
-                }
-                else 
-                {
-                    $this->rollback();
-                    var_dump("upgrade failed");
-                }
+                
             }
         }
     }

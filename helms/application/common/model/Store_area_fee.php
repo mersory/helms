@@ -44,16 +44,8 @@ class Store_area_fee extends Model
 
         $_storeFeeInfo["update_time"] = date("Y-m-d H:i:s",$t);
     
-        $this->startTrans();
         $state = $this->save($_storeFeeInfo);
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
+        
         return $state;
     }
 
@@ -76,37 +68,21 @@ class Store_area_fee extends Model
         $t=time();
         $_storeFeeInfo["update_time"] = date("Y-m-d H:i:s",$t);
     
-        $this->startTrans();
         $state = $this-> where("area_id='$areaId'")-> where("type='$type'")->setField($_storeFeeInfo);
 
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
         return $state;
     }
 
     /**
      * 根据所在区域运费配置
      */
-    public function StoreAreaFeeDelete($areaId,$type,$operator){
+    public function StoreAreaFeeDelete($areaId,$type,$operator)
+    {
+       
         $sql = " delete from helms_store_area_fee where area_id='$areaId' and type='$type'";
 
-        $this->startTrans();
         $state = $this-> query($sql);
 
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
         return $state;
     }
 }

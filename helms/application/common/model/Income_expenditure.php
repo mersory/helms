@@ -96,19 +96,9 @@ class Income_expenditure extends Model
         {
             $_where = "record_id = $record_id";
         }
-        echo $_where;
-        $this->startTrans();
+        
         $state = $this->where($_where)->delete();
-        if ($state)
-        {
-            $this->commit();
-            var_dump("commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("rollback");
-        }
+       
         return $state;
     }
     
@@ -139,18 +129,9 @@ class Income_expenditure extends Model
             $_inandoutinfo["out_contrast_in"] = $out_contrast_in;
         }
         $_inandoutinfo["count_time"] = date("Y-m-d H:i:s");
-        $this->startTrans();
+        
         $state = $this->save($_inandoutinfo);
-        if ($state)
-        {
-            $this->commit();
-            var_dump("Details insert commit");
-        }
-        else
-        {
-            $this->rollback();
-            var_dump("Details insert rollback");
-        }
+        
         return $state;
     }
     
