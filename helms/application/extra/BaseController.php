@@ -4,6 +4,7 @@ namespace app\extra\controller;
 use think\Controller;
 use think\Session;
 use app\common\model\System_subscriber;
+use think\Request;
 
 class Basecontroller extends Controller
 {
@@ -66,24 +67,19 @@ class Basecontroller extends Controller
     public function initialize(){
             //登录拦截
             $_session_user = Session::get(USER_SEESION);
-//             if (empty($_session_user) || empty($_session_user['userId'])){
-//                 return $this->redirect("/login/login/index");
-//             }
+            if (empty($_session_user) || empty($_session_user['userId'])){
+                return $this->redirect("/login/login/index");
+            }
 
-            //菜单查询
-//             $_user_id = $_session_user["userId"];
-//             $subscriber = new System_subscriber();
-//             $res = $subscriber->SubscriberQueryMenu($_user_id);
+            //权限拦截
+            $request = Request::instance();
+            $pathInfo = $request->pathinfo();
             
-//             var_dump("xxxxx"+$res);
-            
-//             $this->assign('menu_data', "xxx");
-//             $this->assign('menu_data', $res);
-            
-            
-            //权限查询
-            
-            
+            //前端用户不予许访问后端页面
+            if($_session_user['isAdmin'] != 'true' && strstr($pathInfo,"backend") !=="" ){
+                return $this->redirect("/login/login/index");
+            }
+         
             //日志管理
     }
     

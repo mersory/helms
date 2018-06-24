@@ -97,6 +97,8 @@ class Login extends Controller
                 
                 $_session_user["menu_data"] = $menu_data;
                 
+                $_session_user["isAdmin"] = true;
+                
                 Session::set(USER_SEESION,$_session_user);
             }
         }else{
@@ -112,6 +114,7 @@ class Login extends Controller
                     $_resdata["success"] = true;
                     $_session_user = array();
                     $_session_user["userId"] = $_res[0]["ID"];
+                    $_session_user["isAdmin"] = false;
             
                     $_priority = new User_priority();
                     $_priority_info = $_priority->PriorityQuery($_res[0]["ID"]);
