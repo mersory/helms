@@ -4,7 +4,7 @@ $(function() {
 	//搜索按钮
 	$("#network-search").on("click",function(){
 
-		var CurrentId = $('#userId').val();
+		var CurrentId = $('#searchUserId').val();
 		if($.trim(CurrentId) != ""){			
 			var urlres =  "/public/index.php/frontend/Common/checkRecommondChild";
 			$.post(urlres,{id:CurrentId},function(result){
@@ -18,7 +18,7 @@ $(function() {
 		}
 	})
 	
-	refreshIntroduceTree( $('#userId').val());
+	refreshIntroduceTree( $('#searchUserId').val());
 })
 
 
@@ -90,7 +90,7 @@ function refreshIntroduceTree(userId) {
 								if (null == map) {
 									$('#chart-container').empty();
 								} else {
-									for(var i in map[0].nodes){
+									for(var i in map){
 										$("#introduce-tree").treeview("addNode", [node.nodeId, { node: { text:map[i].text, userId:map[i].userId,parentId:node.nodeId} }]);	
 									}
 								}
@@ -114,20 +114,23 @@ function getIntroduceTreeData(mapData,userId) {
 		var dataArray = new Array();
 		var data = mapData[userId];
 		var originObject = new Object();
-		originObject.text = userId;
-		originObject.userId = userId;
+		originObject.text = data.userId+"("+data.user_name+")";
+		originObject.userId = data.userId;
+		originObject.hasChildren = data.hasChildren;
 		
 		var userArray = new Array();
-		for(var i in mapData){
+		for(var i in mapData.children){
 			if(i != userId){
 				var object = new Object();
-				object.text = mapData[i].user_name;
-				object.userId = mapData[i].userId;
-				if(mapData[i].haschildren){
+				object.text = mapData.children[i].userId+"("+mapData.children[i].user_name+")";
+				object.userId = mapData.children[i].userId;
+				object.hasChildren = mapData.children[i].hasChildren;
+				if(mapData.children[i].haschildren){
 					var childObject = new Object();
 					var childArray = new Array();
-					childObject.text = "child";
-					childObject.userId = "child";
+					childObject.text = "A";
+					childObject.userId = "B";
+					childObject.hasChildren = false;
 					childArray.push(childObject);
 					object.nodes = childArray;
 				}
