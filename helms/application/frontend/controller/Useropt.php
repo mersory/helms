@@ -193,7 +193,7 @@ class Useropt extends Basecontroller
         //用户角色插入
         $_role_info = new User_role();
         
-        $_bank_insert = $_bank_info->BankinfoInsert($user_id, $bank_name, $bank_account_name, $bank_account_num, $telphone, $sub_bank);
+        $_bank_insert = $_bank_info->BankinfoInsert($user_id, $bank_name, "江苏", $bank_city, $sub_bank, $bank_account_num, $bank_account_name);
         $_details_insert = $_details_info->DetailsInsert($user_id, $name, $email, $portrait, $user_level, $open_time, $recommender, $activator, $registry);
         $_point_insert = $_point_info->PointInsert($user_id, $shares, $bonus_point, $regist_point, $re_consume, $universal_point,-1,-1,-1,$shengyu_jing, $shengyu_dong);
         $_priority_insert = $_priority_info->PriorityInsert($user_id);//默认参数列表
@@ -422,6 +422,21 @@ class Useropt extends Basecontroller
         }
         return json_encode($resData);
     }
+    
+    //用户修改信息，页面直接调用
+    public function updateUserInfoDetails($user_id, $email=-1, $bank_name=-1, $province=-1, $city=-1, $sub_bank=-1, $bank_account_num=-1, $bank_account_name=-1)
+    {
+        $result = array();
+        $result["ok"] = 1;
+        $bankOBJ = new User_bankinfo();
+        $detailsOBJ = new User_details();
+
+        $bankRES = $bankOBJ->BankinfoUpdate($user_id,$bank_name, $province, $city, $sub_bank, $bank_account_num, $bank_account_name);
+        $detailRES = $detailsOBJ->DetailsUpdate($user_id, -1, $email, -1, -1, -1, -1, -1, -1);
+        
+        return json_encode($result);
+    }
+    
     
 //---------------------------------单个接口测试--------------------------------
 //---------------------------------单个接口测试--------------------------------
