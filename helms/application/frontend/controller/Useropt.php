@@ -308,6 +308,9 @@ class Useropt extends Basecontroller
                 $_resdata["bank_name"] = $_res[0]["bank_name"];
                 $_resdata["bank_account_name"] = $_res[0]["bank_account_name"];
                 $_resdata["bank_account_num"] = $_res[0]["bank_account_num"];
+                $_resdata["bank_province"] = $_res[0]["bank_province"];
+                $_resdata["bank_city"] = $_res[0]["bank_city"];
+                $_resdata["sub_bank"] = $_res[0]["sub_bank"];               
                 $_resdata["reserve1"] = $_res[0]["reserve1"];
             }
             
@@ -333,6 +336,20 @@ class Useropt extends Basecontroller
     
     public function UpdatePwd()//记得密码，想要重新设置密码
     {
+        $_session_user = Session::get(USER_SEESION);
+        if(empty($_session_user)){
+            return $this->redirect("/login/login/index");
+        }else{
+            $_user_id = $_session_user["userId"];
+            $_user = new User_details();
+            $_res = $_user->DetailsQuery($_user_id);
+        
+            $_resdata = array();
+            $_resdata["userId"] = $_user_id;
+            $_resdata["userName"] = $_res[0]["user_name"];
+        }
+        $this->assign('pass_data', $_resdata);
+        
         $htmls = $this->fetch();
         // 将数据返回给用户
         return $htmls;

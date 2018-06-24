@@ -207,7 +207,7 @@ $(function() {
 				bank_account_name:bank_account_name},function(result){
 				result = JSON.parse(result);
 				if(result.ok == 1){
-					alert('ok');
+					alert('修改成功');
 				} else if(result.ok == 0){
 					alert("修改失败");
 				} 
