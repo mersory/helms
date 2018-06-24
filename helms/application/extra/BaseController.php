@@ -3,6 +3,7 @@ namespace app\extra\controller;
 
 use think\Controller;
 use think\Session;
+use app\common\model\System_subscriber;
 
 class Basecontroller extends Controller
 {
@@ -68,13 +69,16 @@ class Basecontroller extends Controller
 //             if (empty($_session_user) || empty($_session_user['userId'])){
 //                 return $this->redirect("/login/login/index");
 //             }
-            
+
             //菜单查询
-            $_user_id = $_session_user["userId"];
-            $subscriber = new System_subscriber();
-            $res = $subscriber->SubscriberQueryMenu($_user_id);
+//             $_user_id = $_session_user["userId"];
+//             $subscriber = new System_subscriber();
+//             $res = $subscriber->SubscriberQueryMenu($_user_id);
             
-            $this->assign('menu_data', $res);
+//             var_dump("xxxxx"+$res);
+            
+//             $this->assign('menu_data', "xxx");
+//             $this->assign('menu_data', $res);
             
             
             //权限查询

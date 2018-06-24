@@ -90,6 +90,13 @@ class Login extends Controller
                 $_session_user = array();
                 $_session_user["userId"] = $_res[0]["id"];
                 $_session_user["username"] = $_res[0]["username"];
+                
+                $_user_id = $_session_user["userId"];
+                $subscriber = new System_subscriber();
+                $menu_data = $subscriber->SubscriberQueryMenu($_user_id);
+                
+                $_session_user["menu_data"] = $menu_data;
+                
                 Session::set(USER_SEESION,$_session_user);
             }
         }else{

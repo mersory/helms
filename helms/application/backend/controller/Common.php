@@ -22,6 +22,7 @@ class Common extends Basecontroller
     //初始化UI
     public function index()
     {
+//             $this->assign('menu_data', "xxx");
             $htmls = $this->fetch();
             return $htmls;
     }

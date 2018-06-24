@@ -75,10 +75,9 @@
 
               <li class="navigation" id="navigation">
                 <a href="#" class="sidebar-toggle" data-toggle="#navigation">导航 <i class="fa fa-angle-up"></i></a>
-               
-                {if condition="empty($menu_data) neq true"} 
+                {if condition="empty($Think.session.session_user['menu_data']) neq true"} 
                 <ul class="menu">
-                	{foreach name='menu_data' item='vo' key="k"}
+                	{foreach name='Think.session.session_user.menu_data' item='vo' key="k"}
                     {if condition='$k eq 0'}<li  class="active">
                     {else /} <li>
                     {/if}
