@@ -14,8 +14,9 @@ use phpDocumentor\Reflection\Types\This;
 use app\common\model\Store_order_line;
 use app\common\model\User_point;
 use app\common\model\Point_transform_record;
+use app\extra\controller\Basecontroller;
 
-class Store extends Controller
+class Store extends Basecontroller
 {
     // 商城主页
     public function index()

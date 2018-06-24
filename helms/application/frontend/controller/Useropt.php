@@ -17,7 +17,7 @@ use app\common\model\Historical_price;
 use app\common\model\Subuser_info;
 use think\Session;
 use app\common\model\Role;
-use app\backend\controller\Basecontroller;
+use app\extra\controller\Basecontroller;
 use app\trigger\controller\External;
 use app\common\model\Positionality;
 

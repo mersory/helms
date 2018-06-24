@@ -8,8 +8,9 @@ use app\common\model\Userdetails;
 use app\common\model\Userinfo;
 use app\common\model\Userpoint;
 use app\common\model\Usertopriority;
+use app\extra\controller\Basecontroller;
 
-class Roleopt extends Controller
+class Roleopt extends Basecontroller
 {
     public function index()
     {

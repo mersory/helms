@@ -23,8 +23,9 @@ use app\common\model\Award_daytime;
 use think\Session;
 use app\trigger\controller\External;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
+use app\extra\controller\Basecontroller;
 
-class Adminopt extends Controller
+class Adminopt extends Basecontroller
 {
     public function index()
     {

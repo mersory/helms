@@ -1,2 +1,2 @@
-defaultPHPServer=localapache
+defaultPHPServer=http\://localhost
 eclipse.preferences.version=1
