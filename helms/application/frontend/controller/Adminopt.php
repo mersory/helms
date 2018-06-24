@@ -1253,8 +1253,9 @@ class Adminopt extends Basecontroller
 	        $_res = $_res[0];
 	    }
 	    $level = $_res["user_level"];
+	    $regist_money = 0;
 	    $externOBJ = new External();
-	    $regist_money = $externOBJ->getParam("", $level, $user_id);
+	    $regist_money = $externOBJ->getParam("register_total", $level, $user_id);
 	    
 	    $_resact = $this->activeUserOpt($user_id, $level, $regist_money, $minor_pwd);
 	    $_resdata["success"] = true;
