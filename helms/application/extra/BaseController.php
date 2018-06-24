@@ -65,9 +65,9 @@ class Basecontroller extends Controller
     public function initialize(){
             //登录拦截
             $_session_user = Session::get(USER_SEESION);
-            if (empty($_session_user) || empty($_session_user['userId'])){
-                return $this->redirect("/login/login/index");
-            }
+//             if (empty($_session_user) || empty($_session_user['userId'])){
+//                 return $this->redirect("/login/login/index");
+//             }
             
             //菜单查询
             $_user_id = $_session_user["userId"];

@@ -22,17 +22,8 @@ class Common extends Basecontroller
     //初始化UI
     public function index()
     {
-        $_session_user = Session::get(USER_SEESION);
-        if(empty($_session_user)){
-            return $this->redirect("/login/login/index");
-        }else{
-            $_user_id = $_session_user["userId"];
-            $subscriber = new System_subscriber();
-            $res = $subscriber ->SubscriberQueryMenu($_user_id);           
-            $this->assign('menu_data', $res);
             $htmls = $this->fetch();
             return $htmls;
-        }
     }
 
     public function network()

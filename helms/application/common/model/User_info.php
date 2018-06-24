@@ -3,7 +3,7 @@ namespace app\common\model;
 
 use think\Model;
 use app\trigger\controller\External;
-use function think\commit;
+use think\commit;
 
 class User_info extends Model
 {
