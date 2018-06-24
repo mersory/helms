@@ -52,8 +52,8 @@ class User_bankinfo extends Model
         
         return $state;
     }
-    
-    public function BankinfoInsert($user_id, $bank_name, $bank_account_name, $bank_account_num, $bank_city, $sub_bank)
+
+    public function BankinfoInsert($user_id=-1, $bank_name=-1, $province=-1, $bank_city=-1, $sub_bank=-1, $bank_account_num=-1, $bank_account_name=-1)
     {
         $_bankinfo = array();
         if ($user_id >=0)
@@ -61,6 +61,11 @@ class User_bankinfo extends Model
             $_bankinfo["user_id"] = $user_id;
         }
     
+        if ($province >=0)
+        {
+            $_bankinfo["bank_province"] = $province;
+        }
+        
         if ($bank_name >=0)
         {
             $_bankinfo["bank_name"] = $bank_name;
@@ -91,19 +96,20 @@ class User_bankinfo extends Model
         return $state;
     }
     
-    public function BankinfoUpdate($user_id, $bank_name, $bank_account_name, $bank_account_num, $bank_city, $sub_bank)
+    public function BankinfoUpdate($user_id=-1, $bank_name=-1, $province=-1, $bank_city=-1, $sub_bank=-1, $bank_account_num=-1, $bank_account_name=-1)
     {
         $_bankinfo = array();
-        if ($user_id >=0)
-        {
-            $_bankinfo["user_id"] = $user_id;
-        }
-    
+        
         if ($bank_name >=0)
         {
             $_bankinfo["bank_name"] = $bank_name;
         }
     
+        if ($province >=0)
+        {
+            $_bankinfo["bank_province"] = $province;
+        }
+        
         if ($bank_account_name >=0)
         {
             $_bankinfo["bank_account_name"] = $bank_account_name;
@@ -123,7 +129,7 @@ class User_bankinfo extends Model
         {
             $_bankinfo["sub_bank"] = $sub_bank;
         }
-        $state = $this-> where("user_id=$user_id")
+        $state = $this-> where("user_id='$user_id'")
         ->setField($_bankinfo);
         return $state;
     }
