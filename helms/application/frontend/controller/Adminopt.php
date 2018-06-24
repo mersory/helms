@@ -346,7 +346,7 @@ class Adminopt extends Basecontroller
 
             //var_dump("Adminopt.php : audit_member_open".__LINE__);
             $award->bonus_tongji($vo['user_id']); //奖金统计 
-             
+            return true;
 
         } else {
             //var_dump("Adminopt.php : audit_member_open".__LINE__);
@@ -1253,9 +1253,11 @@ class Adminopt extends Basecontroller
 	        $_res = $_res[0];
 	    }
 	    $level = $_res["user_level"];
-	    $regist_money = $level*500;
+	    $externOBJ = new External();
+	    $regist_money = $externOBJ->getParam("", $level, $user_id);
+	    
 	    $_resact = $this->activeUserOpt($user_id, $level, $regist_money, $minor_pwd);
-	    $_resdata["success"] = $_resact;
+	    $_resdata["success"] = true;
 	    
 	    return json_encode($_resdata);
 	}

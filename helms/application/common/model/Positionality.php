@@ -323,28 +323,28 @@ class Positionality extends Model
         $_where = '';
         if ($str > -1)
         {
-            $_where = "json like '%$str'";
+            $_where = "json like '%,$str' or json like '$str'";
         }
         else
             return;
-            $_position_info = $this->where($_where)
-            ->select();
-            $count = count($_position_info);
-            if ($count < 1)
+        $_position_info = $this->where($_where)
+        ->select();
+        $count = count($_position_info);
+        if ($count < 1)
+        {
+            return ;
+        }
+        else
+        {
+            $_res = array();
+            $i=0;
+            while($i < $count)
             {
-                return ;
+                $_res[$_position_info[$i]["user_id"]] = $_position_info[$i]["user_id"];
+                $i++;
             }
-            else
-            {
-                $_res = array();
-                $i=0;
-                while($i < $count)
-                {
-                    $_res[$_position_info[$i]["user_id"]] = $_position_info[$i]["user_id"];
-                    $i++;
-                }
-            }
-            return $_res;
+        }
+        return $_res;
     }
     
     public function getAllChildByJson($str)//查看当前节点的所有孩子节点，包括多次派生的孩子，返回用户id和json子串
