@@ -6,8 +6,9 @@ use think\Request;
 use think\Session;
 use app\common\model\Preference_option;
 use app\common\model\System_subscriber;
+use app\extra\controller\Basecontroller;
 
-class Preference extends Controller
+class Preference extends Basecontroller
 {
     // 订单列表
     public function preferenceList()

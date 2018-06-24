@@ -7,7 +7,7 @@ class Award_daytime extends Model
 {
     public function index()
     {
-        var_dump("Award_daytime");
+        //var_dump("Award_daytime");
     }
     
     public function AwarddailyQuery($id)//
@@ -23,7 +23,7 @@ class Award_daytime extends Model
         $count = count($_award_info);
         if ($count < 1)
         {
-            var_dump("Award_daytime.php ID :$id not exsist".__LINE__);
+            //var_dump("Award_daytime.php ID :$id not exsist".__LINE__);
             return ;
         }
         return $_award_info;

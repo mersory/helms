@@ -7,7 +7,7 @@ class Award_record extends Model
 {
     public function index()
     {
-        var_dump("Award records");
+        //var_dump("Award records");
     }
     
     public function AwardRecordQuery($id)//
@@ -22,7 +22,7 @@ class Award_record extends Model
         $count = count($_award_info);
         if ($count < 1)
         {
-            var_dump("Award_record.php ID :$id not exsist".__LINE__);
+            //var_dump("Award_record.php ID :$id not exsist".__LINE__);
             return ;
         }
         return $_award_info;

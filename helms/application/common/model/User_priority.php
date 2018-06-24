@@ -7,7 +7,7 @@ class User_priority extends Model
 {
     public function index()
     {
-        var_dump("Usertopriority");
+        //var_dump("Usertopriority");
     }
     
     public function PriorityQuery($user_id)
@@ -22,7 +22,7 @@ class User_priority extends Model
         $count = count($_priority_info);
         if ($count < 1)
         {
-            var_dump("User_priority.php id :$user_id not exsist".__LINE__);
+            //var_dump("User_priority.php id :$user_id not exsist".__LINE__);
             return ;
         }
         return $_priority_info;

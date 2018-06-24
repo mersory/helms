@@ -11,7 +11,7 @@ use app\common\model\Historical_price;
 use think\Session;
 use app\common\model\Role;
 use app\common\model\Positionality;
-use app\frontend\controller\Basecontroller;
+use app\extra\controller\Basecontroller;
 
 class Common extends Basecontroller
 {
@@ -343,8 +343,8 @@ class Common extends Basecontroller
         $_res = $_user->HistoricalpriceQuery($time);
         for($i= 0; $i<count($_res); $i++)
         {
-            var_dump($_res[$i]["current_time"]);
-            var_dump($_res[$i]["share_price"]);
+            //var_dump($_res[$i]["current_time"]);
+            //var_dump($_res[$i]["share_price"]);
         }
         return $_res;
     }

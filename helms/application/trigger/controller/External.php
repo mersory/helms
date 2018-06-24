@@ -15,7 +15,7 @@ class External extends Controller
     }
     
     public function getRecommendPercent($key) {
-        echo "获取配置文件";
+        //echo "获取配置文件";
         $percent = array();
         $percent[$key] = 0.08;
         return $percent[$key];

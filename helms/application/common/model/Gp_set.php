@@ -7,7 +7,7 @@ class Gp_set extends Model
 {
     public function index()
     {
-        var_dump("gpset");
+        //var_dump("gpset");
     }
     
     public function GpSetQuery($id=1)
@@ -22,7 +22,7 @@ class Gp_set extends Model
         $count = count($_award_info);
         if ($count < 1)
         {
-            var_dump("Gp_set.php ID :$id not exsist".__LINE__);
+            //var_dump("Gp_set.php ID :$id not exsist".__LINE__);
             return ;
         }
         return $_award_info;
@@ -30,7 +30,7 @@ class Gp_set extends Model
     
     public function GpSetUpdate($qishu=-1, $cur_price=-1, $gp_qfhl=-1, $s_isopen=-1)
     {
-        var_dump("gp_qfhl:".$gp_qfhl);
+        //var_dump("gp_qfhl:".$gp_qfhl);
         $_detailsinfo = array();
     
         if ($qishu >=0)

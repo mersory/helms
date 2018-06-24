@@ -15,8 +15,11 @@ use app\common\model\Offline_deal;
 use app\common\model\Realtime_price;
 use app\common\model\Historical_price;
 use app\common\model\Subuser_info;
-use app\backend\controller\Basecontroller;
+use think\Session;
+use app\common\model\Role;
+use app\extra\controller\Basecontroller;
 use app\trigger\controller\External;
+use app\common\model\Positionality;
 
 class Useropt extends Basecontroller
 {
@@ -73,7 +76,7 @@ class Useropt extends Basecontroller
         }
         else 
         {
-            var_dump("登录失败，用户名或密码错误");
+            //var_dump("登录失败，用户名或密码错误");
             return;
         }
         $_id = $_resdata["ID"];
@@ -130,57 +133,55 @@ class Useropt extends Basecontroller
     
     
     //用户注册操作
-    public function UserRegist()
+    public function UserRegist($ID, $name, $email, $telphone, $recommender, $activator, $pwd1, $pwd2, $userlevel=1)
     {
-        var_dump("用户注册");
-        $_post = Request::instance()->post();
-        $_user_info = new User_info(); 
-        $name = $_post["fullname"];
-        $pwd1 = $_post["primarypwd"];//
-        $pwd2 = $_post["minorpwd"];//
+        $_resdata = array();
+        $_resdata["success"] = false;
+        
+        //在用户网络结构图中插入数据,检测当前父节点是否已经存在两个子节点
+        $position = new Positionality();
+        $position_res = $position->PositionQuery($activator);
+        if($position_res[0]["leftchild"] != 0 && $position_res[0]["rightchild"] != 0)
+            return json_encode($_resdata);
+
+		//$extern = new External();
+		//$ID = $extern->_auto_userid();
+        $_user_info = new User_info();
         //此处插入用的是用户名和密码，必须这样做，因为此处插入之后才会有对应得ID生成，以便后续使用，此处不需要提供ID，因为主表的ID是自增的
-        $_state = $_user_info->UserinfoInsert($name, $pwd1, $pwd2);
+        $_state = $_user_info->UserinfoInsert($name, $pwd1, $pwd2, $ID);
         if ($_state != 0)
         {
-            $_res =$_user_info->UserinfoQuery($name, $pwd1);
-            echo count($_res);
+            $_res =$_user_info->UserinfoQuery($ID, $pwd1);
             if (count($_res) != 1)
             {
-                echo "存在多个同名用户，或者改用户不存在";
-                return ;
-            }
-            else
-            {
-                echo "1111fasfsaf";
-                //var_dump($_res) ;
-            }
-                
+                return json_encode($_resdata);
+            } 
         }
-
+		$_resdata["success"] = true;
         //银行信息插入
         $_bank_info = new User_bankinfo();
-        $user_id = $_res[0]["ID"];
-        $bank_account_name = "白浅上仙";
-        $bank_account_num = "622718219839182";
-        $bank_name = "中国工商银行";
-        $bank_city = $_post["telphone"];
+        $user_id = $ID;
+        $bank_account_name = "未知";
+        $bank_account_num = "未知";
+        $bank_name = "中国建设银行";
         $sub_bank = "";
         
         //用户详情信息插入
-        $user_name = $_post["fullname"];
-        $email = $_post["email"];
         $portrait = -1;
-        $user_level = -1; 
-        $open_time = -1;
-        $recommender = intval($_post["recommender"]); 
-        $activator = intval($_post["activator"]);
+        $user_level = $userlevel; 
+        $open_time = date("Y-m-d H:i:s");//time();
+        //$recommender = intval($recommender); 
+        //$activator = intval($activator);
         $registry = -1;
         $_details_info = new User_details();
                
         //用户绩点插入
-        $shares=600;
-        $bonus_point=40;
-        $regist_point=30;
+        $regist_point=0;
+        $shengyu_jing = 0;
+        $shengyu_dong = 0;
+        
+        $bonus_point=0;
+        $shares=0;
         $re_consume=0;
         $universal_point=0;
         $re_cast=0;
@@ -194,24 +195,19 @@ class Useropt extends Basecontroller
         //用户角色插入
         $_role_info = new User_role();
         
-        $_user_info->startTrans();
-        $_bank_insert = $_bank_info->BankinfoInsert($user_id, $bank_name, "江苏", $bank_city, $sub_bank, $bank_account_num, $bank_account_name);
-        $_details_insert = $_details_info->DetailsInsert($user_id, $user_name, $email, $portrait, $user_level, $open_time, $recommender, $activator, $registry);
-        $_point_insert = $_point_info->PointInsert($user_id, $shares, $bonus_point, $regist_point, $universal_point);
+        $_bank_insert = $_bank_info->BankinfoInsert($user_id, $bank_name, "unknow", "unknow", $sub_bank, $bank_account_num, $bank_account_name);
+        $_details_insert = $_details_info->DetailsInsert($user_id, $name, $email, $portrait, $user_level, $open_time, $recommender, $activator, $registry);
+        $_point_insert = $_point_info->PointInsert($user_id, $shares, $bonus_point, $regist_point, $re_consume, $universal_point,-1,-1,-1,$shengyu_jing, $shengyu_dong);
         $_priority_insert = $_priority_info->PriorityInsert($user_id);//默认参数列表
-        $_role_insert = $_role_info->RoleInsert($user_id);
-        if ($_bank_insert && $_details_insert && $_point_insert && $_priority_insert &&$_role_insert)
+        $_role_insert = $_role_info->RoleInsert($user_id);//默认参数列表
+        $_position_res = $position->PositionInsertPrev($user_id, $position_res[0]["ID"]);
+        
+        if ( !($_bank_insert && $_details_insert && $_point_insert && $_priority_insert &&$_role_insert && $_position_res) )
         {
-            echo "事务执行成功，提交";
-            $_user_info->commit();
-        }
-        else
-        {
-            echo "事务执行失败，回滚";
-            $_user_info->rollback();    
+			$_resdata["success"] = false;
         }
         
-        return $user_id . '成功增加至数据表中';
+        return json_encode($_resdata);
         
     }
     
@@ -240,12 +236,12 @@ class Useropt extends Basecontroller
         $_role_del = $_role_info->RoleDel($user_id);
         if ($_info_res && $_bank_del && $_details_del && $_point_del && $_priority_del &&$_role_del)
         {
-            echo "事务执行成功，提交";
+            //echo "事务执行成功，提交";
             $_user_info->commit();
         }
         else
         {
-            echo "事务执行失败，回滚";
+            //echo "事务执行失败，回滚";
             $_user_info->rollback();
         }
       
@@ -310,25 +306,24 @@ class Useropt extends Basecontroller
         if (count($_res) == 1)
         {
             $_userinfo->UserinfoUpdate($username, $pwd); 
-            var_dump("密码修改成功");
+            //var_dump("密码修改成功");
         }
         else 
         {
-            var_dump("密码修改失败");
+            //var_dump("密码修改失败");
         }
     }
     
     public function ResetPwd()//忘记密码
     {
         $_post = Request::instance()->post();
-        //var_dump($_post);
         $email = $_post["email"];
-        echo $email;
+        //echo $email;
     }
     
     public function PointsTansform($src_type, $des_type, $sum)//积分转换函数
     {
-        echo "积分转换";
+        //echo "积分转换";
         switch ($src_type)
         {
             case 0:
@@ -507,17 +502,17 @@ class Useropt extends Basecontroller
         $_res= $_upgrade->UpgradeQuery($user_id);
         for($_index=0; $_index < count($_res); $_index++)
         {
-            var_dump($_res[$_index]["ID"]);
-            var_dump($_res[$_index]["user_id"]);
-            var_dump($_res[$_index]["current_level"]);
-            echo "<br/>";
+            //var_dump($_res[$_index]["ID"]);
+            //var_dump($_res[$_index]["user_id"]);
+            //var_dump($_res[$_index]["current_level"]);
+            //echo "<br/>";
         }
     }
     
     public function WithdrawalQuery($withdraw_id)//还有其他的查找方式，此处只列出这一个
     {
         $_withdraw = new Withdrawal_record();
-        var_dump($_withdraw->WithdrawalQuery($withdraw_id));
+        //var_dump($_withdraw->WithdrawalQuery($withdraw_id));
     }
     
     public function WithdrawalUpdate($withdraw_id, $updatetype)//还有其他的查找方式，此处只列出这一个
@@ -535,7 +530,7 @@ class Useropt extends Basecontroller
     public function OfflineQuery($ID)
     {
         $_offline = new Offline_deal();
-        var_dump($_offline->OfflineQuery($ID)[0]["user_id"]);
+        //var_dump($_offline->OfflineQuery($ID)[0]["user_id"]);
     }
     
     public function RealtimepriceInsert( $latest_prive)
@@ -550,8 +545,8 @@ class Useropt extends Basecontroller
         $_res = $_realtime->RealtimepriceQuery($time);
         for ($index = 0; $index<count($_res); $index++)
         {
-            echo $_res[$index]["current_time"];
-            echo $_res[$index]["latest_price"];
+            //echo $_res[$index]["current_time"];
+            //echo $_res[$index]["latest_price"];
         }
     }
 
@@ -567,16 +562,16 @@ class Useropt extends Basecontroller
         $_res = $_realtime->HistoricalpriceQuery($time);
         for ($index = 0; $index<count($_res); $index++)
         {
-            echo $_res[$index]["current_time"];
-            echo $_res[$index]["share_price"];
-            echo "<br/>";
+            //echo $_res[$index]["current_time"];
+            //echo $_res[$index]["share_price"];
+            //echo "<br/>";
         }
     }
     
     public function SubuserinfoQuery($sub_user_id)
     {
         $_subuser = new Subuser_info();
-        var_dump($_subuser->SubuserinfoQuery($sub_user_id));
+        //var_dump($_subuser->SubuserinfoQuery($sub_user_id));
     }
     
 

@@ -7,7 +7,7 @@ class Store_shoppingcart extends Model
 {
     public function index()
     {
-        var_dump("Storeshoppingcartinfo");
+        //var_dump("Storeshoppingcartinfo");
     }
     
     /**

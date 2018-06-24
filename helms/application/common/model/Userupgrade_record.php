@@ -7,7 +7,7 @@ class Userupgrade_record extends Model
 {
     public function index()
     {
-        var_dump("Userdetails");
+        //var_dump("Userdetails");
     }
     
     public function UpgradeQuery($user_id)
@@ -22,7 +22,7 @@ class Userupgrade_record extends Model
         $count = count($_upgrade_info);
         if ($count < 1)
         {
-            var_dump("Userupgrade.php user_id :$user_id not exsist".__LINE__);
+            //var_dump("Userupgrade.php user_id :$user_id not exsist".__LINE__);
             return ;
         }
         return $_upgrade_info;
@@ -38,13 +38,13 @@ class Userupgrade_record extends Model
     
         if ($_upgradeinfo >=0)
         {
-            echo 'cece';
+            //echo 'cece';
             $_upgradeinfo["current_level"] = $current_level;
         }
     
         if ($upgrade_level >=0)
         {
-            echo 'vvvv';
+            //echo 'vvvv';
             $_upgradeinfo["upgrade_level"] = $upgrade_level;
         } 
         $_upgradeinfo["upgrade_time"] = date("Y-m-d H:i:s");
@@ -71,7 +71,7 @@ class Userupgrade_record extends Model
                 }
                 else 
                 {
-                    var_dump("user details eror: user has no level");
+                    //var_dump("user details eror: user has no level");
                     return ;
                 }
                 $_point_data = array();

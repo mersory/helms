@@ -11,14 +11,18 @@ $(function() {
 							var urlres =  "/public/index.php/frontend/Adminopt/getNodeChild";
 							$.post(urlres,{id:parentId},function(result){
 								result = JSON.parse(result);
-							if(result.success){
-								var url = "/public/index.php/frontend/Useropt/RegistIndex?parentId=" + parentId+"&position=left";
-								window.open(url);
-							} else {
-								alert("输当前入的节点不能再作为父节点，请重新选择父节点");
+								if(result.success == 1){
+									var url = "/public/index.php/frontend/Useropt/RegistIndex?parentId=" + parentId+"&position=left";
+									window.open(url);
+								} else if(result.success == 0){
+									alert("当前点位已存在两个子点位，不可再产生子点位，请重新选择");
+								} else if(result.success == -1){
+									alert("当前点位左区不存在直推的用户，请重新选择");
+								} else if(result.success == 2){
+									alert("当前点位尚未激活不能注册子节点，请重新选择");
+								}
+								});
 							}
-							});
-						}
 						else{
 							alert("请先选择父节点");
 						}

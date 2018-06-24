@@ -7,7 +7,7 @@ class Role extends Model
 {
     public function index()
     {
-        var_dump("Userdetails");
+        //var_dump("Userdetails");
     }
     
     public function RoleQuery($ID)//���������Ĳ��ҷ�ʽ���˴�ֻ�г���һ��

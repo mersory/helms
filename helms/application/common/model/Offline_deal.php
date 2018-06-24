@@ -7,7 +7,7 @@ class Offline_deal extends Model
 {
     public function index()
     {
-        var_dump("Userdetails");
+        //var_dump("Userdetails");
     }
     
     public function OfflineQuery($ID)//���������Ĳ��ҷ�ʽ���˴�ֻ�г���һ��
@@ -22,7 +22,7 @@ class Offline_deal extends Model
         $count = count($_offline_info);
         if ($count < 1)
         {
-            var_dump("Offline_deal.php ID :$ID not exsist".__LINE__);
+            //var_dump("Offline_deal.php ID :$ID not exsist".__LINE__);
             return ;
         }
         return $_offline_info;
@@ -35,7 +35,7 @@ class Offline_deal extends Model
         {
             $_where = "ID = $ID";
         }
-        echo $_where;
+        //echo $_where;
         
         $state = $this->where($_where)->delete();
         

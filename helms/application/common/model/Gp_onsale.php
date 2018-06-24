@@ -7,7 +7,7 @@ class Gp_onsale extends Model
 {
     public function index()
     {
-        var_dump("gponsale");
+        //var_dump("gponsale");
     }
     
     public function GponsaleQuery($id)//
@@ -22,7 +22,7 @@ class Gp_onsale extends Model
         $count = count($_award_info);
         if ($count < 1)
         {
-            var_dump("Gp_onsale.php ID :$id not exsist".__LINE__);
+            //var_dump("Gp_onsale.php ID :$id not exsist".__LINE__);
             return ;
         }
         return $_award_info;
@@ -44,7 +44,7 @@ class Gp_onsale extends Model
         $count = count($_award_info);
         if ($count < 1)
         {
-            var_dump("GponsaleQueryByStatus :$status not exsist".__LINE__);
+            //var_dump("GponsaleQueryByStatus :$status not exsist".__LINE__);
             return ;
         }
         return $_award_info[0];
@@ -93,13 +93,13 @@ class Gp_onsale extends Model
         $_cur = $this->GponsaleQueryByStatus();
         if(count($_cur) < 0)
         {
-            var_dump("Gp_onsale.php None ,line".__LINE__);
+            //var_dump("Gp_onsale.php None ,line".__LINE__);
             return -1;
         }
         $id = $_cur["AUTO_ID"];
         if(($sprice==$_cur["sprice"] || $sprice==-1) && ($snums==$_cur["snums"]||$snums==-1) && ($ok_nums==$_cur["ok_nums"]||$ok_nums==-1) && ($get_money==$_cur["get_money"]||$get_money==-1) && ($status==$_cur["status"]||$status==-1) && ($sy_nums==$_cur["sy_nums"]||$sy_nums==-1))
         {
-            var_dump("Gp_onsale.php data is same,line".__LINE__);
+            //var_dump("Gp_onsale.php data is same,line".__LINE__);
             return 1;
         }
         $_detailsinfo = array();
@@ -134,8 +134,8 @@ class Gp_onsale extends Model
             $_detailsinfo["sy_nums"] = $sy_nums;
         }
         $_detailsinfo["uptime"] = date("Y-m-d H:i:s");
-        var_dump("id:".$id);
-        var_dump($_detailsinfo);
+        //var_dump("id:".$id);
+        //var_dump($_detailsinfo);
         $state = $this-> where("AUTO_ID='$id'")
         ->setField($_detailsinfo);
         return $state;

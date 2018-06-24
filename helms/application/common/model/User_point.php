@@ -7,7 +7,7 @@ class User_point extends Model
 {
     public function index()
     {
-        var_dump("Userpoint");
+        //var_dump("Userpoint");
     }
     
     public function PointQuery($user_id)
@@ -27,7 +27,7 @@ class User_point extends Model
         $count = count($_point_info);
         if ($count < 1)
         {
-            var_dump("User_point.php ID :$user_id not exsist".__LINE__);
+            //var_dump("User_point.php ID :$user_id not exsist".__LINE__);
             return ;
         }
         return $_point_info;
@@ -40,7 +40,7 @@ class User_point extends Model
         {
             $_where = "ID = '$user_id'";
         }
-        echo $_where;
+        //echo $_where;
         
         $state = $this->where($_where)->delete();
         
@@ -156,7 +156,7 @@ class User_point extends Model
            && $universal_point==$_cureent["universal_point"] && $re_cast==$_cureent["re_cast"] && $remain_point==$_cureent["remain_point"] && $blocked_point==$_cureent["blocked_point"]
            && $shengyu_jing==$_cureent["shengyu_jing"] && $shengyu_dong==$_cureent["shengyu_dong"] && $dp_leiji==$_cureent["dp_leiji"])
         {
-            var_dump("User_point.php the data is complete same".__LINE__);
+            //var_dump("User_point.php the data is complete same".__LINE__);
             return 1;
         }
         
@@ -234,7 +234,7 @@ class User_point extends Model
             $_cureent = $_cureent[0];
         if($jing==$_cureent["shengyu_jing"] && $dong==$_cureent["shengyu_dong"])
         {
-            var_dump("User_point.php the data is complete same".__LINE__);
+            //var_dump("User_point.php the data is complete same".__LINE__);
             return 1;
         }
         $_pointinfo = array();
@@ -249,8 +249,8 @@ class User_point extends Model
         }
         $state = $this-> where("ID='$user_id'")
         ->setField($_pointinfo);
-        var_dump($user_id);
-        var_dump($state);
+        //var_dump($user_id);
+        //var_dump($state);
         return $state;
     }
     

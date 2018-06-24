@@ -7,7 +7,7 @@ class Priority extends Model
 {
     public function index()
     {
-        var_dump("Userdetails");
+        //var_dump("Userdetails");
     }
     
     public function PriorityQuery($ID)//���������Ĳ��ҷ�ʽ���˴�ֻ�г���һ��
@@ -22,7 +22,7 @@ class Priority extends Model
         $count = count($_role_info);
         if ($count < 1)
         {
-            var_dump("Priority.php ID :$ID not exsist".__LINE__);
+            //var_dump("Priority.php ID :$ID not exsist".__LINE__);
             return ;
         }
         return $_role_info;

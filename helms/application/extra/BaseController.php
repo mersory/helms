@@ -1,5 +1,5 @@
 <?php
-namespace app\frontend\controller;
+namespace app\extra\controller;
 
 use think\Controller;
 use think\Session;
@@ -60,12 +60,27 @@ class Basecontroller extends Controller
     {
         return date($format, strtotime($param)) === $param;
     }
-    public function _initialize(){
-        error_log("进入拦截器");
+    
+    //拦截器
+    public function initialize(){
+            //登录拦截
             $_session_user = Session::get(USER_SEESION);
             if (empty($_session_user) || empty($_session_user['userId'])){
                 return $this->redirect("/login/login/index");
             }
+            
+            //菜单查询
+            $_user_id = $_session_user["userId"];
+            $subscriber = new System_subscriber();
+            $res = $subscriber->SubscriberQueryMenu($_user_id);
+            
+            $this->assign('menu_data', $res);
+            
+            
+            //权限查询
+            
+            
+            //日志管理
     }
     
 }

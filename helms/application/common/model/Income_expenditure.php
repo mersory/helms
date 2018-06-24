@@ -7,7 +7,7 @@ class Income_expenditure extends Model
 {
     public function index()
     {
-        var_dump("Userdetails");
+        //var_dump("Userdetails");
     }
     
     public function IncomeExpenditureQuery($record_id)//���������Ĳ��ҷ�ʽ���˴�ֻ�г���һ��
@@ -22,7 +22,7 @@ class Income_expenditure extends Model
         $count = count($_withdrawal_info);
         if ($count < 1)
         {
-            var_dump("Income_expence.php ID :$record_id not exsist".__LINE__);
+            //var_dump("Income_expence.php ID :$record_id not exsist".__LINE__);
             return ;
         }
         return $_withdrawal_info;

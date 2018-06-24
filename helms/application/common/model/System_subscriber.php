@@ -40,7 +40,7 @@ class System_subscriber extends Model
         $_subscriber_info = $this->select();
         $count = count($_subscriber_info);
         if ($count < 1) {
-            var_dump("subscriber info not exsist");
+            //var_dump("subscriber info not exsist");
             return;
         }
         return $_subscriber_info;

@@ -11,7 +11,7 @@ class System_role extends Model
         $_role_info = $this->select();
         $count = count($_role_info);
         if ($count < 1) {
-            var_dump("role info not exsist");
+            //var_dump("role info not exsist");
             return;
         }
         return $_role_info;
@@ -76,7 +76,7 @@ class System_role extends Model
         $_role_info = $this->where($_where)->select();
         $count = count($_role_info);
         if ($count < 1) {
-            var_dump("ID :$ID not exsist");
+            //var_dump("ID :$ID not exsist");
             return;
         }
         return $_role_info;

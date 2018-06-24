@@ -12,7 +12,7 @@ use app\common\model\Withdrawal_record;
 use app\common\model\Realtime_price;
 use think\Session;
 use app\common\model\Income_expenditure;
-use app\backend\controller\Basecontroller;
+use app\extra\controller\Basecontroller;
 use app\common\model\Positionality;
 use app\common\model\System_subscriber;
 use app\common\model\Role;
@@ -378,7 +378,7 @@ class Common extends Basecontroller
 					$_resdata["res"] = $_res;
 				}
 		}
-		//var_dump($_resdata);
+
         return json_encode($_resdata);
     }
     
@@ -398,7 +398,7 @@ class Common extends Basecontroller
                 $_resdata["res"] = $_res;
             }
         }
-        //var_dump($_resdata);
+
         return json_encode($_resdata);
     }
     

@@ -8,8 +8,9 @@ use think\Session;
 use app\common\model\Store_product;
 use app\common\model\Store_order;
 use app\common\model\System_subscriber;
+use app\extra\controller\Basecontroller;
 
-class Store extends Controller
+class Store extends Basecontroller
 {
     // 订单列表
     public function orderList()
