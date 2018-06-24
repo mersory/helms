@@ -184,6 +184,40 @@ $(function() {
 			alert(points);
 		}
 	})
+	
+	//修改个人信息按钮
+	$("#userinfo_btn").on("click",function(){
+		var userid = $('#changeuserinfo_userid').val();
+		var email = $('#changeuserinfo_email').val();
+		var bank_name = $('#changeuserinfo_bankname').val();
+		var bank_account_name = $('#changeuserinfo_bank_account_name').val();
+		var bank_account_num = $('#changeuserinfo_bank_account_num').val();
+		var province = $('#province').val();
+		var city = $('#city').val();
+		var changeuserinfo_sub_bank = $('#changeuserinfo_sub_bank').val();
+		if($.trim(userid) != ""){
+			var urlres =  "/public/index.php/frontend/Useropt/updateUserInfoDetails";
+			$.post(urlres,{user_id:userid,
+				email:email,
+				bank_name:bank_name,
+				province:province,
+				city:city,
+				sub_bank:changeuserinfo_sub_bank,
+				bank_account_num:bank_account_num,
+				bank_account_name:bank_account_name},function(result){
+				result = JSON.parse(result);
+				if(result.ok == 1){
+					alert('ok');
+				} else if(result.ok == 0){
+					alert("修改失败");
+				} 
+			});
+		}
+		else
+		{
+			alert("请填写信息");
+		}
+	});
 })
 
 // 加载首页股价趋势

@@ -1,5 +1,7 @@
 {extend name="base/frontend"} {block name="js"}
 <script type="text/javascript" src="_JS_/common/index.js"></script>
+<script type="text/javascript" src="_JS_/common/userinfo/distpicker.data.js"></script>
+<script type="text/javascript" src="_JS_/common/userinfo/distpicker.js"></script>
 {/block} {block name="css"} {/block} {block name="content"}
 
 <!-- Page content -->
@@ -41,50 +43,80 @@
 					<!-- tile body -->
 					<div class="tile-body">
 
-						<form action="ResetPwd" method="post" class="form-horizontal"
+						<form method="post" class="form-horizontal"
 							role="form" parsley-validate="" id="basicvalidations">
 
 							<div class="form-group">
 								<label for="email" class="col-sm-3 control-label">用户ID</label>
 								<div class="col-sm-8">
-									<label for="email" class="col-sm-3 control-label">{$pass_data.userId}</label>
+									<input type="text" id="changeuserinfo_userid" for="email" class="form-control" readonly="readonly" value="{$pass_data.userId}">
 								</div>
 							</div>
 
 							<div class="form-group">
 								<label for="email" class="col-sm-3 control-label">用户名称</label>
 								<div class="col-sm-8">
-									<label for="email" class="col-sm-3 control-label">{$pass_data.userName}</label>
+									<input type="text" for="email" class="form-control" readonly="readonly" value="{$pass_data.userName}">
 								</div>
 							</div>
 							
 							<div class="form-group">
 								<label for="email" class="col-sm-3 control-label">用户级别</label>
 								<div class="col-sm-8">
-									<label for="email" class="col-sm-3 control-label">{$pass_data.userLevel}星</label>
+									<input type="text" for="email" class="form-control"  readonly="readonly" value="{$pass_data.userLevel}星">
 								</div>
 							</div>
 
 							<div class="form-group">
 								<label for="email" class="col-sm-3 control-label">邮箱</label>
 								<div class="col-sm-8">
-									<label for="email" class="col-sm-3 control-label">{$pass_data.email}</label>
+									<input type="text" id="changeuserinfo_email" for="email" class="form-control" value="{$pass_data.email}">
 								</div>
 							</div>
 
 							<div class="form-group">
 								<label for="email" class="col-sm-3 control-label">银行名称</label>
 								<div class="col-sm-8">
-									<label for="email" class="col-sm-3 control-label">{$pass_data.bank_name}</label>
-								</div>
+                                    <input type="text" id="changeuserinfo_bankname" class="form-control" value="{$pass_data.bank_name}">
+                                </div>
+							</div>
+							
+							<div class="form-group">
+								<label for="email" class="col-sm-3 control-label">开户名</label>
+								<div class="col-sm-8">
+                                    <input type="text" id="changeuserinfo_bank_account_name" class="form-control" value="{$pass_data.bank_account_name}">
+                                </div>
 							</div>
 
 							<div class="form-group">
 								<label for="email" class="col-sm-3 control-label">银行账号</label>
 								<div class="col-sm-8">
-									<label for="email" class="col-sm-3 control-label">{$pass_data.bank_account_name}</label>
+									<input type="text" id="changeuserinfo_bank_account_num" for="email" class="form-control" value="{$pass_data.bank_account_num}">
 								</div>
 							</div>
+							
+							<div class="form-group">
+								<label for="email" class="col-sm-3 control-label">开户行省市</label>
+								<div class="col-sm-8" data-toggle="distpicker">
+									<select class="form-control" id="province" name="province" data-province="---- 选择省 ----" value="{$pass_data.bank_province}"></select> 
+									<select class="form-control" id="city" name="city" data-city="---- 选择市 ----" value="{$pass_data.bank_city}"></select> 
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="email" class="col-sm-3 control-label">开户行支行地址</label>
+								<div class="col-sm-8">
+									<input type="text" id="changeuserinfo_sub_bank" for="email" class="form-control" value="{$pass_data.sub_bank}">
+								</div>
+							</div>
+							
+							
+							
+							<div class="form-group form-footer text-center">
+		                        <div class="text-center">
+		                          <button type="submit" id="userinfo_btn" class="btn btn-primary" onclick="click">提交</button>
+		                        </div>
+		                    </div>
 						</form>
 
 					</div>
