@@ -1,5 +1,8 @@
 var loadNetworkUrl = "/public/index.php/frontend/common/get_all_children";
 $(function() {
+	
+	$("#searchUserId").val($("#current_user_id").val());
+	
 	// 创建用户
 	$('#btn-add-user')
 			.on(
@@ -30,7 +33,7 @@ $(function() {
 	
 	//搜索按钮
 	$("#network-search").on("click",function(){
-		var parentId = $('#userId').val();
+		var parentId = $('#searchUserId').val();
 		if($.trim(parentId) != ""){
 			var urlres =  "/public/index.php/frontend/Adminopt/checkNodeChild";
 			$.post(urlres,{id:parentId},function(result){
@@ -45,7 +48,7 @@ $(function() {
 		}
 	})
 	
-	refreshNetworkChart( $('#userId').val());
+	refreshNetworkChart( $('#searchUserId').val());
 })
 
 function refreshNetworkChart(_userId){
@@ -99,11 +102,8 @@ function handleNetworkData(mapData,userId){
 //递归返回五层网络结构
 function getUserInfo(mapData,userId){
 	if(null != userId){
-		var t = typeof( userId );
-		if(typeof( userId ) == "string")
-			var data = mapData[userId];
-		else
-			var data = mapData[userId.value];
+		var data = mapData[userId];
+	
 		var originObject = new Object();
 		originObject.userId = data.currentId;
 		originObject.realname = data.realname;
