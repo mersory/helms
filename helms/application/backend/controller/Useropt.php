@@ -195,7 +195,7 @@ class Useropt extends Basecontroller
         $_role_info = new User_role();
         
         $_user_info->startTrans();
-        $_bank_insert = $_bank_info->BankinfoInsert($user_id, $bank_name, $bank_account_name, $bank_account_num, $bank_city, $sub_bank);
+        $_bank_insert = $_bank_info->BankinfoInsert($user_id, $bank_name, "江苏", $bank_city, $sub_bank, $bank_account_num, $bank_account_name);
         $_details_insert = $_details_info->DetailsInsert($user_id, $user_name, $email, $portrait, $user_level, $open_time, $recommender, $activator, $registry);
         $_point_insert = $_point_info->PointInsert($user_id, $shares, $bonus_point, $regist_point, $universal_point);
         $_priority_insert = $_priority_info->PriorityInsert($user_id);//默认参数列表
