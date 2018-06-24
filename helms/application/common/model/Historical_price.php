@@ -7,7 +7,7 @@ class Historical_price extends Model
 {
     public function index()
     {
-        var_dump("Userdetails");
+        //var_dump("Userdetails");
     }
     
     public function HistoricalpriceQuery($time)//���������Ĳ��ҷ�ʽ���˴�ֻ�г���һ��
@@ -17,13 +17,13 @@ class Historical_price extends Model
         {
             $_where = "`current_time` > $time";  //ʱ���ֶβ�ѯʱ��Ҫ������Ͻǵķ���
         }
-        //echo $_where;
+        ////echo $_where;
         $_price_info = $this->where($_where)
         ->select();
         $count = count($_price_info);
         if ($count < 1)
         {
-            var_dump("Historical.php ID :$time not exsist".__LINE__);
+            //var_dump("Historical.php ID :$time not exsist".__LINE__);
             return ;
         }
         return $_price_info;

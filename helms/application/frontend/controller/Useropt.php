@@ -76,7 +76,7 @@ class Useropt extends Basecontroller
         }
         else 
         {
-            var_dump("登录失败，用户名或密码错误");
+            //var_dump("登录失败，用户名或密码错误");
             return;
         }
         $_id = $_resdata["ID"];
@@ -193,7 +193,7 @@ class Useropt extends Basecontroller
         //用户角色插入
         $_role_info = new User_role();
         
-        $_bank_insert = $_bank_info->BankinfoInsert($user_id, $bank_name, "江苏", $bank_city, $sub_bank, $bank_account_num, $bank_account_name);
+        $_bank_insert = $_bank_info->BankinfoInsert($user_id, $bank_name, "unknow", "unknow", $sub_bank, $bank_account_num, $bank_account_name);
         $_details_insert = $_details_info->DetailsInsert($user_id, $name, $email, $portrait, $user_level, $open_time, $recommender, $activator, $registry);
         $_point_insert = $_point_info->PointInsert($user_id, $shares, $bonus_point, $regist_point, $re_consume, $universal_point,-1,-1,-1,$shengyu_jing, $shengyu_dong);
         $_priority_insert = $_priority_info->PriorityInsert($user_id);//默认参数列表
@@ -234,12 +234,12 @@ class Useropt extends Basecontroller
         $_role_del = $_role_info->RoleDel($user_id);
         if ($_info_res && $_bank_del && $_details_del && $_point_del && $_priority_del &&$_role_del)
         {
-            echo "事务执行成功，提交";
+            //echo "事务执行成功，提交";
             $_user_info->commit();
         }
         else
         {
-            echo "事务执行失败，回滚";
+            //echo "事务执行失败，回滚";
             $_user_info->rollback();
         }
       
@@ -350,25 +350,24 @@ class Useropt extends Basecontroller
         if (count($_res) == 1)
         {
             $_userinfo->UserinfoUpdate($username, $pwd); 
-            var_dump("密码修改成功");
+            //var_dump("密码修改成功");
         }
         else 
         {
-            var_dump("密码修改失败");
+            //var_dump("密码修改失败");
         }
     }
     
     public function ResetPwd()//忘记密码
     {
         $_post = Request::instance()->post();
-        //var_dump($_post);
         $email = $_post["email"];
-        echo $email;
+        //echo $email;
     }
     
     public function PointsTansform($src_type, $des_type, $sum)//积分转换函数
     {
-        echo "积分转换";
+        //echo "积分转换";
         switch ($src_type)
         {
             case 0:
@@ -606,17 +605,17 @@ class Useropt extends Basecontroller
         $_res= $_upgrade->UpgradeQuery($user_id);
         for($_index=0; $_index < count($_res); $_index++)
         {
-            var_dump($_res[$_index]["ID"]);
-            var_dump($_res[$_index]["user_id"]);
-            var_dump($_res[$_index]["current_level"]);
-            echo "<br/>";
+            //var_dump($_res[$_index]["ID"]);
+            //var_dump($_res[$_index]["user_id"]);
+            //var_dump($_res[$_index]["current_level"]);
+            //echo "<br/>";
         }
     }
     
     public function WithdrawalQuery($withdraw_id)//还有其他的查找方式，此处只列出这一个
     {
         $_withdraw = new Withdrawal_record();
-        var_dump($_withdraw->WithdrawalQuery($withdraw_id));
+        //var_dump($_withdraw->WithdrawalQuery($withdraw_id));
     }
     
     public function WithdrawalUpdate($withdraw_id, $updatetype)//还有其他的查找方式，此处只列出这一个
@@ -634,7 +633,7 @@ class Useropt extends Basecontroller
     public function OfflineQuery($ID)
     {
         $_offline = new Offline_deal();
-        var_dump($_offline->OfflineQuery($ID)[0]["user_id"]);
+        //var_dump($_offline->OfflineQuery($ID)[0]["user_id"]);
     }
     
     public function RealtimepriceInsert( $latest_prive)
@@ -649,8 +648,8 @@ class Useropt extends Basecontroller
         $_res = $_realtime->RealtimepriceQuery($time);
         for ($index = 0; $index<count($_res); $index++)
         {
-            echo $_res[$index]["current_time"];
-            echo $_res[$index]["latest_price"];
+            //echo $_res[$index]["current_time"];
+            //echo $_res[$index]["latest_price"];
         }
     }
 
@@ -666,16 +665,16 @@ class Useropt extends Basecontroller
         $_res = $_realtime->HistoricalpriceQuery($time);
         for ($index = 0; $index<count($_res); $index++)
         {
-            echo $_res[$index]["current_time"];
-            echo $_res[$index]["share_price"];
-            echo "<br/>";
+            //echo $_res[$index]["current_time"];
+            //echo $_res[$index]["share_price"];
+            //echo "<br/>";
         }
     }
     
     public function SubuserinfoQuery($sub_user_id)
     {
         $_subuser = new Subuser_info();
-        var_dump($_subuser->SubuserinfoQuery($sub_user_id));
+        //var_dump($_subuser->SubuserinfoQuery($sub_user_id));
     }
     
 

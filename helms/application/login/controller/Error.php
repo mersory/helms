@@ -29,7 +29,7 @@ class Error extends Controller
     public function SearchUserInfo()
     {
         $_post = Request::instance()->post();
-        var_dump($_post);
+        //var_dump($_post);
         $_userid = $_post["userid"];
         $_username = $_post["username"];
         $_telphone = $_post["telphone"];
@@ -40,7 +40,7 @@ class Error extends Controller
         $_res = $_admin->UserSearch($_userid, $_username, $_telphone, $_email, $_fromtime, $_totime);
         for ($index = 0; $index < count($_res); $index++)
         {
-            var_dump($_res[$index]);
+            //var_dump($_res[$index]);
         }
         
     }
@@ -60,11 +60,11 @@ class Error extends Controller
         $_res = $_user->UserApplication($_begintime, $_endtime);
         for ($index = 0; $index < count($_res); $index++)
         {
-            var_dump($_res[$index]["ID"]);
-            var_dump($_res[$index]["user_name"]);
-            var_dump($_res[$index]["telphone"]);
-            var_dump($_res[$index]["email"]);
-            var_dump($_res[$index]["open_time"]);
+            //var_dump($_res[$index]["ID"]);
+            //var_dump($_res[$index]["user_name"]);
+            //var_dump($_res[$index]["telphone"]);
+            //var_dump($_res[$index]["email"]);
+            //var_dump($_res[$index]["open_time"]);
         }
     }
     
@@ -90,10 +90,10 @@ class Error extends Controller
         for ($index = 0; $index < count($_res); $index++)
         {
             echo $index;
-            var_dump($_res[$index]["user_id"]);
-            var_dump($_res[$index]["deal_count"]);
-            var_dump($_res[$index]["current_profit"]);
-            var_dump($_res[$index]["count_time"]);
+            //var_dump($_res[$index]["user_id"]);
+            //var_dump($_res[$index]["deal_count"]);
+            //var_dump($_res[$index]["current_profit"]);
+            //var_dump($_res[$index]["count_time"]);
             echo "<br/>";
         }
         //���ý��������
@@ -103,11 +103,11 @@ class Error extends Controller
         for ($index = 0; $index < count($_res); $index++)
         {
             echo $index;
-            var_dump($_res[$index]["user_id"]);
-            var_dump($_res[$index]["deal_time"]);
-            var_dump($_res[$index]["deal_type"]);
-            var_dump($_res[$index]["deal_sum"]);
-            var_dump($_res[$index]["details"]);
+            //var_dump($_res[$index]["user_id"]);
+            //var_dump($_res[$index]["deal_time"]);
+            //var_dump($_res[$index]["deal_type"]);
+            //var_dump($_res[$index]["deal_sum"]);
+            //var_dump($_res[$index]["details"]);
             echo "<br/>";
         }
     }
@@ -128,15 +128,15 @@ class Error extends Controller
         for ($index = 0; $index < count($_res); $index++)
         {
             echo $index;
-            var_dump($_res[$index]["ID"]);
-            var_dump($_res[$index]["shares"]);
-            var_dump($_res[$index]["bonus_point"]);
-            var_dump($_res[$index]["regist_point"]);
-            var_dump($_res[$index]["re_consume"]);
-            var_dump($_res[$index]["universal_point"]);
-            var_dump($_res[$index]["re_cast"]);
-            var_dump($_res[$index]["remain_point"]);
-            var_dump($_res[$index]["blocked_point"]);
+            //var_dump($_res[$index]["ID"]);
+            //var_dump($_res[$index]["shares"]);
+            //var_dump($_res[$index]["bonus_point"]);
+            //var_dump($_res[$index]["regist_point"]);
+            //var_dump($_res[$index]["re_consume"]);
+            //var_dump($_res[$index]["universal_point"]);
+            //var_dump($_res[$index]["re_cast"]);
+            //var_dump($_res[$index]["remain_point"]);
+            //var_dump($_res[$index]["blocked_point"]);
             echo "<br/>";
         }
     }
@@ -158,10 +158,10 @@ class Error extends Controller
         for ($index = 0; $index < count($_res); $index++)
         {
             echo $index;
-            var_dump($_res[$index]["user_id"]);
-            var_dump($_res[$index]["point_change_type"]);
-            var_dump($_res[$index]["point_change_sum"]);
-            var_dump($_res[$index]["point_change_time"]);
+            //var_dump($_res[$index]["user_id"]);
+            //var_dump($_res[$index]["point_change_type"]);
+            //var_dump($_res[$index]["point_change_sum"]);
+            //var_dump($_res[$index]["point_change_time"]);
             echo "<br/>";
         }
     }
@@ -182,15 +182,15 @@ class Error extends Controller
         for ($index = 0; $index < count($_res); $index++)
         {
             echo $index;
-            var_dump($_res[$index]["user_id"]);
-            var_dump($_res[$index]["withdrawal_type"]);
-            var_dump($_res[$index]["withdraw_sum"]);
-            var_dump($_res[$index]["apply_time"]);
-            var_dump($_res[$index]["withdrawal_status"]);
-            var_dump($_res[$index]["verifier_id"]);
-            var_dump($_res[$index]["approve_time"]);
-            var_dump($_res[$index]["to_account_time"]);
-            var_dump($_res[$index]["point_consume"]);
+            //var_dump($_res[$index]["user_id"]);
+            //var_dump($_res[$index]["withdrawal_type"]);
+            //var_dump($_res[$index]["withdraw_sum"]);
+            //var_dump($_res[$index]["apply_time"]);
+            //var_dump($_res[$index]["withdrawal_status"]);
+            //var_dump($_res[$index]["verifier_id"]);
+            //var_dump($_res[$index]["approve_time"]);
+            //var_dump($_res[$index]["to_account_time"]);
+            //var_dump($_res[$index]["point_consume"]);
             echo "<br/>";
         }
     }
@@ -205,15 +205,15 @@ class Error extends Controller
         for ($index = 0; $index < count($_res); $index++)
         {
             echo $index;
-            var_dump($_res[$index]["user_id"]);
-            var_dump($_res[$index]["withdrawal_type"]);
-            var_dump($_res[$index]["withdraw_sum"]);
-            var_dump($_res[$index]["apply_time"]);
-            var_dump($_res[$index]["withdrawal_status"]);
-            var_dump($_res[$index]["verifier_id"]);
-            var_dump($_res[$index]["approve_time"]);
-            var_dump($_res[$index]["to_account_time"]);
-            var_dump($_res[$index]["point_consume"]);
+            //var_dump($_res[$index]["user_id"]);
+            //var_dump($_res[$index]["withdrawal_type"]);
+            //var_dump($_res[$index]["withdraw_sum"]);
+            //var_dump($_res[$index]["apply_time"]);
+            //var_dump($_res[$index]["withdrawal_status"]);
+            //var_dump($_res[$index]["verifier_id"]);
+            //var_dump($_res[$index]["approve_time"]);
+            //var_dump($_res[$index]["to_account_time"]);
+            //var_dump($_res[$index]["point_consume"]);
             echo "<br/>";
         }
     }
@@ -230,7 +230,7 @@ class Error extends Controller
     public function IncomeExpenditureQuery($record_id)
     {
         $_inandout = new Income_expenditure();
-        var_dump($_inandout->IncomeExpenditureQuery($record_id));
+        //var_dump($_inandout->IncomeExpenditureQuery($record_id));
     }
     
     public function IncomeExpenditureUpdate($record_id, $deal_count, $incomings, $outgoing, $current_profit, $out_contrast_in)
@@ -248,7 +248,7 @@ class Error extends Controller
     public function PositionQuery($ID)
     {
         $_position = new Positionality();
-        var_dump($_position->PositionQuery($ID));
+        //var_dump($_position->PositionQuery($ID));
     }
     
     public function PositionDel($ID)
@@ -278,7 +278,7 @@ class Error extends Controller
     public function RoleQuery($ID)//���������Ĳ��ҷ�ʽ���˴�ֻ�г���һ��
     {
         $_role = new Role();
-        var_dump($_role->RoleQuery($ID));
+        //var_dump($_role->RoleQuery($ID));
     }
     
     public function RoleDel($ID)
@@ -296,7 +296,7 @@ class Error extends Controller
     public function PriorityQuery($ID)
     {
         $_priority = new Priority();
-        var_dump( $_priority->PriorityQuery($ID) );
+        //var_dump( $_priority->PriorityQuery($ID) );
     }
     
     public function PriorityDel($ID)
@@ -320,7 +320,7 @@ class Error extends Controller
     public function DealinfoQuery($deal_id)
     {
         $_dealinfo = new Deal_info();
-        var_dump($_dealinfo->DealinfoQuery($deal_id));
+        //var_dump($_dealinfo->DealinfoQuery($deal_id));
     }
     
     public function DealinfoUpdate($deal_id, $user_id, $deal_type, $deal_sum)
@@ -339,14 +339,14 @@ class Error extends Controller
     {
         $_point_transform = new Point_transform_record();
         $_res = $_point_transform->PointTransformQuery(100042);
-        var_dump($_res);
+        //var_dump($_res);
     }
     
     public function PointTransformInsert($point_id, $user_id, $point_type, $point_change_sum, $point_change_type)
     {
         $_point_transform = new Point_transform_record();
         $_res = $_point_transform->PointTransformInsert($point_id, $user_id, $point_type, $point_change_sum, $point_change_type);
-        var_dump($_res);
+        //var_dump($_res);
     }
     
 

@@ -13,7 +13,7 @@ class Preference_option extends Model
         $count = count($_preferenceinfo);
         if ($count < 1)
         {
-            var_dump("PreferenceInfo not exsist");
+            //var_dump("PreferenceInfo not exsist");
             return ;
         }
         return $_preferenceinfo;
@@ -96,7 +96,7 @@ class Preference_option extends Model
         $count = count($_preferenceinfo);
         if ($count < 1)
         {
-            var_dump("PreferenceInfo not exsist");
+            //var_dump("PreferenceInfo not exsist");
             return ;
         }
         return $_preferenceinfo;
@@ -109,7 +109,7 @@ class Preference_option extends Model
         $count = count($_preference_info);
         if ($count < 1)
         {
-            var_dump("PreferenceQueryByCode CODE :$code not exsist".__LINE__);
+            //var_dump("PreferenceQueryByCode CODE :$code not exsist".__LINE__);
             return ;
         }
         return $_preference_info;

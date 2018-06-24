@@ -7,7 +7,7 @@ class User_role extends Model
 {
     public function index()
     {
-        var_dump("Usertorole");
+        //var_dump("Usertorole");
     }
     
     public function RoleQuery($user_id)
@@ -22,7 +22,7 @@ class User_role extends Model
         $count = count($_role_info);
         if ($count < 1)
         {
-            var_dump("User_role.php id :$user_id not exsist".__LINE__);
+            //var_dump("User_role.php id :$user_id not exsist".__LINE__);
             return ;
         }
         return $_role_info;

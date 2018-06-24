@@ -7,7 +7,7 @@ class Realtime_price extends Model
 {
     public function index()
     {
-        var_dump("Userdetails");
+        //var_dump("Userdetails");
     }
     
     public function RealtimepriceQuery($time)//���������Ĳ��ҷ�ʽ���˴�ֻ�г���һ��
@@ -17,13 +17,13 @@ class Realtime_price extends Model
         {
             $_where = "`current_time` > $time";  //ʱ���ֶβ�ѯʱ��Ҫ������Ͻǵķ���
         }
-        echo $_where;
+        //echo $_where;
         $_offline_info = $this->where($_where)
         ->select();
         $count = count($_offline_info);
         if ($count < 1)
         {
-            var_dump("Realtime.php ID :$time not exsist".__LINE__);
+            //var_dump("Realtime.php ID :$time not exsist".__LINE__);
             return ;
         }
         return $_offline_info;

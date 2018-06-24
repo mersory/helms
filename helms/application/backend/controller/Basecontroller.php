@@ -8,7 +8,7 @@ class Basecontroller extends Controller
     public function include_special_characters($input)
     {
         if(preg_match("/[\'.,:;*?~`!@#$%^&+=)(<>{}]|\]|\[|\/|\\\|\"|\|/",$input)){
-            return true;      //echo "包含特殊字符";
+            return true;      ////echo "包含特殊字符";
         } else
             return false;
     }

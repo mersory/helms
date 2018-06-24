@@ -378,7 +378,7 @@ class Common extends Basecontroller
 					$_resdata["res"] = $_res;
 				}
 		}
-		//var_dump($_resdata);
+
         return json_encode($_resdata);
     }
     
@@ -398,7 +398,7 @@ class Common extends Basecontroller
                 $_resdata["res"] = $_res;
             }
         }
-        //var_dump($_resdata);
+
         return json_encode($_resdata);
     }
     

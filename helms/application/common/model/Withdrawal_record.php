@@ -7,7 +7,7 @@ class Withdrawal_record extends Model
 {
     public function index()
     {
-        var_dump("Userdetails");
+        //var_dump("Userdetails");
     }
     
     public function WithdrawalQuery($user_id)//���������Ĳ��ҷ�ʽ���˴�ֻ�г���һ��
@@ -22,7 +22,7 @@ class Withdrawal_record extends Model
         $count = count($_withdrawal_info);
         if ($count < 1)
         {
-            var_dump("Withdrawal_record.php ID :$user_id not exsist".__LINE__);
+            //var_dump("Withdrawal_record.php ID :$user_id not exsist".__LINE__);
             return ;
         }
         return $_withdrawal_info;
@@ -149,10 +149,10 @@ class Withdrawal_record extends Model
         $_res = $this->WithdrawalQuery($withdraw_id);
         if (count($_res) == 1)
         {
-            echo "ffff";
+            //echo "ffff";
             if ($updatetype - $_res[0]["withdrawal_status"] == 1)
             {
-                echo "fasa";
+                //echo "fasa";
                 $_withdrawalinfo["withdrawal_status"] = $updatetype;
                 if ($updatetype == 1)//���ͨ��
                 {
@@ -168,13 +168,13 @@ class Withdrawal_record extends Model
             }
             else 
             {
-                echo "state erro";
+                //echo "state erro";
                 return;
             }
         }
         else 
         {
-            echo "not found";
+            //echo "not found";
             return;
         }
     }

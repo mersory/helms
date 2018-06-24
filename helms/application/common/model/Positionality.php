@@ -9,7 +9,7 @@ class Positionality extends Model
 {
     public function index()
     {
-        var_dump("Userdetails");
+        //var_dump("Userdetails");
     }
     
     public function PositionQuery($user_id)//查看当前用户的网络结构
@@ -71,7 +71,6 @@ class Positionality extends Model
         }
         $_position_info = $this->where($_where)
         ->select();
-        //var_dump("where".$_where);
         $count = count($_position_info);
         if ($count < 1)
         {
@@ -136,12 +135,12 @@ class Positionality extends Model
         $strSRC=$json;//1,4,7,9
         $pos = strrpos($strSRC,',');//返回的是下标，最后一个找到的字符的小标，此处是5
         $strSRC = substr($strSRC,0, $pos);//此处参数三表示的长度，传入$pos正好不需要减去一;结果是1,4,7
-        var_dump("strSRC:".$strSRC);
+        //var_dump("strSRC:".$strSRC);
         while ( $pos != false )
         {
             if($pos == strrpos($json,',') )
             {
-                var_dump("enter".__LINE__."directParent:".$directParent);
+                //var_dump("enter".__LINE__."directParent:".$directParent);
                 $preNodeID = $directParent;
             }
             
@@ -152,12 +151,12 @@ class Positionality extends Model
                 $tmp = substr($strSRC, $pos+1, strlen($strSRC));
                 
             $strSRC = substr($strSRC,0, $pos);
-            var_dump("tmp:".$tmp."|");
+            //var_dump("tmp:".$tmp."|");
             $curNode = $this->PositionQueryByID($tmp);
             if($curNode[0]["rightchild"] != 0 )
             {
-                var_dump("curNode".$curNode[0]["ID"]);
-                var_dump("preNodeID".$preNodeID);
+                //var_dump("curNode".$curNode[0]["ID"]);
+                //var_dump("preNodeID".$preNodeID);
                 if($curNode[0]["leftchild"] == $preNodeID)
                 {
                     $this->updateGanenNextId($curNode[0]["ID"], $directParent);
@@ -173,7 +172,7 @@ class Positionality extends Model
             else
             {
                 $preNodeID = $curNode[0]["ID"];
-                var_dump("preNodeID".$preNodeID);
+                //var_dump("preNodeID".$preNodeID);
             }  
         }
         
@@ -231,10 +230,10 @@ class Positionality extends Model
 
     public function updateStatus($ID, $status, $openid, $fenh_time)
     {
-        var_dump("updateStatus");
-        var_dump($ID);
-        var_dump($openid);
-        var_dump($fenh_time);
+        //var_dump("updateStatus");
+        //var_dump($ID);
+        //var_dump($openid);
+        //var_dump($fenh_time);
         $paramOBJ= new External();
         $bz5 = $paramOBJ->getParam("register_total", $status, "") * $paramOBJ->getParam("share_proportion", $status, "") / 100;
         $gpsetOBJ = new Gp_set();
@@ -254,8 +253,8 @@ class Positionality extends Model
     
     public function updateStatusBY($ID, $status, $cost_money, $base_gushu)
     {
-        var_dump("updateStatus");
-        var_dump($ID);
+        //var_dump("updateStatus");
+        //var_dump($ID);
         $paramOBJ= new External();
         $gpsetOBJ = new Gp_set();
         $_resGPset = $gpsetOBJ->GpSetQuery();
@@ -522,21 +521,21 @@ class Positionality extends Model
         $_cureent = $this->PositionQueryByID($ID);
         if(count($_cureent) < 1)
         {
-            var_dump("None data".__LINE__);
+            //var_dump("None data".__LINE__);
             return -1;
         }
         
         $_cureent = $_cureent[0];
-        var_dump("gushu:".$gushu);
-        var_dump("bz5:".$bz5);
-        var_dump("cf_count:".$cf_count);
+        //var_dump("gushu:".$gushu);
+        //var_dump("bz5:".$bz5);
+        //var_dump("cf_count:".$cf_count);
         if($gushu==$_cureent["gushu"] && $bz5==$_cureent["bz5"] && $cf_count==$_cureent["cf_count"])
         {
-            var_dump("Positionality.php the data is complete same".__LINE__);
+            //var_dump("Positionality.php the data is complete same".__LINE__);
             return 1;
         }
         else 
-            var_dump("Positionality.php: not the same".__LINE__);
+            //var_dump("Positionality.php: not the same".__LINE__);
         $_positioninfo = array();
         if ($gushu > 0)
         {
@@ -552,7 +551,7 @@ class Positionality extends Model
         {
             $_positioninfo["cf_count"] = $cf_count;
         }
-        var_dump($_positioninfo);
+        //var_dump($_positioninfo);
         
         $state = $this-> where("ID='$ID'")
                       ->setField($_positioninfo);
@@ -561,7 +560,7 @@ class Positionality extends Model
     
     public function updateJiangjin($ID, $gushu=-1, $l_ds=-1, $bq_lds=-1, $sq_lds=-1, $r_ds=-1, $bq_rds=-1, $sq_rds=-1, $l_x_ds=-1, $bq_x_lds=-1, $sq_x_lds=-1, $r_x_ds=-1, $bq_x_rds=-1, $sq_x_rds=-1, $sum_ds=1)
     {
-        var_dump("updateJiangjin");
+        //var_dump("updateJiangjin");
         $_positioninfo = array();
         if ($gushu >= 0)
         {

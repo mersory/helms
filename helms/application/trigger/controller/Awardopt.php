@@ -15,13 +15,13 @@ class Awardopt extends Controller
 {
     public function index()
     {
-        echo "class Trigger index";
+        //echo "class Trigger index";
     }
     
     public function zhitui_jj($inUserID, $re_id, $reg_money) 
     {
-        echo "推荐奖";
-        var_dump("user:".$inUserID."recom:".$re_id);
+        //echo "推荐奖";
+        //var_dump("user:".$inUserID."recom:".$re_id);
         $user = new User_point();
         $res = $user->PointQuery($re_id);
         $res = $res[0];
@@ -36,20 +36,20 @@ class Awardopt extends Controller
             $user_details = new User_details();
             $res_details = $user_details->DetailsQuery($re_id);
             $user_level =$res_details[0]["user_level"];
-            echo $user_level;
+            //echo $user_level;
             //get recommend-award percents
             $extern =new External();
-            var_dump("Awardopt.php line:".__LINE__);
+            //var_dump("Awardopt.php line:".__LINE__);
             //calculate real money as awards
             $get_money = ($res["shengyu_dong"] - $get_money)<0 ? $res['shengyu_dong']:$get_money;
             //update relative data to database
             if ($get_money > 0) {
-                var_dump("re_id:".$re_id."|bonus:".$res["bonus_point"]."getmoney:".$get_money);
+                //var_dump("re_id:".$re_id."|bonus:".$res["bonus_point"]."getmoney:".$get_money);
                 //$this->_in_bonus($vo['id'], $inUserID, 1, $get_money);   //！！！！！！！奖金处理需要更改
                 $state = $user->PointUpdate($re_id, -1, $res["bonus_point"]+$get_money, -1, $res["re_consume"]+ $get_money*0.1, 
                                 -1, -1, -1, -1,-1,$res["shengyu_dong"] - $get_money);
                 if($state)
-                    echo "update success";
+                    //echo "update success";
                 
                 //更新人/每天表，此处是直推奖
                 $positionOBJ=new Positionality();
@@ -84,27 +84,27 @@ class Awardopt extends Controller
     //辅导奖
     public function tutorAward($inUserID, $re_path="", $re_level=1, $jj_money=0, $ft=0)
     {
-        echo "tutorAward";
-        var_dump("Awardopt.php line:".__LINE__."user id:".$inUserID);
+        //echo "tutorAward";
+        //var_dump("Awardopt.php line:".__LINE__."user id:".$inUserID);
         $_points =new User_point();
         $detailsOBJ = new User_details();
         $_dayly_point = new Award_daytime();
         $_res= $detailsOBJ->DetailsQuery($inUserID);
-        var_dump($_res[0]['repath']);
+        //var_dump($_res[0]['repath']);
         if(count($_res) < 1)
         {
-            var_dump("Error None, Awardopt.php:line".__LINE__);
+            //var_dump("Error None, Awardopt.php:line".__LINE__);
             return;
         }
         
-        var_dump("input repath:".$re_path);
+        //var_dump("input repath:".$re_path);
         $strSRC=$_res[0]['repath'];
-        var_dump("calculate repath:".$strSRC);
+        //var_dump("calculate repath:".$strSRC);
         $pos = strrpos($strSRC,',');
         if( strlen($strSRC)!=0 && $pos == false )
             $pos = true;
         $strSRC = substr($strSRC,0, $pos);//这里是当前节点是谁的直推节点，谁就拿辅导奖
-        var_dump("Awardopt.php line:".__LINE__."string:".$strSRC);
+        //var_dump("Awardopt.php line:".__LINE__."string:".$strSRC);
         $daishuForaward = 1;
         while ( $pos != false ){
             $pos = strrpos($strSRC,',');
@@ -112,13 +112,13 @@ class Awardopt extends Controller
                 $tmp = $strSRC;
             else
                 $tmp = substr($strSRC, $pos+1, strlen($strSRC));
-           var_dump("enter times");
+           //var_dump("enter times");
            $strSRC = substr($strSRC,0, $pos);
-           var_dump("strSRC:".$strSRC);
+           //var_dump("strSRC:".$strSRC);
            $ID = $tmp;
-           var_dump("ID:".$ID);
+           //var_dump("ID:".$ID);
 
-           echo "tttttttttttttttt";
+           //echo "tttttttttttttttt";
            $_currentDet = $detailsOBJ->DetailsQueryByAutoId($ID) ;
            $_currentDet = $_currentDet[0];
            $_userid = $_currentDet["ID"];
@@ -130,21 +130,21 @@ class Awardopt extends Controller
            if($dai < $daishuForaward)
            {
                $daishuForaward = $daishuForaward + 1;
-               var_dump("Awardopt.php line:".__LINE__."超出推荐代数");
+               //var_dump("Awardopt.php line:".__LINE__."超出推荐代数");
                continue;
            }
            else 
                $daishuForaward = $daishuForaward +1;
            //$i++;
-           var_dump($_userid);
+           //var_dump($_userid);
            
            $_pointsRes = $_points->PointQuery($_userid);
            $_pointsRes = $_pointsRes[0];
            $get_money = $jj_money * $jj / 100;
            //$get_money = $this->_fengding($get_money, $ft, $_pointsRes['dp_leiji']); //
            $get_money = ($_pointsRes['shengyu_dong'] - $get_money)<0 ? $_pointsRes['shengyu_dong']:$get_money;
-           echo "money:";
-           var_dump($_pointsRes[0]['bonus_point']);
+           //echo "money:";
+           //var_dump($_pointsRes[0]['bonus_point']);
            //update the user points table
            $paramOBJ = new External();
            $shui_bl = $paramOBJ->getParam("tax_proportion", -1, $ID);
@@ -157,21 +157,21 @@ class Awardopt extends Controller
                                 $_pointsRes[0]['universal_point'], $_pointsRes[0]['re_cast'], $_pointsRes[0]['remain_point'] - $get_money,-1,-1,$_pointsRes["shengyu_dong"] - $get_money);
            if($_res_points_set)
            {
-               var_dump("point update success");
+               //var_dump("point update success");
            }
            else 
-               var_dump("point update failed");
+               //var_dump("point update failed");
            //update the user daily points records table
            $_res_point_dayly = $_dayly_point->AwarddailyQuery($ID);
            if(sizeof($_res_point_dayly) > 0)
            {
-              var_dump("inbonus Awardopt.php line:".__LINE__);
+              //var_dump("inbonus Awardopt.php line:".__LINE__);
               $_dayly_point->AwarddailyUpdate($ID, -1, -1, $_res_point_dayly[0]["balance"] +$get_money);
               $this->_in_bonus($_userid, $inUserID, 3, $get_money);
            }
            else
            {
-               var_dump("inbonus Awardopt.php line:".__LINE__);
+               //var_dump("inbonus Awardopt.php line:".__LINE__);
                $res = $_dayly_point->AwarddailyInsert($ID, -1, -1, $get_money);
                $this->_in_bonus($_userid, $inUserID, 3, $get_money);
            }
@@ -185,7 +185,7 @@ class Awardopt extends Controller
         $position = new Positionality();
         $_dayly_point = new Award_daytime();
         $_res= $position->PositionQuery($inUserID);
-        var_dump($_res[0]['json']);
+        //var_dump($_res[0]['json']);
         $paramOBJ= new External();
         $jj = $paramOBJ->getParam("ganen_proportion", -1, $ganen_id );
         $get_money = $pingheng_money * $jj / 100;
@@ -194,7 +194,7 @@ class Awardopt extends Controller
         else 
             $_pointsRes = $_points->PointQuery($ganen_r_id);
         $get_money = ($_pointsRes[0]['shengyu_dong'] - $get_money)<0 ? $_pointsRes[0]['shengyu_dong']:$get_money;
-        var_dump($get_money);
+        //var_dump($get_money);
         $paramOBJ = new External();
         $shui_bl = $paramOBJ->getParam("tax_proportion", -1, $ganen_id);
         $jijin_bl = $paramOBJ->getParam("foundation_proportion", -1, $ganen_id);//cy_get_conf('bl_jijin');//1
@@ -210,20 +210,20 @@ class Awardopt extends Controller
         $ganen_r_id_pos = $ganen_r_id_pos[0];
         
         if($ganen_id){
-            echo "point search:";
+            //echo "point search:";
             if($get_money > 0){
                 $_res_points_set = $_points->PointUpdate($ganen_id, $_pointsRes[0]['shares'], $_pointsRes[0]['bonus_point'] + $ok_money, $_pointsRes[0]['regist_point'], $_pointsRes[0]['re_consume'] + $produceCX, 
                                 $_pointsRes[0]['universal_point'], $_pointsRes[0]['re_cast'], -1,-1,-1, $_pointsRes[0]['shengyu_dong'] - $get_money);
                 $_res_point_dayly = $_dayly_point->AwarddailyQuery($ganen_id_pos["ID"]);
                 if(sizeof($_res_point_dayly) > 0)
                 {
-                   var_dump("inbonus Awardopt.php line:".__LINE__);
+                   //var_dump("inbonus Awardopt.php line:".__LINE__);
                    $_dayly_point->AwarddailyUpdate($ganen_id_pos["ID"], -1, $_res_point_dayly[0]["balance"] +$get_money);
                    $this->_in_bonus($ganen_id, $inUserID, 4, $get_money);
                 }
                 else
                 {
-                   var_dump("inbonus Awardopt.php line:".__LINE__);
+                   //var_dump("inbonus Awardopt.php line:".__LINE__);
                    $_dayly_point->AwarddailyInsert($ganen_id_pos["ID"], 0, $get_money);
                    $this->_in_bonus($ganen_id, $inUserID, 4, $get_money);
                 }
@@ -236,13 +236,13 @@ class Awardopt extends Controller
                 $_res_point_dayly = $_dayly_point->AwarddailyQuery($ganen_r_id_pos["ID"]);
                 if(sizeof($_res_point_dayly) > 0)
                 {
-                    var_dump("inbonus Awardopt.php line:".__LINE__);
+                    //var_dump("inbonus Awardopt.php line:".__LINE__);
                     $_dayly_point->AwarddailyUpdate($ganen_r_id_pos["ID"], -1, $_res_point_dayly[0]["balance"] +$get_money);
                     $this->_in_bonus($ganen_r_id, $inUserID, 4, $get_money);
                 }
                 else 
                 {
-                   var_dump("inbonus Awardopt.php line:".__LINE__);
+                   //var_dump("inbonus Awardopt.php line:".__LINE__);
                    $_dayly_point->AwarddailyInsert($ganen_r_id_pos["ID"], 0, $get_money);
                    $this->_in_bonus($ganen_r_id, $inUserID, 4, $get_money);
                 }
@@ -260,13 +260,13 @@ class Awardopt extends Controller
     //向上会员单数统计 --开通一个新人之后，向上统计,$p_path就是网络结构图，$tpl左区为0，右区1
 	public function tree2ds_tongji($p_path, $tpl, $danshu = 1) //节点路径$p_path是节点路径，参数2是当前节点是父节点的左区还是右区
 	{ 
-	    var_dump("Awardopt.php line:".__LINE__."|p_path:".$p_path."|tpl:".$tpl."|danshu:".$danshu);
+	    //var_dump("Awardopt.php line:".__LINE__."|p_path:".$p_path."|tpl:".$tpl."|danshu:".$danshu);
 	    $position = new Positionality();
 	    //json 循环操作，获取每一个元素
 	    $strSRC=$p_path;
 	    $pos = strrpos($strSRC,',');
 	    //$strSRC = substr($strSRC,0, $pos);
-	    var_dump("Awardopt.php line:".__LINE__."string:".$strSRC);
+	    //var_dump("Awardopt.php line:".__LINE__."string:".$strSRC);
 	    while ( $pos != false ){
 	        $pos = strrpos($strSRC,',');
 	        if($pos == false)
@@ -276,7 +276,7 @@ class Awardopt extends Controller
             $strSRC = substr($strSRC,0, $pos);
             
             $ID = $tmp;
-            var_dump("ID:".$ID);
+            //var_dump("ID:".$ID);
             $curNode = $position->PositionQueryByID($ID);
 	        $data = array();
 	        $data['sum_ds'] = $curNode[0]['sum_ds'] + $danshu;
@@ -299,13 +299,13 @@ class Awardopt extends Controller
 	
 	public function tree2ds_tongji_update($p_path, $tpl, $danshu = 1) //节点路径$p_path是节点路径，参数2是当前节点是父节点的左区还是右区
 	{
-	    var_dump("Awardopt.php line:".__LINE__."|p_path:".$p_path."|tpl:".$tpl."|danshu:".$danshu);
+	    //var_dump("Awardopt.php line:".__LINE__."|p_path:".$p_path."|tpl:".$tpl."|danshu:".$danshu);
 	    $position = new Positionality();
 	    //json 循环操作，获取每一个元素
 	    $strSRC=$p_path;
 	    $pos = strrpos($strSRC,',');
 	    //$strSRC = substr($strSRC,0, $pos);
-	    var_dump("Awardopt.php line:".__LINE__."string:".$strSRC);
+	    //var_dump("Awardopt.php line:".__LINE__."string:".$strSRC);
 	    while ( $pos != false ){
 	        $pos = strrpos($strSRC,',');
 	        if($pos == false)
@@ -315,7 +315,7 @@ class Awardopt extends Controller
 	                $strSRC = substr($strSRC,0, $pos);
 	
 	                $ID = $tmp;
-	                var_dump("ID:".$ID);
+	                //var_dump("ID:".$ID);
 	                $curNode = $position->PositionQueryByID($ID);
 	                $data = array();
 	                $data['sum_ds'] = $curNode[0]['sum_ds'] + $danshu;
@@ -338,7 +338,7 @@ class Awardopt extends Controller
 	
 	//虚的统计--修改之后      tree2ds_x_tongji
 	public function tree2ds_x_tongji($p_path, $tpl, $danshu = 1) {
-	    var_dump("Awardopt.php line:".__LINE__."|p_path:".$p_path."|tpl:".$tpl."|danshu:".$danshu);
+	    //var_dump("Awardopt.php line:".__LINE__."|p_path:".$p_path."|tpl:".$tpl."|danshu:".$danshu);
 	    $position = new Positionality();
 	    //json 循环操作，获取每一个元素
 	    $strSRC=$p_path;
@@ -346,7 +346,7 @@ class Awardopt extends Controller
 	    /*
 	    $pos = strrpos($strSRC,',');
 	    $strSRC = substr($strSRC,0, $pos);*/
-	    var_dump("Awardopt.php line:".__LINE__."string:".$strSRC);
+	    //var_dump("Awardopt.php line:".__LINE__."string:".$strSRC);
 	    while ( $pos != false ){
 	        $pos = strrpos($strSRC,',');
 	        if($pos == false)
@@ -356,19 +356,19 @@ class Awardopt extends Controller
             $strSRC = substr($strSRC,0, $pos);
             
             $ID = $tmp;
-            var_dump("ID:".$ID);
+            //var_dump("ID:".$ID);
             $curNode = $position->PositionQueryByID($ID);
 
             $data = array();
             $tpl = $curNode[0]['treeplace'];
             if ($tpl == 0) {
-                var_dump("left vitual danshu");
+                //var_dump("left vitual danshu");
                 $data['l_x_ds'] = $curNode[0]['l_x_ds'] + $danshu;
                 $data['bq_x_lds'] = $curNode[0]['bq_x_lds'] + $danshu;
                 $position->updateJiangjin($ID, -1,-1,-1,-1,-1,-1,-1,$data['l_x_ds'],$data['bq_x_lds'],-1,-1,-1,-1);
 
             } elseif ($tpl == 1) {
-                var_dump("right vitual danshu");
+                //var_dump("right vitual danshu");
                 $data['r_x_ds'] = $curNode[0]['r_x_ds'] + $danshu;
                 $data['bq_x_rds'] = $curNode[0]['bq_x_rds'] + $danshu;
                 $position->updateJiangjin($ID, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,$data['r_x_ds'],$data['bq_x_rds'],-1);
@@ -438,7 +438,7 @@ class Awardopt extends Controller
 	        if($vo['status'] < 1){
 	            continue;
 	        }
-	        var_dump("Awardopt.php user id:".$vo["user_id"]."line:".__LINE__);
+	        //var_dump("Awardopt.php user id:".$vo["user_id"]."line:".__LINE__);
 	        $paramOBJ = new External();
 	        $jj = $paramOBJ->getParam("pingheng_proportion", -1, $vo["user_id"]);
 	        //$jj = 7;//cy_get_conf('s4'); 	//7|8|9|10|11  %
@@ -448,7 +448,7 @@ class Awardopt extends Controller
 	        //$bb_list = 500;//_get_conf('bb_list', 1);     //投资金额
 	        $ds_list = $paramOBJ->getParam("register_order_num", -1, $vo["user_id"]);//_get_conf('ds_list', 1);//投资单数
 	        $dsmoney = intval($bb_list / $ds_list);//$bb_list[1] / $ds_list[1]; //200    每一单价格
-	        var_dump("jj:".$jj."ft:".$ft."bblist:".$bb_list."dslist:".$ds_list);
+	        //var_dump("jj:".$jj."ft:".$ft."bblist:".$bb_list."dslist:".$ds_list);
 	        
 	        //暂时取消不计算管理员积分的功能
 	        /*
@@ -462,15 +462,15 @@ class Awardopt extends Controller
 	        $r = $vo['sq_rds'] + $vo['bq_rds'];     //右区单数
 	        $encash = array();
 	        $nums = $money = $ls = $rs = 0;
-	        var_dump("Awardopt.php line:".__LINE__."l:".$l."r:".$r);
+	        //var_dump("Awardopt.php line:".__LINE__."l:".$l."r:".$r);
 	        $this->touch1to1($encash, $l, $r, $nums);
 	        $ls = $l - $encash[0];   //左区剩余单数
 	        $rs = $r - $encash[1];   //右区剩余单数
-	        var_dump("Awardopt.php line:".__LINE__."l:".$ls."r:".$rs."encash0:".$encash[0]."encash1:".$encash[1]);
-	        var_dump("Awardopt.php line:".__LINE__."nbums:".$nums);
+	        //var_dump("Awardopt.php line:".__LINE__."l:".$ls."r:".$rs."encash0:".$encash[0]."encash1:".$encash[1]);
+	        //var_dump("Awardopt.php line:".__LINE__."nbums:".$nums);
 	        $get_money = $dsmoney * $jj / 100 * $nums;    //$nums为对碰单数
-	        var_dump("Awardopt.php line:".__LINE__);
-	        var_dump("vo:".$vo["dp_leiji"]."|getmoney:".$get_money);;
+	        //var_dump("Awardopt.php line:".__LINE__);
+	        //var_dump("vo:".$vo["dp_leiji"]."|getmoney:".$get_money);;
 	        $user_point = new User_point();
 	        $_point = $user_point->PointQuery($inUserID);
 	        $_point = $_point[0];
@@ -482,7 +482,7 @@ class Awardopt extends Controller
 	            $data['re_consume'] = $_point['re_consume']+round(0.1*$get_money,2);
 	            $data['shengyu_dong'] = $_point['shengyu_dong'] - $get_money;
 	            
-	            var_dump("money:".$get_money);
+	            //var_dump("money:".$get_money);
 	            
 	            $paramOBJ = new External();
 	            $shui_bl = $paramOBJ->getParam("tax_proportion", -1, $myids);
@@ -501,7 +501,7 @@ class Awardopt extends Controller
 	        //$this->query("UPDATE __TABLE__ SET `sq_lds`={$ls},`sq_rds`={$rs},`bq_lds`=0,`bq_rds`=0 WHERE `id`=".$myids);//数据库更新左右区单数
 	        $_res_jiangjin = $position->updateJiangjin($vo['ID'], -1, -1, 0, $ls, -1, 0, $rs, -1, -1, -1, -1, -1, -1, -1);
 	        if ($get_money > 0) {
-	            var_dump("inbonus Awardopt.php line:".__LINE__);
+	            //var_dump("inbonus Awardopt.php line:".__LINE__);
 	            $this->_in_bonus($myids, $inUserID, 2, $get_money);// 参数3等于2表示添加平衡奖，只有平衡对于积分的修改在in_bonus内部，其他的都在外面
 	            
 	            //辅导奖
@@ -512,7 +512,7 @@ class Awardopt extends Controller
 	            $this->tutorAward($vo['user_id'], $_resDetails['repath'], $_resDetails["recommandlevel"]/*$vo['re_level']*/, $get_money,$ft);
 	            
 	            //感恩奖
-	            var_dump("Awardopt line:".__LINE__."id:".$vo['user_id']);
+	            //var_dump("Awardopt line:".__LINE__."id:".$vo['user_id']);
 	            $ganenForthanks = $position->getUserIdByID($vo['ganen_next_id']);
 	            if(count($ganenForthanks) < 1)
 	                $ganenForthanks = 0;
@@ -521,8 +521,8 @@ class Awardopt extends Controller
 	            if(count($ganenRidForthanks) < 1)
 	                $ganenRidForthanks = 0;
 	            
-                var_dump("ganenid:".$ganenForthanks);
-                var_dump("ganen_r_id:".$ganenRidForthanks);
+                //var_dump("ganenid:".$ganenForthanks);
+                //var_dump("ganen_r_id:".$ganenRidForthanks);
 	            $this->thanksAward($ganenForthanks,$ganenRidForthanks,$vo['user_id'],$get_money);
 	        }
 	    }
@@ -554,7 +554,7 @@ class Awardopt extends Controller
 	            //$bb_list = 500;//_get_conf('bb_list', 1);     //投资金额
 	            $ds_list = $paramOBJ->getParam("register_order_num", -1, $vo["user_id"]);//_get_conf('ds_list', 1);//投资单数
 	            $dsmoney = intval($bb_list / $ds_list);//$bb_list[1] / $ds_list[1]; //200    每一单价格
-	            var_dump("jj:".$jj."ft:".$ft."bblist:".$bb_list."dslist:".$ds_list);
+	            //var_dump("jj:".$jj."ft:".$ft."bblist:".$bb_list."dslist:".$ds_list);
 	            
     	        $myids = $vo['user_id'];
     	        $inUserID = $vo['user_id'];
@@ -580,7 +580,7 @@ class Awardopt extends Controller
     	            $data['re_consume'] = $_point['re_consume']+round(0.1*$get_money,2);
     	            $data['shengyu_dong'] = $_point['shengyu_dong'] - $get_money;
     	            
-    	            var_dump("money:".$get_money);
+    	            //var_dump("money:".$get_money);
     	            
     	            $paramOBJ = new External();
     	            $shui_bl = $paramOBJ->getParam("tax_proportion", -1, $myids);
@@ -599,7 +599,7 @@ class Awardopt extends Controller
     	        //$this->query("UPDATE __TABLE__ SET `sq_lds`={$ls},`sq_rds`={$rs},`bq_lds`=0,`bq_rds`=0 WHERE `id`=".$myids);//数据库更新左右区单数
     	        $position->updateJiangjin($vo['ID'], -1, -1, -1, -1, -1, -1, -1, -1, -1, $ls, -1, -1, $rs, -1);
     	        if ($get_money > 0) {
-    	            var_dump("inbonus Awardopt.php line:".__LINE__);
+    	            //var_dump("inbonus Awardopt.php line:".__LINE__);
     	            $this->_in_bonus($myids, $inUserID, 2, $get_money);// 参数3等于2表示添加平衡奖，只有平衡对于积分的修改在in_bonus内部，其他的都在外面
     	            
     	            //辅导奖
@@ -610,7 +610,7 @@ class Awardopt extends Controller
     	            $this->tutorAward($vo['user_id'], $_resDetails['repath'], $_resDetails["recommandlevel"]/*$vo['re_level']*/, $get_money,$ft);
     	            
     	            //感恩奖
-    	            var_dump("Awardopt line:".__LINE__."id:".$vo['user_id']);
+    	            //var_dump("Awardopt line:".__LINE__."id:".$vo['user_id']);
     	            $ganenForthanks = $position->getUserIdByID($vo['ganen_next_id']);
     	            if(count($ganenForthanks) < 1)
     	                $ganenForthanks = 0;
@@ -619,8 +619,8 @@ class Awardopt extends Controller
     	            if(count($ganenRidForthanks) < 1)
     	                $ganenRidForthanks = 0;
     	            
-                    var_dump("ganenid:".$ganenForthanks);
-                    var_dump("ganen_r_id:".$ganenRidForthanks);
+                    //var_dump("ganenid:".$ganenForthanks);
+                    //var_dump("ganen_r_id:".$ganenRidForthanks);
     	            $this->thanksAward($ganenForthanks,$ganenRidForthanks,$vo['user_id'],$get_money);
     	        }
     	    }
@@ -651,7 +651,7 @@ class Awardopt extends Controller
             else
             {
                 $_res_qibonus = $_res_qibonus[0];
-    	        var_dump("Qibonus".$_res_qibonus["direct"]);
+    	        //var_dump("Qibonus".$_res_qibonus["direct"]);
     	        $qibonus->AwarddailyUpdate($dayID, -1, -1, -1, -1, -1, $_res_qibonus["sum"] + $get_money, -1, $_res_qibonus["bz0"]+$get_money);
             }
 
@@ -753,7 +753,7 @@ class Awardopt extends Controller
             //添加奖金记录
             $minfo = '实发（'.$ok_money.'）重消分（'.$produceCX.'）税收（'.$shui.'）基金（'.$jijin.'）。';
             $award_record = new Award_record();
-            var_dump("Awardopt.php line:".__LINE__."myids:".$myids);
+            //var_dump("Awardopt.php line:".__LINE__."myids:".$myids);
 	        $_res_award_record = $award_record->AwardRecordInsert($myids, $awardType, $get_money, $fuserid, $minfo);
 	    }
 	
@@ -797,9 +797,9 @@ class Awardopt extends Controller
 	        $Encash['0'] = 0;
 	        $Encash['1'] = 0;
 	    }
-	    var_dump($Encash);
-	    var_dump("nums:".$NumS);
-	    var_dump("xl:".$xL."xR:".$xR);
+	    //var_dump($Encash);
+	    //var_dump("nums:".$NumS);
+	    //var_dump("xl:".$xL."xR:".$xR);
 	}
 	
 	//封顶

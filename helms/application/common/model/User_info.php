@@ -9,7 +9,7 @@ class User_info extends Model
 {
     public function index()
     {
-        echo 'Userinfo';
+        //echo 'Userinfo';
     }
     
     public function UserinfoQuery($name, $pwd)
@@ -25,7 +25,7 @@ class User_info extends Model
             $_where = "$_where and password = '$pwd'";
         }
        
-        // var_dump(urlencode($_SERVER['REQUEST_URI']));
+        // //var_dump(urlencode($_SERVER['REQUEST_URI']));
         $_user_info = $this->where($_where)
         ->limit(4)
         ->order('ID asc')
@@ -44,7 +44,7 @@ class User_info extends Model
         $_where = '';
         if (!strcmp("$userid", ""))
         {
-             var_dump("User_info.php :username and password could not be null,line:".__LINE__);
+             //var_dump("User_info.php :username and password could not be null,line:".__LINE__);
             return;
         }
         else
@@ -52,13 +52,13 @@ class User_info extends Model
             $_where = "ID = '$userid'";
         }
          
-        // var_dump(urlencode($_SERVER['REQUEST_URI']));
+        // //var_dump(urlencode($_SERVER['REQUEST_URI']));
         $_user_info = $this->where($_where)
         ->select();
         $count = count($_user_info);
         if ($count != 1)
         {
-            var_dump("username or password is not correct");
+            //var_dump("username or password is not correct");
             return ;
         }
         else
@@ -70,7 +70,7 @@ class User_info extends Model
         $_where = '';
         if (!strcmp("$name", "") || !strcmp("$pwd", ""))
         {
-            var_dump("User_info.php :username and password could not be null,line:".__LINE__);
+            //var_dump("User_info.php :username and password could not be null,line:".__LINE__);
             return;
         }
         else
@@ -79,7 +79,7 @@ class User_info extends Model
             $_where = "$_where and minor_pwd = '$pwd'";
         }
          
-        // var_dump(urlencode($_SERVER['REQUEST_URI']));
+        // //var_dump(urlencode($_SERVER['REQUEST_URI']));
         $_user_info = $this->where($_where)
         ->limit(4)
         ->order('ID asc')
@@ -87,7 +87,7 @@ class User_info extends Model
         $count = count($_user_info);
         if ($count != 1)
         {
-            var_dump("username or password is not correct");
+            //var_dump("username or password is not correct");
             return ;
         }
         else
@@ -112,7 +112,7 @@ class User_info extends Model
         $_where = '';
         if (!strcmp("$name", "") || !strcmp("$pwd", ""))//
         {
-            var_dump("operater's username and password could not be null");
+            //var_dump("operater's username and password could not be null");
             return;
         }
         else 
@@ -120,7 +120,7 @@ class User_info extends Model
             $_where = "username = '$name'";
             $_where = "$_where and password = '$pwd'";
         }
-        // var_dump(urlencode($_SERVER['REQUEST_URI'])) ;
+        // //var_dump(urlencode($_SERVER['REQUEST_URI'])) ;
         $res = $this->table('userinfo info,usertorole role')
         ->where("$_where and info.ID=role.user_id")
         ->select();
@@ -134,7 +134,7 @@ class User_info extends Model
             }
             else 
             {
-                var_dump("no priority");
+                //var_dump("no priority");
             }
         }
         return $state;
@@ -164,8 +164,8 @@ class User_info extends Model
     {
         $_res = $this->UserinfoCheckMinor($name, $minor_pwd);
         $_id = $_res[0]->getData("ID");
-        var_dump("_id".$_id);
-        var_dump($_id);
+        //var_dump("_id".$_id);
+        //var_dump($_id);
         $_res = $this->table('helms_user_info U, helms_user_point P')
         ->where("U.ID=P.ID and U.ID = '$_id' and P.regist_point > $cost")
         ->field('U.ID,U.username,U.user_status,P.regist_point')//
@@ -175,18 +175,18 @@ class User_info extends Model
         $now_gujia = $_gpres[0]["now_price"];
         $_point_down = false;
         $_activate = false;
-        var_dump("Position : User_info.cpp".__LINE__);
-        var_dump("count:".count($_res));
+        //var_dump("Position : User_info.cpp".__LINE__);
+        //var_dump("count:".count($_res));
         if (count($_res) == 1)
         {
             $_point = $_res[0]->getData("regist_point") - $cost;
             $_point_data = array();
             $_point_data["regist_point"] = $_point;
     
-            var_dump("point:");
-            var_dump($_point);
-            var_dump("ID:");
-            var_dump($_id);
+            //var_dump("point:");
+            //var_dump($_point);
+            //var_dump("ID:");
+            //var_dump($_id);
             //更新帮助注册用户的注册分，消耗，减少
             $_point_info = new User_point();
             $_point_down = $_point_info->where("ID='$_id'")
@@ -204,7 +204,7 @@ class User_info extends Model
             $_point_data2["shengyu_dong"] = $paramOBJ->getParam("register_total", $level, "") * $paramOBJ->getParam("dynamic_max", $level, "");//10倍
             if(count($_point_info->PointQuery($ID)) < 1)
             {
-                var_dump("User_info.php ERROR ar line:".__LINE__);
+                //var_dump("User_info.php ERROR ar line:".__LINE__);
                 return false;
             }
             $_point_down2 = $_point_info->where("ID='$ID'")
@@ -230,16 +230,16 @@ class User_info extends Model
                 else
                     $_repath = $_details_parent[0]["AUTO_ID"];
     
-                    var_dump("repath:".$_repath);
+                    //var_dump("repath:".$_repath);
                     //进行拆分，去除逗号
                     $strArr =  explode(",",$_repath);
                     $recommondLevel = count($strArr);//本来需要加一，但是去除根节点之后，正好不需要加一
-                    var_dump($strArr);
+                    //var_dump($strArr);
                     $_detail_info = new User_details();
     
                     //更新整条推荐路径上所有节点的repath_ds
-                    var_dump("更新推荐结构信息",$level."level");
-                    var_dump("更新推荐数组",$strArr);
+                    //var_dump("更新推荐结构信息",$level."level");
+                    //var_dump("更新推荐数组",$strArr);
                      
                     switch ($level)
                     {
@@ -331,22 +331,22 @@ class User_info extends Model
     
                     if(count($_detail_info->DetailsQuery($ID)) < 1)
                     {
-                        var_dump("User_info.php ERROR ar line:".__LINE__);
+                        //var_dump("User_info.php ERROR ar line:".__LINE__);
                         return false;
                     }
                     $_detail_info_res = $_detail_info->where("ID='$ID'")
                     ->setField($_detail);
-                    var_dump("details info");
-                    var_dump($_detail_info_res);
+                    //var_dump("details info");
+                    //var_dump($_detail_info_res);
                     $_status_info = array();
                     $_status_info["user_status"] = 1;
                     $_activate = $this->where("ID='$ID'")
                     ->setField($_status_info);
-                    var_dump("action res");
-                    var_dump($_activate);
+                    //var_dump("action res");
+                    //var_dump($_activate);
         }
     
-        var_dump($_status_info);
+        //var_dump($_status_info);
         return true;
     }
     
@@ -354,8 +354,8 @@ class User_info extends Model
     {
         $_res = $this->UserinfoCheckMinor($name, $minor_pwd);
         $_id = $_res[0]->getData("ID");
-        var_dump("_id".$_id);
-        var_dump($_id);
+        //var_dump("_id".$_id);
+        //var_dump($_id);
         $_res = $this->table('helms_user_info U, helms_user_point P')
                     ->where("U.ID=P.ID and U.ID = '$_id' and P.regist_point > $cost")
                     ->field('U.ID,U.username,U.user_status,P.regist_point')//
@@ -365,18 +365,18 @@ class User_info extends Model
         $now_gujia = $_gpres[0]["now_price"];
         $_point_down = false;
         $_activate = false;
-        var_dump("Position : User_info.cpp".__LINE__);
-        var_dump("count:".count($_res));
+        //var_dump("Position : User_info.cpp".__LINE__);
+        //var_dump("count:".count($_res));
         if (count($_res) == 1)
         {
             $_point = $_res[0]->getData("regist_point") - $cost;
             $_point_data = array();
             $_point_data["regist_point"] = $_point;
 
-            var_dump("point:");
-            var_dump($_point);
-            var_dump("ID:");
-            var_dump($_id);
+            //var_dump("point:");
+            //var_dump($_point);
+            //var_dump("ID:");
+            //var_dump($_id);
             //更新帮助注册用户的注册分，消耗，减少
             $_point_info = new User_point();
             $_point_down = $_point_info->where("ID='$_id'")
@@ -387,7 +387,7 @@ class User_info extends Model
            $pointRES = $_point_info->PointQuery($ID);
            if(count($pointRES) < 1)
            {
-               var_dump("User_info.php ERROR ar line:".__LINE__);
+               //var_dump("User_info.php ERROR ar line:".__LINE__);
                return false;
            }
            $_point_data2 = array();
@@ -411,16 +411,16 @@ class User_info extends Model
             else 
                 $_repath = $_details_parent[0]["AUTO_ID"];
             
-            var_dump("repath:".$_repath);
+            //var_dump("repath:".$_repath);
             //进行拆分，去除逗号
             $strArr =  explode(",",$_repath);
             $recommondLevel = count($strArr);//本来需要加一，但是去除根节点之后，正好不需要加一
-            var_dump($strArr);
+            //var_dump($strArr);
             $_detail_info = new User_details();
 
             //更新整条推荐路径上所有节点的repath_ds
-            var_dump("更新推荐结构信息",$level."level");
-            var_dump("更新推荐数组",$strArr);
+            //var_dump("更新推荐结构信息",$level."level");
+            //var_dump("更新推荐数组",$strArr);
             
             
             $addRecmNums = $cost / 500;
@@ -437,15 +437,15 @@ class User_info extends Model
 
             if(count($_detail_info->DetailsQuery($ID)) < 1)
             {
-                var_dump("User_info.php ERROR ar line:".__LINE__);
+                //var_dump("User_info.php ERROR ar line:".__LINE__);
                 return false;
             }
             $_detail_info_res = $_detail_info->where("ID='$ID'")
                                        ->setField($_detail);
-            var_dump("details info");
-            var_dump($_detail_info_res);
-            var_dump("action res");
-            var_dump($_activate);
+            //var_dump("details info");
+            //var_dump($_detail_info_res);
+            //var_dump("action res");
+            //var_dump($_activate);
         }
         
         return true;
@@ -587,7 +587,6 @@ class User_info extends Model
         }
         if (strcmp("$_where", ""))
         {
-            //var_dump("where:".$_where);
             $res = $this->table('helms_user_info info, helms_user_details details')
             ->where("$_where and info.ID=details.ID and info.user_status = 0")
             ->field( 'details.user_name, details.telphone, details.email, details.open_time, helms_user_info.ID')
@@ -595,7 +594,6 @@ class User_info extends Model
         }
         else
         {
-            //var_dump("not none");
             $res = $this->table('helms_user_info info, helms_user_details details')//�˴������ݿ�ǰ׺����ʡ��
             ->where("info.ID=details.ID and info.user_status = 0")
             ->field( 'details.user_name, details.telphone, details.email, details.open_time, helms_user_info.ID')
@@ -623,7 +621,6 @@ class User_info extends Model
         }
         if (strcmp("$_where", ""))
         {
-            //var_dump("where:".$_where);
             $res = $this->table('helms_user_info info, helms_user_details details')
             ->limit($_pagesize * $_pageindex, $_pagesize)
             ->where("$_where and info.ID=details.ID and info.user_status = 0")
@@ -632,7 +629,6 @@ class User_info extends Model
         }
         else
         {
-            //var_dump("not none");
             $res = $this->table('helms_user_info info, helms_user_details details')
             ->limit($_pagesize * $_pageindex, $_pagesize)
             ->where("info.ID=details.ID and info.user_status = 0")

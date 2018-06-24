@@ -7,7 +7,7 @@ class Minor_userinfo extends Model
 {
     public function index()
     {
-        echo 'minor Userinfo';
+        //echo 'minor Userinfo';
     }
     
     public function MinorUserinfoQuery($parent)
@@ -22,7 +22,7 @@ class Minor_userinfo extends Model
             $_where = "parentID = '$parent'";
         }
         
-        // var_dump(urlencode($_SERVER['REQUEST_URI']));
+        // //var_dump(urlencode($_SERVER['REQUEST_URI']));
         $_user_info = $this->where($_where)
         ->order('parentID asc')
         ->select();
@@ -43,11 +43,11 @@ class Minor_userinfo extends Model
         $gp_set = new Gp_set();
         $price = $gp_set->GpSetQuery();
         $price = $price[0]["now_price"];
-        echo $num;
-        echo $parent;
+        //echo $num;
+        //echo $parent;
         $minorID = $parent;
         $minorID .=$num;
-        echo "minorID:".$minorID;
+        //echo "minorID:".$minorID;
         $buy_gujia = $price;
         $gue = $level * 500;
         $gushu = $gue / $buy_gujia;

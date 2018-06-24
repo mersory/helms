@@ -7,7 +7,7 @@ class User_bankinfo extends Model
 {
     public function index()
     {
-        var_dump("Userbankinfo");
+        //var_dump("Userbankinfo");
     }
     
     public function BankinfoQuery($user_id)
@@ -22,21 +22,21 @@ class User_bankinfo extends Model
         $count = count($_bank_info);
         if ($count < 1)
         {
-            var_dump("User_bank.php user_id :$user_id not exsist".__LINE__);
+            //var_dump("User_bank.php user_id :$user_id not exsist".__LINE__);
             return ;
         }
         return $_bank_info;
         /*for($_index = 0; $_index < $count; $_index++)
         {
-            echo '<br/>';
+            //echo '<br/>';
             $ff = $_bank_info[$_index];
-            var_dump($ff->getData('bank_info_id'));
-            var_dump($ff->getData('user_id'));
-            var_dump($ff->getData('bank_name'));
-            var_dump($ff->getData('bank_account_name'));
-            var_dump($ff->getData('bank_account_num'));
-            var_dump($ff->getData('bank_city'));
-            var_dump($ff->getData('sub_bank'));
+            //var_dump($ff->getData('bank_info_id'));
+            //var_dump($ff->getData('user_id'));
+            //var_dump($ff->getData('bank_name'));
+            //var_dump($ff->getData('bank_account_name'));
+            //var_dump($ff->getData('bank_account_num'));
+            //var_dump($ff->getData('bank_city'));
+            //var_dump($ff->getData('sub_bank'));
         }*/
     }
     

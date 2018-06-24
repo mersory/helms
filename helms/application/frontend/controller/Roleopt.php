@@ -18,7 +18,7 @@ class Roleopt extends Controller
         $info = new Userinfo();
         $point = new Userpoint();
         $priority = new Usertopriority();
-        var_dump("Roleopt");
+        //var_dump("Roleopt");
     }
     
     public function RoleQuery($user_id, $role_id)

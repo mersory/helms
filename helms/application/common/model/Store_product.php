@@ -7,7 +7,7 @@ class Store_product extends Model
 {
     public function index()
     {
-        var_dump("Storeproductinfo");
+        //var_dump("Storeproductinfo");
     }
     
     public function CategorytInfoAllQuery(){
@@ -16,7 +16,7 @@ class Store_product extends Model
         $count = count($_productinfo);
         if ($count < 1)
         {
-            var_dump("ProductInfo not exsist");
+            //var_dump("ProductInfo not exsist");
             return ;
         }
         return $_productinfo;
@@ -29,7 +29,7 @@ class Store_product extends Model
         $count = count($_productinfo);
         if ($count < 1)
         {
-            var_dump("ProductInfo not exsist");
+            //var_dump("ProductInfo not exsist");
             return ;
         }
         return $_productinfo;
@@ -44,7 +44,7 @@ class Store_product extends Model
         $count = count($_productinfo);
         if ($count < 1)
         {
-            var_dump("ProductInfo not exsist");
+            //var_dump("ProductInfo not exsist");
             return ;
         }
         return $_productinfo;

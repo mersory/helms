@@ -143,7 +143,7 @@ class Login extends Controller
             }
         }
 
-        echo json_encode($_resdata);
+        return json_encode($_resdata);
     }
     
 

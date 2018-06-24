@@ -7,7 +7,7 @@ class Subuser_info extends Model
 {
     public function index()
     {
-        var_dump("Userdetails");
+        //var_dump("Userdetails");
     }
     
     public function SubuserinfoQuery($sub_user_id)//
@@ -22,7 +22,7 @@ class Subuser_info extends Model
         $count = count($_subuer_info);
         if ($count < 1)
         {
-            var_dump("Subuser.php ID :$sub_user_id not exsist".__LINE__);
+            //var_dump("Subuser.php ID :$sub_user_id not exsist".__LINE__);
             return ;
         }
         return $_subuer_info;

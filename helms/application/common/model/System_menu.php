@@ -11,7 +11,7 @@ class System_menu extends Model
         $_menu_info = $this->select();
         $count = count($_menu_info);
         if ($count < 1) {
-            var_dump("menu info not exsist");
+            //var_dump("menu info not exsist");
             return;
         }
         return $_menu_info;

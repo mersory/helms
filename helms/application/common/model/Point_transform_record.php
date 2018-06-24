@@ -7,7 +7,7 @@ class Point_transform_record extends Model
 {
     public function index()
     {
-        var_dump("Userdetails");
+        //var_dump("Userdetails");
     }
 
     public function PointTransformQuery($deal_id)//���������Ĳ��ҷ�ʽ���˴�ֻ�г���һ��
@@ -22,7 +22,7 @@ class Point_transform_record extends Model
         $count = count($_deal_info);
         if ($count < 1)
         {
-            var_dump("Point_transform.php ID :$deal_id not exsist".__LINE__);
+            //var_dump("Point_transform.php ID :$deal_id not exsist".__LINE__);
             return ;
         }
         return $_deal_info;
