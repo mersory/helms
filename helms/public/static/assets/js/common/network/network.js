@@ -1,8 +1,6 @@
 var loadNetworkUrl = "/public/index.php/frontend/common/get_all_children";
 $(function() {
 	
-	$("#searchUserId").val($("#current_user_id").val());
-	
 	// 创建用户
 	$('#btn-add-user')
 			.on(
