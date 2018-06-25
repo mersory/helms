@@ -9,6 +9,7 @@ use app\common\model\Store_product;
 use app\common\model\Store_order;
 use app\common\model\System_subscriber;
 use app\extra\controller\Basecontroller;
+use phpDocumentor\Reflection\Types\Array_;
 
 class Store extends Basecontroller
 {
@@ -75,7 +76,7 @@ class Store extends Basecontroller
         $category = $_post["product_category"]; //
         $categoryName = $_post["product_category_name"]; //
         $order = $_post["product_order"]; //
-        $_res = $_product_info->StoreProductInsert($description_url,$name, $description, $image_url, "", $inventory, $price,$curPrice,$category,$categoryName,$order);
+        $_res = $_product_info->StoreProductInsert($description_url, $name, $description, $image_url, "", $inventory, $price, $curPrice, $category, $categoryName, $order);
         if (count($_res) == 1) {
             $_resdata["result"] = true;
             $_product_info->commit();
@@ -103,7 +104,7 @@ class Store extends Basecontroller
         $category = $_post["product_category"]; //
         $categoryName = $_post["product_category_name"]; //
         $order = $_post["product_order"]; //
-        $_res = $_product_info->StoreProductUpdate($description_url,$id, $name, $description, $image_url, "", $inventory, $price,$curPrice,$category,$categoryName,$order);
+        $_res = $_product_info->StoreProductUpdate($description_url, $id, $name, $description, $image_url, "", $inventory, $price, $curPrice, $category, $categoryName, $order);
         if (count($_res) == 1) {
             $_resdata["result"] = true;
             $_product_info->commit();
@@ -142,7 +143,7 @@ class Store extends Basecontroller
     public function downStockProduct($product_id)
     {
         $_product_info = new Store_product();
-        $_res = $_product_info->ProductDownStockUpdateStockUpdate($product_id, "");
+        $_res = $_product_info->ProductDownStockUpdate($product_id, "");
         if (count($_res) == 1) {
             $_resdata["result"] = true;
             $_product_info->commit();
@@ -157,7 +158,7 @@ class Store extends Basecontroller
     public function sendOrder($product_id)
     {}
     
-    // 商品图片上传
+   // 商品图片上传
     public function setFile()
     {
         $file = request()->file('file');
@@ -182,25 +183,26 @@ class Store extends Basecontroller
         return json_encode($data);
     }
     
-    //用户确认收货
-    public function confirmSend(){
+    // 用户确认收货
+    public function confirmSend()
+    {
         $_session_user = Session::get(USER_SEESION);
         $user_id = $_session_user["userId"];
         $_resdata = array();
-        $_resdata["result"]=true;
-    
-        if(empty($user_id)){
-            $_resdata["result"]=false;
-            $_resdata["message"]="请先登录用户";
+        $_resdata["result"] = true;
+        
+        if (empty($user_id)) {
+            $_resdata["result"] = false;
+            $_resdata["message"] = "请先登录用户";
             return json_encode($_resdata);
         }
-    
+        
         $_post = Request::instance()->post();
         $orderId = $_post["orderId"];
-    
+        
         $orderInfo = new Store_order();
         $orderInfo->StoreOrderStatusUpdate($orderId, 2);
-    
+        
         return json_encode($_resdata);
     }
 }

@@ -127,6 +127,10 @@ $(function() {
 	$('#fileupload').fileupload({
         dataType: 'json',
         url: "setFile",//文件的后台接受地址
+/*        autoUpload: true,
+        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+        maxFileSize: 1000000, // 10 MB
+        singleFileUploads: false, */
         //设置进度条
         progressall: function (e, data) {
             var progress = parseInt(data.loaded / data.total * 100);
