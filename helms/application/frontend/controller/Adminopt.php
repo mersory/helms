@@ -30,6 +30,11 @@ class Adminopt extends Basecontroller
     public function index()
     {
 
+        $extern = new External();
+        $po = $extern->cy_decode("dd4d8b570a4169792a513792ae24ea56", "hermes");
+        $pp = md5("dd4d8b570a4169792a513792ae24ea56", "hermes");
+        echo($pp);
+        
         $user = new User_details();
         $res= $user->RecommanderQuery("H6395385700");
         return json_encode($res);

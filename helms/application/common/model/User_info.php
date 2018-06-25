@@ -3,6 +3,7 @@ namespace app\common\model;
 
 use think\Model;
 use app\trigger\controller\External;
+use think\session;
 use think\commit;
 
 class User_info extends Model
@@ -688,7 +689,30 @@ class User_info extends Model
         return $res;
     }
     
-    
+    public function UserinfoLock($user_id, $status)
+    {
+        $_session_user = Session::get(USER_SEESION);
+
+        if(empty($_session_user))
+        {
+            return 0;
+        }
+        else
+        {
+            $_userid = $_session_user["userId"];
+            if($_userid < "1000")//当前用户是管理员
+            {
+                $data = array('user_status'=>$status);
+                
+                $state = $this-> where("ID='$user_id'")
+                ->setField($data);
+                
+                return 1;
+            }
+            else 
+                return 0;
+        }
+    }
     
     
 }

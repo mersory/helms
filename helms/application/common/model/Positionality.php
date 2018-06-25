@@ -4,6 +4,7 @@ namespace app\common\model;
 use think\Model;
 use phpDocumentor\Reflection\Types\String_;
 use app\trigger\controller\External;
+use think\session;
 
 class Positionality extends Model
 {
@@ -635,6 +636,31 @@ class Positionality extends Model
         $state = $this-> where("ID=$ID")
         ->setField($_positioninfo);
         return $state;
+    }
+    
+    public function updateStatusSingle($user_id, $status)
+    {
+        $_session_user = Session::get(USER_SEESION);
+
+        if(empty($_session_user))
+        {
+            return 0;
+        }
+        else
+        {
+            $_userid = $_session_user["userId"];
+            if($_userid < "1000")//当前用户是管理员
+            {
+                $data = array('status'=>$status);
+        
+                $state = $this-> where("user_id='$user_id'")
+                ->setField($data);
+        
+                return 1;
+            }
+            else
+                return 0;
+        }
     }
     
     
