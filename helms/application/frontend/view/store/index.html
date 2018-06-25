@@ -1,12 +1,17 @@
 {extend name="base/frontend"} {block name="js"}
-<script type="text/javascript" src="_JS_/common/store/index.js"></script>
+<script
+	type="text/javascript"
+	src="_JS_/common/store/index.js"></script>
 {/block} {block name="css"} {/block} {block name="content"}
 <!-- Page content -->
-<div id="content" class="col-md-12">
+<div
+	id="content"
+	class="col-md-12">
 	<!-- page header -->
 	<div class="pageheader">
 		<h2>
-			<i class="fa fa-tachometer"></i> 一亩阳光商城<span></span>
+			<i class="fa fa-tachometer"></i> 一亩阳光商城
+			<span></span>
 		</h2>
 		<div class="breadcrumbs">
 			<ol class="breadcrumb">
@@ -22,60 +27,83 @@
 		<!-- cards -->
 		<div class="row margin-bottom-40">
 			<!--  -->
-				<div class="input-group input-group-sm margin-bottom-20 margion-left-20">
-                          <div class="input-group-btn">
-                            <button type="button" class="btn btn-default" tabindex="-1">全部</button>
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
-                              <span class="caret"></span>
-                              <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                            	{if condition="empty($category_info) neq true"}
-								{foreach name='category_info' item='vo'}
-                              <li><a href="index?cc={$vo.category}">{$vo.category_name}</a></li>
-                              {/foreach}
-                              {/if}
-                            </ul>
-                          </div>
-                          
-                        </div>
-			
-			
+			<div
+				class="input-group input-group-sm margin-bottom-20 margion-left-20">
+				<div class="input-group-btn">
+					<button
+						type="button"
+						class="btn btn-default"
+						tabindex="-1">全部</button>
+					<button
+						type="button"
+						class="btn btn-default dropdown-toggle"
+						data-toggle="dropdown"
+						tabindex="-1">
+						<span class="caret"></span>
+						<span class="sr-only">Toggle Dropdown</span>
+					</button>
+					<ul
+						class="dropdown-menu"
+						role="menu">
+						{if condition="empty($category_info) neq true"} {foreach
+						name='category_info' item='vo'}
+						<li><a href="index?cc={$vo.category}">{$vo.category_name}</a></li>
+						{/foreach} {/if}
+					</ul>
+				</div>
+
+			</div>
+
+
 			<!-- BEGIN SALE PRODUCT -->
 			<div class="col-md-12 sale-product">
 				<div class="bxslider-wrapper">
 					<div class="bx-wrapper">
-						<div class="bx-viewport"
+						<div
+							class="bx-viewport"
 							style="width: 100%; overflow: hidden; position: relative;">
-							<ul class="bxslider" data-slides-phone="1" data-slides-tablet="2"
-								data-slides-desktop="5" data-slide-margin="15"
-								style="width: 915%; position: relative; transition-duration: 0s;">
-								{if condition="empty($pass_data) neq true"}
-								{foreach name='pass_data' item='vo'}
+							<ul
+								class="bxslider"
+								data-slides-phone="1"
+								data-slides-tablet="2"
+								data-slides-desktop="5"
+								data-slide-margin="15"
+								style="">
+								{if condition="empty($pass_data) neq true"} {foreach
+								name='pass_data' item='vo'}
 								<li
-									style="float: left; list-style: outside none none; position: relative; width: 216px; margin-right: 15px;"
+									style=""
 									class="bx-clone">
-									<div class="product-item">
-										<div class="pi-img-wrapper">
-											<a href="detail?productId={$vo.id}" >
-											<img src="_IMG_/resources{$vo.image_url}" class="img-responsive" style="width:220px;height:290px;"
-												alt="Berry Lace Dress"></a>
+									
+										<div class="product-title">{$vo.name}</div>
+										<a
+										href="detail?productId={$vo.id}"
+										class="product-item-grid"
+										target="_blank">
+										<div class="product-item-grid-img">
+											<img
+												src="_IMG_/resources{$vo.image_url}"
+												alt="" />
 										</div>
-										<h3>{$vo.name}</h3>
-										<div class="pi-price">{$vo.price}</div>
-										{if condition="$vo.lifecycle == 1"}
-										<a href="#" product_id="{$vo.id}" href="#" class="btn btn-default add_shoppingcart">加入购物车</a>
-										{/if}
-										{if condition="$vo.lifecycle == 3"}
-										<label>已下架</a>
-										{/if}
-										{if condition="$vo.lifecycle == 0"}
-										<label>未上架</a>
-										{/if}
-									</div>
-								</li>
-								{/foreach}
-								{/if} 
+										</a>
+										<div class="product-item-grid-info">
+											<!-- <h2>{$vo.name}</h2> -->
+											<div class="product-product-description"></div>
+
+											<div class="product-item-footer">
+												<div class="product-item-grid-price">
+													<p>
+														<del></del>
+													</p>
+													<p>{$vo.price}积分</p>
+												</div>
+												<div class="prduct-item-grid-add add_shoppingcart" product_id="{$vo.id}">
+													<span>加入购物车</span>
+													<i class="svg-default-textlink"></i>
+												</div>
+											</div>
+										</div>
+									</li> {/foreach} {/if}
 							</ul>
 						</div>
 					</div>

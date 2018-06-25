@@ -6,6 +6,15 @@ $(function(){
 	recInput.value = info;
 	actInput.value = info;
 	
+	//处理产品级别
+	$("#product option").hide();
+	$("#product option[value='"+$("#level option:selected").val()+"']").show();
+	
+	$("#level").on("change",function(){
+		$("#product option").hide();
+		$("#product option[value='"+$("#level option:selected").val()+"']").show();
+	})
+	
 	$('#regist').on("click",function(){
 		var id = $("#memberId").val();
 		var username = $("#fullname").val();
@@ -15,6 +24,8 @@ $(function(){
 		var activator = $("#activator").val();
 		var primarypwd = $("#primarypwd").val();
 		var minorpwd = $("#minorpwd").val();
+		var level = $("#level option:selected").val();
+		var product = $("#product option:selected").val();
 
 		if("" == $.trim(username)){
 			showError("用户名不能为空");
@@ -30,7 +41,12 @@ $(function(){
 			return false;
 		}
 		
-		if("" == $.trim(recommender)){
+		if("0" == $.trim(product)){
+			showError("请选择产品");
+			return false;
+		}
+		
+/*		if("" == $.trim(recommender)){
 			showError("推荐人不能为空");
 			return false;
 		}
@@ -46,9 +62,9 @@ $(function(){
 		if("" == $.trim(minorpwd)){
 			showError("二级密码不能为空");
 			return false;
-		}
+		}*/
 		var url =  "/public/index.php/frontend/Useropt/UserRegist";
-		$.post(url,{ID:id, name:username, email:email, telphone:telphone, recommender:recommender, activator:activator, pwd1:primarypwd, pwd2:minorpwd, $userlevel:1},function(result){
+		$.post(url,{ID:id, name:username, email:email, telphone:telphone, recommender:recommender, activator:activator, pwd1:"123", pwd2:"123", userlevel:level},function(result){
 			result = JSON.parse(result);
 			if(result.success){
 				alert("注册成功，点击确定回到主页");

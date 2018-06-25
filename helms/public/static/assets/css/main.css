@@ -241,3 +241,115 @@ li.remove_frame a:hover { background-position: 0 -21px }
 .shoppingcart-list{
 	
 }
+.product-item{
+	width:100%;
+	height:100%;
+}
+
+.sale-product ul {
+	margin:10px 20px 10px 20px;
+	position: relative; 
+	transition-duration: 0s;
+}
+
+.sale-product ul li{
+    position: relative;
+    float: left;
+    width: 23%;
+    height: 450px;
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    background: #e7e7e7;
+	list-style:none;
+	margin:10px;
+}
+
+.sale-product .product-title{
+	font-size: 20px;
+    font-family: 微软雅黑;
+    margin-left: 20px;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #000;
+}
+
+.sale-product .product-title:hover{
+	font-size: 20px;
+    font-family: 微软雅黑;
+    margin-left: 20px;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #000;
+}
+
+.product-item-grid-img img{
+	margin: 0 40px 0px 40px;
+	max-width:320px;	
+}
+
+.product-item-grid-price{
+	float:left;
+	margin-left: 10px;
+    font-size: 16px;
+	color:#666;
+}
+
+.prduct-item-grid-add{
+	float: right;
+    margin-right: 50px;
+    font-size: 16px;
+    margin-top: 10px;
+    color: #e28f51;
+}
+
+.prduct-item-grid-add:hover{
+	text-decoration: underline;
+	cursor:pointer;
+}
+
+
+.sale-product-detail .product-img-wrapper{
+	float:left;
+	width:30%;
+	padding: 0 68px 0 68px;
+}
+
+.sale-product-detail .product-content-wrapper{
+	float:right;
+	width:70%;
+}
+
+.sale-product-detail{
+	color:#fff;
+	font-family:"微软雅黑";
+}
+
+.sale-product-detail  .product-item{
+	width:100%;
+	height:100%;
+}
+
+.sale-product-detail  .product-title{
+	padding: 20px 0px 20px 0px;
+}
+
+.sale-product-detail  .product-title span{
+	margin-right:30px;
+	font-size:20px;
+}
+
+.sale-product-detail  .product-title span:last-child{
+	font-size:25px;
+}
+
+.sale-product-detail  .product-title,.sale-product-detail  .product-option,.sale-product-detail  .product-description{
+	margin:20px 0 20px 0;
+}
+
+.sale-product-detail .product-description span{
+	margin-bottom:50px;
+}
+
+.sale-product-detail .product-description  .image-wrapper img{
+	max-width:1000px;
+}
