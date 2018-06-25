@@ -398,6 +398,11 @@ class Useropt extends Basecontroller
         $_session_user = Session::get(USER_SEESION);
         $resData = array();
         $resData["ok"] = 1;
+        if($newpwd == "")
+        {
+            $resData["ok"] = 0;
+            return json_encode($resData);
+        }
         if(empty($_session_user)){
             return $this->redirect("/login/login/index");
         }else{
@@ -421,6 +426,11 @@ class Useropt extends Basecontroller
         $_session_user = Session::get(USER_SEESION);
         $resData = array();
         $resData["ok"] = 1;
+        if($newpwd == "")
+        {
+            $resData["ok"] = 0;
+            return json_encode($resData);
+        }
         if(empty($_session_user)){
             return $this->redirect("/login/login/index");
         }else{

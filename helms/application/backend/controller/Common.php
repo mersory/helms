@@ -246,7 +246,7 @@ class Common extends Basecontroller
 					$_resdata["info"] = "telphone error";
 				}else{
 					$_admin = new User_info();
-					$_res = $_admin->UserSearch($_userid, $_username, $_telphone, $_email, $_fromtime, $_totime);
+					$_res = $_admin->UserSearchWithOutAdmin($_userid, $_username, $_telphone, $_email, $_fromtime, $_totime);
 					$_resdata["info"] = "ok";
 					$_resdata["res"] = $_res;
 				}

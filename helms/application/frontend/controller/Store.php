@@ -538,7 +538,7 @@ class Store extends Basecontroller
     {
         $t = time();
         $orderSuffix = date("YmdHis", $t);
-        return "HERMS" . $orderSuffix;
+        return "HERMES" . $orderSuffix;
     }
     
     // 用户确认收货

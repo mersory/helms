@@ -44,7 +44,7 @@ $(function(){
 			  //alert('登录成功，正在转向后台主页！');
 			  for (var res_index=0; res_index<msg.res.length; res_index++)
 			  {
-				  addCol(res_index, msg.res[res_index].ID, msg.res[res_index].username, msg.res[res_index].telphone, msg.res[res_index].email, msg.res[res_index].user_level, msg.res[res_index].open_time);//查询成功，增加行和列
+				  addCol(res_index, msg.res[res_index].ID, msg.res[res_index].username, msg.res[res_index].telphone, msg.res[res_index].email, msg.res[res_index].user_level, msg.res[res_index].recommender, msg.res[res_index].kaitongID, msg.res[res_index].open_time);//查询成功，增加行和列
 			  }
 			  //window.location.href = "UserLogin.html";
 			} else {
