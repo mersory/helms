@@ -50,58 +50,58 @@
 			                <div class="form-group">
 			                  <label class="col-sm-3 control-label">用户</label>
 			                  <div class="col-sm-8" >
-			                  	<input type="text" class="form-control" name="updatepwd_user_id" readonly="readonly" value="{$pass_data.userId}">
+			                  	<input type="text" class="form-control" id="updatepwd_user_id" name="updatepwd_user_id" readonly="readonly" value="{$pass_data.userId}">
 			                  </div>
 			                </div>
 			                
 			                
 			                <div class="form-group">
-			                  <label class="col-sm-3 control-label">原始密码</i></label>
+			                  <label class="col-sm-3 control-label">一级原始密码</i></label>
 			                  <div class="col-sm-8" >
-			                  	<input type="text" class="form-control" name="old_pwd">
+			                  	<input type="text" class="form-control" id="updatepwd_oldpwd_1" name="old_pwd">
 			                  </div>
 			                </div>
 			                
 			                <div class="form-group">
-			                  <label class="col-sm-3 control-label">新密码</label>
+			                  <label class="col-sm-3 control-label">一级新密码</label>
 			                  <div class="col-sm-8" >
-			                  	<input type="password" class="form-control" name="password">
+			                  	<input type="password" class="form-control" id="updatepwd_newpwd_1" name="password">
 			                  </div>
 			                </div>
 			                
 			                <div class="form-group">
-			                  <label class="col-sm-3 control-label">重复新密码</label>
+			                  <label class="col-sm-3 control-label">一级重复新密码</label>
 			                  <div class="col-sm-8">
-			                  	<input type="password" class="form-control" name="comfirm">
+			                  	<input type="password" class="form-control" id="updatepwd_newpwd_1_comfirm" name="comfirm">
 			                  </div>
 			                </div>
 			                
 			                <div class="form-group">
 			                  <label class="col-sm-3 control-label">二级原始密码</label>
 			                  <div class="col-sm-8" >
-			                  	<input type="password" class="form-control" name="password">
+			                  	<input type="password" class="form-control" id="updatepwd_oldpwd_2" name="password">
 			                  </div>
 			                </div>
 			                
 			                <div class="form-group">
 			                  <label class="col-sm-3 control-label">二级新密码</label>
 			                  <div class="col-sm-8" >
-			                  	<input type="password" class="form-control" name="password">
+			                  	<input type="password" class="form-control" id="updatepwd_newpwd_2" name="password">
 			                  </div>
 			                </div>
 			                
 			                <div class="form-group">
 			                  <label class="col-sm-3 control-label">二级重复新密码</label>
 			                  <div class="col-sm-8">
-			                  	<input type="password" class="form-control" name="comfirm">
+			                  	<input type="password" class="form-control" id="updatepwd_newpwd_2_comfirm" name="comfirm">
 			                  </div>
 			                </div>
 			                
 			              </section>
 			              <section class="form-group form-footer text-center">
 			              	<div class="text-center">
-			                 <input type="button" class="btn btn-primary"  value="修改密码" onclick="return submitForm();"/> 
-			                 <input type="button" class="btn btn-primary"  value="修改二级密码" onclick="return submitForm();"/> 
+			                 <input type="button" class="btn btn-primary"  id="updatepwd_btn_1" value="修改一级密码" onclick="return submitForm();"/> 
+			                 <input type="button" class="btn btn-primary"  id="updatepwd_btn_2" value="修改二级密码" onclick="return submitForm();"/> 
 			                </div>
 			              </section>
 				    </form>
