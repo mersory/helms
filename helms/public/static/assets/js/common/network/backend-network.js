@@ -13,7 +13,7 @@ $(function() {
 							$.post(urlres,{id:parentId},function(result){
 								result = JSON.parse(result);
 								if(result.success == 1){
-									var url = "/public/index.php/frontend/Useropt/RegistIndex?parentId=" + parentId+"&position=left";
+									var url = "/public/index.php/frontend/Useropt/registindex?parentId=" + parentId+"&position=left";
 									window.open(url);
 								} else if(result.success == 0){
 									alert("当前点位已存在两个子点位，不可再产生子点位，请重新选择");

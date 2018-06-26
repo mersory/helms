@@ -279,6 +279,14 @@ class Common extends Basecontroller
         return json_encode($_resdata);
     }
     
+    public function recharge()
+    {
+        // 取回打包后的数据
+        $htmls = $this->fetch();
+        return $htmls;
+        
+    }
+    
     public function memberApplication()
     {
         $_session_user = Session::get(USER_SEESION);
