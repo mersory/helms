@@ -107,6 +107,7 @@ class Login extends Controller
                 $_resdata["success"] = false;
             }else {
                 //Session::destroy();
+                $_password = md5($_password."hermes");
                 $_user = new User_info();
                 $_res = $_user->UserinfoQuery($_username, $_password);
                 if (count($_res) == 1 && $_res[0]["user_status"] != 0)

@@ -20,6 +20,8 @@ use app\common\model\Role;
 use app\extra\controller\Basecontroller;
 use app\trigger\controller\External;
 use app\common\model\Positionality;
+use app\common\model\Gp_set;
+use app\common\model\Recharge_record;
 
 class Useropt extends Basecontroller
 {
@@ -331,6 +333,44 @@ class Useropt extends Basecontroller
         }
         
     }
+    
+    public function userRecharge($user_id, $money, $cz_type, $content, $real_name, $usefor, $details)
+    {
+        $_resdata = array();
+        $_resdata["success"] = false;
+        $_session_user = Session::get(USER_SEESION);
+        $_userid = $_session_user["userId"];
+    
+        if($_userid < "1000")
+        {
+            /*
+            $posOBJ = new Positionality();
+            $gpsetOBJ = new Gp_set();
+            $gpRES = $gpsetOBJ->GpSetQuery();
+            $gujia = $gpRES[0]["now_price"];
+            $posRES = $posOBJ->PositionQuery($user_id);
+            $posRES = $posRES[0];
+            $gushu = intval($money/$gujia) + $posRES["gushu"];
+            $gue= $gushu * $gujia;
+            $posRES = $posOBJ->updateGushu($user_id,$gushu , $gue);
+            */
+            $pointOBJ = new User_point();
+            $pointRES = $pointOBJ->PointQuery($user_id);
+            $regist = $pointRES[0]["regist_point"] + $money;
+            $pointRES = $pointOBJ->PointUpdate($user_id, -1, -1, $regist);
+            $rechargeOBJ = new Recharge_record();
+            $rechargeRES = $rechargeOBJ->RechargeInsert($user_id, $money, $cz_type, $content, $pointRES,$real_name ,$details, $usefor );
+            
+            $rechargeQueryRES = $rechargeOBJ->RechargeQuery();//不传值，查询所有的用户数据
+            $_resdata["success"] = true;
+            $_resdata["result"] = $rechargeQueryRES;
+            
+            return json_encode($_resdata);
+        }
+    
+        return json_encode($_resdata);
+    }
+    
     
 //---------------------------------单个接口测试--------------------------------
 //---------------------------------单个接口测试--------------------------------

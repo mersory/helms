@@ -151,7 +151,7 @@ class User_details extends Model
         {
             $_detailsinfo["email"] = $email;
         }
-         
+        
         if ($portrait >=0)
         {
             $_detailsinfo["portrait"] = $portrait;

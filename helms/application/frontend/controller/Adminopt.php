@@ -24,12 +24,24 @@ use think\Session;
 use app\trigger\controller\External;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use app\extra\controller\Basecontroller;
+use app\common\model\Recharge_record;
 
 class Adminopt extends Basecontroller
 {
     public function index()
     {
 
+        $extern = new External();
+        $pwd = "140416";
+        $passwd = md5($pwd."hermes");   //这个才是最后使用的家吗函数
+        var_dump("pass:".$passwd);
+        
+        /*
+        $recharge = new Recharge_record();
+        $recharge->index();
+        $state = $recharge->RechargeInsert(H7414916900,1000.00,0,"后台充值", 1,"许丽娟","本部张海龙充值注册分,已确认",1);
+        $recharge->RechargeQuery();
+        var_dump($recharge);
         $extern = new External();
         $po = $extern->cy_decode("dd4d8b570a4169792a513792ae24ea56", "hermes");
         $pp = md5("dd4d8b570a4169792a513792ae24ea56", "hermes");
@@ -38,6 +50,7 @@ class Adminopt extends Basecontroller
         $user = new User_details();
         $res= $user->RecommanderQuery("H6395385700");
         return json_encode($res);
+        */
         //$userinfo = new User_info();
         ////var_dump("user state: ".$userinfo->getUserstate("H1400517071"));
         /*$awardOBJ = new Awardopt();

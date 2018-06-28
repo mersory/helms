@@ -252,6 +252,5 @@ class User_point extends Model
         //var_dump($user_id);
         //var_dump($state);
         return $state;
-    }
-    
+    }  
 }
