@@ -14,7 +14,10 @@ $(function() {
 								result = JSON.parse(result);
 							if(result.success == 1){
 								var url = "/public/index.php/frontend/Useropt/RegistIndex?parentId=" + parentId+"&position=left";
-								window.open(url);
+								//window.open(url);
+								//changed by Gavin start
+								window.location.href=url;
+								//changed by Gavin end
 							} else if(result.success == 0){
 								alert("当前点位已存在两个子点位，不可再产生子点位，请重新选择");
 							} else if(result.success == -1){

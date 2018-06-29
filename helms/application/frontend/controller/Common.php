@@ -434,11 +434,21 @@ class Common extends Basecontroller
             $_res[$_curid[0]["user_id"]]["realname"] = $_user_realname;
             $_keys = array_keys($_res);
             $_values = array_values($_res);
-            for($i=0; $i<count($_res); $i++)
+            for($i=0; $i<count($_res); $i++)           
             {
+                //changed by Gavin start
+                $_user_danshu = $_user->PositionQuery($_keys[$i]);
+               $l_ds = $_user_danshu[0]["l_ds"];
+               $r_ds = $_user_danshu[0]["r_ds"];
+               $sq_lds = $_user_danshu[0]["sq_lds"];
+               $sq_rds = $_user_danshu[0]["sq_rds"];
+                //changed by Gavin end
                 $_user_realname = $_userinfo->DetailsQuery($_keys[$i]);
                 $_user_realname = $_user_realname[0]["user_name"];
-                $_res[$_keys[$i]]["realname"] = $_user_realname;
+                //changed by Gavin start
+                //$_res[$_keys[$i]]["realname"] = $_user_realname;
+                $_res[$_keys[$i]]["realname"] = $_user_realname."&nbsp&nbsp总：".$l_ds."&nbsp-&nbsp".$r_ds.";&nbsp剩：".$sq_lds."&nbsp-&nbsp".$sq_rds;
+                //changed by Gavin end
             }
             $_resdata["res"] = $_res;
            return json_encode($_resdata) ;

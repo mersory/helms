@@ -3,7 +3,6 @@ namespace app\common\model;
 
 use think\Model;
 use app\trigger\controller\External;
-use think\session;
 use think\commit;
 
 class User_info extends Model
@@ -552,15 +551,19 @@ class User_info extends Model
         }
         if (strcmp("$_where", ""))
         {
-            $res = $this->table('helms_user_info info, helms_user_details details')
-            ->where("$_where and info.ID=details.ID and info.user_status > 0 and details.recommender != '0'")
+            //changed by Gavin start model7
+            $res = $this->table('helms_user_info info, helms_user_details details, helms_user_point point, helms_positionality positionality')
+            ->where("$_where and info.ID=details.ID and info.user_status > 0 and details.recommender != '0' and point.ID=info.ID and positionality.user_id=info.ID")
             ->select();
+            //changed by Gavin end model7
         }
         else
         {
-            $res = $this->table('helms_user_info info, helms_user_details details')//�˴������ݿ�ǰ׺����ʡ��
-            ->where("info.ID=details.ID and info.user_status > 0 and details.recommender != '0'")
+            //changed by Gavin start model7
+            $res = $this->table('helms_user_info info, helms_user_details details, helms_user_point point, helms_positionality positionality')//�˴������ݿ�ǰ׺����ʡ��
+            ->where("info.ID=details.ID and info.user_status > 0 and details.recommender != '0' and point.ID=info.ID and positionality.user_id=info.ID")
             ->select();
+            //changed by Gavin end model7
         }
         if(count($res) > 0)
             return $res;
@@ -638,6 +641,7 @@ class User_info extends Model
         }
         if (strcmp("$_where", ""))
         {
+            
             $res = $this->table('helms_user_info info, helms_user_details details')
             ->where("$_where and info.ID=details.ID and info.user_status = 0")
             ->field( 'details.user_name, details.telphone, details.email, details.open_time, helms_user_info.ID')
@@ -649,6 +653,7 @@ class User_info extends Model
             ->where("info.ID=details.ID and info.user_status = 0")
             ->field( 'details.user_name, details.telphone, details.email, details.open_time, helms_user_info.ID')
             ->select();
+            
         }
         return $res;
     }
@@ -692,7 +697,7 @@ class User_info extends Model
     public function UserinfoLock($user_id, $status)
     {
         $_session_user = Session::get(USER_SEESION);
-
+    
         if(empty($_session_user))
         {
             return 0;
@@ -703,16 +708,16 @@ class User_info extends Model
             if($_userid < "1000")//当前用户是管理员
             {
                 $data = array('user_status'=>$status);
-                
+    
                 $state = $this-> where("ID='$user_id'")
                 ->setField($data);
-                
+    
                 return 1;
             }
-            else 
+            else
                 return 0;
         }
     }
     
-    
+
 }

@@ -98,6 +98,9 @@ class Useropt extends Basecontroller
             $_resdata["user_name"] = $_res[0]["user_name"];
             $_resdata["email"] = $_res[0]["email"];
             $_resdata["user_level"] = $_res[0]["user_level"];
+            //changed by Gavin start
+            $_resdata["pay_gujia"] = $_res[0]["pay_gujia"];
+            //changed by Gavin end
         }
         
         $_user = new User_point();

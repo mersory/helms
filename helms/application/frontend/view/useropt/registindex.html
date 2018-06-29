@@ -105,7 +105,9 @@
                         </div>
                       </div> -->
                       <div class="form-group">
-						<label for="email" class="col-sm-4 control-label">开通级别</label>
+                      <!-- changed by Gavin start -->
+						<label for="level" class="col-sm-4 control-label">开通级别</label>
+					  <!-- changed by Gavin end -->
 						<div class="col-sm-8" data-toggle="distpicker">
 							<select class="form-control" id="level" name="level" data-province="---- 选择级别 ----" >
 								<option value="2">二星会员</option>
@@ -118,11 +120,13 @@
 						<label for="product" class="col-sm-4 control-label">选择产品</label>
 						<div class="col-sm-8" data-toggle="distpicker">
 							<select class="form-control" id="product" name="product" data-province="---- 选择产品----" >
-								<option value="0">请选择产品</option>
-								<option style="display:none;" value="2">1*迦尔纳微型太阳能充电站</option>
-								<option style="display:none;" value="2">1*冰箱鲜生+5*卟叮纳米驱蚊宝</option>
-								<option style="display:none;" value="1">1*冰箱鲜生</option>
-								<option style="display:none;" value="1">5*卟叮纳米驱蚊宝</option>
+								<!-- changed by Gavin start -->
+								<option value="0">请选择产品</option>							
+								<option style="display:none;" value="2">二星会员：迦尔纳微型太阳能充电站*1台</option>
+								<option style="display:none;" value="2">二星会员：卟叮纳米光波驱蚊宝*1台</option>
+								<option style="display:none;" value="2">二星会员：冰箱鲜生*2台</option>
+								<option style="display:none;" value="1">一星会员：冰箱鲜生*1台</option>
+								<!-- changed by Gavin end -->
 							</select>  
 						</div>
 					  </div>					  
@@ -148,4 +152,18 @@
           <!-- /content container -->
 
 </div>
+<!-- changed by Gavin start -->
+<script type="text/javascript">
+
+function setup()
+{
+	var s=["level","product"];
+    for(i=0;i<s.length-1;i++)
+    document.getElementById(s[i]).onchange=new Function("change("+(i+1)+")");
+    //change(0);
+}
+setup();
+
+</script>
+<!-- changed by Gavin end -->
 {/block}

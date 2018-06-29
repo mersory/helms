@@ -44,7 +44,11 @@ $(function(){
 			  //alert('登录成功，正在转向后台主页！');
 			  for (var res_index=0; res_index<msg.res.length; res_index++)
 			  {
-				  addCol(res_index, msg.res[res_index].ID, msg.res[res_index].username, msg.res[res_index].telphone, msg.res[res_index].email, msg.res[res_index].user_level, msg.res[res_index].recommender, msg.res[res_index].kaitongID, msg.res[res_index].open_time);//查询成功，增加行和列
+				  //changed by Gavin start model7
+				  addCol(res_index, msg.res[res_index].user_id, msg.res[res_index].username, msg.res[res_index].telphone, msg.res[res_index].email, msg.res[res_index].user_level, msg.res[res_index].recommender, msg.res[res_index].kaitongID, msg.res[res_index].open_time,
+						  msg.res[res_index].regist_point,msg.res[res_index].bonus_point,msg.res[res_index].universal_point,msg.res[res_index].re_consume,msg.res[res_index].gushu,msg.res[res_index].bz5,msg.res[res_index].pay_gujia,
+						  msg.res[res_index].cf_count,msg.res[res_index].shengyu_jing,msg.res[res_index].shengyu_dong);//查询成功，增加行和列
+				  //changed by Gavin end model7
 			  }
 			  //window.location.href = "UserLogin.html";
 			} else {
@@ -71,9 +75,13 @@ function validate()
 }  
 
 //插入行
-function addCol(_index, _id, _username, _telphone, _email, _level, _fromtime) {
-	$("table#userList_table tr:last").after('<tr><td>'+ _index + '</td><td>'+ _id + '</td><td> '+ _username + ' </td><td>'+ _telphone + ' </td><td>'+ _email + ' </td><td>'+ _level + ' </td><td>'+ _fromtime + ' </td>');
-  /*$th = $("<th>增加的列头</th>");
+// changed by Gavin start  model7
+function addCol(_index, _id, _username, _telphone, _email, _level, _recommender, _kaitongID, _fromtime, _registPoint, _bonusPoint,_universalPoint,_reConsume,_gushu,_gue,_paygujia,_cfcount,_shengyu_jing,_shengyu_dong) {
+	$("table#userList_table tr:last").after('<tr><td>'+ _index + '</td><td>'+ _id + '</td><td> '+ _username + ' </td><td>'+ _telphone + ' </td><td>'+ _email + ' </td><td>'+ _level + ' </td><td>'+ _recommender +' </td><td>'
+			+ _kaitongID + ' </td><td>'+ _fromtime + ' </td><td>'+ _registPoint +' </td><td>'+ _bonusPoint +' </td><td>'+ _universalPoint +' </td><td>'+ _reConsume +' </td><td>'+ _gushu
+			+' </td><td>'+ _gue +' </td><td>'+ _paygujia +' </td><td>'+ _cfcount + ' </td><td>'+ _shengyu_jing +' </td><td>'+ _shengyu_dong+' </td>');
+ //changed by Gavin end model7
+	/*$th = $("<th>增加的列头</th>");
   $col = $("<td>增加的列</td>");
   $("#userlist>thead>tr").append($th);
   $("#userlist>tbody>tr").append($col);*/

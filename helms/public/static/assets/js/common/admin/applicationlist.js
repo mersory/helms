@@ -55,7 +55,9 @@ $(function(){
 	 	        {
 				  for (var res_index=0;res_index<msg.res.length;res_index++)
 				  {
-					  addCol(res_index, msg.res[res_index].user_name, msg.res[res_index].telphone, msg.res[res_index].email, msg.res[res_index].open_time, msg.res[res_index].ID);//查询成功，增加行和列
+					  //changed by Gavin start model7
+					  addCol(res_index, msg.res[res_index].user_name, msg.res[res_index].telphone, msg.res[res_index].email, msg.res[res_index].user_level, msg.res[res_index].open_time, msg.res[res_index].ID);//查询成功，增加行和列
+				      //changed by Gavin end model7
 				  }
 	 	          //window.location.href = "UserLogin.html";user_name,telphone,email,open_time,ID
 	 	        } else {
@@ -132,8 +134,10 @@ o = null;
 
 
 //插入行
-function addCol(_index, _username, _telphone, _email,_fromtime, _id) {
-	$("table#applyList_table tr:last").after('<tr><td>'+ _index + '</td><td> '+ _username + ' </td><td>'+ _telphone + ' </td><td>'+ _email + ' </td><td>'+ _fromtime + ' </td><td>'+ _id + '</td><td><button application_id="'+_id+'" type="button" class="btn btn-primary btn_application_list">激活</button></td>');
+//changed by Gavin start model7
+function addCol(_index, _username, _telphone, _email,_level, _fromtime, _id) {
+	$("table#applyList_table tr:last").after('<tr><td>'+ _index + '</td><td> '+ _username + ' </td><td>'+ _telphone + ' </td><td>'+ _email + ' </td><td>'+ _level +' </td><td>'+ _fromtime + ' </td><td>'+ _id + '</td><td><button application_id="'+_id+'" type="button" class="btn btn-primary btn_application_list">激活</button></td>');
+//changed by Gavin end model7
 	$(".btn_application_list").off("click").on("click",function(){
 		var id= $(this).attr("application_id");
 		$("#confirmApplicationDialog").dialog( "open" );
