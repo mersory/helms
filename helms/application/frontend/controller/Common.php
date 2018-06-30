@@ -403,7 +403,7 @@ class Common extends Basecontroller
         $_resdata["info"] = "no";
         if(parent::include_special_characters($applyuserId))
             return json_encode($_resdata) ;
-        if($applyuserId < 1000)
+        if($applyuserId < "1000")
         {
             $applyuserId = "admin";
         }
@@ -419,6 +419,7 @@ class Common extends Basecontroller
             }    
         }
         $_curid = $_user->PositionQuery($applyuserId);
+        //var_dump("ID:".$_curid[0]["ID"]);
         $_userinfo =new User_details();
         if(count($_curid) < 1)
             return json_encode($_resdata) ;

@@ -344,8 +344,8 @@ class Positionality extends Model
                 $_res[$_position_info[$i]["user_id"]] = $_position_info[$i]["user_id"];
                 $i++;
             }
+            return $_res;
         }
-        return $_res;
     }
     
     public function getAllChildByJson($str)//查看当前节点的所有孩子节点，包括多次派生的孩子，返回用户id和json子串
