@@ -1,4 +1,5 @@
-var loadNetworkUrl = "/public/index.php/frontend/common/get_all_children";
+var getChildrenNetworkUrl = "/public/index.php/frontend/common/get_all_children";
+var getChildrenByParentsNetworkUrl = "/public/index.php/frontend/common/get_all_children_by_parents";
 $(function() {
 	
 	// 创建用户
@@ -37,19 +38,36 @@ $(function() {
 			$.post(urlres,{id:parentId},function(result){
 				result = JSON.parse(result);
 			if(result.success){
-				refreshNetworkChart(parentId);
+				refreshNetworkChart(parentId,getChildrenNetworkUrl);
 			} else {
 				alert("没有权限查看当前输入节点的网络结构");
 			}
 			});
 			//refreshNetworkChart(parentId);
 		}
-	})
+	});
 	
-	refreshNetworkChart( $('#searchUserId').val());
+	//返回上一层按钮
+	$("#network-uplevel").on("click",function(){
+		var parentId = $('#searchUserId').val();
+		if($.trim(parentId) != ""){
+			var urlres =  "/public/index.php/frontend/Adminopt/checkNodeChild";
+			$.post(urlres,{id:parentId},function(result){
+				result = JSON.parse(result);
+			if(result.success){
+				refreshNetworkChart(parentId,getChildrenByParentsNetworkUrl);
+			} else {
+				alert("没有权限查看当前输入节点的网络结构");
+			}
+			});
+			//refreshNetworkChart(parentId);
+		}
+	});
+	
+	refreshNetworkChart( $('#searchUserId').val(),getChildrenNetworkUrl);
 })
 
-function refreshNetworkChart(_userId){
+function refreshNetworkChart(_userId, loadNetworkUrl){
 	//var userId = "100042";
 	$.post(loadNetworkUrl, {
 		applyuserId : _userId
@@ -85,6 +103,8 @@ function refreshNetworkChart(_userId){
 					var $this = $(this);
 					$('#rd-node-user').val($this.find('.title').text());
 					$('#rd-introduce-user').val($this.find('.title').text());
+					$('#searchUserId').val($this.find('.title').text());
+					refreshNetworkChart( $('#searchUserId').val(),getChildrenNetworkUrl);
 				});		
 			}
 		}else{
@@ -102,6 +122,7 @@ function getUserInfo(mapData,userId){
 	if(null != userId){
 		var data = mapData[userId];
 	
+		var index = 0;
 		var originObject = new Object();
 		originObject.userId = data.currentId;
 		originObject.realname = data.realname;
@@ -109,7 +130,11 @@ function getUserInfo(mapData,userId){
 			var childrenSplitArray = data.childrenId;
 			var childrenArray = new Array();
 			for(var i in childrenSplitArray){
-				childrenArray.push(getUserInfo(mapData,childrenSplitArray[i]));
+				if (index<5){
+					childrenArray.push(getUserInfo(mapData,childrenSplitArray[i]));
+				}
+				else
+					break;
 			}
 			originObject.children  = childrenArray;
 		}
