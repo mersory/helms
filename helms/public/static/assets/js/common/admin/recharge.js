@@ -1,51 +1,89 @@
 $(function(){
-	//时间插件
-	$('#fromtime').datetimepicker({
-		format:"yyyy-mm-dd",
-		weekStart: 1,
-		todayBtn: 1,
-		autoclose: 1,
-		todayHighlight: 1,
-		startView: 2,
-		forceParse: 0,
-		showMeridian: 1
-		});
+//	//时间插件
+//	$('#fromtime').datetimepicker({
+//		format:"yyyy-mm-dd",
+//		weekStart: 1,
+//		todayBtn: 1,
+//		autoclose: 1,
+//		todayHighlight: 1,
+//		startView: 2,
+//		forceParse: 0,
+//		showMeridian: 1
+//		});
+//	
+//	$('#totime').datetimepicker({
+//		format:"yyyy-mm-dd",
+//		weekStart: 1,
+//		todayBtn: 1,
+//		autoclose: 1,
+//		todayHighlight: 1,
+//		startView: 2,
+//		forceParse: 0,
+//		showMeridian: 1
+//		});
 	
-	$('#totime').datetimepicker({
-		format:"yyyy-mm-dd",
-		weekStart: 1,
-		todayBtn: 1,
-		autoclose: 1,
-		todayHighlight: 1,
-		startView: 2,
-		forceParse: 0,
-		showMeridian: 1
-		});
-	
-	
-	
-	$('#btn_user_list').on("click",function(){
+	$('#btn_recharge').on("click",function(){
 		clear_table()
-		//alert("调用方法");
-		var useridInput=$('#userid').val();
-		var usernameInput=$('#username').val();
-		var telphoneInput=$('#telphone').val();
-		var emailInput=$('#email').val();
-		var fromtimeInput=$('#fromtime').val();
-		var totimeInput=$('#totime').val();
+		var useridInput=$('#recharge_userid').val();
+		var typeInput=$("#recharge_type option:selected").val();
+		var moneyInput=$('#recharge_money').val();
+		var useInput=$('#czyt_type option:selected').val();
+		var contentInput="后台充值";
+		var detailInput=$('#recharge_deatil').val();
 		if (validate() == true)
 		{
 			//alert("valid");
-			var url = "/public/index.php/backend/common/SearchUserInfo";
-			$.post(url, {_userid:useridInput, _username:usernameInput, _telphone:telphoneInput, _email:emailInput, _fromtime:fromtimeInput, _totime:totimeInput}, function(msg){
+			var url = "/public/index.php/backend/useropt/userRecharge";
+			$.post(url, {user_id:useridInput, money:moneyInput, cz_type:typeInput, content:contentInput, usefor:useInput, details:detailInput}, function(msg){
 			msg=JSON.parse(msg);
-			if(msg.info == 'ok')
+			if(msg.success == true)
 			{
 			  //alert('登录成功，正在转向后台主页！');
-			  for (var res_index=0; res_index<msg.res.length; res_index++)
+			  for (var res_index=0; res_index<msg.result.length; res_index++)
 			  {
-				  addCol(res_index, msg.res[res_index].ID, msg.res[res_index].username, msg.res[res_index].telphone, msg.res[res_index].email, msg.res[res_index].user_level, msg.res[res_index].recommender, msg.res[res_index].kaitongID, msg.res[res_index].open_time);//查询成功，增加行和列
+				  //changed by Gavin start model7
+				  addCol(res_index, msg.result[res_index].user_id, msg.result[res_index].real_name, msg.result[res_index].cz_type, 
+						  msg.result[res_index].cz_time, msg.result[res_index].cz_money, msg.result[res_index].czyt_type, 
+						  msg.result[res_index].cz_instruction, msg.result[res_index].status);//查询成功，增加行和列
+				  //changed by Gavin end model7
 			  }
+			  //window.location.href = "UserLogin.html";
+			} else {
+			  alert("充值失败");
+			  return false;
+			}
+			})
+			return true;
+		}
+		else
+		{
+			//$("#username").focus();
+			alert("not valid");
+			return false;
+		}
+	});
+	
+	$('#btn_recharge_search').on("click",function(){
+		clear_table()
+		//alert("调用方法");
+		var useridInput=$('#recharge_search_userid').val();
+		if (validate() == true)
+		{
+			//alert("valid");
+			var url = "/public/index.php/backend/useropt/userRechargeQuery";
+			$.post(url, {user_id:useridInput}, function(msg){
+			msg=JSON.parse(msg);
+			if(msg.success == true)
+			{
+			  //alert('登录成功，正在转向后台主页！');
+				for (var res_index=0; res_index<msg.result.length; res_index++)
+				  {
+					  //changed by Gavin start model7
+					addCol(res_index, msg.result[res_index].user_id, msg.result[res_index].real_name, msg.result[res_index].cz_type, 
+							  msg.result[res_index].cz_time, msg.result[res_index].cz_money, msg.result[res_index].czyt_type, 
+							  msg.result[res_index].cz_instruction, msg.result[res_index].status);//查询成功，增加行和列
+					  //changed by Gavin end model7
+				  }
 			  //window.location.href = "UserLogin.html";
 			} else {
 			  alert("查询失败");
@@ -71,8 +109,8 @@ function validate()
 }  
 
 //插入行
-function addCol(_index, _id, _username, _telphone, _email, _level, _fromtime) {
-	$("table#userList_table tr:last").after('<tr><td>'+ _index + '</td><td>'+ _id + '</td><td> '+ _username + ' </td><td>'+ _telphone + ' </td><td>'+ _email + ' </td><td>'+ _level + ' </td><td>'+ _fromtime + ' </td>');
+function addCol(_index, _id, _username, _cztype, _time, _money, _czyttype, _czinstruction, _statues) {
+	$("table#userList_table tr:last").after('<tr><td>'+ _index + '</td><td>'+ _id + '</td><td> '+ _username + ' </td><td>'+ _time + ' </td><td>'+ _cztype + ' </td><td>'+ _money + ' </td><td>'+ _czyttype + ' </td><td>'+ _czinstruction + ' </td><td>'+ _statues + ' </td>');
   /*$th = $("<th>增加的列头</th>");
   $col = $("<td>增加的列</td>");
   $("#userlist>thead>tr").append($th);

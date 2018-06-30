@@ -4,7 +4,7 @@ namespace app\backend\controller;
 use think\Controller;
 use think\Request;
 use think\Session;
-use app\backend\controller\Basecontroller;
+use app\extra\controller\Basecontroller;
 use app\common\model\System_role;
 use app\common\model\System_menu;
 use app\common\model\System_subscriber;

@@ -34,8 +34,8 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label">充值类型</label>
 							<div >
-							    <select >
-								    <option value="">注册分</option>
+							    <select id="recharge_type">
+								    <option value="1">注册分</option>
 						        </select>
 							</div>
 						</div>
@@ -50,10 +50,10 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label">充值用途</label>
 							<div >
-								<select >
-								    <option value="">报单注册</option>
-							        <option value="注册分">帕点</option>
-							        <option value="注册分">其他</option>
+								<select id="czyt_type">
+								    <option value="0">报单注册</option>
+							        <option value="1">帕点</option>
+							        <option value="2">其他</option>
 						        </select>
 							</div>
 						</div>
@@ -61,14 +61,28 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label">充值用途详细说明</label>
 							<div class="col-sm-3">
-								<input type="text" class="form-control" id="recharge_fromtime">
+								<input type="text" class="form-control" id="recharge_deatil">
 							</div>
 						</div>
 						
 					</div>
 					<div class="tile-widget">
-						<button type="button" class="btn btn-primary" id="btn_user_list">确定充值</button>
+						<button type="button" class="btn btn-primary" id="btn_recharge">确定充值</button>
 					</div>
+					
+					<div class="title-body" style="height: 50px;">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">会员ID</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" id="recharge_search_userid">
+							</div>
+						</div>
+						
+					</div>
+					<div class="tile-widget">
+						<button type="button" class="btn btn-primary" id="btn_recharge_search">搜索会员</button>
+					</div>
+					
 
 					<!-- tile widget -->
 					<div class="tile-widget bg-transparent-white-2">
@@ -76,7 +90,7 @@
 						<!-- tile header -->
 						<div class="tile-header">
 							<h1>
-								<strong>会员信息</strong>
+								<strong>充值信息</strong>
 							</h1>
 						</div>
 						<!-- /tile header -->
