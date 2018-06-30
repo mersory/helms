@@ -334,7 +334,7 @@ class Useropt extends Basecontroller
         
     }
     
-    public function userRecharge($user_id, $money, $cz_type, $content, $real_name, $usefor, $details)
+    public function userRecharge($user_id, $money, $cz_type, $content, $usefor, $details)
     {
         $_resdata = array();
         $_resdata["success"] = false;
@@ -358,6 +358,9 @@ class Useropt extends Basecontroller
             $pointRES = $pointOBJ->PointQuery($user_id);
             $regist = $pointRES[0]["regist_point"] + $money;
             $pointRES = $pointOBJ->PointUpdate($user_id, -1, -1, $regist);
+            $userdetailsOBJ = new User_details();
+            $userdetailsRES = $userdetailsOBJ->DetailsQuery($user_id);
+            $real_name = $userdetailsRES[0]["user_name"];
             $rechargeOBJ = new Recharge_record();
             $rechargeRES = $rechargeOBJ->RechargeInsert($user_id, $money, $cz_type, $content, $pointRES,$real_name ,$details, $usefor );
             
@@ -365,6 +368,26 @@ class Useropt extends Basecontroller
             $_resdata["success"] = true;
             $_resdata["result"] = $rechargeQueryRES;
             
+            return json_encode($_resdata);
+        }
+    
+        return json_encode($_resdata);
+    }
+    
+    public function userRechargeQuery($user_id)
+    {
+        $_resdata = array();
+        $_resdata["success"] = false;
+        $_session_user = Session::get(USER_SEESION);
+        $_userid = $_session_user["userId"];
+    
+        if($_userid < "1000")
+        {
+            $rechargeOBJ = new Recharge_record();
+            $rechargeQueryRES = $rechargeOBJ->RechargeQuery($user_id);//不传值，查询所有的用户数据
+            $_resdata["success"] = true;
+            $_resdata["result"] = $rechargeQueryRES;
+    
             return json_encode($_resdata);
         }
     

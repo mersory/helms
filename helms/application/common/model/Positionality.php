@@ -324,7 +324,7 @@ class Positionality extends Model
         $_where = '';
         if ($str > -1)
         {
-            $_where = "json like '%,$str' or json like '$str'";
+            $_where = "json like '%,$str,'";
         }
         else
             return;
@@ -350,16 +350,37 @@ class Positionality extends Model
     
     public function getAllChildByJson($str)//查看当前节点的所有孩子节点，包括多次派生的孩子，返回用户id和json子串
     {
-        $_where = '';
-        if ($str > -1)
-        {
-            $_where = "json like '%$str%'";
-        }
-        else
+        $_res = array();
+        $_current_level = 0;
+        $_res = $this->getAllChildByJsonWithInFiveLevel($str, $_current_level, $_res);
+        return $_res;
+    }
+    
+    public function getAllChildByJsonWithInFiveLevel($str, $current_level, &$_res)//查看当前节点的所有孩子节点，包括多次派生的孩子，返回用户id和json子串
+    {
+        if($current_level >= 5)
             return;
+        
+        $_where = '';
+        if($str == ',')
+        {
+            $_where = "json like ','";
+            //var_dump($_where);
+        }
+        else if ($str > -1)
+        {
+            $_where = "json like '$str'";
+            //var_dump($_where);
+        }
+        else 
+        {
+            return;
+        }
+            
         $_position_info = $this->where($_where)
         ->select();
         $count = count($_position_info);
+        $current_count = $count;
         if ($count < 1)
         {
             return ;
@@ -375,6 +396,8 @@ class Positionality extends Model
                 $parentID = $this->getUserIdByID($_position_info[$count-1]["parent"]);
                 $_res[$_position_info[$count-1]["user_id"]]["parent"] = $parentID;
                 $_res[$_position_info[$count-1]["user_id"]]["left"] = $_position_info[$count-1]["leftchild"];
+                $strTemp = $str.$_position_info[$count-1]["ID"].",";
+                $t = $this->getAllChildByJsonWithInFiveLevel($strTemp, $current_level+1, $_res);
                 $count--;
             }
         }
@@ -403,7 +426,7 @@ class Positionality extends Model
     public function PositionRoot()//查看当前用户的网络结构
     {
         $_where = '';
-        $_where = "json like ''";
+        $_where = "json like ','";
         $_position_info = $this->where($_where)
         ->select();
         $count = count($_position_info);

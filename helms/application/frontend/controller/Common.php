@@ -403,6 +403,10 @@ class Common extends Basecontroller
         $_resdata["info"] = "no";
         if(parent::include_special_characters($applyuserId))
             return json_encode($_resdata) ;
+        if($applyuserId < 1000)
+        {
+            $applyuserId = "admin";
+        }
         $_session_user = Session::get(USER_SEESION);
         $_userid = $_session_user["userId"];
         $_user = new Positionality();
@@ -422,7 +426,8 @@ class Common extends Basecontroller
         {
             $_resdata["info"] = "ok";
             $parent = $_curid[0]["ID"];//
-            $_res = $_user->getAllChildByJson($parent);
+            $curJson = $_curid[0]["json"].$parent.",";
+            $_res = $_user->getAllChildByJson($curJson);
             $_res[$_curid[0]["user_id"]]["currentId"] = $_curid[0]["user_id"];
             $_res[$_curid[0]["user_id"]]["childrenId"] = $_user->getDirectChildrenByJson($_curid[0]["ID"]);
             $_res[$_curid[0]["user_id"]]["ID"] = $_curid[0]["ID"];
