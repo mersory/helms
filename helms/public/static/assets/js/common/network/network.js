@@ -1,5 +1,5 @@
 var getChildrenNetworkUrl = "/public/index.php/frontend/common/get_all_children";
-var getChildrenByParentsNetworkUrl = "/public/index.php/frontend/common/get_all_children_by_parents";
+var getChildrenByParentsNetworkUrl = "/public/index.php/frontend/common/get_all_children";
 $(function() {
 	
 	// 创建用户
@@ -54,11 +54,12 @@ $(function() {
 	$("#network-uplevel").on("click",function(){
 		var parentId = $('#searchUserId').val();
 		if($.trim(parentId) != ""){
-			var urlres =  "/public/index.php/frontend/Adminopt/checkNodeChild";
+			var urlres =  "/public/index.php/frontend/Adminopt/checkNodeParent";
 			$.post(urlres,{id:parentId},function(result){
 				result = JSON.parse(result);
 			if(result.success){
-				refreshNetworkChart(parentId,getChildrenByParentsNetworkUrl);
+				parentId = result.cur_id
+				refreshNetworkChart(parentId,getChildrenNetworkUrl);
 			} else {
 				alert("没有权限查看当前输入节点的网络结构");
 			}
