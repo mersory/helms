@@ -410,6 +410,7 @@ class Common extends Basecontroller
         $_session_user = Session::get(USER_SEESION);
         $_userid = $_session_user["userId"];
         $_user = new Positionality();
+        /*
         if($_userid < "1000")
         {
             $_CURuserId = $_user->PositionRoot();
@@ -418,6 +419,7 @@ class Common extends Basecontroller
                 $applyuserId = $_CURuserId;
             }    
         }
+        */
         $_curid = $_user->PositionQuery($applyuserId);
         //var_dump("ID:".$_curid[0]["ID"]);
         $_userinfo =new User_details();
@@ -461,6 +463,74 @@ class Common extends Basecontroller
         }
     }
     
+    //根据提供的用户$applyuserId，先找到其父节点，然后其他操作与get_all_children函数一致
+    public function get_all_children_by_parents($applyuserId)
+    {
+        $_resdata = array();
+        $_resdata["info"] = "no";
+        if(parent::include_special_characters($applyuserId))
+            return json_encode($_resdata) ;
+        if($applyuserId < "1000")  //此处的作用是将查询框输入的值是1或者其他小于1000的值时，转化成输入admin
+        {
+            $applyuserId = "admin";
+        }
+        $_session_user = Session::get(USER_SEESION);
+        $_userid = $_session_user["userId"];
+        $_user = new Positionality();
+        if($_userid < "1000")  //此处是将登陆的用户是管理员，即缓存是小于1000时，需要找到跟节点
+        {
+            $_CURuserId = $_user->PositionRoot();  //这里的结果就是admin
+            if($applyuserId < "1000")  //当申请的节点小于1000时，转化成admin
+            {
+                $applyuserId = $_CURuserId;
+            }
+        }
+        $_curid = $_user->PositionQuery($applyuserId);
+        if($_curid[0]["parent"] != 0)  //普通节点，非管理员节点
+        {
+            $_curid = $_user->PositionQueryByID($_curid[0]["parent"]);  //找到其节点的父节点
+        }
+        //var_dump("ID:".$_curid[0]["ID"]);
+        $_userinfo =new User_details();
+        if(count($_curid) < 1)
+            return json_encode($_resdata) ;
+        else
+        {
+            $_resdata["info"] = "ok";
+            $parent = $_curid[0]["ID"];//
+            $curJson = $_curid[0]["json"].$parent.",";
+            $_res = $_user->getAllChildByJson($curJson);
+            $_res[$_curid[0]["user_id"]]["currentId"] = $_curid[0]["user_id"];
+            $_res[$_curid[0]["user_id"]]["childrenId"] = $_user->getDirectChildrenByJson($_curid[0]["ID"]);
+            $_res[$_curid[0]["user_id"]]["ID"] = $_curid[0]["ID"];
+            $_res[$_curid[0]["user_id"]]["json"] = $_curid[0]["json"];
+            $_res[$_curid[0]["user_id"]]["parent"] = $_curid[0]["parent"];
+            $_res[$_curid[0]["user_id"]]["left"] = $_curid[0]["leftchild"];
+            $_user_realname = $_userinfo->DetailsQuery($_curid[0]["user_id"]);
+            $_user_realname = $_user_realname[0]["user_name"];
+            $_res[$_curid[0]["user_id"]]["realname"] = $_user_realname;
+            $_keys = array_keys($_res);
+            $_values = array_values($_res);
+            for($i=0; $i<count($_res); $i++)
+            {
+                //changed by Gavin start
+                $_user_danshu = $_user->PositionQuery($_keys[$i]);
+                $l_ds = $_user_danshu[0]["l_ds"];
+                $r_ds = $_user_danshu[0]["r_ds"];
+                $sq_lds = $_user_danshu[0]["sq_lds"];
+                $sq_rds = $_user_danshu[0]["sq_rds"];
+                //changed by Gavin end
+                $_user_realname = $_userinfo->DetailsQuery($_keys[$i]);
+                $_user_realname = $_user_realname[0]["user_name"];
+                //changed by Gavin start
+                //$_res[$_keys[$i]]["realname"] = $_user_realname;
+                $_res[$_keys[$i]]["realname"] = $_user_realname."&nbsp&nbsp总：".$l_ds."&nbsp-&nbsp".$r_ds.";&nbsp剩：".$sq_lds."&nbsp-&nbsp".$sq_rds;
+                //changed by Gavin end
+            }
+            $_resdata["res"] = $_res;
+            return json_encode($_resdata) ;
+        }
+    }
     
     public function add_net_topology($parent)
     {

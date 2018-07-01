@@ -450,6 +450,19 @@ class Positionality extends Model
         return $state;
     }
     
+    public function PositionDelByUserID($user_id)
+    {
+        $_where = '';
+        if ($user_id > 0)
+        {
+            $_where = "user_id = $user_id";
+        }
+         
+        $state = $this->where($_where)->delete();
+    
+        return $state;
+    }
+    
     public function PositionInsertPrev($user_id, $parent)
     {
         $_positioninfo = array();

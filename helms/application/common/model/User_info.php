@@ -3,6 +3,7 @@ namespace app\common\model;
 
 use think\Model;
 use app\trigger\controller\External;
+use think\Session;
 use think\commit;
 
 class User_info extends Model
@@ -137,6 +138,21 @@ class User_info extends Model
                 //var_dump("no priority");
             }
         }
+        return $state;
+    }
+    
+    public function UserinfoDelByForce($id)//delete userinfo record by admin
+    {
+        $_resdata = array();
+        $_resdata["success"] = false;
+        $_session_user = Session::get(USER_SEESION);
+        $_userid = $_session_user["userId"];
+        $state = 0;
+        if($_userid < "1000")
+        {
+            $state = $this->where("ID = $id")->delete();
+        }
+        
         return $state;
     }
     

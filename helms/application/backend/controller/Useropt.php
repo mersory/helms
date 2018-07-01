@@ -394,6 +394,43 @@ class Useropt extends Basecontroller
         return json_encode($_resdata);
     }
     
+    //删除注册了但是没有激活的用户
+    public function userDelete($userid)
+    {
+        $_resdata = array();
+        $_resdata["success"] = false;
+        $_session_user = Session::get(USER_SEESION);
+        $_userid = $_session_user["userId"];
+        
+        if($_userid < "1000")
+        {            
+            $userinfoOBJ = new User_info();
+            $userstatus = $userinfoOBJ->getUserstate($userid);  
+            if($userstatus == 0)
+            {
+                $pointOBJ = new User_point();
+                $priorityOBJ = new User_priority();
+                $roleOBJ = new User_role();
+                $positionOBJ = new Positionality();
+                $bankOBJ = new User_bankinfo();
+                $detailsOBJ = new User_details();
+                
+                $pointRES = $pointOBJ->PointDel($userid);
+                $priorityRES = $priorityOBJ->PriorityDel($userid);
+                $roleRES = $roleOBJ->RoleDel($userid);
+                $positionRES = $positionOBJ->PositionDelByUserID($userid);
+                $bankRES = $bankOBJ->BankinfoDel($userid);
+                $detailsRES = $detailsOBJ->DetailsDel($userid);
+                $userinfoRES = $userinfoOBJ->UserinfoDelByForce($userid);
+                
+                if($pointRES && $priorityRES && $roleRES && $positionRES && $bankRES && $detailsRES && $userinfoRES)
+                    $_resdata["success"] = true;
+            }
+            return json_encode($_resdata);
+        }
+        else
+            return json_encode($_resdata);
+    }
     
 //---------------------------------单个接口测试--------------------------------
 //---------------------------------单个接口测试--------------------------------
