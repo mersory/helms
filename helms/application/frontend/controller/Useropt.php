@@ -148,8 +148,8 @@ class Useropt extends Basecontroller
 		//$extern = new External();
 		//$ID = $extern->_auto_userid();
 		//将密码进行md5算法加密，再进行存储
-        $pwd1 = md5($pwd1);
-        $pwd2 = md5($pwd2);
+        $pwd1 = md5($pwd1."hermes");
+        $pwd2 = md5($pwd2."hermes");
         $_user_info = new User_info();
         //此处插入用的是用户名和密码，必须这样做，因为此处插入之后才会有对应得ID生成，以便后续使用，此处不需要提供ID，因为主表的ID是自增的
         $_state = $_user_info->UserinfoInsert($name, $pwd1, $pwd2, $ID);
@@ -414,6 +414,7 @@ class Useropt extends Basecontroller
         }else{
             $_user_id = $_session_user["userId"];
             $user = new User_info();
+            $pwd = md5($pwd."hermes");
             $res = $user->UserinfoQuery($_user_id, $pwd);
             if(count($res) < 1)//输入的用户名或者密码错误
             {
@@ -421,6 +422,7 @@ class Useropt extends Basecontroller
             }
             else
             {
+                $newpwd = md5($newpwd."hermes");
                 $resUpdate = $user->updateUserPwd($_user_id, $newpwd);
             }
         }
@@ -441,6 +443,7 @@ class Useropt extends Basecontroller
             return $this->redirect("/login/login/index");
         }else{
             $_user_id = $_session_user["userId"];
+            $pwd = md5($pwd."hermes");
             $user = new User_info();
             $res = $user->UserinfoCheckMinor($_user_id, $pwd);
             if(count($res) < 1)//输入的用户名或者密码错误
@@ -449,6 +452,7 @@ class Useropt extends Basecontroller
             }
             else
             {
+                $newpwd = md5($newpwd."hermes");
                 $resUpdate = $user->updateUserMinorPwd($_user_id, $newpwd);
             }
         }
