@@ -29,7 +29,6 @@ class Recharge_record extends Model
         $count = count($_recharge);
         if ($count < 1)
         {
-            var_dump("Realtime.php ID : not exsist".__LINE__);
             return ;
         }
 
