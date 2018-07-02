@@ -1591,6 +1591,8 @@ class Adminopt extends Basecontroller
 	public function change_gujia($use_gujia)
 	{
 	    $awardOBJ = new Awardopt();
+	    $res = array();
+	    $res["success"] = false;
 	    $use_gujia = $awardOBJ->_wei2($use_gujia);
 	    if($use_gujia > 1 && $use_gujia < 2)
 	    {
@@ -1599,7 +1601,9 @@ class Adminopt extends Basecontroller
 	        $gpsetRES = $gpsetRES[0];
 	        $currentGujia = $gpsetRES["now_price"];
 	        if($currentGujia >= $use_gujia)
-	            return false;
+	        {
+	            return json_encode($res);
+	        }
 	                 
             $gpSetOBJ->GpSetUpdate(-1, $use_gujia);
              
@@ -1644,10 +1648,11 @@ class Adminopt extends Basecontroller
 	        $this->chaifen_act($gpsetRES,0);//
 	    }else 
 	    {
-	        return false;
+	        return json_encode($res);
 	    }
-        
-        
+	    
+        $res["success"] = true;
+	    return json_encode($res);
 	}
 	
 	

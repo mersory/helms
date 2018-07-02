@@ -23,20 +23,11 @@
 			<div class="col-md-10">
 				<section class="tile color transparent-white">
 
-					<div class="title-body" style="height: 100px;">
+					<div class="title-body" style="height: 80px;">
 						<div class="form-group">
 							<label class="col-sm-3 control-label">会员ID</label>
 							<div class="col-sm-3">
 								<input type="text" class="form-control" id="recharge_userid">
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<label class="col-sm-3 control-label">充值类型</label>
-							<div >
-							    <select id="recharge_type">
-								    <option value="1">注册分</option>
-						        </select>
 							</div>
 						</div>
 						
@@ -48,8 +39,16 @@
 						</div>
 						
 						<div class="form-group">
+							<label class="col-sm-3 control-label">充值用途详细说明</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" id="recharge_deatil">
+							</div>
+						</div>
+					</div>
+					<div class="title-body" style="height: 15px;">
+						<div class="form-group">
 							<label class="col-sm-3 control-label">充值用途</label>
-							<div >
+							<div class="col-sm-3">
 								<select id="czyt_type">
 								    <option value="0">报单注册</option>
 							        <option value="1">帕点</option>
@@ -59,9 +58,11 @@
 						</div>
 						
 						<div class="form-group">
-							<label class="col-sm-3 control-label">充值用途详细说明</label>
+							<label class="col-sm-3 control-label">充值类型</label>
 							<div class="col-sm-3">
-								<input type="text" class="form-control" id="recharge_deatil">
+							    <select id="recharge_type">
+								    <option value="1">注册分</option>
+						        </select>
 							</div>
 						</div>
 						
@@ -70,7 +71,7 @@
 						<button type="button" class="btn btn-primary" id="btn_recharge">确定充值</button>
 					</div>
 					
-					<div class="title-body" style="height: 50px;">
+					<div class="title-body" style="height: 25px;">
 						<div class="form-group">
 							<label class="col-sm-3 control-label">会员ID</label>
 							<div class="col-sm-3">

@@ -16,6 +16,7 @@ use app\extra\controller\Basecontroller;
 use app\common\model\Positionality;
 use app\common\model\System_subscriber;
 use app\common\model\Role;
+use app\common\model\Gp_set;
 
 class Common extends Basecontroller
 {       
@@ -285,6 +286,19 @@ class Common extends Basecontroller
         $htmls = $this->fetch();
         return $htmls;
         
+    }
+    
+    public function changegujia()
+    {
+        $gpset = new Gp_set();
+        $gpsetres = $gpset->GpSetQuery();
+        $_resdata["gujia"] = $gpsetres[0]["now_price"];
+        $_resdata["qishu"] = $gpsetres[0]["qishu"];        
+        $this->assign('gujia_data', $_resdata);
+        // 取回打包后的数据
+        $htmls = $this->fetch();
+        return $htmls;
+    
     }
     
     public function memberApplication()

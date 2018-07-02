@@ -365,8 +365,10 @@ class Useropt extends Basecontroller
             $rechargeRES = $rechargeOBJ->RechargeInsert($user_id, $money, $cz_type, $content, $pointRES,$real_name ,$details, $usefor );
             
             $rechargeQueryRES = $rechargeOBJ->RechargeQuery();//不传值，查询所有的用户数据
-            $_resdata["success"] = true;
-            $_resdata["result"] = $rechargeQueryRES;
+            if($rechargeRES > 0 && count($rechargeQueryRES) > 0){
+                $_resdata["success"] = true;
+                $_resdata["result"] = $rechargeQueryRES;
+            }
             
             return json_encode($_resdata);
         }
@@ -395,7 +397,7 @@ class Useropt extends Basecontroller
     }
     
     //删除注册了但是没有激活的用户
-    public function userDelete($userid)
+    public function inactiveUserDelete($userid)
     {
         $_resdata = array();
         $_resdata["success"] = false;
@@ -430,6 +432,49 @@ class Useropt extends Basecontroller
         }
         else
             return json_encode($_resdata);
+    }
+    
+    public function gpsetgujia()
+    {
+        $gpset = new Gp_set();
+        $gpres = $gpset->GpSetQuery();
+        $resdata = array();
+        $resdata["success"] = false;
+        $_res = array();
+        if(count($gpres) > 0)
+        {
+            $resdata["success"] = true;
+            $_res["gujia"] = $gpres[0]["now_price"];
+            $_res["qishu"] = $gpres[0]["qishu"];
+            $resdata["res"] = $_res;
+        }
+        
+        return json_encode($resdata);
+    }
+    
+    public function userGujiaGue($user_id)
+    {
+        $gpset = new Gp_set();
+        $detail = new User_details();
+        $position = new Positionality();
+        
+        $gpres = $gpset->GpSetQuery();
+        $detailres = $detail->DetailsQuery($user_id);
+        $positionres = $position->PositionQuery($user_id);
+        $resdata = array();
+        $resdata["success"] = false;
+        $_res = array();
+        if(count($gpres) > 0 && count($detailres) > 0 && count($positionres) > 0)
+        {
+            $resdata["success"] = true;
+            $res = array();
+            $res["current_gujia"] = $gpres[0]["now_price"];
+            $res["pay_gujia"] = $detailres[0]["pay_gujia"];
+            $res["gushu"] = $positionres[0]["gushu"];
+            $res["gue"] = $positionres[0]["bz5"];
+            $resdata["result"] = $res;
+        }
+        return json_encode($resdata);
     }
     
 //---------------------------------单个接口测试--------------------------------
