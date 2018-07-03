@@ -110,15 +110,14 @@ function refreshNetworkChart(_userId, loadNetworkUrl){
 }
 
 function handleNetworkData(mapData,userId){
-	return getUserInfo(mapData,userId);
+	var index = 1;
+	return getUserInfo(mapData,userId,index);
 }
 
 //递归返回五层网络结构
-function getUserInfo(mapData,userId){
+function getUserInfo(mapData,userId,index){
 	if(null != userId){
 		var data = mapData[userId];
-	
-		var index = 0;
 		var originObject = new Object();
 		originObject.userId = data.currentId;
 		originObject.realname = data.realname;
@@ -127,7 +126,7 @@ function getUserInfo(mapData,userId){
 			var childrenArray = new Array();
 			for(var i in childrenSplitArray){
 				if (index<5){
-					childrenArray.push(getUserInfo(mapData,childrenSplitArray[i]));
+					childrenArray.push(getUserInfo(mapData,childrenSplitArray[i],index+1));
 				}
 				else
 					break;

@@ -46,6 +46,19 @@ class System_subscriber extends Model
         return $_subscriber_info;
     }
     
+    // 根据用户ID查询指定的角色
+    public function SubscriberQueryById($userid)
+    {
+        $_subscriber_info = $this->where("id = '$userid'")
+                                 ->select();
+        $count = count($_subscriber_info);
+        if ($count < 1) {
+            //var_dump("subscriber info not exsist");
+            return;
+        }
+        return $_subscriber_info;
+    }
+    
     // 根据用户ID查询所有的角色
     public function SubscriberByRoleIdQuery($roleId)
     {
