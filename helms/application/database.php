@@ -13,13 +13,13 @@ return [
     // 锟斤拷锟捷匡拷锟斤拷锟斤拷
     'type'            => 'mysql',
     // 锟斤拷锟斤拷锟斤拷锟斤拷址
-    'hostname'        => '127.0.0.1',
+    'hostname'        => '47.94.92.83',
     // 锟斤拷锟捷匡拷锟斤拷
-    'database'        => 'mydb',
+    'database'        => 'helms_clone',
     // 锟矫伙拷锟斤拷
-    'username'        => 'root',
+    'username'        => 'helms',
     // 锟斤拷锟斤拷
-    'password'        => '',
+    'password'        => 'Helms@123',
     // 锟剿匡拷
     'hostport'        => '3306',
     // 锟斤拷锟斤拷dsn
