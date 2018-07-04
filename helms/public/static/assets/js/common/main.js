@@ -1,3 +1,16 @@
+$(function(){
+	//登出
+	$(".login-out").on("click",function(){
+		var url =  "/public/index.php/login/login/loginout";
+		 $.post(url,{},function(result){
+			 result = JSON.parse(result);
+			 if(result.result){
+				 window.location.reload();
+			 }
+		 });
+	});
+});
+
 /** 
 *	js中更改日期  
 * 	y年， m月， d日， h小时， n分钟，s秒  
@@ -55,4 +68,24 @@ function isEmpty(value){
 	}else{
 		return false;
 	}
+}
+
+function refreshShoppingCart(){
+	var urlres =  "/public/index.php/frontend/store/getShoppingcartCount";
+	$.post(urlres,{},function(result){
+		result = JSON.parse(result);
+		if(result.result){
+			$("shoppingcart_count").empty().html(result.count);
+		}
+	});
+}
+
+function showMask(){
+	$(".common-mask").show();
+	$(".common-mask .loader").show();
+}
+
+function hideMask(){
+	$(".common-mask").hide();
+	$(".common-mask .loader").hide();
 }

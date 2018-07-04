@@ -3,8 +3,8 @@
 
           <!-- Branding -->
           <div class="navbar-header col-md-2">
-            <a class="navbar-brand" href="index.html">
-              <strong>HERMS</strong>
+            <a class="navbar-brand" href="/public/index.php/frontend/common/index.html">
+              <strong>HERMES</strong>
             </a>
             <div class="sidebar-collapse">
               <a href="#">
@@ -27,6 +27,15 @@
               <li class="divided">
               	<a href="/public/index.php/frontend/store/shoppingcart" >
                 <img style="width:50px;height:45px;" src="_IMG_/checkout/shoppingcart.jpg"></img>
+                <span style="border-radius: 50%;    height: 20px;    width: 20px;    display: inline-block;    background: #238ff9;      vertical-align: top;right: 10px;top: 0px;position: absolute;">  
+      				<span style="display: block;    color: #FFFFFF;    height: 20px;    line-height: 20px;    text-align: center" class="shoppingcart_count">
+      					{if condition="empty($Think.session.session_user['shoppingcart_count']) neq true"} 
+	      					{$Think.session.session_user['shoppingcart_count']}
+	      				{else}
+	      					0
+	      				{/if}	
+      				</span>  
+ 				</span> 
                 </a>
               </li>
               
@@ -65,7 +74,7 @@
                   <li class="divider"></li>
 
                   <li>
-                    <a href="/public/index.php/login/login/index"><i class="fa fa-power-off"></i> 登出</a>
+                    <a href="#" class="login-out"><i class="fa fa-power-off"></i> 登出</a>
                   </li>
                 </ul>
               </li>

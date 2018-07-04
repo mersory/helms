@@ -504,7 +504,7 @@ class Store extends Basecontroller
 
     /**
      * 查询市
-     * 
+     *
      * @return string
      */
     public function getCityByProvince()
@@ -520,7 +520,7 @@ class Store extends Basecontroller
 
     /**
      * 查询区县
-     * 
+     *
      * @return string
      */
     public function getAreaByCity()
@@ -538,7 +538,7 @@ class Store extends Basecontroller
     {
         $t = time();
         $orderSuffix = date("YmdHis", $t);
-        return "HERMS" . $orderSuffix;
+        return "HERMES" . $orderSuffix;
     }
     
     // 用户确认收货
@@ -562,6 +562,17 @@ class Store extends Basecontroller
         $orderInfo = new Store_order();
         $orderInfo->StoreOrderStatusUpdate($orderId, 3);
         
+        return json_encode($_resdata);
+    }
+
+    public function getShoppingcartCount()
+    {
+        $_shoppingcart_info = new Store_shoppingcart();
+        $_shoppingcart_info_count = $_shoppingcart_info->ShoppingcartInfoAllQueryCount($_res[0]["ID"]);
+        $_session_user["shoppingcart_count"] = $_shoppingcart_info_count;
+        $_resdata = array();
+        $_resdata['result'] = true;
+        $_resdata['count'] = $_shoppingcart_info;
         return json_encode($_resdata);
     }
 }

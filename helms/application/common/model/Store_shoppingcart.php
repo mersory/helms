@@ -23,6 +23,18 @@ class Store_shoppingcart extends Model
     }
     
     /**
+     * 查询所有购物车
+     * @param unknown $userId
+     * @return unknown
+     */
+    public function ShoppingcartInfoAllQueryCount($userId)
+    {
+        $sql = "select sum(product_num) from helms_store_shoppingcart  where user_id = '$userId'";
+        $_shoppingcartinfo = $this->query($sql);
+        return count($_shoppingcartinfo);
+    }
+    
+    /**
      * 查询购物车是否存在某件商品
      * @param unknown $productId
      * @param unknown $userId

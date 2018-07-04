@@ -1,4 +1,5 @@
-var loadNetworkUrl = "/public/index.php/frontend/common/get_all_children";
+var getChildrenNetworkUrl = "/public/index.php/frontend/common/get_all_children";
+var getChildrenByParentsNetworkUrl = "/public/index.php/frontend/common/get_all_children";
 $(function() {
 	
 	// 创建用户
@@ -13,7 +14,7 @@ $(function() {
 							$.post(urlres,{id:parentId},function(result){
 								result = JSON.parse(result);
 								if(result.success == 1){
-									var url = "/public/index.php/frontend/Useropt/RegistIndex?parentId=" + parentId+"&position=left";
+									var url = "/public/index.php/backend/Useropt/registindex?parentId=" + parentId+"&position=left";
 									window.open(url);
 								} else if(result.success == 0){
 									alert("当前点位已存在两个子点位，不可再产生子点位，请重新选择");
@@ -37,19 +38,37 @@ $(function() {
 			$.post(urlres,{id:parentId},function(result){
 				result = JSON.parse(result);
 			if(result.success){
-				refreshNetworkChart(parentId);
+				refreshNetworkChart(parentId,getChildrenNetworkUrl);
 			} else {
 				alert("没有权限查看当前输入节点的网络结构");
 			}
 			});
 			//refreshNetworkChart(parentId);
 		}
-	})
+	});
 	
-	refreshNetworkChart( $('#searchUserId').val());
+	//返回上一层按钮
+	$("#network-uplevel").on("click",function(){
+		var parentId = $('#searchUserId').val();
+		if($.trim(parentId) != ""){
+			var urlres =  "/public/index.php/frontend/Adminopt/checkNodeParent";
+			$.post(urlres,{id:parentId},function(result){
+				result = JSON.parse(result);
+			if(result.success){
+				parentId = result.cur_id
+				refreshNetworkChart(parentId,getChildrenNetworkUrl);
+			} else {
+				alert("没有权限查看当前输入节点的网络结构");
+			}
+			});
+			//refreshNetworkChart(parentId);
+		}
+	});
+	
+	refreshNetworkChart( $('#searchUserId').val(),getChildrenNetworkUrl);
 })
 
-function refreshNetworkChart(_userId){
+function refreshNetworkChart(_userId, loadNetworkUrl){
 	//var userId = "100042";
 	$.post(loadNetworkUrl, {
 		applyuserId : _userId
@@ -85,6 +104,8 @@ function refreshNetworkChart(_userId){
 					var $this = $(this);
 					$('#rd-node-user').val($this.find('.title').text());
 					$('#rd-introduce-user').val($this.find('.title').text());
+					$('#searchUserId').val($this.find('.title').text());
+					refreshNetworkChart( $('#searchUserId').val(),getChildrenNetworkUrl);
 				});		
 			}
 		}else{
@@ -94,14 +115,14 @@ function refreshNetworkChart(_userId){
 }
 
 function handleNetworkData(mapData,userId){
-	return getUserInfo(mapData,userId);
+	var index = 1;
+	return getUserInfo(mapData,userId,index);
 }
 
 //递归返回五层网络结构
-function getUserInfo(mapData,userId){
+function getUserInfo(mapData,userId,index){
 	if(null != userId){
 		var data = mapData[userId];
-	
 		var originObject = new Object();
 		originObject.userId = data.currentId;
 		originObject.realname = data.realname;
@@ -109,7 +130,11 @@ function getUserInfo(mapData,userId){
 			var childrenSplitArray = data.childrenId;
 			var childrenArray = new Array();
 			for(var i in childrenSplitArray){
-				childrenArray.push(getUserInfo(mapData,childrenSplitArray[i]));
+				if (index<5){
+					childrenArray.push(getUserInfo(mapData,childrenSplitArray[i],index+1));
+				}
+				else
+					break;
 			}
 			originObject.children  = childrenArray;
 		}
