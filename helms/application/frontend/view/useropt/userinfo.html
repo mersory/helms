@@ -13,7 +13,7 @@
 		</h2>
 		<div class="breadcrumbs">
 			<ol class="breadcrumb">
-				<li><a href="index.html">HERMS</a></li>
+				<li><a href="index.html">HERMES</a></li>
 				<li class="active">个人信息</li>
 			</ol>
 		</div>
@@ -77,7 +77,7 @@
 							<div class="form-group">
 								<label for="email" class="col-sm-3 control-label">银行名称</label>
 								<div class="col-sm-8">
-                                    <input type="text" id="changeuserinfo_bankname" class="form-control" value="{$pass_data.bank_name}">
+                                    <input type="text" id="changeuserinfo_bankname" class="form-control" readonly="readonly" value="{$pass_data.bank_name}">
                                 </div>
 							</div>
 							
@@ -98,8 +98,8 @@
 							<div class="form-group">
 								<label for="email" class="col-sm-3 control-label">开户行省市</label>
 								<div class="col-sm-8" data-toggle="distpicker">
-									<select class="form-control" id="province" name="province" data-province="---- 选择省 ----" value="{$pass_data.bank_province}"></select> 
-									<select class="form-control" id="city" name="city" data-city="---- 选择市 ----" value="{$pass_data.bank_city}"></select> 
+									<select class="form-control" id="province" name="province" data-province="{$pass_data.bank_province}"></select> 
+									<select class="form-control" id="city" name="city" data-city="{$pass_data.bank_city}"></select> 
 								</div>
 							</div>
 							

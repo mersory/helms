@@ -20,6 +20,8 @@ use app\common\model\Role;
 use app\extra\controller\Basecontroller;
 use app\trigger\controller\External;
 use app\common\model\Positionality;
+use app\common\model\Gp_set;
+use app\common\model\Recharge_record;
 
 class Useropt extends Basecontroller
 {
@@ -330,6 +332,149 @@ class Useropt extends Basecontroller
                 break;
         }
         
+    }
+    
+    public function userRecharge($user_id, $money, $cz_type, $content, $usefor, $details)
+    {
+        $_resdata = array();
+        $_resdata["success"] = false;
+        $_session_user = Session::get(USER_SEESION);
+        $_userid = $_session_user["userId"];
+    
+        if($_userid < "1000")
+        {
+            /*
+            $posOBJ = new Positionality();
+            $gpsetOBJ = new Gp_set();
+            $gpRES = $gpsetOBJ->GpSetQuery();
+            $gujia = $gpRES[0]["now_price"];
+            $posRES = $posOBJ->PositionQuery($user_id);
+            $posRES = $posRES[0];
+            $gushu = intval($money/$gujia) + $posRES["gushu"];
+            $gue= $gushu * $gujia;
+            $posRES = $posOBJ->updateGushu($user_id,$gushu , $gue);
+            */
+            $pointOBJ = new User_point();
+            $pointRES = $pointOBJ->PointQuery($user_id);
+            $regist = $pointRES[0]["regist_point"] + $money;
+            $pointRES = $pointOBJ->PointUpdate($user_id, -1, -1, $regist);
+            $userdetailsOBJ = new User_details();
+            $userdetailsRES = $userdetailsOBJ->DetailsQuery($user_id);
+            $real_name = $userdetailsRES[0]["user_name"];
+            $rechargeOBJ = new Recharge_record();
+            $rechargeRES = $rechargeOBJ->RechargeInsert($user_id, $money, $cz_type, $content, $pointRES,$real_name ,$details, $usefor );
+            
+            $rechargeQueryRES = $rechargeOBJ->RechargeQuery();//不传值，查询所有的用户数据
+            if($rechargeRES > 0 && count($rechargeQueryRES) > 0){
+                $_resdata["success"] = true;
+                $_resdata["result"] = $rechargeQueryRES;
+            }
+            
+            return json_encode($_resdata);
+        }
+    
+        return json_encode($_resdata);
+    }
+    
+    public function userRechargeQuery($user_id)
+    {
+        $_resdata = array();
+        $_resdata["success"] = false;
+        $_session_user = Session::get(USER_SEESION);
+        $_userid = $_session_user["userId"];
+    
+        if($_userid < "1000")
+        {
+            $rechargeOBJ = new Recharge_record();
+            $rechargeQueryRES = $rechargeOBJ->RechargeQuery($user_id);//不传值，查询所有的用户数据
+            $_resdata["success"] = true;
+            $_resdata["result"] = $rechargeQueryRES;
+    
+            return json_encode($_resdata);
+        }
+    
+        return json_encode($_resdata);
+    }
+    
+    //删除注册了但是没有激活的用户
+    public function inactiveUserDelete($userid)
+    {
+        $_resdata = array();
+        $_resdata["success"] = false;
+        $_session_user = Session::get(USER_SEESION);
+        $_userid = $_session_user["userId"];
+        
+        if($_userid < "1000")
+        {            
+            $userinfoOBJ = new User_info();
+            $userstatus = $userinfoOBJ->getUserstate($userid);  
+            if($userstatus == 0)
+            {
+                $pointOBJ = new User_point();
+                $priorityOBJ = new User_priority();
+                $roleOBJ = new User_role();
+                $positionOBJ = new Positionality();
+                $bankOBJ = new User_bankinfo();
+                $detailsOBJ = new User_details();
+                
+                $pointRES = $pointOBJ->PointDel($userid);
+                $priorityRES = $priorityOBJ->PriorityDel($userid);
+                $roleRES = $roleOBJ->RoleDel($userid);
+                $positionRES = $positionOBJ->PositionDelByUserID($userid);
+                $bankRES = $bankOBJ->BankinfoDel($userid);
+                $detailsRES = $detailsOBJ->DetailsDel($userid);
+                $userinfoRES = $userinfoOBJ->UserinfoDelByForce($userid);
+                
+                if($pointRES && $priorityRES && $roleRES && $positionRES && $bankRES && $detailsRES && $userinfoRES)
+                    $_resdata["success"] = true;
+            }
+            return json_encode($_resdata);
+        }
+        else
+            return json_encode($_resdata);
+    }
+    
+    public function gpsetgujia()
+    {
+        $gpset = new Gp_set();
+        $gpres = $gpset->GpSetQuery();
+        $resdata = array();
+        $resdata["success"] = false;
+        $_res = array();
+        if(count($gpres) > 0)
+        {
+            $resdata["success"] = true;
+            $_res["gujia"] = $gpres[0]["now_price"];
+            $_res["qishu"] = $gpres[0]["qishu"];
+            $resdata["res"] = $_res;
+        }
+        
+        return json_encode($resdata);
+    }
+    
+    public function userGujiaGue($user_id)
+    {
+        $gpset = new Gp_set();
+        $detail = new User_details();
+        $position = new Positionality();
+        
+        $gpres = $gpset->GpSetQuery();
+        $detailres = $detail->DetailsQuery($user_id);
+        $positionres = $position->PositionQuery($user_id);
+        $resdata = array();
+        $resdata["success"] = false;
+        $_res = array();
+        if(count($gpres) > 0 && count($detailres) > 0 && count($positionres) > 0)
+        {
+            $resdata["success"] = true;
+            $res = array();
+            $res["current_gujia"] = $gpres[0]["now_price"];
+            $res["pay_gujia"] = $detailres[0]["pay_gujia"];
+            $res["gushu"] = $positionres[0]["gushu"];
+            $res["gue"] = $positionres[0]["bz5"];
+            $resdata["result"] = $res;
+        }
+        return json_encode($resdata);
     }
     
 //---------------------------------单个接口测试--------------------------------

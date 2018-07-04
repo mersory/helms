@@ -4,7 +4,7 @@ namespace app\backend\controller;
 use think\Controller;
 use think\Request;
 use think\Session;
-use app\backend\controller\Basecontroller;
+use app\extra\controller\Basecontroller;
 use app\common\model\System_role;
 use app\common\model\System_menu;
 use app\common\model\System_subscriber;
@@ -25,7 +25,10 @@ class System extends Basecontroller
             
             $this->assign('menu_data', $res);
             $_role = new System_subscriber();
-            $_role_info = $_role->SubscriberAllQuery();
+            if(1 == $_user_id)
+                $_role_info = $_role->SubscriberAllQuery();
+            else 
+                $_role_info = $_role->SubscriberQueryById($_user_id);
             // 向V层传数据
             $this->assign('pass_data', $_role_info);
             

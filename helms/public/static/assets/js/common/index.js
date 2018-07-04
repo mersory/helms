@@ -207,7 +207,8 @@ $(function() {
 				bank_account_name:bank_account_name},function(result){
 				result = JSON.parse(result);
 				if(result.ok == 1){
-					alert('修改成功');
+					alert('修改成功,返回首页');
+					window.location.href="/public/index.php/frontend/Useropt/userinfo";
 				} else if(result.ok == 0){
 					alert("修改失败");
 				} 
@@ -216,6 +217,72 @@ $(function() {
 		else
 		{
 			alert("请填写信息");
+		}
+	});
+	
+	//修改一级密码按钮
+	$("#updatepwd_btn_1").on("click",function(){
+		var userid = $('#updatepwd_user_id').val();
+		var old_pwd = $('#updatepwd_oldpwd_1').val();
+		var new_pwd = $('#updatepwd_newpwd_1').val();
+		var new_pwd_confirm = $('#updatepwd_newpwd_1_comfirm').val();
+		
+		if($.trim(userid) != "" && $.trim(new_pwd) != ""){
+			var urlres =  "/public/index.php/frontend/Useropt/updatePwdSingle";
+			if(new_pwd == new_pwd_confirm){
+				$.post(urlres,{pwd:old_pwd,
+					newpwd:new_pwd},function(result){
+					result = JSON.parse(result);
+					if(result.ok == 1){
+						alert('修改成功');
+					} else if(result.ok == 0){
+						alert("修改失败");
+						return false;
+					} 
+				});
+			}
+			else{
+				alert("两次输入密码不一致");
+				return false;
+			}
+		}
+		else
+		{
+			alert("请填写信息，密码不可为空");
+			return false;
+		}
+	});
+	
+	//修改二级密码按钮
+	$("#updatepwd_btn_2").on("click",function(){
+		var userid = $('#updatepwd_user_id').val();
+		var old_pwd = $('#updatepwd_oldpwd_2').val();
+		var new_pwd = $('#updatepwd_newpwd_2').val();
+		var new_pwd_confirm = $('#updatepwd_newpwd_2_comfirm').val();
+		
+		if($.trim(userid) != "" && $.trim(new_pwd) != ""){
+			var urlres =  "/public/index.php/frontend/Useropt/updateMinorPwdSingle";
+			if(new_pwd == new_pwd_confirm){
+				$.post(urlres,{pwd:old_pwd,
+					newpwd:new_pwd},function(result){
+					result = JSON.parse(result);
+					if(result.ok == 1){
+						alert('修改成功');
+					} else if(result.ok == 0){
+						alert("修改失败");
+						return false;
+					} 
+				});
+			}
+			else{
+				alert("两次输入密码不一致");
+				return false;
+			}
+		}
+		else
+		{
+			alert("请填写信息,密码不可为空");
+			return false;
 		}
 	});
 })

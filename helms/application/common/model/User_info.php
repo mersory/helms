@@ -3,6 +3,7 @@ namespace app\common\model;
 
 use think\Model;
 use app\trigger\controller\External;
+use think\Session;
 use think\commit;
 
 class User_info extends Model
@@ -137,6 +138,21 @@ class User_info extends Model
                 //var_dump("no priority");
             }
         }
+        return $state;
+    }
+    
+    public function UserinfoDelByForce($id)//delete userinfo record by admin
+    {
+        $_resdata = array();
+        $_resdata["success"] = false;
+        $_session_user = Session::get(USER_SEESION);
+        $_userid = $_session_user["userId"];
+        $state = 0;
+        if($_userid < "1000")
+        {
+            $state = $this->where("ID = $id")->delete();
+        }
+        
         return $state;
     }
     
@@ -517,6 +533,60 @@ class User_info extends Model
             return;
     }
     
+    //根据提供信息，查询当前用户信息
+    public function UserSearchWithOutAdmin($_userid, $_username, $_telphone, $_email, $_fromtime, $_totime)
+    {
+        $_where = '';
+        if (strcmp("$_userid", "") )
+        {
+            $_where = "info.ID = '$_userid'";   //���ﲻҪ=���ţ���Ϊ�������ݿ��е�ID����int����
+        }
+        else
+        {
+            $_where = "info.ID != -1";
+        }
+        if (strcmp("$_username", "") )
+        {
+            $_where = "$_where and info.username = '$_username'";//������Ҫ�������
+        }
+        if (strcmp("$_telphone", "") )
+        {
+            $_where = "$_where and details.telphone = '$_telphone'";//�������������������ݿ����
+        }
+        if (strcmp("$_email", "") )
+        {
+            $_where = "$_where and details.email = '$_email'";
+        }
+        if (strcmp("$_fromtime", "") )
+        {
+            $_where = "$_where and details.open_time > '$_fromtime'";
+        }
+        if (strcmp("$_totime", "") )
+        {
+            $_where = "$_where and details.open_time < '$_totime'";
+        }
+        if (strcmp("$_where", ""))
+        {
+            //changed by Gavin start model7
+            $res = $this->table('helms_user_info info, helms_user_details details, helms_user_point point, helms_positionality positionality')
+            ->where("$_where and info.ID=details.ID and info.user_status > 0 and details.recommender != '0' and point.ID=info.ID and positionality.user_id=info.ID")
+            ->select();
+            //changed by Gavin end model7
+        }
+        else
+        {
+            //changed by Gavin start model7
+            $res = $this->table('helms_user_info info, helms_user_details details, helms_user_point point, helms_positionality positionality')//�˴������ݿ�ǰ׺����ʡ��
+            ->where("info.ID=details.ID and info.user_status > 0 and details.recommender != '0' and point.ID=info.ID and positionality.user_id=info.ID")
+            ->select();
+            //changed by Gavin end model7
+        }
+        if(count($res) > 0)
+            return $res;
+            else
+                return;
+    }
+    
     //根据提供信息，查询当前用户信息,设置每页大小和查询的是第几页
     public function UserSearchWithLimit($_userid, $_username, $_telphone, $_email, $_fromtime, $_totime, $pagesize=25, $pageindex=0)
     {
@@ -553,14 +623,14 @@ class User_info extends Model
         {
             $res = $this->table('helms_user_info info, helms_user_details details')
             ->limit($pagesize * $pageindex, $pagesize)
-            ->where("$_where and info.ID=details.ID and info.user_status > 0")
+            ->where("$_where and info.ID=details.ID and info.user_status > 0 and details.recommender != '0'")
             ->select();
         }
         else
         {
             $res = $this->table('helms_user_info info, helms_user_details details')
             ->limit($pagesize * $pageindex, $pagesize)
-            ->where("info.ID=details.ID and info.user_status > 0")
+            ->where("info.ID=details.ID and info.user_status > 0 and details.recommender != '0'")
             ->select();
         }
         if(count($res) > 0)
@@ -587,6 +657,7 @@ class User_info extends Model
         }
         if (strcmp("$_where", ""))
         {
+            
             $res = $this->table('helms_user_info info, helms_user_details details')
             ->where("$_where and info.ID=details.ID and info.user_status = 0")
             ->field( 'details.user_name, details.telphone, details.email, details.open_time, helms_user_info.ID')
@@ -598,6 +669,7 @@ class User_info extends Model
             ->where("info.ID=details.ID and info.user_status = 0")
             ->field( 'details.user_name, details.telphone, details.email, details.open_time, helms_user_info.ID')
             ->select();
+            
         }
         return $res;
     }
@@ -638,7 +710,30 @@ class User_info extends Model
         return $res;
     }
     
+    public function UserinfoLock($user_id, $status)
+    {
+        $_session_user = Session::get(USER_SEESION);
     
+        if(empty($_session_user))
+        {
+            return 0;
+        }
+        else
+        {
+            $_userid = $_session_user["userId"];
+            if($_userid < "1000")//当前用户是管理员
+            {
+                $data = array('user_status'=>$status);
     
+                $state = $this-> where("ID='$user_id'")
+                ->setField($data);
     
+                return 1;
+            }
+            else
+                return 0;
+        }
+    }
+    
+
 }

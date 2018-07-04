@@ -24,15 +24,40 @@ use think\Session;
 use app\trigger\controller\External;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use app\extra\controller\Basecontroller;
+use app\common\model\Recharge_record;
 
 class Adminopt extends Basecontroller
 {
     public function index()
     {
-
+        $positionobj = new Positionality();
+        $str = ',1,';
+        $level = 0;
+        $_res = array();
+        $positionobj->getAllChildByJsonWithInFiveLevel($str, $level, $_res);
+        //$_res = $positionobj->getDirectChildrenByJson("2");
+        var_dump($_res);
+        /*
+        $extern = new External();
+        $pwd = "140416";
+        $passwd = md5($pwd."hermes");   //这个才是最后使用的家吗函数
+        var_dump("pass:".$passwd);
+        
+     
+        $recharge = new Recharge_record();
+        $recharge->index();
+        $state = $recharge->RechargeInsert(H7414916900,1000.00,0,"后台充值", 1,"许丽娟","本部张海龙充值注册分,已确认",1);
+        $recharge->RechargeQuery();
+        var_dump($recharge);
+        $extern = new External();
+        $po = $extern->cy_decode("dd4d8b570a4169792a513792ae24ea56", "hermes");
+        $pp = md5("dd4d8b570a4169792a513792ae24ea56", "hermes");
+        echo($pp);
+        
         $user = new User_details();
         $res= $user->RecommanderQuery("H6395385700");
         return json_encode($res);
+        */
         //$userinfo = new User_info();
         ////var_dump("user state: ".$userinfo->getUserstate("H1400517071"));
         /*$awardOBJ = new Awardopt();
@@ -1487,10 +1512,87 @@ class Adminopt extends Basecontroller
 	        return json_encode($_resdata);
 	}
 	
+	//查看当前登录用户的节点是否具有权限查看当前的参数1的节点；通过检查其的所有子孙节点中，是否包含参数1这个节点
+	public function checkNodeParent($id)
+	{
+	    $_resdata = array();
+	    $_resdata["success"] = true;
+	    $_session_user = Session::get(USER_SEESION);
+	    $_userid = $_session_user["userId"];
+	    $_userid = $_session_user["userId"];
+	    if($_userid < "1000" && ($id < "1000" || $id == "admin"))
+	    {
+	        $_resdata["success"] = true;
+	        $_resdata["cur_id"] = "1";
+	        return json_encode($_resdata);
+	    }
+	    if($_userid < "1000")
+	    {
+	        $position = new Positionality();
+    	    $position_res = $position->PositionQuery($id);
+    	    
+    	    if(count($position_res) < 1)
+    	    {
+    	        $_resdata["success"] = false;
+    	        return json_encode($_resdata);
+    	    }
+    	    
+    	    $position_res = $position->PositionQueryByID($position_res[0]["parent"]);
+    	    if(count($position_res) < 1)
+    	    {
+    	        $_resdata["success"] = false;
+    	        return json_encode($_resdata);
+    	    }
+    	    $parentID = $position_res[0]["user_id"];
+    	    $_resdata["success"] = true;
+    	    $_resdata["cur_id"] = $parentID;
+	        return json_encode($_resdata);
+	    }
+
+	    $position = new Positionality();
+	    $position_res = $position->PositionQuery($id);
+	    
+	    if(count($position_res) < 1)
+	    {
+	        $_resdata["success"] = false;
+	        return json_encode($_resdata);
+	    }
+	    
+	    $position_res = $position->PositionQueryByID($position_res[0]["parent"]);
+	    if(count($position_res) < 1)
+	    {
+	        $_resdata["success"] = false;
+	        return json_encode($_resdata);
+	    }
+	    $parentID = $position_res[0]["user_id"];
+	    $nodejson = $position_res[0]["json"];
+	    $_session_user = Session::get(USER_SEESION);
+	    $_userid = $_session_user["userId"];
+	    $position_res = $position->PositionQuery($_userid);
+	    if(count($position_res) < 1)
+	    {
+	        $_resdata["success"] = false;
+	        return json_encode($_resdata);
+	    }
+	    $loginjson = $position_res[0]["json"];
+	     
+	    if(strcmp($loginjson,"")==0 || strpos($nodejson,$loginjson) !== false)
+	    {
+	        $_resdata["success"] = true;
+	        $_resdata["cur_id"] = $parentID;
+	    }
+        else
+            $_resdata["success"] = false;
+
+        return json_encode($_resdata);
+	}
+	
 	//修改股价
 	public function change_gujia($use_gujia)
 	{
 	    $awardOBJ = new Awardopt();
+	    $res = array();
+	    $res["success"] = false;
 	    $use_gujia = $awardOBJ->_wei2($use_gujia);
 	    if($use_gujia > 1 && $use_gujia < 2)
 	    {
@@ -1499,7 +1601,9 @@ class Adminopt extends Basecontroller
 	        $gpsetRES = $gpsetRES[0];
 	        $currentGujia = $gpsetRES["now_price"];
 	        if($currentGujia >= $use_gujia)
-	            return false;
+	        {
+	            return json_encode($res);
+	        }
 	                 
             $gpSetOBJ->GpSetUpdate(-1, $use_gujia);
              
@@ -1544,10 +1648,11 @@ class Adminopt extends Basecontroller
 	        $this->chaifen_act($gpsetRES,0);//
 	    }else 
 	    {
-	        return false;
+	        return json_encode($res);
 	    }
-        
-        
+	    
+        $res["success"] = true;
+	    return json_encode($res);
 	}
 	
 	
