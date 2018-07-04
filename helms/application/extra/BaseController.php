@@ -67,7 +67,10 @@ class Basecontroller extends Controller
     public function initialize(){
             //登录拦截
             $_session_user = Session::get(USER_SEESION);
+            var_dump("eter");
+            dump("xxxxx");
             if (empty($_session_user) || empty($_session_user['userId'])){
+                var_dump("xxxxx");
                 return $this->redirect("/login/login/index");
             }
 

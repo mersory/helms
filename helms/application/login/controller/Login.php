@@ -8,6 +8,7 @@ use think\Session;
 use app\common\model\Subuser_info;
 use app\common\model\System_subscriber;
 use app\common\model\User_point;
+use app\common\model\Store_shoppingcart;
 
 class Login extends Controller
 {
@@ -116,6 +117,10 @@ class Login extends Controller
                     $_session_user = array();
                     $_session_user["userId"] = $_res[0]["ID"];
                     $_session_user["isAdmin"] = false;
+                    
+                    $_shoppingcart_info = new Store_shoppingcart();
+                    $_shoppingcart_info_count = $_shoppingcart_info->ShoppingcartInfoAllQueryCount($_res[0]["ID"]);
+                    $_session_user["shoppingcart_count"] = $_shoppingcart_info_count;
             
                     $_priority = new User_priority();
                     $_priority_info = $_priority->PriorityQuery($_res[0]["ID"]);
@@ -157,5 +162,14 @@ class Login extends Controller
         return json_encode($_resdata);
     }
     
+    
+    function loginout(){
+        //清空session
+        Session::set(USER_SEESION,null);
+        
+        $_resdata = array();
+        $_resdata["result"] = true;
+        return json_encode($_resdata);
+    }
 
 }

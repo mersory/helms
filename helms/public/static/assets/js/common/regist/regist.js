@@ -68,7 +68,7 @@ $(function(){
 			result = JSON.parse(result);
 			if(result.success){
 				alert("注册成功，点击确定回到主页");
-				window.location.href="/public/index.php/frontend/common/network";
+				window.location.href="/public/index.php/frontend/common/index";
 			}else{
 				alert("注册失败，请重新注册");
 				window.location.href="/public/index.php/frontend/common/network";
