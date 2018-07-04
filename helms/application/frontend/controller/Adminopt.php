@@ -25,11 +25,28 @@ use app\trigger\controller\External;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use app\extra\controller\Basecontroller;
 use app\common\model\Recharge_record;
+use app\common\model\Userupgrade_record;
 
 class Adminopt extends Basecontroller
 {
     public function index()
     {
+        $positionOBJ = new Positionality();
+        $ID = 17;
+        $ID = $positionOBJ->getUserIdByID($ID);
+        var_dump("ID:".$ID);
+        $extern = new External();
+        $pwd = "140416";
+        $passwd = md5($pwd."hermes");   //这个才是最后使用的家吗函数
+        var_dump("pass:".$passwd);
+        $user  = new User_info();
+        $res= $user->UserSearchWithLimit("", "", "", "", "", "");
+        var_dump($res);
+        /*
+        $str = "hello";
+        $str = substr($str, 0, strlen($str)-1);
+        var_dump($str);
+        var_dump(strlen($str));
         $positionobj = new Positionality();
         $str = ',1,';
         $level = 0;
@@ -37,7 +54,7 @@ class Adminopt extends Basecontroller
         $positionobj->getAllChildByJsonWithInFiveLevel($str, $level, $_res);
         //$_res = $positionobj->getDirectChildrenByJson("2");
         var_dump($_res);
-        /*
+        
         $extern = new External();
         $pwd = "140416";
         $passwd = md5($pwd."hermes");   //这个才是最后使用的家吗函数
@@ -1353,14 +1370,30 @@ class Adminopt extends Basecontroller
 	//用户升级,参数2是目标等级， 参数3是当前等级和目标等之间注册资金的差值
 	public function updateUserOpt($user_id, $level, $cost_money, $minor_pwd)
 	{
+	    $resdata = array();
+	    $resdata["success"] = false;
 	    $_session_user = Session::get(USER_SEESION);
 	    if(empty($_session_user))
 	    {
-	        //var_dump('ERROR : Adminopt.php on line:'.__LINE__);
-	        //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
+	        return json_encode($resdata);
 	    }
-	     
+	    
+	    $userdetails = new User_details();
+	    $detailsRES = $userdetails->DetailsQuery($user_id);
+	    if(count($detailsRES) > 0)
+	        $currentLevel = $userdetails[0]["user_level"];
+	    else 
+	        return json_encode($resdata);
+	    
+	    $extern = new External();
+	    $beforemoney = $extern->getParam("register_total", $currentLevel, "");
+	    $aftermoney = $extern->getParam("register_total", $level, "");
+	    $cost_money = $aftermoney - $beforemoney;
 	    $_userid = $_session_user["userId"];
+	    if($_userid < "1000")
+	    {
+	        $_userid = "admin";
+	    }
         //var_dump($_userid);
 	
 	    $position = new Positionality();
@@ -1395,8 +1428,16 @@ class Adminopt extends Basecontroller
             
             //奖金处理等系列操作----针对用户升级
             $this->audit_member_update($ID, $openid, $cost_money);//the most import logic module
-	             
+	        
+            $userupdate = new Userupgrade_record();
+            $userupdateRES = $userupdate->UpgradeInsert($user_id, $currentLevel, $level);
+            
+            $resdata["success"] = true;
+            return json_encode($resdata);
 	    }
+	    else 
+	        return json_encode($resdata);
+	    
 	}
 	
 	//获取当前节点的孩子节点信息，如果已经有了两个子节点则返回false，已经有了左孩子，但是不存在任何直推节点，则返回-1
