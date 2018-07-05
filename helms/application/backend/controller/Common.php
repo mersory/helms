@@ -165,12 +165,12 @@ class Common extends Basecontroller
                 
             $_post = Request::instance()->get();
             
-            $_userid = $_get["userId"];
-            $_username = $_get["username"];
-            $_telephone = $_get["telephone"];
-            $_email = $_get["email"];
-            $_fromtime = $_get["fromTime"];
-            $_totime = $_get["toTime"];
+            $_userid = $_GET["userId"];
+            $_username = $_GET["username"];
+            $_telephone = $_GET["telephone"];
+            $_email = $_GET["email"];
+            $_fromtime = $_GET["fromTime"];
+            $_totime = $_GET["toTime"];
 
             $_admin = new User_info();
             $_res = $_admin->UserSearchWithLimit($_userid, $_username, $_telphone, $_email, $_fromtime, $_totime);
