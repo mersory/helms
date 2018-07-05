@@ -162,6 +162,9 @@ class Awardopt extends Controller
            else 
                //var_dump("point update failed");
            //update the user daily points records table
+           $positionOBJ = new Positionality();
+           $positionRES = $positionOBJ->PositionQueryByID($ID);
+           $ID = $positionRES[0]["user_id"];
            $_res_point_dayly = $_dayly_point->AwarddailyQuery($ID);
            if(sizeof($_res_point_dayly) > 0)
            {
@@ -264,6 +267,8 @@ class Awardopt extends Controller
 	    $position = new Positionality();
 	    //json 循环操作，获取每一个元素
 	    $strSRC=$p_path;
+	    $strSRC = substr($strSRC, 1, strlen($strSRC)-1);
+	    $strSRC = substr($strSRC, 0, strlen($strSRC)-1);
 	    $pos = strrpos($strSRC,',');
 	    //$strSRC = substr($strSRC,0, $pos);
 	    //var_dump("Awardopt.php line:".__LINE__."string:".$strSRC);
@@ -276,7 +281,7 @@ class Awardopt extends Controller
             $strSRC = substr($strSRC,0, $pos);
             
             $ID = $tmp;
-            //var_dump("ID:".$ID);
+            var_dump("ID:".$ID);
             $curNode = $position->PositionQueryByID($ID);
 	        $data = array();
 	        $data['sum_ds'] = $curNode[0]['sum_ds'] + $danshu;
@@ -303,6 +308,8 @@ class Awardopt extends Controller
 	    $position = new Positionality();
 	    //json 循环操作，获取每一个元素
 	    $strSRC=$p_path;
+	    $strSRC = substr($strSRC, 1, strlen($strSRC)-1);
+	    $strSRC = substr($strSRC, 0, strlen($strSRC)-1);
 	    $pos = strrpos($strSRC,',');
 	    //$strSRC = substr($strSRC,0, $pos);
 	    //var_dump("Awardopt.php line:".__LINE__."string:".$strSRC);

@@ -69,6 +69,7 @@ class User_info extends Model
     public function UserinfoCheckMinor($name, $pwd)
     {
         $_where = '';
+        $pwd = md5($pwd."hermes");
         if (!strcmp("$name", "") || !strcmp("$pwd", ""))
         {
             //var_dump("User_info.php :username and password could not be null,line:".__LINE__);
@@ -623,6 +624,7 @@ class User_info extends Model
         {
             $res = $this->table('helms_user_info info, helms_user_details details')
             ->limit($pagesize * $pageindex, $pagesize)
+            ->order("details.open_time desc")
             ->where("$_where and info.ID=details.ID and info.user_status > 0 and details.recommender != '0'")
             ->select();
         }
@@ -630,13 +632,14 @@ class User_info extends Model
         {
             $res = $this->table('helms_user_info info, helms_user_details details')
             ->limit($pagesize * $pageindex, $pagesize)
+            ->order("details.open_time desc")
             ->where("info.ID=details.ID and info.user_status > 0 and details.recommender != '0'")
             ->select();
         }
         if(count($res) > 0)
             return $res;
-            else
-                return;
+        else
+            return;
     }
     
     //获取申请注册的用户列表，仅仅列出申请了但是还未激活通过
@@ -696,6 +699,7 @@ class User_info extends Model
             $res = $this->table('helms_user_info info, helms_user_details details')
             ->limit($_pagesize * $_pageindex, $_pagesize)
             ->where("$_where and info.ID=details.ID and info.user_status = 0")
+            ->order("details.open_time desc")
             ->field( 'details.user_name, details.telphone, details.email, details.open_time, helms_user_info.ID')
             ->select();
         }
@@ -703,6 +707,7 @@ class User_info extends Model
         {
             $res = $this->table('helms_user_info info, helms_user_details details')
             ->limit($_pagesize * $_pageindex, $_pagesize)
+            ->order("details.open_time desc")
             ->where("info.ID=details.ID and info.user_status = 0")
             ->field( 'details.user_name, details.telphone, details.email, details.open_time, helms_user_info.ID')
             ->select();
@@ -710,6 +715,7 @@ class User_info extends Model
         return $res;
     }
     
+    //锁定会员时，传递会员ID，status=-1表示锁定会员，status=-2表示关闭提现，status=1表示正常会员
     public function UserinfoLock($user_id, $status)
     {
         $_session_user = Session::get(USER_SEESION);

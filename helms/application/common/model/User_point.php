@@ -2,6 +2,7 @@
 namespace app\common\model;
 
 use think\Model;
+use think\Session;
 
 class User_point extends Model
 {
@@ -31,6 +32,38 @@ class User_point extends Model
             return ;
         }
         return $_point_info;
+    }
+    
+    //分页查询积分
+    public function PointQueryWithLimit($userid,$_pagesize=25, $_pageindex=0)
+    {
+        $_session_user = Session::get(USER_SEESION);
+        $_resdata = array();
+        if(empty($_session_user)){
+            return ;
+        }
+        else
+        {
+            if ($userid != -1)
+            {
+                $_where = "`ID` = '$userid'";  //
+            }
+            else
+            {
+                $_where = "`ID` != -1";
+            }
+    
+            $_points = $this->where($_where)
+                              ->limit($_pagesize * $_pageindex, $_pagesize)->where($_where)
+                              ->select();
+            $count = count($_points);
+            if ($count < 1)
+            {
+                return ;
+            }
+    
+            return $_points;
+        }
     }
     
     public function PointDel($user_id)
