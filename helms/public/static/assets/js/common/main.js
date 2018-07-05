@@ -5,7 +5,7 @@ $(function(){
 		 $.post(url,{},function(result){
 			 result = JSON.parse(result);
 			 if(result.result){
-				 window.location.reload();
+				 window.location.href="/public/index.php/login/login/index";
 			 }
 		 });
 	});

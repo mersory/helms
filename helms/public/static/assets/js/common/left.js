@@ -1,5 +1,5 @@
 $(function(){
-    var url =  "/public/index.php/frontend/useropt/usergujiague";
+    var url =  "/public/index.php/backend/useropt/usergujiague";
 
     //定时刷新股价股额
     setInterval(function(){
