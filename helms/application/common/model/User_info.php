@@ -5,6 +5,7 @@ use think\Model;
 use app\trigger\controller\External;
 use think\Session;
 use think\commit;
+use think\paginator\driver;
 
 class User_info extends Model
 {
@@ -589,7 +590,7 @@ class User_info extends Model
     }
     
     //根据提供信息，查询当前用户信息,设置每页大小和查询的是第几页
-    public function UserSearchWithLimit($_userid, $_username, $_telphone, $_email, $_fromtime, $_totime, $pagesize=25, $pageindex=0)
+    public function UserSearchWithLimit($_userid, $_username, $_telphone, $_email, $_fromtime, $_totime)
     {
         $_where = '';
         if (strcmp("$_userid", "") )
@@ -622,24 +623,21 @@ class User_info extends Model
         }
         if (strcmp("$_where", ""))
         {
-            $res = $this->table('helms_user_info info, helms_user_details details')
-            ->limit($pagesize * $pageindex, $pagesize)
+            $res = $this->table('helms_user_info info, helms_user_details details, helms_user_point point, helms_positionality positionality')
+            ->where("$_where and info.ID=details.ID and info.user_status > 0 and details.recommender != '0' and point.ID=info.ID and positionality.user_id=info.ID")
             ->order("details.open_time desc")
-            ->where("$_where and info.ID=details.ID and info.user_status > 0 and details.recommender != '0'")
-            ->select();
+            ->paginate(25);
         }
         else
         {
-            $res = $this->table('helms_user_info info, helms_user_details details')
+            $res = $this->table('helms_user_info info, helms_user_details details, helms_user_point point, helms_positionality positionality')
             ->limit($pagesize * $pageindex, $pagesize)
             ->order("details.open_time desc")
             ->where("info.ID=details.ID and info.user_status > 0 and details.recommender != '0'")
-            ->select();
+            ->paginate(25);
         }
-        if(count($res) > 0)
-            return $res;
-        else
-            return;
+
+        return $res;
     }
     
     //获取申请注册的用户列表，仅仅列出申请了但是还未激活通过
