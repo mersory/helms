@@ -224,8 +224,10 @@ class System extends Basecontroller
             
             $this->assign('menu_data', $res);
             $_menu = new System_menu();
-            $_menu_info = $_menu->MenuAllQuery();
+            $_menu_info = $_menu->MenuAllQueryPage();
+            
             // 向V层传数据
+            $this->assign('page', $_menu_info->render());
             $this->assign('pass_data', $_menu_info);
             
             // 取回打包后的数据

@@ -3,14 +3,29 @@ namespace app\common\model;
 
 use think\Model;
 use app\common\model\Store_order_line;
+use think\paginator\driver;
 
 class Store_order extends Model
 {
     //查询所有订单
     public function OrderInfoAllQuery()
     {
-        $sql = "select * from helms_store_order order by update_time desc";
-        $_orderinfo = $this->query($sql);
+     
+        $_orderinfo = $this->order('update_time desc')->select();
+        if(count($_orderinfo) > 0){
+            for($i=0;$i<count($_orderinfo);++$i){
+                $orderLine = new Store_order_line();
+                $_orderinfo[$i]["orderLines"] = $orderLine->getOrderLineByCode($_orderinfo[$i]["code"]);
+            }
+        }
+        return $_orderinfo;
+    }
+    
+    //查询所有订单
+    public function OrderInfoAllQueryPage()
+    {
+//         $sql = "select * from helms_store_order order by update_time desc";
+        $_orderinfo = $this->order('update_time desc')->paginate(10);
         if(count($_orderinfo) > 0){
             for($i=0;$i<count($_orderinfo);++$i){
                 $orderLine = new Store_order_line();

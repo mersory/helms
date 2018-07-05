@@ -2,6 +2,7 @@
 namespace app\common\model;
 
 use think\Model;
+use think\paginator\driver;
 
 class Preference_option extends Model
 {
@@ -10,6 +11,19 @@ class Preference_option extends Model
     {
         $_where = '';
         $_preferenceinfo = $this->where($_where)->order("update_time desc")->select();
+        $count = count($_preferenceinfo);
+        if ($count < 1)
+        {
+            //var_dump("PreferenceInfo not exsist");
+            return ;
+        }
+        return $_preferenceinfo;
+    }
+    
+    public function PreferenceInfoAllQueryPage()
+    {
+        $_where = '';
+        $_preferenceinfo = $this->where($_where)->order("update_time desc")->paginate(10);
         $count = count($_preferenceinfo);
         if ($count < 1)
         {

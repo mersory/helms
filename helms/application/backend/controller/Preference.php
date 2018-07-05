@@ -25,9 +25,11 @@ class Preference extends Basecontroller
             
             
             $preference = new Preference_option();
-            $res = $preference->PreferenceInfoAllQuery();
+            $res = $preference->PreferenceInfoAllQueryPage();
+            
             
             // 向V层传数据
+            $this->assign('page', $res->render());
             $this->assign('pass_data', $res);
             
             // 取回打包后的数据

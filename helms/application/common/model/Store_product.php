@@ -2,6 +2,7 @@
 namespace app\common\model;
 
 use think\Model;
+use think\paginator\driver;
 
 class Store_product extends Model
 {
@@ -13,6 +14,19 @@ class Store_product extends Model
     public function CategorytInfoAllQuery(){
         
         $_productinfo = $this->field('category,category_name')->group('category')->select();
+        $count = count($_productinfo);
+        if ($count < 1)
+        {
+            //var_dump("ProductInfo not exsist");
+            return ;
+        }
+        return $_productinfo;
+    }
+    
+    public function ProductInfoAllQueryPage()
+    {
+        $_where = '';
+        $_productinfo = $this->where($_where)->order("id desc")->paginate(10);
         $count = count($_productinfo);
         if ($count < 1)
         {

@@ -27,8 +27,9 @@ class Store extends Basecontroller
             $this->assign('menu_data', $res);
             
             $_order = new Store_order();
-            $_order_info = $_order->OrderInfoAllQuery();
+            $_order_info = $_order->OrderInfoAllQueryPage();
             // 向V层传数据
+            $this->assign('page',$_order_info->render());
             $this->assign('pass_data', $_order_info);
             
             // 取回打包后的数据
@@ -50,7 +51,9 @@ class Store extends Basecontroller
             
             $this->assign('menu_data', $res);
             $_product = new Store_product();
-            $_product_info = $_product->ProductInfoAllQuery();
+            $_product_info = $_product->ProductInfoAllQueryPage();
+            
+            $this->assign('page',$_product_info->render());
             // 向V层传数据
             $this->assign('pass_data', $_product_info);
             
