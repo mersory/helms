@@ -1367,6 +1367,30 @@ class Adminopt extends Basecontroller
 	    } 
 	}
 	
+	//用户升级，页面直接调用
+	public function UserUpdate()
+	{
+	    $_session_user = Session::get(USER_SEESION);
+	    $_resdata = array();
+	    $_user_id = $_session_user["userId"];
+	    $_point = new User_point();
+	    $_pointres = $_point->PointQuery($_user_id);
+	    $_details = new User_details();
+	    $_detailsres = $_details->DetailsQuery($_user_id);
+	
+	    $_resdata["userId"] = $_session_user["userId"];
+	    $_resdata["user_level"] = $_detailsres[0]["user_level"];
+	    $_resdata["registpoint"] = $_pointres[0]["regist_point"];
+	
+	
+	    // 向V层传数据
+	    $this->assign('pass_data', $_resdata);//真正传递的是前面那个变量，这也是html中可以使用的
+	
+	    // 取回打包后的数据
+	    $htmls = $this->fetch();
+	    return $htmls;
+	}
+	
 	//用户升级,参数2是目标等级， 参数3是当前等级和目标等之间注册资金的差值
 	public function updateUserOpt($user_id, $level, $cost_money, $minor_pwd)
 	{

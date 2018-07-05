@@ -1,0 +1,151 @@
+{extend name="base/frontend"} {block name="js"}
+<script type="text/javascript" src="_JS_/common/userinfo/userupdate.js"></script>
+{/block} {block name="css"}
+{/block} {block name="content"}
+        <!-- Page content -->
+        <div id="content" class="col-md-12">
+          <!-- page header -->
+          <div class="pageheader">
+            <h2><i class="fa fa-tachometer"></i> 会员升级<span></span></h2>
+            <div class="breadcrumbs">
+              <ol class="breadcrumb">
+                <li><a href="index.html">HERMES</a></li>
+                <li class="active">会员升级</li>
+              </ol>
+            </div>
+          </div>
+          <!-- /page header -->
+
+          <!-- content main container -->
+          <div class="main">
+          	<div class="row">
+                <div class="col-md-6">
+                  <section class="tile color transparent-black">
+
+
+
+                  <!-- tile header -->
+                  <div class="tile-header">
+                    <h1><strong>会员升级</strong></h1>
+                    <div class="controls">
+                      <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
+                      <a href="#" class="remove"><i class="fa fa-times"></i></a>
+                    </div>
+                  </div>
+                  <!-- /tile header -->
+
+                  <!-- tile body -->
+                  <div class="tile-body">
+                    
+                    <form class="form-horizontal" id="basicvalidations">
+
+					  <div class="form-group">
+                        <label for="memberId" class="col-sm-4 control-label">会员ID </label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control parsley-validated" name="memberId" id="memberId" parsley-trigger="change" parsley-required="true" parsley-minlength="4" parsley-validation-minlength="1" value="{$pass_data.userId}" />
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="fullname" class="col-sm-4 control-label">注册分余额</label>
+                        <div class="col-sm-8">
+                          <input type="text" readonly="readonly" class="form-control parsley-validated" id="registpoint" parsley-trigger="change" parsley-required="true" parsley-minlength="4" parsley-validation-minlength="1" value="{$pass_data.registpoint}">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="email" class="col-sm-4 control-label">当前等级</label>
+                        <div class="col-sm-8">
+                          <input type="text" readonly="readonly" class="form-control parsley-validated" id="leval" color=white parsley-trigger="change" parsley-required="true" parsley-minlength="4" parsley-type="email" parsley-validation-minlength="1" value="{$pass_data.user_level}">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="activator" class="col-sm-4 control-label">二级密码</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control parsley-validated" name="activator" id="minorpassword" parsley-trigger="change" parsley-minlength="4" parsley-type="url" parsley-validation-minlength="1">
+                        </div>
+                      </div>
+					  <!-- <div class="form-group">
+                        <label for="primarypwd" class="col-sm-4 control-label">一级密码 *</label>
+                        <div class="col-sm-8">
+                          <input type="password" class="form-control parsley-validated" name="primarypwd" id="primarypwd" parsley-trigger="change" parsley-minlength="4" parsley-type="url" parsley-validation-minlength="1">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="primarypwd" class="col-sm-4 control-label">确认一级密码 *</label>
+                        <div class="col-sm-8">
+                          <input type="password" class="form-control parsley-validated" name="confirmPrimarypwd" id="confirmPrimarypwd" parsley-trigger="change" parsley-minlength="4" parsley-type="url" parsley-validation-minlength="1">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="minorpwd" class="col-sm-4 control-label">二级密码 *</label>
+                        <div class="col-sm-8">
+                          <input type="password" class="form-control parsley-validated" name="minorpwd" id="minorpwd" parsley-trigger="change" parsley-minlength="4" parsley-type="url" parsley-validation-minlength="1">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="minorpwd" class="col-sm-4 control-label">确认二级密码 *</label>
+                        <div class="col-sm-8">
+                          <input type="password" class="form-control parsley-validated" name="confirmMinorpwd" id="comfirmMinorpwd" parsley-trigger="change" parsley-minlength="4" parsley-type="url" parsley-validation-minlength="1">
+                        </div>
+                      </div> -->
+                      <div class="form-group">
+                      <!-- changed by Gavin start -->
+						<label for="level" class="col-sm-4 control-label">晋级为</label>
+					  <!-- changed by Gavin end -->
+						<div class="col-sm-8" data-toggle="distpicker">
+							<select class="form-control" id="level" name="level" data-province="---- 选择级别 ----" >
+								<option value="2">二星[1000]</option>
+								<option value="1">一星[500]</option>
+							</select>  
+						</div>
+					  </div>
+					  
+                      <div class="form-group">
+						<label for="product" class="col-sm-4 control-label">备注</label>
+						<div class="col-sm-8" data-toggle="distpicker">
+							<select class="form-control" id="levaldetail" name="product" data-province="---- 选择产品----" >
+								<!-- changed by Gavin start -->					
+								<option style="display:none;" value="1">晋级</option>
+								<!-- changed by Gavin end -->
+							</select>  
+						</div>
+					  </div>					  
+                      	                     
+                      <div class="form-group form-footer">
+                        <div class="col-sm-offset-4 col-sm-8">
+                          <button type="button" class="btn btn-primary" id="btn_update">确认升级</button>
+                        </div>
+                      </div>
+
+                    </form>
+
+                  </div>
+                  <!-- /tile body -->
+                  
+                
+
+
+                </section>
+                </div>
+            </div>
+          </div>
+          <!-- /content container -->
+
+</div>
+<!-- changed by Gavin start -->
+<script type="text/javascript">
+
+function setup()
+{
+	var s=["level","product"];
+    for(i=0;i<s.length-1;i++)
+    document.getElementById(s[i]).onchange=new Function("change("+(i+1)+")");
+    //change(0);
+}
+setup();
+
+</script>
+<!-- changed by Gavin end -->
+{/block}
