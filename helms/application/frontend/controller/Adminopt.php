@@ -1404,11 +1404,13 @@ class Adminopt extends Basecontroller
 	    
 	    $userdetails = new User_details();
 	    $detailsRES = $userdetails->DetailsQuery($user_id);
+	    //var_dump("current_level:".$detailsRES[0]);
 	    if(count($detailsRES) > 0)
-	        $currentLevel = $userdetails[0]["user_level"];
+	        $currentLevel = $detailsRES[0]["user_level"];
 	    else 
 	        return json_encode($resdata);
 	    
+	    //var_dump("ll:".$currentLevel);
 	    $extern = new External();
 	    $beforemoney = $extern->getParam("register_total", $currentLevel, "");
 	    $aftermoney = $extern->getParam("register_total", $level, "");
@@ -1454,6 +1456,7 @@ class Adminopt extends Basecontroller
             $this->audit_member_update($ID, $openid, $cost_money);//the most import logic module
 	        
             $userupdate = new Userupgrade_record();
+            
             $userupdateRES = $userupdate->UpgradeInsert($user_id, $currentLevel, $level);
             
             $resdata["success"] = true;

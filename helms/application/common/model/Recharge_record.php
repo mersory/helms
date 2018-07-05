@@ -53,7 +53,7 @@ class Recharge_record extends Model
                 $_where = "`user_id` != -1";
             }
     
-            $_recharge = $this
+            $_recharge = $this->order("cz_time desc")
                         ->limit($_pagesize * $_pageindex, $_pagesize)->where($_where)
                         ->select();
             $count = count($_recharge);

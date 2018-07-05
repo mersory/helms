@@ -17,12 +17,38 @@ class Award_record extends Model
         {
             $_where = "ID = '$id'";
         }
+        else
+        {
+            $_where = "ID != '0'";
+        }
         $_award_info = $this->where($_where)
         ->select();
         $count = count($_award_info);
         if ($count < 1)
         {
-            //var_dump("Award_record.php ID :$id not exsist".__LINE__);
+            return ;
+        }
+        return $_award_info;
+    }
+    
+    public function AwardRecordQueryWithLimit($id, $pageindex, $pagesize)//
+    {
+        $_where = '';
+        if (strcmp("$id", ""))
+        {
+            $_where = "ID = '$id'";
+        }
+        else
+        {
+            $_where = "ID != '0'";
+        }
+        $_award_info = $this->limit($pagesize * $pageindex, $pagesize)
+                            ->order("time desc")
+                            ->where($_where)
+                            ->select();
+        $count = count($_award_info);
+        if ($count < 1)
+        {
             return ;
         }
         return $_award_info;

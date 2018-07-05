@@ -70,7 +70,7 @@ $(function() {
 										userIds.push($(this).attr("v-id"));
 									});
 							$.post(url, {
-								user_id : userIds,
+								_userid_arr : userIds,
 								status : 1,
 								is_punish : 0
 							}, function(result) {
@@ -96,7 +96,7 @@ $(function() {
 										userIds.push($(this).attr("v-id"));
 									});
 							$.post(url, {
-								user_id : userIds,
+								_userid_arr : userIds,
 								status : -1,
 								is_punish : 1
 							}, function(result) {
@@ -123,7 +123,7 @@ $(function() {
 									});
 
 							$.post(url, {
-								user_id : userIds,
+								_userid_arr : userIds,
 								status : 1,
 								is_punish : 0
 							}, function(result) {
@@ -149,7 +149,7 @@ $(function() {
 										userIds.push($(this).attr("v-id"));
 									});
 							$.post(url, {
-								user_id : userIds,
+								_userid_arr : userIds,
 								status : -2,
 								is_punish : 1
 							}, function(result) {

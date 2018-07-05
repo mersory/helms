@@ -155,13 +155,11 @@ class Awardopt extends Controller
            $ok_money = $this->_wei2($get_money - $shui-$jijin - $produceCX);//实际发放金额
            $_res_points_set = $_points->PointUpdate($_userid, $_pointsRes[0]['shares'], $_pointsRes[0]['bonus_point'] + $ok_money, $_pointsRes[0]['regist_point'], $_pointsRes[0]['re_consume'] + $produceCX, 
                                 $_pointsRes[0]['universal_point'], $_pointsRes[0]['re_cast'], $_pointsRes[0]['remain_point'] - $get_money,-1,-1,$_pointsRes["shengyu_dong"] - $get_money);
-           if($_res_points_set)
-           {
-               //var_dump("point update success");
-           }
-           else 
-               //var_dump("point update failed");
+           
+           //var_dump("point update failed");
            //update the user daily points records table
+           
+               
            $positionOBJ = new Positionality();
            $positionRES = $positionOBJ->PositionQueryByID($ID);
            $ID = $positionRES[0]["user_id"];

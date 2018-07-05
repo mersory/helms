@@ -46,7 +46,6 @@ $(function(){
 						  msg.result[res_index].cz_time, msg.result[res_index].cz_money, msg.result[res_index].czyt_type, 
 						  msg.result[res_index].cz_instruction, msg.result[res_index].status);//查询成功，增加行和列
 				  //changed by Gavin end model7
-				  alert("充值成功");
 			  }
 			  //window.location.href = "UserLogin.html";
 			} else {
@@ -54,6 +53,7 @@ $(function(){
 			  return false;
 			}
 			})
+			alert("充值成功");
 			return true;
 		}
 		else

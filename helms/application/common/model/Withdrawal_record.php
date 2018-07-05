@@ -83,6 +83,7 @@ class Withdrawal_record extends Model
         if (strcmp("$_where", ""))
         {
             $res = $this->limit($_pagesize * $_pageindex, $_pagesize)
+            ->order("apply_time desc")
             ->where($_where)
             ->field( 'user_id, withdrawal_type, withdraw_sum, apply_time, withdrawal_status, verifier_id, approve_time, to_account_time, point_consume')
             ->select();
@@ -90,6 +91,7 @@ class Withdrawal_record extends Model
         else
         {
             $res = $this->limit($_pagesize * $_pageindex, $_pagesize)
+            ->order("apply_time desc")
             ->field( 'user_id, withdrawal_type, withdraw_sum, apply_time, withdrawal_status, verifier_id, approve_time, to_account_time, point_consume')
             ->select();
         }

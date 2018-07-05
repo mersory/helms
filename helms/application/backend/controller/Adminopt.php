@@ -241,7 +241,7 @@ class Adminopt extends Basecontroller
     }
     
     //锁定账户，禁止提现  或者  解锁账户，开启提现；参数3为1表示锁定或者禁止提现，  参数3位0表示解锁，允许提现
-    public function lockorForbidonUser($user_id, $status, $is_punish)
+    public function lockorForbidonUser($_userid_arr, $status, $is_punish)
     {
         $_session_user = Session::get(USER_SEESION);
         $_resdata = array();
@@ -256,37 +256,68 @@ class Adminopt extends Basecontroller
     	    if($_userid < "1000")//当前用户是管理员
     	    {
     	        $_resdata["ok"] = 1;
-    	        $userinfoOBJ = new User_info();
-    	        $positionOBJ = new Positionality();
-    	        if($is_punish == 1)
+    	        //var_dump(count($_userid_arr));
+    	        for($i=0; $i<count($_userid_arr); $i++)
     	        {
-    	            $userinfoRES = $userinfoOBJ->UserinfoLock($user_id, $status);
-    	            $positionRES = $positionOBJ->updateStatusSingle($user_id, $status);
-    	        }
-    	        else 
-    	        {
-    	            $detailsOBJ = new User_details();
-    	            $detialsRES = $detailsOBJ->DetailsQuery($user_id);
-    	            if(count($detialsRES)<1)
+    	            $user_id = $_userid_arr[$i];
+    	            //var_dump("userid:".$user_id);
+    	            $userinfoOBJ = new User_info();
+    	            $positionOBJ = new Positionality();
+    	            if($is_punish == 1)
     	            {
-    	                $_resdata["ok"] = 0;
-    	                return json_encode($_resdata);
+    	                $userinfoRES = $userinfoOBJ->UserinfoLock($user_id, $status);
+    	                $positionRES = $positionOBJ->updateStatusSingle($user_id, $status);
     	            }
-    	            else 
+    	            else
     	            {
-    	                $pos_status = $detialsRES[0]["user_level"];
-    	                $userinfoRES = $userinfoOBJ->UserinfoLock($user_id, 1);
-    	                $positionRES = $positionOBJ->updateStatusSingle($user_id, $pos_status);
+    	                $detailsOBJ = new User_details();
+    	                $detialsRES = $detailsOBJ->DetailsQuery($user_id);
+    	                if(count($detialsRES)<1)
+    	                {
+    	                    $_resdata["ok"] = 0;
+    	                }
+    	                else
+    	                {
+    	                    $pos_status = $detialsRES[0]["user_level"];
+    	                    $userinfoRES = $userinfoOBJ->UserinfoLock($user_id, 1);
+    	                    $positionRES = $positionOBJ->updateStatusSingle($user_id, $pos_status);
+    	                }
     	            }
-
+    	            return json_encode($_resdata);
     	        }
-    	        return json_encode($_resdata);
     	    }
             else 
                 return json_encode($_resdata);
         }
     }
     
+    public function awardRecordsQuery($userid, $pageindex, $pagesize)
+    {
+        $_session_user = Session::get(USER_SEESION);
+        $_resdata = array();
+        $_resdata["ok"] = 0;
+        if(empty($_session_user))
+        {
+            return json_encode($_resdata);
+        }
+        else
+        {
+            $_userid = $_session_user["userId"];
+            if($_userid < "1000")//当前用户是管理员
+            {
+                $awardOBJ = new Award_record();
+                $awardRES = $awardOBJ->AwardRecordQueryWithLimit($userid, $pageindex, $pagesize);
+                if(count($awardRES) > 0)
+                {
+                    $_resdata["ok"] = 1;
+                    $_resdata["res"] = $_resdata;
+                }
+                return json_encode($_resdata);
+            }
+            else
+                return json_encode($_resdata);
+        }
+    }
     
     //--------------------------------------------------------
     //--------------------------------------------------------

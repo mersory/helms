@@ -26,7 +26,7 @@ $(function(){
 		}
 		
 		var url =  "/public/index.php/frontend/Adminopt/updateUserOpt";
-		$.post(url,{user_id:id, level:level, cost_money:0, minorpassword:minorpassword},function(result){
+		$.post(url,{user_id:needupdateid, level:level, cost_money:0, minor_pwd:minorpassword},function(result){
 			result = JSON.parse(result);
 			if(result.success){
 				alert("升级成功");
