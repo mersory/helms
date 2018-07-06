@@ -1,6 +1,7 @@
 <?php
 namespace app\backend\controller;
 
+use app\common\model\Recharge_record;
 use think\Controller;
 use app\common\model\User_info;
 use app\common\model\User_bankinfo;
@@ -143,10 +144,24 @@ class Common extends Basecontroller
 
     public function recharge()
     {
-        // 取回打包后的数据
-        $htmls = $this->fetch();
-        return $htmls;
+        $_session_user = Session::get(USER_SEESION);
+        if(empty($_session_user)){
+            return $this->redirect("/login/login/index");
+        }else {
 
+            $userId = $_GET("userId");
+
+            $reCharge = new Recharge_record();
+            $reCharge->RechargeQueryWithLimit($userId);
+
+            $this->assign('userId', $userId);
+            $this->assign('page', $reCharge->render());
+            $this->assign('pass_data', $reCharge);
+
+            // 取回打包后的数据
+            $htmls = $this->fetch();
+            return $htmls;
+        }
     }
 
     public function changegujia()

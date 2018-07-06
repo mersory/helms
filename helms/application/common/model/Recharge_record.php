@@ -35,15 +35,9 @@ class Recharge_record extends Model
         return $_recharge;
     }
 
-    public function RechargeQueryWithLimit($userid,$_pagesize=25, $_pageindex=0)
+    public function RechargeQueryWithLimit($userid)
     {
-        $_session_user = Session::get(USER_SEESION);
-        $_resdata = array();
-        if(empty($_session_user)){
-            return ;
-        }
-        else
-        {
+            $_where="";
             if ($userid != -1)
             {
                 $_where = "`user_id` = '$userid'";  //
@@ -54,17 +48,10 @@ class Recharge_record extends Model
             }
     
             $_recharge = $this->order("cz_time desc")
-                        ->limit($_pagesize * $_pageindex, $_pagesize)->where($_where)
-                        ->select();
-            $count = count($_recharge);
-            if ($count < 1)
-            {
-                var_dump("Realtime.php ID : not exsist".__LINE__);
-                return ;
-            }
-    
+                        ->where($_where)
+                        ->paginate(25);
+
             return $_recharge;
-        }
     }
     
     public function RechargeInsert($user_id, $cz_money=-1, $cz_type=-1, $content=-1, $status=-1, $real_name=-1, $cz_instruction=-1, $czyt_type=-1)
