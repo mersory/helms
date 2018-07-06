@@ -631,7 +631,6 @@ class User_info extends Model
         else
         {
             $res = $this->table('helms_user_info info, helms_user_details details, helms_user_point point, helms_positionality positionality')
-            ->limit($pagesize * $pageindex, $pagesize)
             ->order("details.open_time desc")
             ->where("info.ID=details.ID and info.user_status > 0 and details.recommender != '0'")
             ->paginate(25);

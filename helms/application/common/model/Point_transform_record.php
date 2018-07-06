@@ -61,7 +61,7 @@ class Point_transform_record extends Model
         return $res;
     }
     
-    public function PointTransformQueryByWithLimit($_id, $_start, $_end, $_pagesize=25, $_pageindex=0)
+    public function PointTransformQueryByWithLimit($_id, $_start, $_end)
     {
         $_where = '';
         if (strcmp("$_id", ""))
@@ -74,19 +74,17 @@ class Point_transform_record extends Model
         }
         if (strcmp("$_start", ""))
         {
-            $_where = "$_where and point_change_time >= '$_start'";//������Ҫ�������   //���ﲻҪ=���ţ���Ϊ�������ݿ��е�ID����int����
+            $_where = "$_where and point_change_time >= '$_start'";
         }
         if (strcmp("$_end", "") )
         {
-            $_where = "$_where and point_change_time <= '$_end'";//������Ҫ�������
+            $_where = "$_where and point_change_time <= '$_end'";
         }
         if (strcmp("$_where", ""))
         {
-            $res = $this->limit($_pagesize * $_pageindex, $_pagesize)
-            ->order("point_change_time desc")
+            $res = $this->order("point_change_time desc")
             ->where($_where)
-            ->field( 'user_id, 	point_change_type, 	point_change_sum, point_change_time')
-            ->select();
+            ->field( 'user_id, 	point_change_type, 	point_change_sum, point_change_time')->paginate(25);
         }
         else
         {

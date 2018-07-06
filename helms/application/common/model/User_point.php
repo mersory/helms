@@ -3,6 +3,7 @@ namespace app\common\model;
 
 use think\Model;
 use think\Session;
+use think\paginator\driver;
 
 class User_point extends Model
 {
@@ -64,6 +65,22 @@ class User_point extends Model
     
             return $_points;
         }
+    }
+
+    //分页查询用户积分详情
+    public function pointDetailsQueryPage($userId){
+
+        $_where = 'up.ID = p.ID and p.ID = ud.ID';
+        if (strcmp("$userId", "") )
+        {
+            $_where = " and up.ID = '$userId'";   //
+        }
+
+        $res = $this->table('helms_user_point up,helms_positionality p,helms_user_details ud')
+            ->where($_where)
+            ->order("ud.open_time desc")
+            ->paginate(25);
+        return $res;
     }
     
     public function PointDel($user_id)

@@ -61,7 +61,7 @@ class Withdrawal_record extends Model
         return $res;
     }
     
-    public function WithdrawalApplicationByTimeWithLimit($user_id, $_start, $_end, $_pagesize=25, $_pageindex=0)
+    public function WithdrawalApplicationByTimeWithLimit($user_id, $_start, $_end)
     {
         $_where = '';
         if (strcmp("$user_id", ""))
@@ -74,26 +74,24 @@ class Withdrawal_record extends Model
         }
         if (strcmp("$_start", "") )
         {
-            $_where = "apply_time > '$_start'";   //���ﲻҪ=���ţ���Ϊ�������ݿ��е�ID����int����
+            $_where = "apply_time > '$_start'";
         }
         if (strcmp("$_end", "") )
         {
-            $_where = "$_where and apply_time < '$_end'";//������Ҫ�������
+            $_where = "$_where and apply_time < '$_end'";
         }
         if (strcmp("$_where", ""))
         {
-            $res = $this->limit($_pagesize * $_pageindex, $_pagesize)
-            ->order("apply_time desc")
+            $res = $this->order("apply_time desc")
             ->where($_where)
             ->field( 'user_id, withdrawal_type, withdraw_sum, apply_time, withdrawal_status, verifier_id, approve_time, to_account_time, point_consume')
-            ->select();
+            ->paginate(25);
         }
         else
         {
-            $res = $this->limit($_pagesize * $_pageindex, $_pagesize)
-            ->order("apply_time desc")
+            $res = $this->order("apply_time desc")
             ->field( 'user_id, withdrawal_type, withdraw_sum, apply_time, withdrawal_status, verifier_id, approve_time, to_account_time, point_consume')
-            ->select();
+            ->paginate(25);
         }
         return $res;
     }
