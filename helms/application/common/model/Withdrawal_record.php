@@ -84,31 +84,31 @@ class Withdrawal_record extends Model
         $_where = '';
         if (strcmp("$user_id", ""))
         {
-            $_where = "user_id = '$user_id'";
+            $_where = "W.user_id = '$user_id'";
         }
         else
         {
-            $_where = "user_id != -1";
+            $_where = "W.user_id != -1";
         }
         if (strcmp("$_start", "") )
         {
-            $_where = "apply_time > '$_start'";
+            $_where = "W.apply_time > '$_start'";
         }
         if (strcmp("$_end", "") )
         {
-            $_where = "$_where and apply_time < '$_end'";
+            $_where = "$_where and W.apply_time < '$_end'";
         }
         if (strcmp("$_where", ""))
         {
-            $res = $this->order("apply_time desc")
-            ->where($_where)
-            ->field( 'user_id, withdrawal_type, withdraw_sum, apply_time, withdrawal_status, verifier_id, approve_time, to_account_time, point_consume')
+            $res = $this->table('helms_withdrawal_record W, helms_user_bankinfo B, helms_user_details D')
+            ->where("$_where and W.user_id=B.user_id and D.ID=W.user_id")
+            ->order("apply_time desc")
             ->paginate(25);
         }
         else
         {
             $res = $this->order("apply_time desc")
-            ->field( 'user_id, withdrawal_type, withdraw_sum, apply_time, withdrawal_status, verifier_id, approve_time, to_account_time, point_consume')
+            ->where("W.user_id=B.user_id")
             ->paginate(25);
         }
         return $res;

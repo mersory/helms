@@ -100,15 +100,17 @@
 									{if condition="empty($pass_data) neq true"} {foreach
 									name='pass_data' item='vo'}
 									<tr>
-										<td>
-										</td>
+										<td>{$vo.withdraw_id}</td>
 										<td>{$vo.user_id}</td>
 										<td>{$vo.withdrawal_type}</td>
 										<td>{$vo.withdraw_sum}</td>
 										<td>{$vo.apply_time}</td>
 										<td>{$vo.withdrawal_status}</td>
 										<td>{$vo.verifier_id}</td>
-										<td>{$vo.approve_time}</td>
+										<td>{$vo.bank_account_name}</td>
+										<td>{$vo.sub_bank}</td>
+										<td>{$vo.bank_account_num}</td>
+										<td>{$vo.telphone}</td>
 										<td></td>
 										<td></td>
 										<td></td>
