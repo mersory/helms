@@ -104,7 +104,7 @@ function refreshNetworkChart(_userId, loadNetworkUrl){
 						}
 						
 						//未激活状态
-						if(data.status == "1"){
+						if(data.status != "1"){
 							$node.find(".title").empty().html("<i style='left:-7px;' class='glyphicon glyphicon-ban-circle'></i>"+data.userId);
 						}else{
 							$node.find(".title").empty().html(data.userId);
