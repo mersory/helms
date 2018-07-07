@@ -375,6 +375,8 @@ class Positionality extends Model
             
         $_position_info = $this->where($_where)
         ->select();
+        $_userinfo = new User_details();
+        $_userOBJ = new User_info();
         $count = count($_position_info);
         $current_count = $count;
         if ($count < 1)
@@ -392,6 +394,19 @@ class Positionality extends Model
                 $parentID = $this->getUserIdByID($_position_info[$count-1]["parent"]);
                 $_res[$_position_info[$count-1]["user_id"]]["parent"] = $parentID;
                 $_res[$_position_info[$count-1]["user_id"]]["left"] = $_position_info[$count-1]["leftchild"];
+                
+                $_res[$_position_info[$count-1]["user_id"]]["lds"] =$_position_info[$count-1]["l_ds"];
+                $_res[$_position_info[$count-1]["user_id"]]["rds"] = $_position_info[$count-1]["r_ds"];
+                $_res[$_position_info[$count-1]["user_id"]]["sqlds"] = $_position_info[$count-1]["sq_lds"];
+                $_res[$_position_info[$count-1]["user_id"]]["sqrds"] = $_position_info[$count-1]["sq_rds"];
+                $_user_realname = $_userinfo->DetailsQuery($_position_info[$count-1]["user_id"]);
+                $_res[$_position_info[$count-1]["user_id"]]["level"] = $_user_realname[0]["user_level"];
+                $_user_realname = $_user_realname[0]["user_name"];
+                $_res[$_position_info[$count-1]["user_id"]]["realname"] = $_user_realname;
+                
+                $isActive = $_userOBJ->getUserstate($_position_info[$count-1]["user_id"]);
+                $_res[$_position_info[$count-1]["user_id"]]["status"] = $isActive;
+
                 $strTemp = $str.$_position_info[$count-1]["ID"].",";
                 $t = $this->getAllChildByJsonWithInFiveLevel($strTemp, $current_level+1, $_res);
                 $count--;

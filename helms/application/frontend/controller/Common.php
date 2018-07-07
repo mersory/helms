@@ -489,12 +489,8 @@ class Common extends Basecontroller
     {
         $_resdata = array();
         $_resdata["info"] = "no";
-        $is_date = parent::isDatetime($from);
-        if(!$is_date)
-            return json_encode($_resdata);
-        $is_date = parent::isDatetime($to);
-        if(!$is_date)
-            return json_encode($_resdata);
+
+        var_dump("fassfa");
         $_user = new Historical_price();
         $_res = $_user->HistoricalpriceQueryByTiem($from, $to);        
         $_tmp = array();
@@ -559,6 +555,8 @@ class Common extends Basecontroller
         $_curid = $_user->PositionQuery($applyuserId);
         //var_dump("ID:".$_curid[0]["ID"]);
         $_userinfo =new User_details();
+        $_userOBJ = new User_info();
+        
         if(count($_curid) < 1)
             return json_encode($_resdata) ;
         else 
@@ -573,9 +571,17 @@ class Common extends Basecontroller
             $_res[$_curid[0]["user_id"]]["json"] = $_curid[0]["json"];
             $_res[$_curid[0]["user_id"]]["parent"] = $_curid[0]["parent"];
             $_res[$_curid[0]["user_id"]]["left"] = $_curid[0]["leftchild"];
+            $_res[$_curid[0]["user_id"]]["lds"] = $_curid[0]["l_ds"];
+            $_res[$_curid[0]["user_id"]]["rds"] = $_curid[0]["r_ds"];
+            $_res[$_curid[0]["user_id"]]["sqlds"] = $_curid[0]["sq_lds"];
+            $_res[$_curid[0]["user_id"]]["sqrds"] = $_curid[0]["sq_rds"];
             $_user_realname = $_userinfo->DetailsQuery($_curid[0]["user_id"]);
+            $_res[$_curid[0]["user_id"]]["level"] = $_user_realname[0]["user_level"];
             $_user_realname = $_user_realname[0]["user_name"];
             $_res[$_curid[0]["user_id"]]["realname"] = $_user_realname;
+            
+            $isActive = $_userOBJ->getUserstate($_curid[0]["user_id"]);
+            $_res[$_curid[0]["user_id"]]["status"] = $isActive;
             $_keys = array_keys($_res);
             $_values = array_values($_res);
             for($i=0; $i<count($_res); $i++)           
@@ -587,11 +593,11 @@ class Common extends Basecontroller
                $sq_lds = $_user_danshu[0]["sq_lds"];
                $sq_rds = $_user_danshu[0]["sq_rds"];
                 //changed by Gavin end
-                $_user_realname = $_userinfo->DetailsQuery($_keys[$i]);
-                $_user_realname = $_user_realname[0]["user_name"];
+                //$_user_realname = $_userinfo->DetailsQuery($_keys[$i]);
+                //$_user_realname = $_user_realname[0]["user_name"];
                 //changed by Gavin start
                 //$_res[$_keys[$i]]["realname"] = $_user_realname;
-                $_res[$_keys[$i]]["realname"] = $_user_realname."&nbsp&nbsp总：".$l_ds."&nbsp-&nbsp".$r_ds.";&nbsp剩：".$sq_lds."&nbsp-&nbsp".$sq_rds;
+                //$_res[$_keys[$i]]["realname"] = $_user_realname."&nbsp&nbsp总：".$l_ds."&nbsp-&nbsp".$r_ds.";&nbsp剩：".$sq_lds."&nbsp-&nbsp".$sq_rds;
                 //changed by Gavin end
             }
             $_resdata["res"] = $_res;
