@@ -32,11 +32,24 @@ class Historical_price extends Model
     public function HistoricalpriceQueryByTiem($from, $to)//查询期间段内历史股价
     {
         $_where = '';
-        if ($from != -1)
+        
+        if (strcmp("$from", "") )
         {
-            $_where = "`current_time` > '$from' and `current_time` < '$to'";  //
+            $_where = "current_time > '$from'";   //���ﲻҪ=���ţ���Ϊ�������ݿ��е�ID����int����
         }
-        $_price_info = $this->where($_where)
+        if (strcmp("$to", "") )
+        {
+            if($_where == "")
+            {
+                $_where = "current_time < '$to'";//������Ҫ�������
+            }
+            else 
+            {
+                $_where = "$_where and current_time < '$to'";//������Ҫ�������
+            }
+        }
+        
+        $_price_info = $this
         ->select();
         $count = count($_price_info);
         if ($count < 1)
