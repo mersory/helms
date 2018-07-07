@@ -10,6 +10,40 @@ class Award_daytime extends Model
         //var_dump("Award_daytime");
     }
     
+    public function AwarddailyQueryByPage($id,$_fromtime,$_totime)//
+    {
+        $_where = '';
+        
+        if (strcmp("$id", ""))
+        {
+            $_where = "P.ID = '$id'";
+        }
+        if (strcmp("$_fromtime", "") )
+        {
+            $_where = "$_where and P.date >= '$_fromtime'";
+        }
+        if (strcmp("$_totime", "") )
+        {
+            $_where = "$_where and P.date <= '$_totime'";
+        }
+        if( strcmp($_where, "") )
+        {
+            $_where = "U.ID=P.ID and ".$_where;
+        }
+        else
+        {
+            $_where = "U.ID=P.ID";
+        }
+        
+        $_award_info = $this->table('helms_user_info U, helms_award_daytime P')
+        ->order("P.date desc")
+        ->where($_where)
+        ->field('U.username,  P.ID, P.direct, P.balance, P.tutor, P.appreciation, P.staticbonus, P.sum, P.actualsalary, P.date, P.bz0')
+        ->paginate(25);
+ 
+        return $_award_info;
+    }
+    
     public function AwarddailyQuery($id)//
     {
         $_where = '';

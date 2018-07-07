@@ -28,6 +28,24 @@ class Withdrawal_record extends Model
         return $_withdrawal_info;
     }
     
+    public function WithdrawalQueryByWithdrawID($id)//���������Ĳ��ҷ�ʽ���˴�ֻ�г���һ��
+    {
+        $_where = '';
+        if ($id != -1)
+        {
+            $_where = "withdraw_id = '$id'";
+        }
+        $_withdrawal_info = $this->where($_where)
+        ->select();
+        $count = count($_withdrawal_info);
+        if ($count < 1)
+        {
+            //var_dump("Withdrawal_record.php ID :$user_id not exsist".__LINE__);
+            return ;
+        }
+        return $_withdrawal_info;
+    }
+    
     public function WithdrawalApplicationByTime($user_id, $_start, $_end)
     {
         $_where = '';
@@ -96,12 +114,12 @@ class Withdrawal_record extends Model
         return $res;
     }
     
-    public function WithdrawalDel($user_id)
+    public function WithdrawalDel($id)
     {
         $_where = '';
-        if ($user_id != -1)
+        if ($id != -1)
         {
-            $_where = "user_id = '$user_id'";
+            $_where = "withdraw_id = '$id'";
         }
 
         $state = $this->where($_where)->delete();
@@ -146,8 +164,8 @@ class Withdrawal_record extends Model
     public function WithdrawalUpdate($withdraw_id, $updatetype)
     {
         $_withdrawalinfo = array();
-        $_res = $this->WithdrawalQuery($withdraw_id);
-        if (count($_res) == 1)
+        $_res = $this->WithdrawalQueryByWithdrawID($withdraw_id);
+        if (count($_res) > 0)
         {
             //echo "ffff";
             if ($updatetype - $_res[0]["withdrawal_status"] == 1)
@@ -162,6 +180,7 @@ class Withdrawal_record extends Model
                 {
                     $_withdrawalinfo["to_account_time"] = date("Y-m-d H:i:s");
                 }
+                var_dump("with:".$_withdrawalinfo);
                 $state = $this-> where("withdraw_id=$withdraw_id")
                 ->setField($_withdrawalinfo);
                 return $state;
@@ -169,13 +188,13 @@ class Withdrawal_record extends Model
             else 
             {
                 //echo "state erro";
-                return;
+                return -1;
             }
         }
         else 
         {
             //echo "not found";
-            return;
+            return -1;
         }
     }
 }

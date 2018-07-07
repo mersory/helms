@@ -8,10 +8,13 @@ use app\common\model\User_details;
 use app\common\model\User_point;
 use app\common\model\User_priority;
 use app\common\model\Historical_price;
+use app\common\model\Withdrawal_record;
+use app\common\model\Point_transform_record;
 use think\Session;
 use app\common\model\Role;
 use app\common\model\Positionality;
 use app\extra\controller\Basecontroller;
+use app\common\model\Award_record;
 
 class Common extends Basecontroller
 {
@@ -272,7 +275,140 @@ class Common extends Basecontroller
         }
     }
 		
-		
+    public function bonusdetails()
+    {
+        $_session_user = Session::get(USER_SEESION);
+        if(empty($_session_user)){
+            return $this->redirect("/login/login/index");
+        }else {
+            //$_post = Request::instance()->get();
+            $userId = $_session_user["userId"];
+    
+            $Award = new Award_record();
+            $pageindex = 0;
+            $pagesize = 25;
+            $_res = $Award->AwardRecordQueryWithLimit($userId, $pageindex, $pagesize);
+    
+            $this->assign('userId', $userId);
+            $this->assign('page', $_res->render());
+            $this->assign('pass_data', $_res);
+            // 取回打包后的数据
+            $htmls = $this->fetch();
+            return $htmls;
+        }
+    }
+    
+    public function presentApplication()
+    {
+        $_session_user = Session::get(USER_SEESION);
+        if(empty($_session_user)){
+            return $this->redirect("/login/login/index");
+        }else{
+    
+            $_user_id = $_session_user["userId"];
+            $_money = "";//$_GET("fromTime");
+    
+            $_start="";
+            $_end = "";
+            $_withdraw = new Withdrawal_record();
+            $_res = $_withdraw->WithdrawalApplicationByTimeWithLimit($_user_id, $_start, $_end);
+    
+            $this->assign('userId', $_user_id);
+            $this->assign('point_consume', $_money);
+            $this->assign('page', $_res->render());
+            $this->assign('pass_data', $_res);
+    
+            // 取回打包后的数据
+            $htmls = $this->fetch();
+            return $htmls;
+    
+        }
+    }
+    
+    public function userWithdraw($points, $point_type)
+    {
+        $resdata = array();
+        $resdata["success"] = false;
+        $_session_user = Session::get(USER_SEESION);
+        if(empty($_session_user)){
+            return $this->redirect("/login/login/index");
+        }else{
+            $_user_id = $_session_user["userId"];
+            $pointsOBJ = new User_point();
+            $pointsRES = $pointsOBJ->PointQuery($_user_id);
+            $withdrawOBJ = new Withdrawal_record();
+            if(count($points<=0 || $pointsRES) < 1)
+            {
+                return json_encode($resdata);
+            }
+            else
+            {
+                switch ($point_type)
+                {
+                    case 1:
+                        if($pointsRES[0]["bonus_point"] > $points)
+                        {
+                            $actRES = $pointsOBJ->PointUpdate($_user_id, -1, $pointsRES[0]["bonus_point"] - $points);
+                            $actRES = $actRES && $withdrawOBJ->WithdrawalInsert($_user_id, $points*6*0.95, $point_type, $points, 0);
+                            if($actRES > 0)
+                                $resdata["success"] = true;
+                                break;
+                        }
+                        else
+                            return json_encode($resdata);
+                    case 2:
+                        if($pointsRES[0]["regist_point"] > $points)
+                        {
+                            $actRES = $pointsOBJ->PointUpdate($_user_id, -1, -1, $pointsRES[0]["regist_point"] - $points);
+                            $actRES = $actRES && $withdrawOBJ->WithdrawalInsert($_user_id, $points*6*0.95, $point_type, $points, 0);
+                            if($actRES > 0)
+                                $resdata["success"] = true;
+                                break;
+                        }
+                        else
+                            return json_encode($resdata);
+                    case 3:
+                        if($pointsRES[0]["universal_point"] > $points)
+                        {
+                            $actRES = $pointsOBJ->PointUpdate($_user_id, -1, -1,-1, -1, $pointsRES[0]["universal_point"] - $points);
+                            $actRES = $actRES && $withdrawOBJ->WithdrawalInsert($_user_id, $points*6*0.95, $point_type, $points, 0);
+                            if($actRES > 0)
+                                $resdata["success"] = true;
+                                break;
+                        }
+                        else
+                            return json_encode($resdata);
+                    default:
+                        return json_encode($resdata);
+                }
+                return json_encode($resdata);
+            }
+        }
+    }
+    
+    public function pointsTransfer()
+    {
+        $_session_user = Session::get(USER_SEESION);
+        if(empty($_session_user)){
+            return $this->redirect("/login/login/index");
+        }else{
+    
+            $_user_id = $_session_user["userId"];
+            $_start = "";//$_GET("fromTime");
+            $_end = "";//$_GET("toTime");
+            $_user_point = new Point_transform_record();
+            $_res = $_user_point->PointTransformQueryByWithLimit($_user_id, $_start, $_end);
+       
+            $this->assign('userId', $_user_id);
+            $this->assign('page', $_res->render());
+            $this->assign('pass_data', $_res);
+    
+            // 取回打包后的数据
+            $htmls = $this->fetch();
+            return $htmls;
+    
+        }
+    }
         public function points($type)
         {
             $_session_user = Session::get(USER_SEESION);

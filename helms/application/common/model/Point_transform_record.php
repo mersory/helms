@@ -90,7 +90,8 @@ class Point_transform_record extends Model
         {
             $res = $this->order("point_change_time desc")
             ->field( 'user_id, 	point_change_type, 	point_change_sum, point_change_time')
-            ->select();
+            ->select()
+            ->paginate(25);;
         }
         return $res;
     }

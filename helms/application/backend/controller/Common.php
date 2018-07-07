@@ -19,6 +19,8 @@ use app\common\model\Positionality;
 use app\common\model\System_subscriber;
 use app\common\model\Role;
 use app\common\model\Gp_set;
+use app\common\model\Award_record;
+use app\common\model\Award_daytime;
 
 class Common extends Basecontroller
 {
@@ -162,7 +164,58 @@ class Common extends Basecontroller
             return $htmls;
         }
     }
+    
+    public function bonusdetails()
+    {
+        $_session_user = Session::get(USER_SEESION);
+        if(empty($_session_user)){
+            return $this->redirect("/login/login/index");
+        }else {
+            $_post = Request::instance()->get();
+            $userId = "";//$_GET("bonus_userid");
+    
+            $Award = new Award_record();
+            $pageindex = 0;
+            $pagesize = 25;
+            $_res = $Award->AwardRecordQueryWithLimit($userId, $pageindex, $pagesize);
+    
+            $this->assign('userId', $userId);
+            $this->assign('page', $_res->render());
+            $this->assign('pass_data', $_res);
+            // 取回打包后的数据
+            $htmls = $this->fetch();
+            return $htmls;
+        }
+    }
 
+    public function personperday()
+    {
+        $_session_user = Session::get(USER_SEESION);
+        if(empty($_session_user)){
+            return $this->redirect("/login/login/index");
+        }else {
+            $_post = Request::instance()->get();
+            
+            $userId = "";
+            if ($_GET("userid") != null)
+            {
+                $userId = $_GET("userid");
+            }
+    
+            $Award = new Award_daytime();
+            $_fromtime = "";
+            $_totime = "";
+            $_res = $Award->AwarddailyQueryByPage($userId, $_fromtime,$_totime);
+    
+            $this->assign('userId', $userId);
+            $this->assign('page', $_res->render());
+            $this->assign('pass_data', $_res);
+            // 取回打包后的数据
+            $htmls = $this->fetch();
+            return $htmls;
+        }
+    }
+    
     public function changegujia()
     {
         $gpset = new Gp_set();
@@ -587,6 +640,81 @@ class Common extends Basecontroller
             return $htmls;
 
         }
+    }
+    
+    //允许提现
+    public function userWithdrawApprove($appID)
+    {
+        $_session_user = Session::get(USER_SEESION);
+        if(empty($_session_user)){
+            return $this->redirect("/login/login/index");
+        }
+        else {
+            $res = array();
+            $res["success"] = false;
+            $_user_id = $_session_user["userId"];
+            if($_user_id < "1000")
+            {
+                var_dump("userid:".$_user_id."appid:".$appID);
+                $withdrawOBJ = new Withdrawal_record();
+                $withdrawRES = $withdrawOBJ->WithdrawalUpdate($appID, 1);
+                if($withdrawRES >= 0)
+                    $res["success"] = true;
+            }
+        }
+        return json_encode($res);
+    }
+    
+    //拒绝提现
+    public function userWithdrawDeny($appID, $userid, $points, $point_type)
+    {
+        $_session_user = Session::get(USER_SEESION);
+        if(empty($_session_user)){
+            return $this->redirect("/login/login/index");
+        }
+        else
+        {
+            $res = array();
+            $res["success"] = false;
+            $_user_id = $_session_user["userId"];
+            if($_user_id > "1000" && $_user_id != "admin")
+            {
+                return json_encode($res);
+            }
+            
+            $withdrawOBJ = new Withdrawal_record();
+            $pointsOBJ = new User_point();
+            
+            $pointsRES = $pointsOBJ->PointQuery($userid);
+            if(count($pointsRES) > 0)
+            {
+                switch ($point_type)
+                {
+                    case 1:
+                        $actRES = $pointsOBJ->PointUpdate($userid, -1, $pointsRES[0]["bonus_point"] + $points);
+                        if($actRES > 0)
+                            $resdata["success"] = true;
+                            break;
+                    case 2:
+                        $actRES = $pointsOBJ->PointUpdate($userid, -1, -1, $pointsRES[0]["regist_point"] + $points);
+                        if($actRES > 0)
+                            $resdata["success"] = true;
+                            break;
+                    case 3:
+                        $actRES = $pointsOBJ->PointUpdate($userid, -1, -1,-1, -1, $pointsRES[0]["universal_point"]+ $points);
+                        if($actRES > 0)
+                            $resdata["success"] = true;
+                            break;
+                    default:
+                        return json_encode($resdata);
+                }
+            
+                $delete = $withdrawOBJ->WithdrawalDel($appID);
+                return json_encode($resdata);
+            }
+        }
+        
+        return json_encode($resdata);
     }
 
     public function presentApplicationQuery($_user_id, $_start, $_end)
