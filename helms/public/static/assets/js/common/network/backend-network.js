@@ -103,13 +103,13 @@ function refreshNetworkChart(_userId, loadNetworkUrl){
 						$node[0].id = getId();
 						
 						//非一星用户
-						if(data.level != "1"){
+						if(data.level == 1){
 							$node.find(".title").addClass("isLevel1");
 							$node.find(".content").addClass("isLevel1");
 						}
 						
 						//未激活状态
-						if(data.status != "1"){
+						if(data.status == 0){
 							$node.find(".title").empty().html("<i style='left:-7px;' class='glyphicon glyphicon-ban-circle'></i>"+data.userId);
 						}else{
 							$node.find(".title").empty().html(data.userId);
