@@ -20,6 +20,19 @@ $(function(){
                 }
             }
         });
-    },5000)
+    },5000);
+    
+    
+    if(undefined != $(".menu")){
+    	$(".menu li").removeClass("active");
+    	$(".menu li").each(function(){
+    		var link = $(this).find("a").attr("href");
+    		var curLink = window.location.href;
+    		
+    		if(curLink.indexOf(link) != -1){
+    			$(this).addClass("active");
+    		}
+    	});
+    }
 
 })

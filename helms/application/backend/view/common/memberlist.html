@@ -127,7 +127,7 @@
 									<tr>
 										<th style="width: 40px;">
 											<input
-												style="width: 15px;height: 15px;"
+												style="width: 15px; height: 15px;"
 												type="checkbox"
 												id="allcheck">
 											<label for="allchck2"></label>
@@ -164,12 +164,11 @@
 									name='pass_data' item='vo'}
 									<tr>
 										<td>
-												<input
-													style="width: 15px;height: 15px;"
-													type="checkbox"
-													name="row-check" 
-													v-id="{$vo.user_id}"
-													/>
+											<input
+												style="width: 15px; height: 15px;"
+												type="checkbox"
+												name="row-check"
+												v-id="{$vo.user_id}" />
 										</td>
 										<td>{$vo.user_id}</td>
 										<td>{$vo.username}</td>
@@ -189,26 +188,35 @@
 										<td>{$vo.cf_count}</td>
 										<td>{$vo.shengyu_jing}</td>
 										<td>{$vo.shengyu_dong}</td>
-										<td>
-										</td>
+										<td></td>
 									</tr>
 									{/foreach} {/if}
 
 								</tbody>
 							</table>
 							<div class="tile-widget">
-								<button type="button" class="btn btn-primary" id="open_user_list">解锁用户</button>
-								<button type="button" class="btn btn-primary" id="close_user_list">锁定用户</button>
-								<button type="button" class="btn btn-primary" id="open_apply_user_list">开启提现</button>
-								<button type="button" class="btn btn-primary" id="close_apply_user_list">禁止提现</button>
+								<button
+									type="button"
+									class="btn btn-primary"
+									id="open_user_list">解锁用户</button>
+								<button
+									type="button"
+									class="btn btn-primary"
+									id="close_user_list">锁定用户</button>
+								<button
+									type="button"
+									class="btn btn-primary"
+									id="open_apply_user_list">开启提现</button>
+								<button
+									type="button"
+									class="btn btn-primary"
+									id="close_apply_user_list">禁止提现</button>
 							</div>
 						</div>
 						<!-- /tile body -->
 
 						<!-- tile footer -->
-						<div>
-							{$page}
-						</div>
+						<div>{$page}</div>
 				</section>
 			</div>
 		</div>

@@ -79,9 +79,7 @@
                 {if condition="empty($Think.session.session_user['menu_data']) neq true"} 
                 <ul class="menu">
                 	{foreach name='Think.session.session_user.menu_data' item='vo' key="k"}
-                    {if condition='$k eq 0'}<li  class="active">
-                    {else /} <li>
-                    {/if}
+                    <li>
                     <a href="{$vo.url}">
                       <i class="fa fa-tachometer"></i> {$vo.name}
                     </a>
