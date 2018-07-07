@@ -150,7 +150,7 @@ class Common extends Basecontroller
             return $this->redirect("/login/login/index");
         }else {
 
-            $userId = $_GET("userId");
+            $userId = $_GET["userId"];
 
             $reCharge = new Recharge_record();
             $reCharge->RechargeQueryWithLimit($userId);
@@ -197,9 +197,9 @@ class Common extends Basecontroller
             $_post = Request::instance()->get();
             
             $userId = "";
-            if ($_GET("userid") != null)
+            if ($_GET["userid"] != null)
             {
-                $userId = $_GET("userid");
+                $userId = $_GET["userid"];
             }
     
             $Award = new Award_daytime();
@@ -461,9 +461,9 @@ class Common extends Basecontroller
             return $this->redirect("/login/login/index");
         }else{
 
-            $_user_id = $_GET("userId");
-            $_start = $_GET("fromTime");
-            $_end = $_GET("toTime");
+            $_user_id = $_GET["userId"];
+            $_start = $_GET["fromTime"];
+            $_end = $_GET["toTime"];
             $_user_point = new Point_transform_record();
             $_res = $_user_point->PointTransformQueryByWithLimit($_user_id, $_start, $_end);
 
@@ -622,9 +622,9 @@ class Common extends Basecontroller
             return $this->redirect("/login/login/index");
         }else{
 
-            $_user_id = $_GET("userId");
-            $_start = $_GET("fromTime");
-            $_end = $_GET("toTime");
+            $_user_id = $_GET["userId"];
+            $_start = $_GET["fromTime"];
+            $_end = $_GET["toTime"];
 
             $_withdraw = new Withdrawal_record();
             $_res = $_withdraw->WithdrawalApplicationByTimeWithLimit($_user_id, $_start, $_end);

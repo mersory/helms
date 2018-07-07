@@ -394,8 +394,8 @@ class Common extends Basecontroller
         }else{
     
             $_user_id = $_session_user["userId"];
-            $_start = "";//$_GET("fromTime");
-            $_end = "";//$_GET("toTime");
+            $_start =$_GET["fromTime"];
+            $_end = $_GET["toTime"];
             $_user_point = new Point_transform_record();
             $_res = $_user_point->PointTransformQueryByWithLimit($_user_id, $_start, $_end);
        
