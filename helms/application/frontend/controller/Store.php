@@ -567,12 +567,15 @@ class Store extends Basecontroller
 
     public function getShoppingcartCount()
     {
+        $_session_user = Session::get(USER_SEESION);
+        $user_id = $_session_user["userId"];
+               
         $_shoppingcart_info = new Store_shoppingcart();
-        $_shoppingcart_info_count = $_shoppingcart_info->ShoppingcartInfoAllQueryCount($_res[0]["ID"]);
+        $_shoppingcart_info_count = $_shoppingcart_info->ShoppingcartInfoAllQueryCount($user_id);
         $_session_user["shoppingcart_count"] = $_shoppingcart_info_count;
         $_resdata = array();
         $_resdata['result'] = true;
-        $_resdata['count'] = $_shoppingcart_info;
+        $_resdata['count'] = $_shoppingcart_info_count;
         return json_encode($_resdata);
     }
 }

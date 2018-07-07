@@ -29,9 +29,14 @@ class Store_shoppingcart extends Model
      */
     public function ShoppingcartInfoAllQueryCount($userId)
     {
-        $sql = "select sum(product_num) from helms_store_shoppingcart  where user_id = '$userId'";
+        $sql = "select sum(product_num) as countNum from helms_store_shoppingcart  where user_id = '$userId'";
         $_shoppingcartinfo = $this->query($sql);
-        return count($_shoppingcartinfo);
+        if(count($_shoppingcartinfo) < 1){
+            return 1;
+        }else{
+            return $_shoppingcartinfo[0]['countNum'];
+        }
+        
     }
     
     /**

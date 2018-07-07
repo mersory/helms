@@ -7,6 +7,7 @@ $(function(){
 			result = JSON.parse(result);
 			if(result.result){
 				alert("已加入购物车");
+				refreshShoppingCart();
 			}else{
 				alert(result.message);
 			}
