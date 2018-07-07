@@ -31,7 +31,7 @@ class Award_record extends Model
         return $_award_info;
     }
     
-    public function AwardRecordQueryWithLimit($id, $pageindex, $pagesize)//
+    public function AwardRecordQueryWithLimit($id)//
     {
         $_where = '';
         if (strcmp("$id", ""))
@@ -42,15 +42,10 @@ class Award_record extends Model
         {
             $_where = "ID != '0'";
         }
-        $_award_info = $this->limit($pagesize * $pageindex, $pagesize)
-                            ->order("time desc")
+        $_award_info = $this->order("time desc")
                             ->where($_where)
-                            ->select();
-        $count = count($_award_info);
-        if ($count < 1)
-        {
-            return ;
-        }
+                            ->paginate(25);
+       
         return $_award_info;
     }
     

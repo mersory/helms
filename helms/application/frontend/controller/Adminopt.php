@@ -31,17 +31,9 @@ class Adminopt extends Basecontroller
 {
     public function index()
     {
-        $positionOBJ = new Positionality();
-        $ID = 17;
-        $ID = $positionOBJ->getUserIdByID($ID);
-        var_dump("ID:".$ID);
-        $extern = new External();
-        $pwd = "140416";
-        $passwd = md5($pwd."hermes");   //这个才是最后使用的家吗函数
-        var_dump("pass:".$passwd);
-        $user  = new User_info();
-        $res= $user->UserSearchWithLimit("", "", "", "", "", "");
-        var_dump($res);
+        $pointOBJ = new User_info();
+        $ress = $pointOBJ->UserApplicationWithLimit();
+        var_dump("ress:".$ress);
         /*
         $str = "hello";
         $str = substr($str, 0, strlen($str)-1);

@@ -88,8 +88,7 @@ class Point_transform_record extends Model
         }
         else
         {
-            $res = $this->limit($_pagesize * $_pageindex, $_pagesize)
-            ->order("point_change_time desc")
+            $res = $this->order("point_change_time desc")
             ->field( 'user_id, 	point_change_type, 	point_change_sum, point_change_time')
             ->select();
         }

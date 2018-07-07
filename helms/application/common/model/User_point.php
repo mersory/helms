@@ -36,7 +36,7 @@ class User_point extends Model
     }
     
     //分页查询积分
-    public function PointQueryWithLimit($userid,$_pagesize=25, $_pageindex=0)
+    public function PointQueryWithLimit($userid)
     {
         $_session_user = Session::get(USER_SEESION);
         $_resdata = array();
@@ -55,14 +55,8 @@ class User_point extends Model
             }
     
             $_points = $this->where($_where)
-                              ->limit($_pagesize * $_pageindex, $_pagesize)->where($_where)
-                              ->select();
-            $count = count($_points);
-            if ($count < 1)
-            {
-                return ;
-            }
-    
+                            ->paginate(25);
+            
             return $_points;
         }
     }
@@ -70,16 +64,17 @@ class User_point extends Model
     //分页查询用户积分详情
     public function pointDetailsQueryPage($userId){
 
-        $_where = 'up.ID = p.ID and p.ID = ud.ID';
+        $_where = 'up.ID = p.user_id and p.user_id = ud.ID';
         if (strcmp("$userId", "") )
         {
-            $_where = " and up.ID = '$userId'";   //
+            $_where = " and up.ID = '$userId'";
         }
 
         $res = $this->table('helms_user_point up,helms_positionality p,helms_user_details ud')
             ->where($_where)
             ->order("ud.open_time desc")
             ->paginate(25);
+
         return $res;
     }
     

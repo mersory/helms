@@ -641,7 +641,7 @@ class User_info extends Model
     }
     
     //获取申请注册的用户列表，仅仅列出申请了但是还未激活通过
-    public function UserApplication($_start, $_end)
+    public function UserApplication($_start="", $_end="")
     {
         $_where = '';
         if (strcmp("$_start", "") )
@@ -656,6 +656,7 @@ class User_info extends Model
         {
             $_where = "$_where and details.open_time < '$_end'";//������Ҫ�������
         }
+
         if (strcmp("$_where", ""))
         {
             
@@ -677,14 +678,14 @@ class User_info extends Model
     
     
     //获取申请注册的用户列表，仅仅列出申请了但是还未激活通过
-    public function UserApplicationWithLimit($_start, $_end, $_pagesize=25, $_pageindex=0)
+    public function UserApplicationWithLimit($_start="", $_end="")
     {
-        $_where = '';
+         $_where = '';
         if (strcmp("$_start", "") )
         {
             $_where = "details.open_time > '$_start'";   //���ﲻҪ=���ţ���Ϊ�������ݿ��е�ID����int����
         }
-        else
+        else 
         {
             $_where = "(details.open_time > '1970-01-01 00:00:00' or details.open_time = '0000-00-00 00:00:00')";
         }
@@ -692,23 +693,24 @@ class User_info extends Model
         {
             $_where = "$_where and details.open_time < '$_end'";//������Ҫ�������
         }
+
         if (strcmp("$_where", ""))
         {
+            
             $res = $this->table('helms_user_info info, helms_user_details details')
-            ->limit($_pagesize * $_pageindex, $_pagesize)
-            ->where("$_where and info.ID=details.ID and info.user_status = 0")
             ->order("details.open_time desc")
+            ->where("$_where and info.ID=details.ID and info.user_status = 0")
             ->field( 'details.user_name, details.telphone, details.email, details.open_time, helms_user_info.ID')
-            ->select();
+            ->paginate(25);
         }
         else
         {
-            $res = $this->table('helms_user_info info, helms_user_details details')
-            ->limit($_pagesize * $_pageindex, $_pagesize)
+            $res = $this->table('helms_user_info info, helms_user_details details')//�˴������ݿ�ǰ׺����ʡ��
             ->order("details.open_time desc")
             ->where("info.ID=details.ID and info.user_status = 0")
             ->field( 'details.user_name, details.telphone, details.email, details.open_time, helms_user_info.ID')
-            ->select();
+            ->paginate(25);
+            
         }
         return $res;
     }

@@ -306,7 +306,7 @@ class Adminopt extends Basecontroller
             if($_userid < "1000")//当前用户是管理员
             {
                 $awardOBJ = new Award_record();
-                $awardRES = $awardOBJ->AwardRecordQueryWithLimit($userid, $pageindex, $pagesize);
+                $awardRES = $awardOBJ->AwardRecordQueryWithLimit($userid);
                 if(count($awardRES) > 0)
                 {
                     $_resdata["ok"] = 1;

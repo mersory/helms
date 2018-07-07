@@ -62,7 +62,6 @@ class Common extends Basecontroller
         if(empty($_session_user)){
             return $this->redirect("/login/login/index");
         }else{
-
             $_post = Request::instance()->get();
 
             $_userid = $_GET["userId"];
@@ -134,7 +133,7 @@ class Common extends Basecontroller
                 $_resdata["info"] = "telphone error";
             }else{
                 $_admin = new User_info();
-                $_res = $_admin->UserSearchWithLimit($_userid, $_username, $_telphone, $_email, $_fromtime, $_totime,$pagesize,$pageindex);
+                $_res = $_admin->UserSearchWithLimit($_userid, $_username, $_telphone, $_email, $_fromtime, $_totime);
                 $_resdata["info"] = "ok";
                 $_resdata["res"] = $_res;
             }
@@ -177,82 +176,89 @@ class Common extends Basecontroller
 
     }
 
-    public function memberApplication()
+    public function memberapplication($_start=0, $_end=0)
     {
-        $_session_user = Session::get(USER_SEESION);
-        if(empty($_session_user)){
-            return $this->redirect("/login/login/index");
-        }else{
-            $_user_id = $_session_user["userId"];
+//         $_session_user = Session::get(USER_SEESION);
+//         if(empty($_session_user)){
+//             return $this->redirect("/login/login/index");
+//         }else{
+//             $_user_id = $_session_user["userId"];
 
-            $subscriber = new System_subscriber();
-            $res = $subscriber ->SubscriberQueryMenu($_user_id);
+//             $subscriber = new System_subscriber();
+//             $res = $subscriber ->SubscriberQueryMenu($_user_id);
 
-            if(count($res)>0)
-            {
-                $this->assign('menu_data', $res);
-                $htmls = $this->fetch();
-                return $htmls;
-            }
-
-//             $_role_id = $_session_user["roleId"];
-
-            $_user = new User_details();
-            $_res = $_user->DetailsQuery($_user_id);
-            if (count($_res) == 1)
-            {
-                $_session_user["userName"] = $_res[0]["user_name"];
-                $_session_user["email"] = $_res[0]["email"];
-                $_session_user["userLevel"] = $_res[0]["user_level"];
-            }
-
-//             $_role = new Role();
-//             $_res = $_role->RoleQuery($_role_id);
-//             if (count($_res) == 1)
+//             if(count($res)>0)
 //             {
-//                 $_session_user["role_type"] = $_res[0]["role_type"];
+//                 $this->assign('menu_data', $res);
+//                 $htmls = $this->fetch();
+//                 return $htmls;
 //             }
 
-            //更新session
-            Session::set(USER_SEESION,$_session_user);
+// //             $_role_id = $_session_user["roleId"];
 
+//             $_user = new User_details();
+//             $_res = $_user->DetailsQuery($_user_id);
+//             if (count($_res) == 1)
+//             {
+//                 $_session_user["userName"] = $_res[0]["user_name"];
+//                 $_session_user["email"] = $_res[0]["email"];
+//                 $_session_user["userLevel"] = $_res[0]["user_level"];
+//             }
+
+// //             $_role = new Role();
+// //             $_res = $_role->RoleQuery($_role_id);
+// //             if (count($_res) == 1)
+// //             {
+// //                 $_session_user["role_type"] = $_res[0]["role_type"];
+// //             }
+
+//             //更新session
+//             Session::set(USER_SEESION,$_session_user);
+
+//             $_resdata = array();
+//             $_user = new User_bankinfo();
+//             $_res = $_user->BankinfoQuery($_user_id);
+//             if (count($_res) == 1)
+//             {
+//                 $_resdata["bank_name"] = $_res[0]["bank_name"];
+//                 $_resdata["bank_account_name"] = $_res[0]["bank_account_name"];
+//                 $_resdata["bank_account_num"] = $_res[0]["bank_account_num"];
+//                 $_resdata["reserve1"] = $_res[0]["reserve1"];
+//             }
+
+//             $_user = new User_point();
+//             $_res = $_user->PointQuery($_user_id);
+//             if (count($_res) == 1)
+//             {
+//                 $_resdata["shares"] = $_res[0]["shares"];
+//                 $_resdata["bonus_point"] = $_res[0]["bonus_point"];
+//                 $_resdata["regist_point"] = $_res[0]["regist_point"];
+//             }
+
+//             $_user = new User_priority();
+//             $_res = $_user->PriorityQuery($_user_id);
+//             if (count($_res) == 1)
+//             {
+//                 $_resdata["priority_id"] = $_res[0]["priority_id"];
+//             }
+
+            $_session_user = Session::get(USER_SEESION);
             $_resdata = array();
-            $_user = new User_bankinfo();
-            $_res = $_user->BankinfoQuery($_user_id);
-            if (count($_res) == 1)
-            {
-                $_resdata["bank_name"] = $_res[0]["bank_name"];
-                $_resdata["bank_account_name"] = $_res[0]["bank_account_name"];
-                $_resdata["bank_account_num"] = $_res[0]["bank_account_num"];
-                $_resdata["reserve1"] = $_res[0]["reserve1"];
-            }
-
-            $_user = new User_point();
-            $_res = $_user->PointQuery($_user_id);
-            if (count($_res) == 1)
-            {
-                $_resdata["shares"] = $_res[0]["shares"];
-                $_resdata["bonus_point"] = $_res[0]["bonus_point"];
-                $_resdata["regist_point"] = $_res[0]["regist_point"];
-            }
-
-            $_user = new User_priority();
-            $_res = $_user->PriorityQuery($_user_id);
-            if (count($_res) == 1)
-            {
-                $_resdata["priority_id"] = $_res[0]["priority_id"];
-            }
-
-            $this->assign('pass_data', $_resdata);//真正传递的是前面那个变量，这也是html中可以使用的
-
-            // 取回打包后的数据
-            $htmls = $this->fetch();
-            return $htmls;
-
-        }
+            if(empty($_session_user)){
+                $_resdata["info"] = "priority error";
+            }else{
+                    $_admin = new User_info();
+                    $_res = $_admin->UserApplicationWithLimit($_start, $_end);
+                    
+                    $this->assign('page', $_res->render());
+                    $this->assign('pass_data', $_res);
+                    // 取回打包后的数据
+                    $htmls = $this->fetch();
+                    return $htmls;
+                }
     }
 
-    public function memberApplicationQueryByTime($_start, $_end)
+    public function memberApplicationQueryByTime($_start=0, $_end=0)
     {
         $_session_user = Session::get(USER_SEESION);
         $_resdata = array();
@@ -283,7 +289,7 @@ class Common extends Basecontroller
                 $_resdata["info"] = "error";
             }else {
                 $_admin = new User_info();
-                $_res = $_admin->UserApplicationWithLimit($_start, $_end, $_pagesize, $_pageindex);
+                $_res = $_admin->UserApplicationWithLimit($_start, $_end);
                 $_resdata["info"] = "ok";
                 $_resdata["res"] = $_res;
             }
@@ -299,7 +305,8 @@ class Common extends Basecontroller
         if(empty($_session_user)){
             return $this->redirect("/login/login/index");
         }else{
-            $userId = $_GET("userId");
+
+            $userId = "";//$_GET("userId");
 
             $_point = new User_point();
             $res = $_point ->pointDetailsQueryPage($userId);
@@ -369,7 +376,7 @@ class Common extends Basecontroller
                 return json_encode($_resdata);
             }
             $_position = new Positionality();
-            $_res_pos = $_position->PositionQueryWithLimit($_user_id,$_pagesize, $_pageindex);
+            $_res_pos = $_position->PositionQueryWithLimit($_user_id);
             if(count($_res_pos) < 1)
             {
                 $_resdata["info"] = "error";
@@ -444,7 +451,7 @@ class Common extends Basecontroller
             $_resdata["info"] = "priority error";
         }else{
             $_user_point = new Point_transform_record();
-            $_res = $_user_point->PointTransformQueryByWithLimit($_user_id, $_start, $_end, $_pagesize, $_pageindex);
+            $_res = $_user_point->PointTransformQueryByWithLimit($_user_id, $_start, $_end);
             $_resdata["info"] = "ok";
             $_resdata["res"] = $_res;
         }
@@ -548,7 +555,7 @@ class Common extends Basecontroller
             $_resdata["info"] = "priority error";
         }else{
             $_income_expense = new Income_expenditure();
-            $_res = $_income_expense->IncomeExpenditureQueryByTimeWithLimit($_start, $_end, $_pagesize, $_pageindex);
+            $_res = $_income_expense->IncomeExpenditureQueryByTimeWithLimit($_start, $_end);
             $_resdata["info"] = "ok";
             $_resdata["res"] = $_res;
         }
@@ -605,7 +612,7 @@ class Common extends Basecontroller
             $_resdata["info"] = "priority error";
         }else{
             $_withdraw = new Withdrawal_record();
-            $_res = $_withdraw->WithdrawalApplicationByTimeWithLimit($_user_id, $_start, $_end, $_pagesize, $_pageindex);
+            $_res = $_withdraw->WithdrawalApplicationByTimeWithLimit($_user_id, $_start, $_end);
             $_resdata["info"] = "ok";
             $_resdata["res"] = $_res;
         }

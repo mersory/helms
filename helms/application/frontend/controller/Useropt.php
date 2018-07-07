@@ -20,6 +20,7 @@ use app\common\model\Role;
 use app\extra\controller\Basecontroller;
 use app\trigger\controller\External;
 use app\common\model\Positionality;
+use app\common\model\Award_record;
 
 class Useropt extends Basecontroller
 {
@@ -472,7 +473,6 @@ class Useropt extends Basecontroller
         
         return json_encode($result);
     }
-    
     
 //---------------------------------单个接口测试--------------------------------
 //---------------------------------单个接口测试--------------------------------
