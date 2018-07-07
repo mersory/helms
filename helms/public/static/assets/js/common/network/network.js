@@ -96,6 +96,21 @@ function refreshNetworkChart(_userId, loadNetworkUrl){
 					'parentNodeSymbol' : 'fa-th-large',
 					'createNode' : function($node, data) {
 						$node[0].id = getId();
+						
+						//非一星用户
+						if(data.level != "1"){
+							$node.find(".title").addClass("isLevel1");
+							$node.find(".content").addClass("isLevel1");
+						}
+						
+						//未激活状态
+						if(data.status == "1"){
+							$node.find(".title").empty().html("<i style='left:-7px;' class='glyphicon glyphicon-ban-circle'></i>"+data.userId);
+						}else{
+							$node.find(".title").empty().html(data.userId);
+						}
+							
+						$node.find(".content").empty().html(data.realname+"<br/>总："+data.lds+"-"+data.rds+"<br/>剩："+data.sqlds+"-"+data.sqrds);
 					}
 				});
 
@@ -127,6 +142,13 @@ function getUserInfo(mapData,userId,index){
 		var originObject = new Object();
 		originObject.userId = data.currentId;
 		originObject.realname = data.realname;
+		originObject.level = data.level;
+		originObject.status = data.status;
+		originObject.lds = data.lds;
+		originObject.rds = data.rds;
+		originObject.sqlds = data.sqlds;
+		originObject.sqrds = data.sqrds;
+		
 		if(null != data.childrenId || undefined != data.childrenId || "" != $.trim(data.childrenId)){
 			var childrenSplitArray = data.childrenId;
 			var childrenArray = new Array();

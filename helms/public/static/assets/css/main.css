@@ -57,7 +57,6 @@ section.news-content div.tile-body p {
 	left: 10px;
 	width: calc(100% - 40px);
 	border-radius: 4px;
-	float: left;
 	margin-top: 10px;
 	padding: 10px;
 	color: #fff;
@@ -186,10 +185,7 @@ none
 
 #chart-container {
 	position: relative;
-	display: inline-block;
-	top: 10px;
-	left: 10px;
-	width: calc(100% - 24px);
+	height: 600px;
 	border: 2px dashed #aaa;
 	border-radius: 5px;
 	overflow: auto;
@@ -685,6 +681,29 @@ li.remove_frame a:hover {
 }
 
 .common-mask .loader{
+    background: url(../images/loader.gif) center center no-repeat;
+    height: 15px;
+    width: 15px;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    margin: -25px 0 0 -25px;
+}
+
+.netwwork-mask {
+	background-color: rgba(0, 0, 0, 0.5);
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	z-index: 100000;
+	top: -45px;
+	padding-bottom: 45px;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+}
+
+.network-mask .loader{
     background: url(../images/loader.gif) center center no-repeat;
     height: 15px;
     width: 15px;
