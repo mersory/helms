@@ -229,7 +229,7 @@ class Common extends Basecontroller
 
     }
 
-    public function memberapplication($_start=0, $_end=0)
+    public function memberapplication($_start="", $_end="")
     {
 //         $_session_user = Session::get(USER_SEESION);
 //         if(empty($_session_user)){

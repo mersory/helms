@@ -62,6 +62,8 @@ $(function() {
 			if(result.success){
 				parentId = result.cur_id
 				refreshNetworkChart(parentId,getChildrenNetworkUrl);
+				$('#rd-node-user').val(parentId);
+				$('#searchUserId').val(parentId);
 			} else {
 				alert("没有权限查看当前输入节点的网络结构");
 			}
@@ -99,10 +101,12 @@ function refreshNetworkChart(_userId, loadNetworkUrl){
 
 				oc.$chartContainer.on('click', '.node', function() {
 					var $this = $(this);
-					$('#rd-node-user').val($this.find('.title').text());
-					$('#rd-introduce-user').val($this.find('.title').text());
-					$('#searchUserId').val($this.find('.title').text());
-					refreshNetworkChart( $('#searchUserId').val(),getChildrenNetworkUrl);
+					if ($('#searchUserId').val() != $this.find('.title').text()){
+						$('#rd-node-user').val($this.find('.title').text());
+						$('#rd-introduce-user').val($this.find('.title').text());
+						$('#searchUserId').val($this.find('.title').text());
+						refreshNetworkChart( $('#searchUserId').val(),getChildrenNetworkUrl);
+					}
 				});		
 			}
 		}else{
