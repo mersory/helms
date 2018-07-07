@@ -180,7 +180,6 @@ class Withdrawal_record extends Model
                 {
                     $_withdrawalinfo["to_account_time"] = date("Y-m-d H:i:s");
                 }
-                var_dump("with:".$_withdrawalinfo);
                 $state = $this-> where("withdraw_id=$withdraw_id")
                 ->setField($_withdrawalinfo);
                 return $state;

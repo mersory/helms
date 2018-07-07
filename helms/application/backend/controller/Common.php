@@ -651,15 +651,14 @@ class Common extends Basecontroller
         }
         else {
             $res = array();
-            $res["success"] = false;
+            $res["success"] = 0;
             $_user_id = $_session_user["userId"];
             if($_user_id < "1000")
             {
-                var_dump("userid:".$_user_id."appid:".$appID);
                 $withdrawOBJ = new Withdrawal_record();
                 $withdrawRES = $withdrawOBJ->WithdrawalUpdate($appID, 1);
                 if($withdrawRES >= 0)
-                    $res["success"] = true;
+                    $res["success"] = 1;
             }
         }
         return json_encode($res);
@@ -675,7 +674,7 @@ class Common extends Basecontroller
         else
         {
             $res = array();
-            $res["success"] = false;
+            $res["success"] = 0;
             $_user_id = $_session_user["userId"];
             if($_user_id > "1000" && $_user_id != "admin")
             {
@@ -685,6 +684,20 @@ class Common extends Basecontroller
             $withdrawOBJ = new Withdrawal_record();
             $pointsOBJ = new User_point();
             
+            $withdrawRES = $withdrawOBJ->WithdrawalQueryByWithdrawID($appID);
+            if(count($withdrawRES) < 1)
+            {
+                return json_encode($res);
+            }
+            else 
+            {
+                if($withdrawRES[0]["withdrawal_status"] != 0)
+                {
+                    $res["success"] = -1;
+                    return json_encode($res);
+                }
+            }
+            
             $pointsRES = $pointsOBJ->PointQuery($userid);
             if(count($pointsRES) > 0)
             {
@@ -693,28 +706,28 @@ class Common extends Basecontroller
                     case 1:
                         $actRES = $pointsOBJ->PointUpdate($userid, -1, $pointsRES[0]["bonus_point"] + $points);
                         if($actRES > 0)
-                            $resdata["success"] = true;
+                            $res["success"] = 1;
                             break;
                     case 2:
                         $actRES = $pointsOBJ->PointUpdate($userid, -1, -1, $pointsRES[0]["regist_point"] + $points);
                         if($actRES > 0)
-                            $resdata["success"] = true;
+                            $res["success"] = 1;
                             break;
                     case 3:
                         $actRES = $pointsOBJ->PointUpdate($userid, -1, -1,-1, -1, $pointsRES[0]["universal_point"]+ $points);
                         if($actRES > 0)
-                            $resdata["success"] = true;
+                            $res["success"] = 1;
                             break;
                     default:
-                        return json_encode($resdata);
+                        return json_encode($res);
                 }
             
                 $delete = $withdrawOBJ->WithdrawalDel($appID);
-                return json_encode($resdata);
+                return json_encode($res);
             }
         }
         
-        return json_encode($resdata);
+        return json_encode($res);
     }
 
     public function presentApplicationQuery($_user_id, $_start, $_end)
