@@ -520,13 +520,13 @@ class User_info extends Model
         if (strcmp("$_where", ""))
         {
             $res = $this->table('helms_user_info info, helms_user_details details')
-            ->where("$_where and info.ID=details.ID and info.user_status > 0")
+            ->where("$_where and info.ID=details.ID and info.user_status != 0")
             ->select();
         }
         else 
         {
             $res = $this->table('helms_user_info info, helms_user_details details')//�˴������ݿ�ǰ׺����ʡ��
-            ->where("info.ID=details.ID and info.user_status > 0")
+            ->where("info.ID=details.ID and info.user_status != 0")
             ->select();
         }
         if(count($res) > 0)
@@ -571,7 +571,7 @@ class User_info extends Model
         {
             //changed by Gavin start model7
             $res = $this->table('helms_user_info info, helms_user_details details, helms_user_point point, helms_positionality positionality')
-            ->where("$_where and info.ID=details.ID and info.user_status > 0 and details.recommender != '0' and point.ID=info.ID and positionality.user_id=info.ID")
+            ->where("$_where and info.ID=details.ID and info.user_status != 0 and details.recommender != '0' and point.ID=info.ID and positionality.user_id=info.ID")
             ->select();
             //changed by Gavin end model7
         }
@@ -579,7 +579,7 @@ class User_info extends Model
         {
             //changed by Gavin start model7
             $res = $this->table('helms_user_info info, helms_user_details details, helms_user_point point, helms_positionality positionality')//�˴������ݿ�ǰ׺����ʡ��
-            ->where("info.ID=details.ID and info.user_status > 0 and details.recommender != '0' and point.ID=info.ID and positionality.user_id=info.ID")
+            ->where("info.ID=details.ID and info.user_status != 0 and details.recommender != '0' and point.ID=info.ID and positionality.user_id=info.ID")
             ->select();
             //changed by Gavin end model7
         }
@@ -621,10 +621,11 @@ class User_info extends Model
         {
             $_where = "$_where and details.open_time < '$_totime'";
         }
+        //var_dump("where:".$_where);
         if (strcmp("$_where", ""))
         {
             $res = $this->table('helms_user_info info, helms_user_details details, helms_user_point point, helms_positionality positionality')
-            ->where("$_where and info.ID=details.ID and info.user_status > 0 and details.recommender != '0' and point.ID=info.ID and positionality.user_id=info.ID")
+            ->where("$_where and info.ID=details.ID and info.user_status != 0 and details.recommender != '0' and point.ID=info.ID and positionality.user_id=info.ID")
             ->order("details.open_time desc")
             ->paginate(25);
         }
@@ -632,7 +633,7 @@ class User_info extends Model
         {
             $res = $this->table('helms_user_info info, helms_user_details details, helms_user_point point, helms_positionality positionality')
             ->order("details.open_time desc")
-            ->where("info.ID=details.ID and info.user_status > 0 and details.recommender != '0'")
+            ->where("info.ID=details.ID and info.user_status != 0 and details.recommender != '0'")
             ->paginate(25);
         }
 
