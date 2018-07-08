@@ -50,6 +50,9 @@ class Positionality extends Model
         $_where = '';
         $_where = "ID != 1 and status > 0";
         $_position_info = $this->where($_where)
+        //changed by Gavin start model11
+        ->field('status,ID,gushu')
+        //changed by Gavin end model11
         ->select();
         $count = count($_position_info);
         if ($count < 1)
@@ -130,6 +133,10 @@ class Positionality extends Model
         $preNodeID = 0;
         //本轮for循环，查找节点的ganenid和ganennextid 或者 是 ganenid和ganennextrid
         $strSRC=$json;//1,4,7,9
+        //changed by Gavin start model11
+        $strSRC = substr($strSRC, 1, strlen($strSRC)-1);
+        $strSRC = substr($strSRC, 0, strlen($strSRC)-1);
+        //changed by Gavin end model11
         $pos = strrpos($strSRC,',');//返回的是下标，最后一个找到的字符的小标，此处是5
         $strSRC = substr($strSRC,0, $pos);//此处参数三表示的长度，传入$pos正好不需要减去一;结果是1,4,7
         //var_dump("strSRC:".$strSRC);

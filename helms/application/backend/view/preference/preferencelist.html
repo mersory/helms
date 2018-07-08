@@ -48,13 +48,12 @@
                           <th style="width: 40px;">ID
                           </th>
                           <th class="sort-asc">参数名称</th>
-                          <th class="sort-numeric">参数编码</th>
                           <th class="sort-amount">参数值</th>
                           <th class="sort-amount">状态</th>
                           <th class="sort-amount">创建时间</th>
                           <th class="sort-amount">更新时间</th>
                           <th class="sort-amount">操作人</th>
-                          <th class="sort-amount"></th>
+                          <th class="sort-amount">操作</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -63,9 +62,8 @@
                         <tr>
                           <td>{$vo.id}</td>
                           <td>{$vo.name}</td>
-                          <td>{$vo.code}</td>
                           <td>{$vo.value}</td>
-                          <td>{$vo.status}
+                          
 								{if condition="$vo.status == 1"}
 									已生效
 								{else}

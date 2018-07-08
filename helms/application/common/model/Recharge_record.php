@@ -12,10 +12,11 @@ class Recharge_record extends Model
         var_dump("recharge");
     }
 
-    public function RechargeQuery($userid = -1)//if userid=-1,it means query all records
+    public function RechargeQuery($userid = "")//if userid=-1,it means query all records
     {
         $_where = '';
-        if ($userid != -1)
+        if (strcmp($userid,""))
+    //changed by Gavin end model11
         {
             $_where = "`user_id` = '$userid'";  //
         }
@@ -25,6 +26,7 @@ class Recharge_record extends Model
         }
 
         $_recharge = $this->where($_where)
+        ->order('ok_time DESC')
         ->select();
         $count = count($_recharge);
         if ($count < 1)

@@ -23,33 +23,22 @@ $(function(){
 		});
 	
 	$('#btn_income_expend').on("click",function(){
-		clear_table()
 		var fromtimeInput=$('#income_expense_start').val();
 		var totimeInput=$('#income_expense_end').val();
-		if (validate() == true)
-		{
-			var url = "/public/index.php/backend/common/incomeAndExpenseQuery";
-			$.post(url, {_start:fromtimeInput, _end:totimeInput}, function(msg){
-			msg=JSON.parse(msg);
-			if(msg.info == 'ok')
-			{
-			  for (var res_index=0;res_index<msg.res.length;res_index++)
-			  {
-				  addCol(res_index, msg.res[res_index].user_id, msg.res[res_index].deal_count, msg.res[res_index].current_profit, msg.res[res_index].comment, msg.res[res_index].count_time);//查询成功，增加行和列
-			  }
-			  //window.location.href = "UserLogin.html";
-			} else {
-			  alert("登录失败");
-			  return false;
-			}
-			})
-			return true;
-		}
-		else
-		{
-			alert("not valid");
-			return false;
-		}
+//	    var typeInput=$('#cur_status').val();
+
+	    var searchUrl = window.location.href.split("?")[0] + "?page=1";
+
+	    if ($.trim(fromtimeInput) != "") {
+	        searchUrl = searchUrl + "&fromTime=" + fromtimeInput;
+	    }
+
+	    if ($.trim(totimeInput) != "") {
+	        searchUrl = searchUrl + "&toTime=" + totimeInput;
+	    }
+	    
+	    window.location.href = searchUrl;
+		
 	 });
 		
 });
