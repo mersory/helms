@@ -42,6 +42,15 @@ class Store extends Basecontroller
     {
         $_product = new Store_product();
         $_product_info = $_product->ProductInfoByIdQuery($productId);
+        
+        if (count($_product_info) > 0) {
+            foreach ($_product_info as $key=>$value) {
+                if ("" != $_product_info[$key]['description_url']) {
+                    $_product_info[$key]['description_url_array'] = explode('|', $_product_info[$key]['description_url']);
+                }
+            }
+        }
+        
         // 向V层传数据
         $this->assign('pass_data', $_product_info);
         
@@ -569,7 +578,7 @@ class Store extends Basecontroller
     {
         $_session_user = Session::get(USER_SEESION);
         $user_id = $_session_user["userId"];
-               
+        
         $_shoppingcart_info = new Store_shoppingcart();
         $_shoppingcart_info_count = $_shoppingcart_info->ShoppingcartInfoAllQueryCount($user_id);
         $_session_user["shoppingcart_count"] = $_shoppingcart_info_count;

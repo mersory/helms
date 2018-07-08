@@ -98,9 +98,9 @@ class Store extends Basecontroller
         $_product_info = new Store_product();
         $id = $_post["product_id"];
         $name = $_post["product_name"];
-        $description = $_post["product_description_url"]; //
+        $description = $_post["product_description"]; //
         $image_url = $_post["product_url"]; //
-        $description_url = $_post["description_url"]; //
+        $description_url = $_post["product_description_url"]; //
         $inventory = $_post["product_inventory"]; //
         $price = $_post["product_price"]; //
         $curPrice = $_post["product_cur_price"]; //
@@ -164,7 +164,7 @@ class Store extends Basecontroller
    // 商品图片上传
     public function setFile()
     {
-/*        $file = request()->file('file');
+        $file = request()->file('file');
         if ($_FILES['file']['error']) {
             $data['result'] = false;
         } else {
@@ -181,8 +181,8 @@ class Store extends Basecontroller
             $image_url = str_replace('\\', '/', $info->getPathname());
             $image_url = substr($image_url, strpos($image_url, '/resources') + 10);
             $data['pic_url'] = $image_url;
-        }*/
-        $files = request()->file('image');
+        }
+      /*   $files = request()->file('image');
 
         $fileName = "";
         foreach($files as $file){
@@ -209,7 +209,7 @@ class Store extends Basecontroller
         }
 
         $data['result'] = true;
-        $data['pic_url'] = $fileName;
+        $data['pic_url'] = $fileName; */
 
         return json_encode($data);
     }

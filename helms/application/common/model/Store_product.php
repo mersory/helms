@@ -140,9 +140,9 @@ class Store_product extends Model
     public function StoreProductUpdate($descriptionUrl,$id, $name, $description, $image_url, $operator, $invetory,$price,$curPrice,$category,$categoryName,$order)
     {
         $_productinfo = array();
-        if (descriptionUrl >=0)
+        if ($descriptionUrl >=0)
         {
-            $_productinfo["description_url"] = descriptionUrl;
+            $_productinfo["description_url"] = $descriptionUrl;
         }
         
         if ($name >=0)

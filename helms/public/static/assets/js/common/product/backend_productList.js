@@ -163,7 +163,11 @@ $(function() {
         done: function (e, data){
         	var result = JSON.parse(data.result);
         	if(result.result){
-        		$("#product_description_url").val(result.pic_url);	
+        		if("" == $("#product_description_url").val()){
+        			$("#product_description_url").val(result.pic_url);	
+        		}else{
+        			$("#product_description_url").val($("#product_description_url").val() + "|" +result.pic_url);
+        		}
         	}
         }
     });

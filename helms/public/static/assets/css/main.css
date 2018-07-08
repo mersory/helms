@@ -712,3 +712,9 @@ li.remove_frame a:hover {
     position: absolute;
     margin: -25px 0 0 -25px;
 }
+.description-img-array img{
+	width:800px;
+}
+.description-img-array{
+    margin-top: 85px;
+}

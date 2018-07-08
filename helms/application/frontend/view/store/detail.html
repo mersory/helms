@@ -55,8 +55,12 @@
 						</div>
 						<div class="product-description">
 							<span>{$pass_data[0]['description']}</span>
-							<div class="image-wrapper">
-								<img src="_IMG_/resources{$pass_data[0]['description_url']}"/>
+							<div class="image-wrapper description-img-array">
+								{if condition="empty($pass_data[0]['description_url_array']) neq true"} {foreach
+									name="pass_data[0]['description_url_array']"" item='vo1'}
+								<img src="_IMG_/resources{$vo1}"/>
+								{/foreach}
+								{/if}
 							</div>
 						</div>
 					</div>
