@@ -82,10 +82,10 @@ function refreshShoppingCart(){
 
 function showMask(){
 	$(".common-mask").show();
-	$(".common-mask .loader").show();
+	$(".common-mask .common-loader").show();
 }
 
 function hideMask(){
 	$(".common-mask").hide();
-	$(".common-mask .loader").hide();
+	$(".common-mask .common-loader").hide();
 }
