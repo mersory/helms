@@ -63,7 +63,7 @@
 										<th class="sort-asc">序号</th>
 										<th class="sort-asc">会员ID</th>
 										<th class="sort-numeric">奖金类型</th>
-										<th class="sort-amount">金额</th>
+										<th class="sort-amount">积分</th>
 										<th class="sort-amount">发放时间</th>
 										<th class="sort-amount">备注</th>
 									</tr>
@@ -72,14 +72,7 @@
 									{if condition="empty($pass_data) neq true"} {foreach
 									name='pass_data' item='vo'}
 									<tr>
-										<td>
-												<input
-													style="width: 15px;height: 15px;"
-													type="checkbox"
-													name="row-check" 
-													v-id="{$vo.ID}"
-													/>
-										</td>
+										<td>{$vo.AUTO}</td>
 										<td>{$vo.ID}</td>
 										<td>{$vo.award}</td>
 										<td>{$vo.money}</td>

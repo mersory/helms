@@ -103,11 +103,6 @@
 							<table class="table table-custom" id="userList_table">
 								<thead>
 									<tr>
-										<th style="width: 40px;">
-											<div class="checkbox check-transparent">
-												<input type="checkbox" id="allchck"> <label></label>
-											</div>
-										</th>
 										<th class="sort-asc">会员ID</th>
 										<th class="sort-numeric">真实姓名</th>
 										<th class="sort-amount">充值类型</th>
@@ -124,16 +119,42 @@
 								{if condition="empty($pass_data) neq true"} {foreach
 								name='pass_data' item='vo'}
 								<tr>
-									<td>
-									</td>
 									<td>{$vo.user_id}</td>
 									<td>{$vo.real_name}</td>
-									<td>{$vo.cz_type}</td>
+									<td>
+										{if $vo.cz_type eq 0}
+											注册分
+										{elseif $vo.cz_type eq 1}
+											奖励分
+										{elseif $vo.cz_type eq 2}
+											万能分
+										{elseif $vo.cz_type eq 3}
+											重复消费分
+										{else}
+											其他
+										{/if}
+									</td>
 									<td>{$vo.cz_time}</td>
 									<td>{$vo.cz_money}</td>
-									<td>{$vo.czyt_type}</td>
+									<td>
+										{if $vo.czyt_type eq 0}
+											报单注册
+										{elseif $vo.czyt_type eq 1}
+											帕点
+										{elseif $vo.czyt_type eq 2}
+											其他
+										{/if}
+									</td>
 									<td>{$vo.cz_instruction}</td>
-									<td>{$vo.status}</td>
+									<td>
+										{if $vo.status eq 0}
+											未成功
+										{elseif $vo.status eq 1}
+											已成功
+										{else}
+											其他
+										{/if}
+									</td>
 									<td>
 									</td>
 								</tr>

@@ -66,6 +66,7 @@
                       <thead>
                         <tr>
                           <th class="sort-numeric">序号</th>
+						  <th class="sort-amount">申请人会员ID</th>
                           <th class="sort-numeric">会员名</th>
                           <th class="sort-amount">手机号</th>
                           <th class="sort-amount">邮箱</th>
@@ -73,7 +74,7 @@
                           <th class="sort-amount">会员等级</th>
                           <!-- changed by Gavin start model7 -->
                           <th class="sort-amount">申请时间</th>
-                          <th class="sort-amount">申请人会员ID</th>
+                          <th class="sort-amount">申请产品</th>
                           <th style="width: 60px;">操作</th>
                         </tr>
                       </thead>
@@ -82,12 +83,25 @@
 									name='pass_data' item='vo'}
 									<tr>
 									    <td>{$vo.AUTO_ID}</td>
+										<td>{$vo.ID}</td>
 										<td>{$vo.user_name}</td>
 										<td>{$vo.telphone}</td>
 										<td>{$vo.email}</td>
 										<td>{$vo.user_level}</td>
 										<td>{$vo.open_time}</td>
-										<td>{$vo.ID}</td>
+										<td>
+											{if $vo.portrait eq 1}
+												冰箱鲜生1台
+											{elseif $vo.portrait eq 2}
+												卟叮1台
+											{elseif $vo.portrait eq 3}
+												迦尔纳1台
+											{elseif $vo.portrait eq 4}
+												冰箱鲜生2台
+											{else}
+												空
+											{/if}
+										</td>
 										<td>
 											<button type="button" menu_id="{$vo.ID}" class="btn btn-primary menu_pass">激活</button>
 											<button type="button" menu_id="{$vo.ID}" class="btn btn-primary menu_delete">删除</button>
