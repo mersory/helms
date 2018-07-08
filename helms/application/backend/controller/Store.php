@@ -164,7 +164,7 @@ class Store extends Basecontroller
    // 商品图片上传
     public function setFile()
     {
-        $file = request()->file('file');
+/*        $file = request()->file('file');
         if ($_FILES['file']['error']) {
             $data['result'] = false;
         } else {
@@ -181,8 +181,36 @@ class Store extends Basecontroller
             $image_url = str_replace('\\', '/', $info->getPathname());
             $image_url = substr($image_url, strpos($image_url, '/resources') + 10);
             $data['pic_url'] = $image_url;
+        }*/
+        $files = request()->file('image');
+
+        $fileName = "";
+        foreach($files as $file){
+            // 移动到框架应用根目录/public/uploads/ 目录下
+            $info = $file->move(ROOT_PATH . 'public' . DS . 'resources');
+            if($info){
+                // 成功上传后 获取上传信息
+                // 输出 jpg
+                echo $info->getExtension();
+                // 输出 42a79759f284b767dfcb2a0197904287.jpg
+                echo $info->getFilename();
+
+                if("" == $fileName){
+                    $fileName = $info->getFilename();
+                }else{
+                    $fileName = $fileName + "," + $info->getFilename();
+                }
+            }else{
+                // 上传失败获取错误信息
+                echo $file->getError();
+                $data['result'] = false;
+                return;
+            }
         }
-        
+
+        $data['result'] = true;
+        $data['pic_url'] = $fileName;
+
         return json_encode($data);
     }
     
