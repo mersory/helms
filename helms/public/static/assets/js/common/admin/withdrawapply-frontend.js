@@ -29,6 +29,12 @@ $(function(){
 			alert("提现分数不能为空");
 			return false;
 		}
+        alert(parseInt(points));
+        alert(parseInt(points) % 100)
+        if( parseInt(points) % 100 == 0){
+			alert("提现分数必须为100的整数");
+			return false;
+		}
 
         var url =  "/public/index.php/frontend/common/userWithdraw";
 		$.post(url,{points:points, point_type:pointtype},function(resdata){
