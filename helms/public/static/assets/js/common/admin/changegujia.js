@@ -25,12 +25,14 @@ $(function(){
 	currentgujia();
 	
 	$('#btn_changegujia').on("click",function(){
+		showMask();
 		var gujiaInput=$('#change_gujia').val();
 		if (validate() == true)
 		{
 			//alert("valid");
 			var url = "/public/index.php/frontend/Adminopt/change_gujia";
 			$.post(url, {use_gujia:gujiaInput}, function(res){
+				hideMask();
 			res=JSON.parse(res);
 			if(res.success == true)
 			{

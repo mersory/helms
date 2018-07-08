@@ -3,11 +3,13 @@ $(function() {
 
 	//搜索按钮
 	$("#network-search").on("click",function(){
+		showMask();
 
 		var CurrentId = $('#searchUserId').val();
 		if($.trim(CurrentId) != ""){			
 			var urlres =  "/public/index.php/frontend/Common/checkRecommondChild";
 			$.post(urlres,{id:CurrentId},function(result){
+				hideMask();
 				result = JSON.parse(result);
 			if(result.success){
 				refreshIntroduceTree(CurrentId);

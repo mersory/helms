@@ -16,6 +16,7 @@ $(function(){
 	})
 	
 	$('#regist').on("click",function(){
+		showMask();
 		var id = $("#memberId").val();
 		var username = $("#fullname").val();
 		var email = $("#email").val();
@@ -65,6 +66,7 @@ $(function(){
 		}*/
 		var url =  "/public/index.php/frontend/Useropt/UserRegist";
 		$.post(url,{ID:id, name:username, email:email, telphone:telphone, recommender:recommender, activator:activator, pwd1:"123", pwd2:"123", userlevel:level},function(result){
+			hideMask();
 			result = JSON.parse(result);
 			if(result.success){
 				alert("注册成功，点击确定回到主页");

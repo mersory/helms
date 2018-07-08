@@ -1,5 +1,6 @@
 $(function(){
 	$("#apply-btn").on("click",function(){
+		showMask();
 		
 		var points_type = $("#points_type").val();
 		var transfer_amount = $("#transfer_amount").val();
@@ -21,6 +22,7 @@ $(function(){
 		
 		var url =  "/public/index.php/frontend/Adminopt/pointTransforRes";
 		 $.post(url,{point_type:points_type,point_change_type:1,point_change_sum:transfer_amount,minor_password:minor_password},function(result){
+			 hideMask();
 			 result = JSON.parse(result);
 			 if(result.success){
 				 window.location.refresh();

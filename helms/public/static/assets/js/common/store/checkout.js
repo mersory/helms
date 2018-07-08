@@ -1,6 +1,7 @@
 $(function(){
 	//提交订单
 	$(".submit-order").on("click",function(){
+		showMask();
 		var addressId = $("input[name='radio_cds']").val().trim();
 		var receiver = $("input[name='receiver']").val().trim();
 		var mobile = $("input[name='receiver_mobile']").val().trim();
@@ -31,6 +32,7 @@ $(function(){
 			area:area,
 			pointType:pointType
 		}, function(result) {
+			hideMask();
 			result = JSON.parse(result);
 			if(result.result==1){
 				alert("订单提交成功");

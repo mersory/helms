@@ -12,6 +12,8 @@ $(function(){
 	 });
 	
 	$('#btn_recharge').on("click",function(){
+		showMask();
+		
 		var useridInput=$('#recharge_userid').val();
 		var typeInput=$("#recharge_type option:selected").val();
 		var moneyInput=$('#recharge_money').val();
@@ -25,6 +27,7 @@ $(function(){
 		
 		var url = "/public/index.php/backend/useropt/userRecharge";
 		$.post(url, {user_id:useridInput, money:moneyInput, cz_type:typeInput, content:contentInput, usefor:useInput, details:detailInput}, function(msg){
+			hideMask();
 			msg=JSON.parse(msg);
 			if(msg.success == true)
 			{

@@ -22,6 +22,7 @@ $(function(){
 		});
 	
 	$('#withdraw_application').on("click",function(){
+		showMask();
 		var points = $('#withdraw').val();
         var pointtype=$('#pointtype').val();
         
@@ -32,6 +33,7 @@ $(function(){
 
         var url =  "/public/index.php/frontend/common/userWithdraw";
 		$.post(url,{points:points, point_type:pointtype},function(resdata){
+			hideMask();
 			resdata = JSON.parse(resdata);
 			if(resdata.success){
 				alert("提现成功");

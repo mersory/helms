@@ -2,11 +2,13 @@ $(function(){
 	
 	//删除商品
 	$(".alert-close").on("click",function(){
+		showMask();
 		var shoppingcartId = $(this).parents(".item").attr("shoppingcart_id");
 		
 		$.post("/public/index.php/frontend/store/deleteFromShoppingcart", {
 			shoppingcartId : shoppingcartId
 		}, function(result) {
+			hideMask();
 			result = JSON.parse(result);
 			if(result.result){
 				window.location.reload();

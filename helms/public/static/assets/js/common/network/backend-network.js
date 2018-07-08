@@ -52,10 +52,12 @@ $(function() {
 	
 	//返回上一层按钮
 	$("#network-uplevel").on("click",function(){
+		showMask();
 		var parentId = $('#searchUserId').val();
 		if($.trim(parentId) != ""){
 			var urlres =  "/public/index.php/frontend/Adminopt/checkNodeParent";
 			$.post(urlres,{id:parentId},function(result){
+				hideMask();
 				result = JSON.parse(result);
 			if(result.success){
 				parentId = result.cur_id

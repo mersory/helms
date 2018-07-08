@@ -26,10 +26,12 @@ $(function(){
 	 });
 		
 	$('.menu_pass').on("click",function(){
+		showMask();
 		var withdrawId = $(this).parents("tr").find("td").eq(0).html();
 		$.post("/public/index.php/backend/common/userWithdrawApprove", {
 			appID : withdrawId
 		}, function(res) {
+			hideMask();
 			res = JSON.parse(res);
 			if(res.success==true){
 				alert("通过");
@@ -40,6 +42,7 @@ $(function(){
 		});
 	});
 	$('.menu_delete').on("click",function(){
+		showMask();
 		var withdrawId = $(this).parents("tr").find("td").eq(0).html();
 		var userId = $(this).parents("tr").find("td").eq(1).html();
 		var points = $(this).parents("tr").find("td").eq(3).html();
@@ -50,6 +53,7 @@ $(function(){
 			points : points, 
 			point_type : pointType
 		}, function(res) {
+			hideMask();
 			res = JSON.parse(res);
 			if(res.success==true){
 				search_show();
