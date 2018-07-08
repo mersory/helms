@@ -29,9 +29,8 @@ $(function(){
 			alert("提现分数不能为空");
 			return false;
 		}
-        alert(parseInt(points));
-        alert(parseInt(points) % 100)
-        if( parseInt(points) % 100 == 0){
+        
+        if( parseInt(points) % 100 != 0){
 			alert("提现分数必须为100的整数");
 			return false;
 		}
@@ -39,11 +38,13 @@ $(function(){
         var url =  "/public/index.php/frontend/common/userWithdraw";
 		$.post(url,{points:points, point_type:pointtype},function(resdata){
 			resdata = JSON.parse(resdata);
-			if(resdata.success){
+			if(resdata.success == 1){
 				alert("提现成功");
 				search_show();
-			}else{
+			}else if(resdata.success == 0){
 				alert("提现失败");
+			}else if(resdata.success == -1){
+				alert("个人信息填写不完全，请正确填写详细信息");
 			}
 		});
 	 });
