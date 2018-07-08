@@ -127,7 +127,6 @@
 										<th class="sort-amount">提现金额</th>
 										<th class="sort-amount">提现申请时间</th>
 										<th class="sort-amount">当前状态</th>
-										<th class="sort-amount">审核人</th>
 										<th class="sort-amount">开户人姓名</th>
 										<th class="sort-amount">开户行</th>
 										<th class="sort-amount">开户卡号</th>
@@ -141,12 +140,21 @@
 									<tr>
 										<td>{$vo.withdraw_id}</td>
 										<td>{$vo.user_id}</td>
-										<td>{$vo.withdrawal_type}</td>
+										<td>
+											{if $vo.withdrawal_type eq 1}
+												奖励分提现
+											{elseif $vo.withdrawal_type eq 2}
+												注册分提现
+											{elseif $vo.withdrawal_type eq 3}
+												万能分提现
+											{else}
+												空
+											{/if}
+										</td>
 										<td>{$vo.point_consume}</td>
 										<td>{$vo.withdraw_sum}</td>
 										<td>{$vo.apply_time}</td>
 										<td>{$vo.withdrawal_status}</td>
-										<td>{$vo.verifier_id}</td>
 										<td>{$vo.bank_account_name}</td>
 										<td>{$vo.sub_bank}</td>
 										<td>{$vo.bank_account_num}</td>

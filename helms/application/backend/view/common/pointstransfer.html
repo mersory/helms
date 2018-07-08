@@ -81,7 +81,15 @@
 								<tr>
 									<td>{$vo.POINT_ID}</td>
 									<td>{$vo.user_id}</td>
-									<td>{$vo.point_change_type}</td>
+									<td>
+										{if $vo.point_change_type eq 0}
+											奖励分转注册分
+										{elseif $vo.point_change_type eq 1}
+											万能分转注册分
+										{else}
+											其他
+										{/if}
+									</td>
 									<td>{$vo.point_before}</td>
 									<td>{$vo.point_change_sum}</td>
 									<td>{$vo.point_change_time}</td>
