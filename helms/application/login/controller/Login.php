@@ -121,6 +121,9 @@ class Login extends Controller
                     $_shoppingcart_info = new Store_shoppingcart();
                     $_shoppingcart_info_count = $_shoppingcart_info->ShoppingcartInfoAllQueryCount($_res[0]["ID"]);
                     $_session_user["shoppingcart_count"] = $_shoppingcart_info_count;
+                    
+                    $_resdata["shoppingcart_count"] = $_shoppingcart_info_count;
+                    $_resdata["userId"] = $_res[0]["ID"];
             
                     $_priority = new User_priority();
                     $_priority_info = $_priority->PriorityQuery($_res[0]["ID"]);
@@ -138,13 +141,14 @@ class Login extends Controller
                             $_resdata["restdynamic"] = $_point_info[0]["shengyu_dong"];
                         }
                         $_session_user["roleId"] = $_priority_info[0]["priority_id"];
-                        Session::set(USER_SEESION,$_session_user);
                         if(1111 == $_priority_info[0]["priority_id"]){
                             $_resdata["redirectUrl"] = "/public/index.php/backend/common/index";
                         }else{
                             $_resdata["redirectUrl"] = "/public/index.php/frontend/common/index";
                         }
                     }
+                    
+                    Session::set(USER_SEESION,$_session_user);
                 }
                 else if(count($_res) == 1 && $_res[0]["user_status"] == 0)
                 {
