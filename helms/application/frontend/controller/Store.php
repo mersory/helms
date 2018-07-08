@@ -291,7 +291,7 @@ class Store extends Basecontroller
         $_resdata = array();
         $_resdata["result"] = true;
         
-        $shippingFee = 25;
+        $shippingFee = 7.5;
         
         // 未登录用户不予许进入结算页
         if (empty($user_id)) {

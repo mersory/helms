@@ -82,13 +82,13 @@ $(function(){
 		}
 	})
 	
-	$("select[name='receiver_city'],input[name='radio_cds']").on("change",function(){
+	$("select[name='receiver_city'],select[name='receiver_area'],input[name='radio_cds']").on("change",function(){
 		var addressId = $("input[name='radio_cds']").val();
-		var province = $("select[name='receiver_province'] option:selected").text();
-		var city = $("select[name='receiver_city'] option:selected").text();
-		var area = $("select[name='receiver_area'] option:selected").text();
+		var province = $("select[name='receiver_province'] option:selected").val();
+		var city = $("select[name='receiver_city'] option:selected").val();
+		var area = $("select[name='receiver_area'] option:selected").val();
 		
-		if(("new" == addressId &&"请选择" != province && "请选择" != city && "请选择" != area) || "new" != addressId){
+		if(("new" == addressId &&"" != province && "" != city && "" != area) || "new" != addressId){
 			$.post("/public/index.php/frontend/store/getShippingFee", {
 				addressId : addressId,
 				province:province,
