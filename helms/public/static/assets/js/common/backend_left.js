@@ -1,5 +1,5 @@
 $(function(){
-    var url =  "/public/index.php/backend/useropt/usergujiague";
+    var url =  "/public/index.php/backend/useropt/gpsetgujia";
 
     //定时刷新股价股额
     setInterval(function(){
@@ -8,16 +8,19 @@ $(function(){
             result = JSON.parse(result);
             if(result.success){
                 if(undefined != $("#show-curgujia")){
-                    $("#show-curgujia").empty().html(result.result.current_gujia);
+                    $("#show-curgujia").empty().html(result.res.gujia);
                 }
 
-                if(undefined != $("#show-gushu")){
-                    $("#show-gushu").empty().html(result.result.gushu);
+                if(undefined != $("#show-qishu")){
+                    $("#show-qishu").empty().html(result.res.qishu);
                 }
-
-                if(undefined != $("#show-gue")){
-                    $("#show-gue").empty().html(result.result.gue);
-                }
+//                if(undefined != $("#show-gushu")){
+//                    $("#show-gushu").empty().html(result.result.gushu);
+//                }
+//
+//                if(undefined != $("#show-gue")){
+//                    $("#show-gue").empty().html(result.result.gue);
+//                }
             }
         });
     },5000);

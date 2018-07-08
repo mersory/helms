@@ -32,10 +32,13 @@ $(function() {
 	
 	//搜索按钮
 	$("#network-search").on("click",function(){
+		showMask();
+	
 		var parentId = $('#searchUserId').val();
 		if($.trim(parentId) != ""){
 			var urlres =  "/public/index.php/frontend/Adminopt/checkNodeChild";
 			$.post(urlres,{id:parentId},function(result){
+				hideMask();
 				result = JSON.parse(result);
 			if(result.success){
 				refreshNetworkChart(parentId,getChildrenNetworkUrl);
