@@ -57,7 +57,7 @@ class Income_expenditure extends Model
         return $res;
     }
     
-    public function IncomeExpenditureQueryByTimeWithLimit($_start, $_end)
+    public function IncomeExpenditureQueryByTimeWithLimit($_start="", $_end="")
     {
         $_where = '';
         if (strcmp("$_start", "") )
@@ -77,13 +77,13 @@ class Income_expenditure extends Model
         {
             $res = $this->order("count_time desc")
             ->where($_where)
-            ->field( 'user_id, deal_count, current_profit, count_time, comment')
+            ->field( 'record_id, incomings, outgoing, current_profit, count_time')
             ->paginate(25);
         }
         else
         {
             $res = $this->order("count_time desc")
-                        ->field( 'user_id, deal_count, current_profit, count_time')
+                        ->field( 'record_id, incomings, outgoing, current_profit, count_time')
                         ->paginate(25);
         }
         return $res;

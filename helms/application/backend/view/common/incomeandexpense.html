@@ -6,12 +6,12 @@
 	<!-- page header -->
 	<div class="pageheader">
 		<h2>
-			<i class="fa fa-tachometer"></i> 收支明细<span></span>
+			<i class="fa fa-tachometer"></i>每期出纳<span></span>
 		</h2>
 		<div class="breadcrumbs">
 			<ol class="breadcrumb">
 				<li><a href="index.html">HERMES</a></li>
-				<li class="active">收支明细</li>
+				<li class="active">每期出纳</li>
 			</ol>
 		</div>
 	</div>
@@ -28,12 +28,12 @@
 						<div class="form-group">
 							<label for="input01" class="col-sm-2 control-label">时间</label>
 							<div class="col-sm-2">
-								<input type="datetime-local" class="form-control"
-									id="income_expense_start">
+								<input type="text" class="form-control"
+									id="income_expense_start" value="{$fromTime}">
 							</div>
 							<div class="col-sm-2">
-								<input type="datetime-local" class="form-control"
-									id="income_expense_end">
+								<input type="text" class="form-control"
+									id="income_expense_end" value="{$toTime}">
 							</div>
 						</div>
 					</div>
@@ -64,24 +64,29 @@
 								<thead>
 									<tr>
 										<th class="sort-asc">序号</th>
-										<th class="sort-asc">会员ID</th>
-										<th class="sort-numeric">收支类型</th>
-										<th class="sort-amount">金额</th>
-										<th class="sort-amount">收支说明</th>
+										<th class="sort-numeric">当期收入</th>
+										<th class="sort-amount">当期支出</th>
+										<th class="sort-amount">当期盈利</th>
+										<th class="sort-amount">拨出比</th>
 										<th class="sort-amount">时间</th>
 									</tr>
 								</thead>
 								<tbody>
+								{if condition="empty($pass_data) neq true"} {foreach
+									name='pass_data' item='vo'}
 									<tr>
-										<td>1</td>
-										<td>123124</td>
-										<td>注册分转入</td>
-										<td>+500</td>
-										<td></td>
-										<td>2017-09-01 12:30:00</td>
+										<td>{$vo.record_id}</td>
+										<td>{$vo.incomings}</td>
+										<td>{$vo.outgoing}</td>
+										<td>{$vo.current_profit}</td>
+										<td>{$vo.outgoing}/{$vo.incomings}</td>
+										<td>{$vo.count_time}</td>
 									</tr>
+									{/foreach} {/if}
+									
 								</tbody>
 							</table>
+							<div>{$page}</div>
 
 						</div>
 						<!-- /tile body -->
