@@ -89,6 +89,38 @@ class Income_expenditure extends Model
         return $res;
     }
     
+    public function sumIncomeExpenditureQueryByTimeWithLimit($_start="", $_end="")
+    {
+        $_where = '';
+        if (strcmp("$_start", "") )
+        {
+            $_where = "count_time > '$_start'";
+        }
+        else
+        {
+            $_where = "count_time > '1970-01-01 00:00:00'";
+        }
+        if (strcmp("$_end", "") )
+        {
+            $_where = "$_where and count_time < '$_end'";
+        }
+    
+        if (strcmp("$_where", ""))
+        {
+            $res = $this->order("count_time desc")
+            ->where($_where)
+            ->field( 'sum(incomings) as incomingSum, sum(outgoing) as outgoingSum, sum(current_profit) profitSum, sum(outgoing)/sum(incomings) as precent')
+            ->select();
+        }
+        else
+        {
+            $res = $this->order("count_time desc")
+            ->field( 'sum(incomings) as incomingSum, sum(outgoing) as outgoingSum, sum(current_profit) profitSum, sum(outgoing)/sum(incomings) as precent')
+            ->select();
+        }
+        return $res;
+    }
+    
     public function IncomeExpenditureDel($record_id)
     {
         $_where = '';

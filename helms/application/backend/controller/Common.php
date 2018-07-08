@@ -543,7 +543,10 @@ class Common extends Basecontroller
             $_res = $_income_expense->IncomeExpenditureQueryByTimeWithLimit($_fromtime, $_totime);
             $_resdata["fromTime"] = $_fromtime;
             $_resdata["toTime"] = $_totime;
-        
+            
+            $_sumres = $_income_expense->SumIncomeExpenditureQueryByTimeWithLimit($_fromtime, $_totime);
+            
+            $this->assign('sumdata', $_sumres);
             $this->assign('page', $_res->render());
             $this->assign('pass_data', $_res);
         
