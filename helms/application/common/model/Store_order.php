@@ -113,7 +113,7 @@ class Store_order extends Model
         return $state;
     }
     
-    public function StoreOrderStatusUpdate($id, $lifecycle)
+    public function StoreOrderStatusUpdate($id, $lifecycle,$expressCode)
     {
         $_orderinfo = array();
         if ($id >=0)
@@ -125,6 +125,12 @@ class Store_order extends Model
         {
             $_orderinfo["lifecycle"] = $lifecycle;
         }
+        
+        if ($expressCode >=0)
+        {
+            $_orderinfo["express_code"] = $expressCode;
+        }
+        
         $t=time();
         $_orderinfo["update_time"] = date("Y-m-d H:i:s",$t);
     

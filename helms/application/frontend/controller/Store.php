@@ -569,7 +569,7 @@ class Store extends Basecontroller
         $orderId = $_post["orderId"];
         
         $orderInfo = new Store_order();
-        $orderInfo->StoreOrderStatusUpdate($orderId, 3);
+        $orderInfo->StoreOrderStatusUpdate($orderId, 3,null);
         
         return json_encode($_resdata);
     }

@@ -36,6 +36,7 @@ $(function(){
 			result = JSON.parse(result);
 			if(result.result==1){
 				alert("订单提交成功");
+				refreshShoppingCart();
 				window.location.href = "/public/index.php/frontend/store/orderlist";
 			}else{
 				alert(result.message)
@@ -120,7 +121,7 @@ $(function(){
 function initSummary(){
 	var productTotal = 0;
 	$(".pro_shop_list .shop_porlist ").each(function(index,element){
-		productTotal += parseInt($(element).find("td:nth-child(4)").text());
+		productTotal += parseFloat($(element).find("td:nth-child(4)").text()) * parseFloat($(element).find("td:nth-child(3)").text());
 	});
 	$(".product-total").html(productTotal);
 	
@@ -137,7 +138,7 @@ function initSummary(){
 	}, function(result) {
 		result = JSON.parse(result);
 		$(".shipping-fee").html(result.shippingFee);
-		$(".summary-total").html(parseInt(productTotal)+parseInt(result.shippingFee));
+		$(".summary-total").html(parseFloat(productTotal)+parseFloat(result.shippingFee));
 	});
 }
 

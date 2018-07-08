@@ -2,15 +2,15 @@ $(function(){
 	
 	//删除商品
 	$(".alert-close").on("click",function(){
-		showMask();
+		
 		var shoppingcartId = $(this).parents(".item").attr("shoppingcart_id");
 		
 		$.post("/public/index.php/frontend/store/deleteFromShoppingcart", {
 			shoppingcartId : shoppingcartId
 		}, function(result) {
-			hideMask();
 			result = JSON.parse(result);
 			if(result.result){
+				refreshShoppingCart();
 				window.location.reload();
 			}else{
 				alert(result.message);
@@ -30,7 +30,7 @@ $(function(){
 		}, function(result) {
 			result = JSON.parse(result);
 			if(result.result){
-				
+				refreshShoppingCart();
 			}else{
 				alert(result.message);
 				window.location.reload();

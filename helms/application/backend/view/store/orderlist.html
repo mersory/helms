@@ -48,6 +48,7 @@
 									<th class="sort-amount">下单时间</th>
 									<th class="sort-amount">总金额</th>
 									<th class="sort-amount">运费</th>
+									<th class="sort-amount">运单号</th>
 									<th class="sort-amount">状态</th>
 								</tr>
 							</thead>
@@ -63,14 +64,14 @@
 									<td>{$vo.create_time}</td>
 									<td>{$vo.total}</td>
 									<td>{$vo.shipping_fee}</td>
-									<td>
-										{if condition="$vo.lifecycle eq 1"} 待发货 {elseif
-										condition="$vo.lifecycle eq 2"} 已发货
-										<button
+									<td>{$vo.express_code}</td>
+									<td class="text-center">
+										{if condition="$vo.lifecycle eq 1"} <button
 											type="button"
 											order-id="{$vo.id}"
-											class="btn btn-info confirm-receive"
-											style="margin-left: 30px;">确认收货</button>
+											class="btn btn-info confirm-send"
+											style="margin-left: 30px;">确认发货</button> {elseif
+										condition="$vo.lifecycle eq 2"} 已发货
 										{elseif condition="$vo.lifecycle eq 3"} 已收货 {else}
 										未知：{$vo.status} {/if}
 									</td>
@@ -87,7 +88,6 @@
 									<td>单价</td>
 									<td>小计</td>
 								</tr>
-								
 								
 								{foreach name='$vo.orderLines' item='orderLine' key="k"}
 								<tr class="shop_porlist ">
@@ -121,10 +121,14 @@
 								{/foreach} {/if}
 							</tbody>
 						</table>
-<div>{$page}</div>
+						<div>{$page}</div>
                   </div>
                   <!-- /tile body -->
-
+                  	<div id="confirmSendDialog" >
+						<input type="hidden" id="confirm_order_id" value="" /> 
+						<label for="input03" class="col-sm-5 text-left control-label">运单号</label>
+						<input type="text" class="form-control" type="regist" id="express_code" />
+					</div>
                 </section>
               </div>
             </div>

@@ -157,10 +157,6 @@ class Store extends Basecontroller
         return json_encode($_resdata);
     }
     
-    // 订单已发货
-    public function sendOrder($product_id)
-    {}
-    
    // 商品图片上传
     public function setFile()
     {
@@ -214,7 +210,7 @@ class Store extends Basecontroller
         return json_encode($data);
     }
     
-    // 用户确认收货
+    //  确认发货
     public function confirmSend()
     {
         $_session_user = Session::get(USER_SEESION);
@@ -230,10 +226,12 @@ class Store extends Basecontroller
         
         $_post = Request::instance()->post();
         $orderId = $_post["orderId"];
+        $expressCode = $_post["expressCode"];
         
         $orderInfo = new Store_order();
-        $orderInfo->StoreOrderStatusUpdate($orderId, 2);
+        $orderInfo->StoreOrderStatusUpdate($orderId, 2,$expressCode);
         
         return json_encode($_resdata);
     }
+   
 }
