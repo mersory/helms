@@ -1,8 +1,8 @@
 $(function(){
 	//提交订单
 	$(".submit-order").on("click",function(){
-		showMask();
-		var addressId = $("input[name='radio_cds']").val().trim();
+
+		var addressId = $("input[name='radio_cds']:checked").val().trim();
 		var receiver = $("input[name='receiver']").val().trim();
 		var mobile = $("input[name='receiver_mobile']").val().trim();
 		var address = $("textarea[name='receiver_address']").val().trim();
@@ -11,17 +11,28 @@ $(function(){
 		var area = $("select[name='receiver_area'] option:selected").text().trim();
 		var pointType = $("select.user-points option:selected").val().trim();
 		var point = $(".user-point").text().trim();
+
+		if("new" == addressId){
+			if($.trim(receiver)=="" || $.trim(mobile)=="" || $.trim(address)=="" ||$.trim(province)=="请选择" || $.trim(city)=="请选择"  || $.trim(area)=="请选择"){
+				alert("参数为空，请检查后重新提交");
+				return false;
+			}			
+		}else if("" == $.trim(addressId) || undefined == addressId){
+			alert("请先选择地址");
+			return false;
+		}
+		
+		if(point == "0"){
+			alert("可用积分为零");
+			return false;
+		}
 		
 		if(parseInt(point) <parseInt( $(".summary-total").text().trim())){
 			alert("积分余额不足");
 			return false;
 		}
-		
-//		if(isEmpty(productId) || isEmpty(receiver) || isEmpty(mobile) || isEmpty(address) || isEmpty(password) ){
-//			alert("参数为空，请检查后重新提交");
-//			return false;
-//		}
-		
+	
+		showMask();
 		$.post("/public/index.php/frontend/store/goToPay", {
 			addressId : addressId,
 			receiver:receiver,
@@ -100,7 +111,7 @@ $(function(){
 			}, function(result) {
 				result = JSON.parse(result);
 				$(".shipping-fee").html(result.shippingFee);
-				$(".summary-total").html(parseInt($(".product-total").text())+parseInt(result.shippingFee));
+				$(".summary-total").html(parseFloat($(".product-total").text())+parseFloat(result.shippingFee));
 			});
 		}
 	});

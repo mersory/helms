@@ -134,14 +134,6 @@ class Store_shoppingcart extends Model
 
         $state = $this->where($_where)->delete();
     
-        if ($state)
-        {
-            $this->commit();
-        }
-        else
-        {
-            $this->rollback();
-        }
         return $state;
     }    
 }

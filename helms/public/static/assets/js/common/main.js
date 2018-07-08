@@ -75,7 +75,7 @@ function refreshShoppingCart(){
 	$.post(urlres,{},function(result){
 		result = JSON.parse(result);
 		if(result.result){
-			$("shoppingcart_count").empty().html(result.count);
+			$(".shoppingcart_count").empty().html(result.count);
 		}
 	});
 }

@@ -135,6 +135,14 @@ class Store extends Basecontroller
             $province = $_post["province"]; //
             $city = $_post["city"]; //
             $area = $_post["area"]; //
+            
+            //判断收货地址
+            if("" == $receiver || "" == $mobile || "" == $address || "" == $province || "" == $city || "" == $area){
+                $_resdata['result'] = false;
+                $_resdata['message'] = "请填写完整信息";
+                return json_encode($_resdata);
+            }
+            
             $saveAddress = true;
         } else {
             $address = new Store_user_address();
@@ -146,6 +154,16 @@ class Store extends Basecontroller
                 $province = $addressInfo[0]["province"];
                 $city = $addressInfo[0]["city"];
                 $area = $addressInfo[0]["area"];
+                
+                if("" == $receiver || "" == $mobile || "" == $address || "" == $province || "" == $city || "" == $area){
+                    $_resdata['result'] = false;
+                    $_resdata['message'] = "地址信息不完整";
+                    return json_encode($_resdata);
+                }
+            }else{
+                $_resdata['result'] = false;
+                $_resdata['message'] = "未查询到地址信息";
+                return json_encode($_resdata);
             }
         }
         
@@ -179,7 +197,7 @@ class Store extends Basecontroller
             }
             
             // 计算运费
-            $shippingFee = 25;
+            $shippingFee = 7.5;
             $areaFee = new Store_area_fee();
             $shippingFeeInfo = $areaFee->StoreAreaFeeByAreaQuery($province, $city, $area);
             if (count($shippingFeeInfo) == 1) {
@@ -187,11 +205,30 @@ class Store extends Basecontroller
             }
             
             // 创建订单
+            $order = new Store_order();
+            $product = new Store_product();
+            $orderLine = new Store_order_line();
+            $userPoint = new User_point();
+            $pointRecord = new Point_transform_record();
+            $addressUser = new Store_user_address();
+            
+            $order -> startTrans();
+            $product -> startTrans();
+            $orderLine-> startTrans();
+            $userPoint -> startTrans();
+            $pointRecord -> startTrans();
+            $addressUser -> startTrans();
+            
             // 生成订单编码
             $orderCode = $this->generateOrderCode();
+            $orderResult = $order->StoreOrderInsert($orderCode, $user_id, $total, $shippingFee, $receiver, $mobile, $address, $province, $city, $area);
             
-            $order = new Store_order();
-            $order->StoreOrderInsert($orderCode, $user_id, $total, $shippingFee, $receiver, $mobile, $address, $province, $city, $area);
+            //回滚
+            if (!$orderResult) {
+                $order -> rollback();
+                $_resdata['result'] = false;
+                return json_encode($_resdata);
+            }
             
             // 扣减库存以及创建订单行
             for ($i = 0; $i < count($_shoppingcart_data); ++ $i) {
@@ -199,22 +236,33 @@ class Store extends Basecontroller
                 $productId = $_shoppingcart_data[$i]["product_id"];
                 $productPrice = $_shoppingcart_data[$i]["cur_price"];
                 
-                $product = new Store_product();
                 $state = $product->StoreReduceInvetory($productId, $productNum);
-                if ($state < 1) {
+                if ($state == false) {
                     $_resdata['result'] = false;
-                    $_resdata['message'] = "商品库存不足";
+                    $_resdata['message'] = "商品库存不足$state[0]";
+                    
+                    //回滚
+                    $order -> rollback();
+                    $product->rollback();
+                    
                     return json_encode($_resdata);
                     break;
                 }
                 
-                $orderLine = new Store_order_line();
-                $orderLine->StoreOrderLineInsert($orderCode, $productId, $productNum, $productPrice * $productNum, $user_id);
+                $orderLineResult = $orderLine->StoreOrderLineInsert($orderCode, $productId, $productNum, $productPrice * $productNum, $user_id);
+                
+                if (!$state) {
+                    //回滚
+                    $order -> rollback();
+                    $product->rollback();
+                    $orderLine->rollback();
+                    $_resdata['result'] = false;
+                    return json_encode($_resdata);
+                }
             }
             
             // 扣减积分
             // 查询用户积分情况
-            $userPoint = new User_point();
             $userPointInfo = $userPoint->PointQuery($user_id);
             $bonusPoint = $userPointInfo[0]['bonus_point'];
             $registPoint = $userPointInfo[0]['regist_point'];
@@ -227,7 +275,11 @@ class Store extends Basecontroller
                     $point_type = 1;
                     if ($bonusPoint < $total + $shippingFee) {
                         $_resdata['result'] = false;
-                        $_resdata['message'] = "积分不足";
+                        $_resdata['message'] = "奖励分余额不足";
+                        //回滚
+                        $order -> rollback();
+                        $product->rollback();
+                        $orderLine->rollback();
                         return json_encode($_resdata);
                     }
                     $bonusPoint = $bonusPoint - ($total + $shippingFee);
@@ -237,7 +289,11 @@ class Store extends Basecontroller
                     $point_type = 2;
                     if ($registPoint < $total + $shippingFee) {
                         $_resdata['result'] = false;
-                        $_resdata['message'] = "积分不足";
+                        $_resdata['message'] = "注册分余额不足";
+                        //回滚
+                        $order -> rollback();
+                        $product->rollback();
+                        $orderLine->rollback();
                         return json_encode($_resdata);
                     }
                     $registPoint = $registPoint - ($total + $shippingFee);
@@ -247,7 +303,11 @@ class Store extends Basecontroller
                     $point_type = 3;
                     if ($consumePoint < $total + $shippingFee) {
                         $_resdata['result'] = false;
-                        $_resdata['message'] = "积分不足";
+                        $_resdata['message'] = "重复消费分不足";
+                        //回滚
+                        $order -> rollback();
+                        $product->rollback();
+                        $orderLine->rollback();
                         return json_encode($_resdata);
                     }
                     $consumePoint = $consumePoint - ($total + $shippingFee);
@@ -257,7 +317,11 @@ class Store extends Basecontroller
                     $point_type = 4;
                     if ($universalPoint < $total + $shippingFee) {
                         $_resdata['result'] = false;
-                        $_resdata['message'] = "积分不足";
+                        $_resdata['message'] = "万能分余额不足";
+                        //回滚
+                        $order -> rollback();
+                        $product->rollback();
+                        $orderLine->rollback();
                         return json_encode($_resdata);
                     }
                     $universalPoint = $universalPoint - ($total + $shippingFee);
@@ -265,25 +329,70 @@ class Store extends Basecontroller
             }
             $point_change_type = "0";
             $point_change_sum = $total + $shippingFee;
-            $pointRecord = new Point_transform_record();
-            $pointRecord->PointTransformInsert($user_id, $point_type, $point_change_type, $point_change_sum);
+
+            $pointRecordResult = $pointRecord->PointTransformInsert($user_id, $point_type, $point_change_type, $point_change_sum);
             
-            $userPoint = new User_point();
-            $state = $userPoint->PointUpdate($user_id, - 1, $bonusPoint, $registPoint, $consumePoint, $universalPoint, - 1, - 1, - 1, - 1, - 1);
-            if ($state) {
-                $userPoint->commit();
-            } else {
-                $userPoint->rollback();
+            if(!$pointRecordResult){
+                //回滚
+                $order -> rollback();
+                $product->rollback();
+                $orderLine->rollback();
+                $pointRecord->rollback();
+                $_resdata['result'] = false;
+                return json_encode($_resdata);
             }
             
+            $state = $userPoint->PointUpdate($user_id, - 1, $bonusPoint, $registPoint, $consumePoint, $universalPoint, - 1, - 1, - 1, - 1, - 1);
+            if ($state == false) {
+                $order -> rollback();
+                $product->rollback();
+                $orderLine->rollback();
+                $pointRecord->rollback();
+                $userPoint->rollback();
+                $_resdata['result'] = false;
+                return json_encode($_resdata);
+            } 
+            
             // 清空购物车
-            $_shoppingcart->StoreShoppingcartEmpty($user_id);
+            $emptyShoppingcart = $_shoppingcart->StoreShoppingcartEmpty($user_id);
+            
+            if (!$emptyShoppingcart) {
+                $order -> rollback();
+                $product->rollback();
+                $orderLine->rollback();
+                $pointRecord->rollback();
+                $userPoint->rollback();
+                $_shoppingcart->rollback();
+                $_resdata['result'] = false;
+                return json_encode($_resdata);
+            }
             
             // 保存用户地址
             if ($saveAddress) {
-                $addressUser = new Store_user_address();
-                $addressUser->AddressInsert($receiver, $mobile, "", $province, $city, $area, $address, $user_id);
+                $saveAddressResult = $addressUser->AddressInsert($receiver, $mobile, "", $province, $city, $area, $address, $user_id);
+                
+                if (!$saveAddressResult) {
+                    $order -> rollback();
+                    $product->rollback();
+                    $orderLine->rollback();
+                    $pointRecord->rollback();
+                    $userPoint->rollback();
+                    $_shoppingcart->rollback();
+                    $addressUser->rollback();
+                    $_resdata['result'] = false;
+                    return json_encode($_resdata);
+                }
             }
+            
+            $order -> commit();
+            $product->commit();
+            $orderLine->commit();
+            $pointRecord->commit();
+            $userPoint->commit();
+            $_shoppingcart->commit();
+            $addressUser->commit();
+            $_resdata['result'] = true;
+            return json_encode($_resdata);
         } else {
             $_resdata['result'] = false;
             $_resdata['message'] = "购物车为空";
@@ -582,6 +691,7 @@ class Store extends Basecontroller
         $_shoppingcart_info = new Store_shoppingcart();
         $_shoppingcart_info_count = $_shoppingcart_info->ShoppingcartInfoAllQueryCount($user_id);
         $_session_user["shoppingcart_count"] = $_shoppingcart_info_count;
+        Session::set(USER_SEESION,$_session_user);
         $_resdata = array();
         $_resdata['result'] = true;
         $_resdata['count'] = $_shoppingcart_info_count;

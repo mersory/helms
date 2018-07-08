@@ -75,9 +75,9 @@
 											<input
 												name="radio_cds"
 												{if condition="$k eq 0"}
-												checked="checked"
 												{/if}
 												type="radio"
+												checked 
 												value="{$vo.id}">
 											<span>{$vo.province}{$vo.city}{$vo.area}{$vo.address}{$vo.receiver}{$vo.mobile}</span>
 										</span></li>
@@ -87,7 +87,7 @@
 											<input
 												name="radio_cds"
 												type="radio"
-												value="">
+												value="new">
 											<span>使用新地址</span>
 										</span></li>	
 									{else}
@@ -96,7 +96,7 @@
 											<input
 												name="radio_cds"
 												type="radio"
-												checked=“checked”
+												checked
 												value="new">
 											<span>使用新地址</span>
 										</span></li>									
@@ -141,8 +141,7 @@
 							
 							<div class="address-info-line">
 								<span>详细地址：</span>
-								<textarea name="receiver_address" style="height:100px;">
-								</textarea>
+								<textarea name="receiver_address" style="height:100px;" value=""></textarea>
 							</div>
 						</div>
 

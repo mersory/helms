@@ -252,7 +252,7 @@ class Store_product extends Model
      */
     public function StoreReduceInvetory($productId,$num){
         $sql = "update helms_store_product set invetory=invetory-$num where id = $productId and invetory>=$num";
-        $state =  $this->query($sql);
+        $state =  $this->execute($sql);
         
         return $state;
     }
