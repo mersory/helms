@@ -169,7 +169,6 @@ class Useropt extends Basecontroller
         $sub_bank = "";
         
         //用户详情信息插入
-        $portrait = -1;
         $user_level = $userlevel; 
         $open_time = date("Y-m-d H:i:s");//time();
         //$recommender = intval($recommender); 
@@ -198,7 +197,7 @@ class Useropt extends Basecontroller
         $_role_info = new User_role();
         
         $_bank_insert = $_bank_info->BankinfoInsert($user_id, $bank_name, "unknow", "unknow", $sub_bank, $bank_account_num, $bank_account_name);
-        $_details_insert = $_details_info->DetailsInsert($user_id, $name, $email, $portrait, $user_level, $open_time, $recommender, $activator, $registry);
+        $_details_insert = $_details_info->DetailsInsert($user_id, $name, $email, $portrait, $user_level, $open_time, $recommender, $activator, $registry,$telphone);
         $_point_insert = $_point_info->PointInsert($user_id, $shares, $bonus_point, $regist_point, $re_consume, $universal_point,-1,-1,-1,$shengyu_jing, $shengyu_dong);
         $_priority_insert = $_priority_info->PriorityInsert($user_id);//默认参数列表
         $_role_insert = $_role_info->RoleInsert($user_id);//默认参数列表

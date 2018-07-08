@@ -805,57 +805,6 @@ class Adminopt extends Basecontroller
 	        //var_dump("curID:".$curID."gue:".$gue."futoujine:".$futouJine);
 	        if($gue >= $futouJine)   //reg_money*配股比例*4
 	            $this->futou($curID, $futouJine); //reg_money*配股比例*4-reg_money
-	        
-	        /*
-	        switch($vo["status"])
-	        {
-	            case 1:
-	                //var_dump("switch jin_ru ! Adminopt.php line:".__LINE__."futou jin_e:".$futouJine);
-	                if($gue >= $futouJine)   //reg_money*配股比例*4
-	                    $this->futou($curID, $futouJine);   //reg_money*配股比例*4
-	                break;
-	            case 2:
-	                if($gue >= 1800)
-	                    $this->futou($curID, $futouJine);
-	                break;
-	            case 3:
-	                if($gue >= 2800)
-	                    $this->futou($curID, $futouJine);
-	                break;
-                case 4:
-                    if($gue >= 800)   //reg_money*配股比例*4
-                        $this->futou($curID, $futouJine);   //reg_money*配股比例*4
-                    break;
-                case 5:
-                    if($gue >= 1800)
-                        $this->futou($curID, $futouJine);
-                        break;
-                case 6:
-                    if($gue >= 2800)
-                        $this->futou($curID, $futouJine);
-                    break;
-                case 7:
-                    if($gue >= 2800)
-                        $this->futou($curID, $futouJine);
-                        break;
-                case 8:
-                    if($gue >= 800)   //reg_money*配股比例*4
-                        $this->futou($curID, $futouJine);   //reg_money*配股比例*4
-                        break;
-                case 9:
-                    if($gue >= 1800)
-                        $this->futou($curID, $futouJine);
-                        break;
-                case 10:
-                    if($gue >= 2800)
-                        $this->futou($curID, $futouJine);
-                        break;
-	        }*/
-                    
-	        if(!$ok){
-	            //var_dump('ERROR : Adminopt.php on line:'.__LINE__);
-	            //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
-	        }
 	    }
 	    return 3;
 	}
@@ -952,7 +901,9 @@ class Adminopt extends Basecontroller
 	    if($now_gushu){
 	        //若当前累计的股数<当前期数的股数，则更新当前累计的股数
 	        if($gponsale['ok_nums'] < $gponsale['snums']){
-	            $okid=$deal_info->DealinfoInsert($id, $vo['gushu']*$now_gujia, $vo['gushu'], -1, -1, -1, -1, $now_gujia);//$this->gptobuy_add($vo,$now_gujia);
+	            //changed by Gavin start model11
+	            $okid=$deal_info->DealinfoInsert($id, 1, $vo['gushu']*$now_gujia, $vo['gushu'], -1, -1, -1, $now_gujia);//$this->gptobuy_add($vo,$now_gujia);
+	            //changed by Gavin end model11
 	            if(!$okid){
 	                //var_dump('ERROR : Adminopt.php on line:'.__LINE__);
 	                //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
@@ -1441,7 +1392,10 @@ class Adminopt extends Basecontroller
             else
             {
                 //$_res_qibonus = $_res_qibonus[0];
-                $awardday->AwarddailyUpdate($ID,0,0,0,0,0,0,0,0,0,0,0,$param);
+                //changed by Gavin start model11
+                //$awardday->AwarddailyUpdate($ID,0,0,0,0,0,0,0,0,0,0,0,$param);
+                $awardday->AwarddailyUpdate($ID,0,0,0,0,0,0,0,0,0,0,0,$cost_money);
+                //changed by Gavin end model11
             }
             
             //奖金处理等系列操作----针对用户升级

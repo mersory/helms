@@ -100,6 +100,10 @@ class Awardopt extends Controller
         //var_dump("input repath:".$re_path);
         $strSRC=$_res[0]['repath'];
         //var_dump("calculate repath:".$strSRC);
+        //changed by Gavin start model11
+        $strSRC = substr($strSRC, 1, strlen($strSRC)-1);
+        $strSRC = substr($strSRC, 0, strlen($strSRC)-1);
+        //changed by Gavin end model11
         $pos = strrpos($strSRC,',');
         if( strlen($strSRC)!=0 && $pos == false )
             $pos = true;
@@ -347,6 +351,10 @@ class Awardopt extends Controller
 	    $position = new Positionality();
 	    //json 循环操作，获取每一个元素
 	    $strSRC=$p_path;
+	    //changed by Gavin start model11
+	    $strSRC = substr($strSRC, 1, strlen($strSRC)-1);
+	    $strSRC = substr($strSRC, 0, strlen($strSRC)-1);
+	    //changed by Gavin end model11
 	    $pos = strrpos($strSRC,',');// 使得pos返回字符串末尾
 	    /*
 	    $pos = strrpos($strSRC,',');
@@ -693,8 +701,10 @@ class Awardopt extends Controller
 	        //unset($qibonus);
 	        
 	        
+		$_res_qibonus = $qibonus->AwarddailyQuery($myids);
 	        /*//这里不需要这一步
-	        $_res_qibonus = $qibonus->AwarddailyQuery($myids);
+		
+	        
 	        if(count($_res_qibonus) < 1) //如果当天记录不存在，则先插入一条记录，然后再在后面更新
 	        {
 	            $qibonus->AwarddailyInsert($myids);
@@ -772,9 +782,11 @@ class Awardopt extends Controller
 	
 	//对碰1：1
 	public function touch1to1(&$Encash,$xL=0,$xR=0,&$NumS=0){   //   ,左区单数，右区单数，之前对碰总额
-	    /* $xL = floor($xL);
-	     $xR = floor($xR);  */
-	    if (($xL > 0 && $xR > 0) || ($xL > 0 && $xR > 0)){
+	    //changed by Gavin start model11
+	    $Encash['0'] = 0;
+	    $Encash['1'] = 0;
+	    //changed by Gavin end model11
+	    if ($xL > 0 && $xR > 0){
 	        if ($xL > $xR){
 	            $NumS = $xR;
 	            $xL = $xL - $NumS;

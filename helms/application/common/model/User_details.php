@@ -132,9 +132,8 @@ class User_details extends Model
         
         return $state;
     }
-    
     public function DetailsInsert($user_id, $user_name, $email, $portrait, $user_level,
-        $open_time, $recommender, $activator, $registry)
+        $open_time, $recommender, $activator, $registry,$telphone)
     {
             $_detailsinfo = array();
         if ($user_id >=0)
@@ -181,6 +180,13 @@ class User_details extends Model
         {
             $_detailsinfo["registry"] = $registry;
         }
+        
+        //changed by Gavin start model11
+        if ($telphone >=0)
+        {
+            $_detailsinfo["telphone"] = $telphone;
+        }
+        //changed by Gavin end model11
 
         $state = $this->save($_detailsinfo);
         

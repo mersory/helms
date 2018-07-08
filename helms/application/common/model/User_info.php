@@ -700,7 +700,7 @@ class User_info extends Model
             $res = $this->table('helms_user_info info, helms_user_details details')
             ->order("details.open_time desc")
             ->where("$_where and info.ID=details.ID and info.user_status = 0")
-            ->field( 'details.AUTO_ID, details.user_name, details.telphone, details.email, details.user_level, details.open_time, helms_user_info.ID')
+            ->field( 'details.AUTO_ID, details.portrait, details.user_name, details.telphone, details.email, details.user_level, details.open_time, helms_user_info.ID')
             ->paginate(25);
         }
         else
@@ -708,7 +708,7 @@ class User_info extends Model
             $res = $this->table('helms_user_info info, helms_user_details details')//�˴������ݿ�ǰ׺����ʡ��
             ->order("details.open_time desc")
             ->where("info.ID=details.ID and info.user_status = 0")
-           ->field( 'details.AUTO_ID, details.user_name, details.telphone, details.email, details.user_level, details.open_time, helms_user_info.ID')
+           ->field( 'details.AUTO_ID, details.portrait, details.user_name, details.telphone, details.email, details.user_level, details.open_time, helms_user_info.ID')
             ->paginate(25);
             
         }
