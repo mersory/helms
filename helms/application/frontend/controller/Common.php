@@ -332,6 +332,20 @@ class Common extends Basecontroller
             return $this->redirect("/login/login/index");
         }else{
             $_user_id = $_session_user["userId"];
+            //检测是否填写完整信息
+            $bankinfoOBJ = new User_bankinfo();
+            $bankRES = $bankinfoOBJ->BankinfoQuery($_user_id);
+            var_dump($bankRES);
+            if(count($bankRES) < 1)
+                return $this->redirect("/frontend/Useropt/userinfo");
+            else if($bankRES[0]["bank_account_name"]=="" || $bankRES[0]["bank_account_num"]=="")
+            {
+                return $this->redirect("/Useropt/userinfo");
+            }
+            
+            if( ($points % 100)!=0 )
+                return json_encode($resdata);
+            
             $pointsOBJ = new User_point();
             $pointsRES = $pointsOBJ->PointQuery($_user_id);
             $withdrawOBJ = new Withdrawal_record();

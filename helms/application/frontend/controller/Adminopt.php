@@ -1353,6 +1353,9 @@ class Adminopt extends Basecontroller
 	    else 
 	        return json_encode($resdata);
 	    
+	    if($currentLevel == $level)
+	        return json_encode($resdata);
+	        
 	    //var_dump("ll:".$currentLevel);
 	    $extern = new External();
 	    $beforemoney = $extern->getParam("register_total", $currentLevel, "");
