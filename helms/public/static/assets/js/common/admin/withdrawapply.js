@@ -22,27 +22,70 @@ $(function(){
 		});
 	
 	$('#withdraw_application').on("click",function(){
-        var userId=$('#search-userid').val();
-        var fromtimeInput=$('#withdraw_start').val();
-        var totimeInput=$('#withdraw_end').val();
-
-        var searchUrl = window.location.href.split("?")[0] + "?page=1";
-        if ($.trim(userId) != "") {
-            searchUrl = searchUrl + "&userId=" + userId;
-        }
-
-        if ($.trim(fromtimeInput) != "") {
-            searchUrl = searchUrl + "&fromTime=" + fromtimeInput;
-        }
-
-        if ($.trim(totimeInput) != "") {
-            searchUrl = searchUrl + "&toTime=" + totimeInput;
-        }
-
-        window.location.href = searchUrl;
+		search_show();
 	 });
 		
+	$('.menu_pass').on("click",function(){
+		var withdrawId = $(this).parents("tr").find("td").eq(0).html();
+		$.post("/public/index.php/backend/common/userWithdrawApprove", {
+			appID : withdrawId
+		}, function(res) {
+			res = JSON.parse(res);
+			if(res.success==true){
+				alert("通过");
+				search_show();
+			}else{
+				alert("未通过");
+			}
+		});
+	});
+	$('.menu_delete').on("click",function(){
+		var withdrawId = $(this).parents("tr").find("td").eq(0).html();
+		var userId = $(this).parents("tr").find("td").eq(1).html();
+		var points = $(this).parents("tr").find("td").eq(3).html();
+		var pointType = $(this).parents("tr").find("td").eq(2).html();
+		$.post("/public/index.php/backend/common/userWithdrawDeny", {
+			appID : withdrawId,
+			userid : userId, 
+			points : points, 
+			point_type : pointType
+		}, function(res) {
+			res = JSON.parse(res);
+			if(res.success==true){
+				search_show();
+				alert("删除成功");
+			}else{
+				alert("删除失败");
+			}
+		});
+	});
 });
+
+function search_show(){
+	var userId=$('#search-userid').val();
+    var fromtimeInput=$('#withdraw_start').val();
+    var totimeInput=$('#withdraw_end').val();
+//    var typeInput=$('#cur_status').val();
+
+    var searchUrl = window.location.href.split("?")[0] + "?page=1";
+    if ($.trim(userId) != "") {
+        searchUrl = searchUrl + "&userId=" + userId;
+    }
+
+    if ($.trim(fromtimeInput) != "") {
+        searchUrl = searchUrl + "&fromTime=" + fromtimeInput;
+    }
+
+    if ($.trim(totimeInput) != "") {
+        searchUrl = searchUrl + "&toTime=" + totimeInput;
+    }
+    
+//    if ($.trim(typeInput) != "") {
+//        searchUrl = searchUrl + "&type=" + typeInput;
+//    }
+
+    window.location.href = searchUrl;
+}
 
 //输入序列合法性检测
 function validate() 

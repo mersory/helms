@@ -21,6 +21,7 @@ use app\common\model\Role;
 use app\common\model\Gp_set;
 use app\common\model\Award_record;
 use app\common\model\Award_daytime;
+use app\common\model\Userupgrade_record;
 
 class Common extends Basecontroller
 {
@@ -153,11 +154,11 @@ class Common extends Basecontroller
             $userId = $_GET["userId"];
 
             $reCharge = new Recharge_record();
-            $reCharge->RechargeQueryWithLimit($userId);
-
+            $rechargeRES = $reCharge->RechargeQueryWithLimit($userId);
+            
             $this->assign('userId', $userId);
-            $this->assign('page', $reCharge->render());
-            $this->assign('pass_data', $reCharge);
+            $this->assign('page', $rechargeRES->render());
+            $this->assign('pass_data', $rechargeRES);
 
             // 取回打包后的数据
             $htmls = $this->fetch();
@@ -172,12 +173,32 @@ class Common extends Basecontroller
             return $this->redirect("/login/login/index");
         }else {
             $_post = Request::instance()->get();
-            $userId = "";//$_GET("bonus_userid");
+            $userId = $_GET["bonus_userid"];
     
             $Award = new Award_record();
             $pageindex = 0;
             $pagesize = 25;
             $_res = $Award->AwardRecordQueryWithLimit($userId, $pageindex, $pagesize);
+    
+            $this->assign('userId', $userId);
+            $this->assign('page', $_res->render());
+            $this->assign('pass_data', $_res);
+            // 取回打包后的数据
+            $htmls = $this->fetch();
+            return $htmls;
+        }
+    }
+    
+    public function userupdate()
+    {
+        $_session_user = Session::get(USER_SEESION);
+        if(empty($_session_user)){
+            return $this->redirect("/login/login/index");
+        }else {
+            $userId = $_GET["userid"];
+    
+            $Upgrade = new Userupgrade_record();
+            $_res = $Upgrade->UpgradeQueryWithLimit($userId);
     
             $this->assign('userId', $userId);
             $this->assign('page', $_res->render());
@@ -193,14 +214,8 @@ class Common extends Basecontroller
         $_session_user = Session::get(USER_SEESION);
         if(empty($_session_user)){
             return $this->redirect("/login/login/index");
-        }else {
-            $_post = Request::instance()->get();
-            
-            $userId = "";
-            if ($_GET["userid"] != null)
-            {
-                $userId = $_GET["userid"];
-            }
+        }else {            
+            $userId = $_GET["userid"];
     
             $Award = new Award_daytime();
             $_fromtime = "";
@@ -301,6 +316,8 @@ class Common extends Basecontroller
                 $_resdata["info"] = "priority error";
             }else{
                     $_admin = new User_info();
+                    $_start = $_GET['fromTime'];
+                    $_end = $_GET['toTime'];
                     $_res = $_admin->UserApplicationWithLimit($_start, $_end);
                     
                     $this->assign('page', $_res->render());
@@ -359,7 +376,7 @@ class Common extends Basecontroller
             return $this->redirect("/login/login/index");
         }else{
 
-            $userId = "";//$_GET("userId");
+            $userId = $_GET["search-userid"];
 
             $_point = new User_point();
             $res = $_point ->pointDetailsQueryPage($userId);
@@ -625,6 +642,7 @@ class Common extends Basecontroller
             $_user_id = $_GET["userId"];
             $_start = $_GET["fromTime"];
             $_end = $_GET["toTime"];
+            $_type = $_GET["type"];
 
             $_withdraw = new Withdrawal_record();
             $_res = $_withdraw->WithdrawalApplicationByTimeWithLimit($_user_id, $_start, $_end);

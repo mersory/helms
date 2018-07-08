@@ -30,9 +30,9 @@ $(function(){
 		{
 			//alert("valid");
 			var url = "/public/index.php/frontend/Adminopt/change_gujia";
-			$.post(url, {use_gujia:gujiaInput}, function(msg){
-			msg=JSON.parse(msg);
-			if(msg.success == true)
+			$.post(url, {use_gujia:gujiaInput}, function(res){
+			res=JSON.parse(res);
+			if(res.success == true)
 			{
 			  //alert('修改股价成功，正在转向后台主页！');
 			  alert("修改股价成功");

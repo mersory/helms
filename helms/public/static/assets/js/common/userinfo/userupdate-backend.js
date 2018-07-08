@@ -1,7 +1,5 @@
 $(function(){
-		
-	$('#btn_bonus').on("click", function() {
-		// alert("调用方法");
+	$('#btn_update').on("click",function(){
 		var userIdInput=$('#userid').val();
 
 		var searchUrl = window.location.href.split("?")[0] + "?page=1";
@@ -11,11 +9,4 @@ $(function(){
 
 		window.location.href = searchUrl;
 	});
-});
-
-//输入序列合法性检测
-function validate() 
-{
-   return true;
-}  
-
+})

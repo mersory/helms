@@ -34,11 +34,11 @@
 				<div class="title-body" style="height: 35px;">
                       <div class="form-group">
                         <label for="input01" class="col-sm-2 control-label">申请时间</label>
-                        <div class="col-sm-2">
-                          <input type="datetime-local" class="form-control"  id="applytime_start">
+                        <div class="col-sm-3">
+                          <input type="text" class="form-control"  id="applytime_start" value="{$fromTime}">
                         </div>
-                        <div class="col-sm-2">
-                           <input type="datetime-local" class="form-control"  id="applytime_end">
+                        <div class="col-sm-3">
+                           <input type="text" class="form-control"  id="applytime_end" value="{$toTime}">
                         </div>
                       </div>
                   </div>
@@ -74,20 +74,24 @@
                           <!-- changed by Gavin start model7 -->
                           <th class="sort-amount">申请时间</th>
                           <th class="sort-amount">申请人会员ID</th>
-                          <th style="width: 30px;"></th>
+                          <th style="width: 60px;">操作</th>
                         </tr>
                       </thead>
                       <tbody>
 									{if condition="empty($pass_data) neq true"} {foreach
 									name='pass_data' item='vo'}
 									<tr>
+									    <td></td>
 										<td>{$vo.user_name}</td>
 										<td>{$vo.telphone}</td>
 										<td>{$vo.email}</td>
 										<td>{$vo.user_level}</td>
 										<td>{$vo.open_time}</td>
 										<td>{$vo.ID}</td>
-										
+										<td>
+											<button type="button" menu_id="{$vo.ID}" class="btn btn-primary menu_pass">激活</button>
+											<button type="button" menu_id="{$vo.ID}" class="btn btn-primary menu_delete">删除</button>
+										</td>
 									</tr>
 									{/foreach} {/if}
 

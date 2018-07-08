@@ -92,12 +92,13 @@ class Withdrawal_record extends Model
         }
         if (strcmp("$_start", "") )
         {
-            $_where = "W.apply_time > '$_start'";
+            $_where = "$_where and W.apply_time > '$_start'";
         }
         if (strcmp("$_end", "") )
         {
             $_where = "$_where and W.apply_time < '$_end'";
         }
+        
         if (strcmp("$_where", ""))
         {
             $res = $this->table('helms_withdrawal_record W, helms_user_bankinfo B, helms_user_details D')

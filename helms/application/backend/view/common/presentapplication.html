@@ -31,7 +31,7 @@
 
 					<div
 						class="title-body"
-						style="height: 120px;">
+						style="height: 80px;">
 						<div class="form-group" style="height:30px;">
 							<label
 								for="input01"
@@ -45,11 +45,11 @@
 							</div>
 						</div>
 
-						<div class="form-group" style="height:30px;">
+						<!--<div class="form-group" style="height:30px;">
 							<label
 								for="input01"
 								class="col-sm-3 control-label">当前状态</label>
-							<div class="col-sm-3">
+							  <div class="col-sm-3">
 								<select
 									id="cur_status"
 									class="chosen-select chosen-transparent form-control">
@@ -60,6 +60,7 @@
 								</select>
 							</div>
 						</div>
+						-->
 						
 						<div class="form-group" style="height:30px;">
 							<label
@@ -122,6 +123,7 @@
 										<th class="sort-asc">序号</th>
 										<th class="sort-asc">会员ID</th>
 										<th class="sort-numeric">提现类型</th>
+										<th class="sort-amount">提现积分</th>
 										<th class="sort-amount">提现金额</th>
 										<th class="sort-amount">提现申请时间</th>
 										<th class="sort-amount">当前状态</th>
@@ -130,6 +132,7 @@
 										<th class="sort-amount">开户行</th>
 										<th class="sort-amount">开户卡号</th>
 										<th class="sort-amount">联系方式</th>
+										<th class="sort-amount">操作</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -139,6 +142,7 @@
 										<td>{$vo.withdraw_id}</td>
 										<td>{$vo.user_id}</td>
 										<td>{$vo.withdrawal_type}</td>
+										<td>{$vo.point_consume}</td>
 										<td>{$vo.withdraw_sum}</td>
 										<td>{$vo.apply_time}</td>
 										<td>{$vo.withdrawal_status}</td>
@@ -147,7 +151,14 @@
 										<td>{$vo.sub_bank}</td>
 										<td>{$vo.bank_account_num}</td>
 										<td>{$vo.telphone}</td>
-										<td></td>
+										<td>
+											{if $vo.withdrawal_status eq 0}
+												<button type="button" menu_id="{$vo.withdraw_id}" class="btn btn-primary menu_pass">通过</button>
+												<button type="button" menu_id="{$vo.withdraw_id}" class="btn btn-primary menu_delete">删除</button>
+											{else}
+												已完成
+											{/if}
+										</td>
 										<td></td>
 										<td></td>
 									</tr>

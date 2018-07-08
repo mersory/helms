@@ -46,34 +46,34 @@ $(function(){
 			clear_table()
 			var fromtimeInput=$('#applytime_start').val();
 	 	    var totimeInput=$('#applytime_end').val();
-	 	   	if (validate() == true)
- 	   		{
-	 	   		var url = "/public/index.php/backend/common/memberApplicationQueryByTime";
-	 	        $.post(url, {_start:fromtimeInput, _end:totimeInput}, function(msg){
-				msg=JSON.parse(msg);
-	 	        if(msg.info == 'ok')
-	 	        {
-				  for (var res_index=0;res_index<msg.res.length;res_index++)
-				  {
-					  //changed by Gavin start model7
-					  addCol(res_index, msg.res[res_index].user_name, msg.res[res_index].telphone, msg.res[res_index].email, msg.res[res_index].user_level, msg.res[res_index].open_time, msg.res[res_index].ID);//查询成功，增加行和列
-				      //changed by Gavin end model7
-				  }
-	 	          //window.location.href = "UserLogin.html";user_name,telphone,email,open_time,ID
-	 	        } else {
-	 	          alert("登录失败");
-	 	          return false;
-	 	        }
-	 	        })
- 	   			return true;
- 	   		}
-	 	   	else
- 	   		{
-		 	   	//$("#username").focus();
-				alert("not valid");
-		        return false;
- 	   		}
+	 	    
+	 	   var searchUrl = window.location.href.split("?")[0] + "?page=1";
+	        if ($.trim(userId) != "") {
+	            searchUrl = searchUrl + "&fromTime=" + fromtimeInput;
+	        }
+	        
+	        if ($.trim(totimeInput) != "") {
+	            searchUrl = searchUrl + "&toTime=" + totimeInput;
+	        }
+	        window.location.href = searchUrl;
+	        
 	 	 });
+	
+	//激活
+	$(".menu_pass").on("click",function(){
+		$("#confirmApplicationDialog").dialog( "open" );
+		var menuId = $(this).parents("tr").find("td").eq(6).html();
+		var minorpwd = $("#minorpwd").val();
+		activateAction(menuId, minorpwd);
+	});
+	
+	//删除
+	$(".menu_delete").on("click",function(){
+		$("#confirmApplicationDialog").dialog( "open" );
+		var menuId = $(this).parents("tr").find("td").eq(6).html();
+		var minorpwd = $("#minorpwd").val();
+		activateAction(menuId, minorpwd);
+	});
 		
 });
 

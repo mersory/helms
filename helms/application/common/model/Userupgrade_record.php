@@ -28,6 +28,23 @@ class Userupgrade_record extends Model
         return $_upgrade_info;
     }
     
+    public function UpgradeQueryWithLimit($user_id)
+    {
+        $_where = '';
+        if ($user_id != "")
+        {
+            $_where = "user_id = '$user_id'";
+        }
+        else 
+        {
+            $_where = "user_id != '-1'";
+        }
+        $_upgrade_info = $this->order("upgrade_time desc")
+                            ->where($_where)
+                            ->paginate(25);
+        return $_upgrade_info;
+    }
+    
     public function UpgradeInsert($user_id, $current_level, $upgrade_level)
     {
         $_upgradeinfo = array();

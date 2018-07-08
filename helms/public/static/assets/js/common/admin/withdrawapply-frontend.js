@@ -22,28 +22,38 @@ $(function(){
 		});
 	
 	$('#withdraw_application').on("click",function(){
-        var userId=$('#search-userid').val();
-        var fromtimeInput=$('#withdraw_start').val();
-        var totimeInput=$('#withdraw_end').val();
+		var points = $('#withdraw').val();
+        var pointtype=$('#pointtype').val();
+        
+        if("" == $.trim(points)){
+			showError("提现分数不能为空");
+			return false;
+		}
 
-        var searchUrl = window.location.href.split("?")[0] + "?page=1";
-        if ($.trim(userId) != "") {
-            searchUrl = searchUrl + "&userId=" + userId;
-        }
-
-        if ($.trim(fromtimeInput) != "") {
-            searchUrl = searchUrl + "&fromTime=" + fromtimeInput;
-        }
-
-        if ($.trim(totimeInput) != "") {
-            searchUrl = searchUrl + "&toTime=" + totimeInput;
-        }
-
-        window.location.href = searchUrl;
+        var url =  "/public/index.php/frontend/common/userWithdraw";
+		$.post(url,{points:points, point_type:pointtype},function(resdata){
+			resdata = JSON.parse(resdata);
+			if(resdata.success){
+				alert("提现成功");
+				search_show();
+			}else{
+				alert("提现失败");
+			}
+		});
 	 });
 		
 });
 
+function search_show(){
+	var userIdInput=$('#present-userid').val();
+
+	var searchUrl = window.location.href.split("?")[0] + "?page=1";
+	if ($.trim(userId) != "") {
+		searchUrl = searchUrl + "&userid=" + userIdInput;
+	}
+
+	window.location.href = searchUrl;
+}
 //输入序列合法性检测
 function validate() 
 {

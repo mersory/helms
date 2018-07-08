@@ -38,7 +38,7 @@ class Recharge_record extends Model
     public function RechargeQueryWithLimit($userid)
     {
             $_where="";
-            if ($userid != -1)
+            if ($userid != "")
             {
                 $_where = "`user_id` = '$userid'";  //
             }
@@ -46,7 +46,7 @@ class Recharge_record extends Model
             {
                 $_where = "`user_id` != -1";
             }
-    
+
             $_recharge = $this->order("cz_time desc")
                         ->where($_where)
                         ->paginate(25);

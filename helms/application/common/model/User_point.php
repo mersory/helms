@@ -67,7 +67,7 @@ class User_point extends Model
         $_where = 'up.ID = p.user_id and p.user_id = ud.ID';
         if (strcmp("$userId", "") )
         {
-            $_where = " and up.ID = '$userId'";
+            $_where = "$_where and up.ID = '$userId'";
         }
 
         $res = $this->table('helms_user_point up,helms_positionality p,helms_user_details ud')

@@ -306,7 +306,6 @@ class Common extends Basecontroller
         }else{
     
             $_user_id = $_session_user["userId"];
-            $_money = "";//$_GET("fromTime");
     
             $_start="";
             $_end = "";
@@ -314,7 +313,6 @@ class Common extends Basecontroller
             $_res = $_withdraw->WithdrawalApplicationByTimeWithLimit($_user_id, $_start, $_end);
     
             $this->assign('userId', $_user_id);
-            $this->assign('point_consume', $_money);
             $this->assign('page', $_res->render());
             $this->assign('pass_data', $_res);
     
