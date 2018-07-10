@@ -326,12 +326,30 @@ class Common extends Basecontroller
     public function userWithdraw($points, $point_type)
     {
         $resdata = array();
-        $resdata["success"] = false;
+        $resdata["success"] = 0;
         $_session_user = Session::get(USER_SEESION);
         if(empty($_session_user)){
             return $this->redirect("/login/login/index");
         }else{
             $_user_id = $_session_user["userId"];
+            //检测是否填写完整信息
+            $bankinfoOBJ = new User_bankinfo();
+            $bankRES = $bankinfoOBJ->BankinfoQuery($_user_id);
+            
+            if(count($bankRES) < 1)
+            {
+                $resdata["success"] = -1;
+                return json_encode($resdata);
+            }
+            else if($bankRES[0]["bank_account_name"]=="" || $bankRES[0]["bank_account_num"]=="")
+            {
+                $resdata["success"] = -1;
+                return json_encode($resdata);
+            }
+            
+            if( ($points % 100)!=0 )
+                return json_encode($resdata);
+            
             $pointsOBJ = new User_point();
             $pointsRES = $pointsOBJ->PointQuery($_user_id);
             $withdrawOBJ = new Withdrawal_record();
@@ -349,7 +367,7 @@ class Common extends Basecontroller
                             $actRES = $pointsOBJ->PointUpdate($_user_id, -1, $pointsRES[0]["bonus_point"] - $points);
                             $actRES = $actRES && $withdrawOBJ->WithdrawalInsert($_user_id, $points*6*0.95, $point_type, $points, 0);
                             if($actRES > 0)
-                                $resdata["success"] = true;
+                                $resdata["success"] = 1;
                                 break;
                         }
                         else
@@ -360,7 +378,7 @@ class Common extends Basecontroller
                             $actRES = $pointsOBJ->PointUpdate($_user_id, -1, -1, $pointsRES[0]["regist_point"] - $points);
                             $actRES = $actRES && $withdrawOBJ->WithdrawalInsert($_user_id, $points*6*0.95, $point_type, $points, 0);
                             if($actRES > 0)
-                                $resdata["success"] = true;
+                                $resdata["success"] = 1;
                                 break;
                         }
                         else
@@ -371,7 +389,7 @@ class Common extends Basecontroller
                             $actRES = $pointsOBJ->PointUpdate($_user_id, -1, -1,-1, -1, $pointsRES[0]["universal_point"] - $points);
                             $actRES = $actRES && $withdrawOBJ->WithdrawalInsert($_user_id, $points*6*0.95, $point_type, $points, 0);
                             if($actRES > 0)
-                                $resdata["success"] = true;
+                                $resdata["success"] = 1;
                                 break;
                         }
                         else
