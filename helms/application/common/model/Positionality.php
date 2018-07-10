@@ -471,9 +471,9 @@ class Positionality extends Model
     public function PositionDelByUserID($user_id)
     {
         $_where = '';
-        if ($user_id > 0)
+        if (null != $user_id || "" == $user_id)
         {
-            $_where = "user_id = $user_id";
+            $_where = "user_id = '$user_id'";
         }
          
         $state = $this->where($_where)->delete();

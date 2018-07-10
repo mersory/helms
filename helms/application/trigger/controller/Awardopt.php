@@ -283,7 +283,7 @@ class Awardopt extends Controller
             $strSRC = substr($strSRC,0, $pos);
             
             $ID = $tmp;
-            var_dump("ID:".$ID);
+//             var_dump("ID:".$ID);
             $curNode = $position->PositionQueryByID($ID);
 	        $data = array();
 	        $data['sum_ds'] = $curNode[0]['sum_ds'] + $danshu;

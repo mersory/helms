@@ -152,7 +152,7 @@ class User_info extends Model
         $state = 0;
         if($_userid < "1000")
         {
-            $state = $this->where("ID = $id")->delete();
+            $state = $this->where("ID = '$id'")->delete();
         }
         
         return $state;
@@ -181,7 +181,12 @@ class User_info extends Model
     public function UserActivate($ID, $name, $minor_pwd, $level, $cost)//用户开通，激活
     {
         $_res = $this->UserinfoCheckMinor($name, $minor_pwd);
-        $_id = $_res[0]->getData("ID");
+        
+        $_id = "";
+        if(count($_res)){
+            $_id = $_res[0]->getData("ID");
+        }
+        
         //var_dump("_id".$_id);
         //var_dump($_id);
         $_res = $this->table('helms_user_info U, helms_user_point P')

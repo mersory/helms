@@ -396,8 +396,9 @@ class Useropt extends Basecontroller
     }
     
     //删除注册了但是没有激活的用户
-    public function inactiveUserDelete($userid)
+    public function inactiveUserDelete()
     {
+        $userid = $_POST['userid'];
         $_resdata = array();
         $_resdata["success"] = false;
         $_session_user = Session::get(USER_SEESION);
@@ -425,8 +426,22 @@ class Useropt extends Basecontroller
                 $userinfoRES = $userinfoOBJ->UserinfoDelByForce($userid);
                 
                 if($pointRES && $priorityRES && $roleRES && $positionRES && $bankRES && $detailsRES && $userinfoRES)
+                    $pointOBJ->commit();
+                    $priorityOBJ->commit();
+                    $roleOBJ->commit();
+                    $positionOBJ->commit();
+                    $bankOBJ->commit();
+                    $detailsOBJ->commit();
                     $_resdata["success"] = true;
-            }
+                }else{
+                    $pointOBJ->rollback();
+                    $priorityOBJ->rollback();
+                    $roleOBJ->rollback();
+                    $positionOBJ->rollback();
+                    $bankOBJ->rollback();
+                    $detailsOBJ->rollback();
+                    $_resdata["success"] = false;
+                }
             return json_encode($_resdata);
         }
         else

@@ -1261,8 +1261,8 @@ class Adminopt extends Basecontroller
 	    $_userid = $_session_user["userId"];
 	    if(strlen($_userid)<5)
 	    {
-	        $_userid = "H6395385700";
-	        $minor_pwd ="1";
+	        $_userid = "admin";
+	        $minor_pwd ="140416";
 	    }
 	        
 	    //var_dump($_userid);

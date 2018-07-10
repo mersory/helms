@@ -43,9 +43,9 @@ class User_bankinfo extends Model
     public function BankinfoDel($user_id)
     {
         $_where = '';
-        if ($user_id != -1)
+        if (null != $user_id || "" != $user_id)
         {
-            $_where = "user_id = $user_id";
+            $_where = "user_id = '$user_id'";
         }
         
         $state = $this->where($_where)->delete();
