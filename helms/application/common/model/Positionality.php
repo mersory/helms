@@ -210,7 +210,7 @@ class Positionality extends Model
         if (strcmp($str, ""))
         {
             // $_where = "locate('$str', json) > 0";
-            $_where = "json like '%$str'";
+            $_where = "json like '%,$str,%'";
         }
         else 
             return;
@@ -372,7 +372,7 @@ class Positionality extends Model
         }
         else if ($str > -1)
         {
-            $_where = "json like '$str'";
+            $_where = "json like '$str'";//此处不需要再去添加逗号“，”，因为调用的时候参数已经添加了
             //var_dump($_where);
         }
         else 
@@ -429,7 +429,7 @@ class Positionality extends Model
         if (strcmp($str, ""))
         {
            // $_where = "locate('$str', json) > 0";
-            $_where = "json like '%$str%'";
+            $_where = "json like '%,$str,%'";
         }
         $_position_info = $this->where($_where)
         ->select();
