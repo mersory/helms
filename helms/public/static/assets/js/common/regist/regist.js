@@ -65,7 +65,7 @@ $(function(){
 			return false;
 		}*/
 		var url =  "/public/index.php/frontend/Useropt/UserRegist";
-		$.post(url,{ID:id, name:username, email:email, telphone:telphone, recommender:recommender, activator:activator, pwd1:"123", pwd2:"123", userlevel:level},function(result){
+		$.post(url,{ID:id, name:username, email:email, portrait:product, telphone:telphone, recommender:recommender, activator:activator, pwd1:"123", pwd2:"123", userlevel:level},function(result){
 			hideMask();
 			result = JSON.parse(result);
 			if(result.success){

@@ -135,7 +135,7 @@ class Useropt extends Basecontroller
     }
     
     //用户注册操作
-    public function UserRegist($ID, $name, $email, $telphone, $recommender, $activator, $pwd1, $pwd2, $userlevel=1)
+    public function UserRegist($ID, $name, $email, $portrait, $telphone, $recommender, $activator, $pwd1, $pwd2, $userlevel=1)
     {
         $_resdata = array();
         $_resdata["success"] = false;
@@ -153,15 +153,16 @@ class Useropt extends Basecontroller
         $pwd2 = md5($pwd2."hermes");
         $_user_info = new User_info();
         //此处插入用的是用户名和密码，必须这样做，因为此处插入之后才会有对应得ID生成，以便后续使用，此处不需要提供ID，因为主表的ID是自增的
+//         $_user_info->startTans();
         $_state = $_user_info->UserinfoInsert($name, $pwd1, $pwd2, $ID);
-        if ($_state != 0)
-        {
-            $_res =$_user_info->UserinfoQuery($ID, $pwd1);
-            if (count($_res) != 1)
-            {
-                return json_encode($_resdata);
-            } 
-        }
+//         if ($_state != 0)
+//         {
+//             $_res =$_user_info->UserinfoQuery($ID, $pwd1);
+//             if (count($_res) != 1)
+//             {
+//                 return json_encode($_resdata);
+//             } 
+//         }
 		$_resdata["success"] = true;
         //银行信息插入
         $_bank_info = new User_bankinfo();
@@ -172,7 +173,7 @@ class Useropt extends Basecontroller
         $sub_bank = "";
         
         //用户详情信息插入
-        $portrait = -1;
+//         $portrait = -1;
         $user_level = $userlevel; 
         $open_time = date("Y-m-d H:i:s");//time();
         //$recommender = intval($recommender); 
@@ -200,18 +201,41 @@ class Useropt extends Basecontroller
         //用户角色插入
         $_role_info = new User_role();
         
+//         $_bank_info->startTrans();
+//         $_details_info->startTans();
+//         $_point_info->startTans();
+//         $_priority_info->startTrans();
+//         $_role_info->startTans();
+//         $position->startTrans();
+        
         $_bank_insert = $_bank_info->BankinfoInsert($user_id, $bank_name, "unknow", "unknow", $sub_bank, $bank_account_num, $bank_account_name);
-        $_details_insert = $_details_info->DetailsInsert($user_id, $name, $email, $portrait, $user_level, $open_time, $recommender, $activator, $registry);
+        $_details_insert = $_details_info->DetailsInsert($user_id, $name, $email, $portrait, $user_level, $open_time, $recommender, $activator, $registry, $telphone);
         $_point_insert = $_point_info->PointInsert($user_id, $shares, $bonus_point, $regist_point, $re_consume, $universal_point,-1,-1,-1,$shengyu_jing, $shengyu_dong);
         $_priority_insert = $_priority_info->PriorityInsert($user_id);//默认参数列表
         $_role_insert = $_role_info->RoleInsert($user_id);//默认参数列表
         $_position_res = $position->PositionInsertPrev($user_id, $position_res[0]["ID"]);
         
-        if ( !($_bank_insert && $_details_insert && $_point_insert && $_priority_insert &&$_role_insert && $_position_res) )
+        if ( !($_state && $_bank_insert && $_details_insert && $_point_insert && $_priority_insert &&$_role_insert && $_position_res) )
         {
 			$_resdata["success"] = false;
+			$_user_info->rollback();
+			$_bank_info->rollback();
+			$_details_info->rollback();
+			$_point_info->rollback();
+			$_priority_info->rollback();
+			$_role_info->rollback();
+			$position->rollback();
         }
-        
+        else 
+        {
+            $_user_info->commit();
+            $_bank_info->commit();
+            $_details_info->commit();
+            $_point_info->commit();
+            $_priority_info->commit();
+            $_role_info->commit();
+            $position->commit();
+        }
         return json_encode($_resdata);
         
     }
@@ -221,6 +245,8 @@ class Useropt extends Basecontroller
     {
         $_post = Request::instance()->post();
 
+        $_resdata = array();
+        $_resdata["success"] = true;
         $_user_info = new User_info();
         $name = $_post["del_username"];
         $pwd = $_post["del_password"];
@@ -231,25 +257,45 @@ class Useropt extends Basecontroller
         $_point_info = new User_point();
         $_priority_info = new User_priority();
         $_role_info = new User_role();
+        $position = new Positionality();
         
-        $_user_info->startTrans();
+//         $_user_info->startTrans();
+//         $_bank_info->startTrans();
+//         $_details_info->startTans();
+//         $_point_info->startTans();
+//         $_priority_info->startTrans();
+//         $_role_info->startTans();
+//         $position->startTrans();
+        
         $_info_res =$_user_info->UserinfoDel($user_id, $name, $pwd);//如果这里删除成功，则说明具有相应权限
         $_bank_del = $_bank_info->BankinfoDel($user_id);
         $_details_del = $_details_info->DetailsDel($user_id);
         $_point_del = $_point_info->PointDel($user_id);
         $_priority_del = $_priority_info->PriorityDel($user_id);
         $_role_del = $_role_info->RoleDel($user_id);
-        if ($_info_res && $_bank_del && $_details_del && $_point_del && $_priority_del &&$_role_del)
+        $_position_del = $position->PositionDelByUserID($user_id);
+        if ($_info_res && $_bank_del && $_details_del && $_point_del && $_priority_del &&$_role_del&&$_position_del)
         {
-            //echo "事务执行成功，提交";
             $_user_info->commit();
+            $_bank_info->commit();
+            $_details_info->commit();
+            $_point_info->commit();
+            $_priority_info->commit();
+            $_role_info->commit();
+            $position->commit();
         }
         else
         {
-            //echo "事务执行失败，回滚";
-            $_user_info->rollback();
+            $_resdata["success"] = false;
+			$_user_info->rollback();
+			$_bank_info->rollback();
+			$_details_info->rollback();
+			$_point_info->rollback();
+			$_priority_info->rollback();
+			$_role_info->rollback();
+			$position->rollback();
         }
-      
+        return json_encode($_resdata);
     }
     
     //激活操作

@@ -402,6 +402,26 @@ class Common extends Basecontroller
         }
     }
     
+    public function memberapplication($_start="", $_end="")
+    {
+            $_session_user = Session::get(USER_SEESION);
+            $_resdata = array();
+            if(empty($_session_user)){
+                $_resdata["info"] = "priority error";
+            }else{
+                $_admin = new User_info();
+                $_start = $_GET['fromTime'];
+                $_end = $_GET['toTime'];
+                $_res = $_admin->UserApplicationWithLimit($_start, $_end);
+    
+                $this->assign('page', $_res->render());
+                $this->assign('pass_data', $_res);
+                // 取回打包后的数据
+                $htmls = $this->fetch();
+                return $htmls;
+            }
+    }
+    
     public function pointsTransfer()
     {
         $_session_user = Session::get(USER_SEESION);
