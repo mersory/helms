@@ -1223,11 +1223,33 @@ class Adminopt extends Basecontroller
 	//帮助开通账号总函数
 	public function activateUser($user_id, $minor_pwd)
 	{
-	    $_details = new User_details();
-	    $_res = $_details->DetailsQuery($user_id);
+	    $_session_user = Session::get(USER_SEESION);
+	    if(empty($_session_user))
+	    {
+	        //var_dump('ERROR : Adminopt.php on line:'.__LINE__);
+	        //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
+	    }
+	     
+	    $_userid = $_session_user["userId"];
+	    if(strlen($_userid)<5)
+	    {
+	        $_userid = "admin";
+	        $minor_pwd ="140416";
+	    }
 	    $_resdata = array();
 	    $_resdata["success"] = true;
-	    	        
+	    
+	    $pointOBJ = new User_point();
+	    $pointRES = $pointOBJ->PointQuery($_userid);
+	    if(count($pointRES) < 1)
+	    {
+	        $_resdata["success"] = false;
+	        return json_encode($_resdata);
+	    }
+	    
+	    $_details = new User_details();
+	    $_res = $_details->DetailsQuery($user_id);
+     
 	    if(count($_res)<1)
 	    {
 	        $_resdata["success"] = false;
@@ -1241,7 +1263,11 @@ class Adminopt extends Basecontroller
 	    $regist_money = 0;
 	    $externOBJ = new External();
 	    $regist_money = $externOBJ->getParam("register_total", $level, $user_id);
-	    
+	    if($regist_money > $pointRES[0]["regist_point"]) //积分不够
+	    {
+	        $_resdata["success"] = false;
+	        return json_encode($_resdata);
+	    }
 	    $_resact = $this->activeUserOpt($user_id, $level, $regist_money, $minor_pwd);
 	    $_resdata["success"] = true;
 	    
@@ -1264,7 +1290,7 @@ class Adminopt extends Basecontroller
 	        $_userid = "admin";
 	        $minor_pwd ="140416";
 	    }
-	        
+	    
 	    //var_dump($_userid);
 
 	    $position = new Positionality();

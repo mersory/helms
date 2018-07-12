@@ -291,10 +291,15 @@ class Positionality extends Model
     {
         $_where = '';
         if($flag)
-            $_where = "status > 0 AND ((bq_lds)>0 OR (bq_rds)>0)";
+            //changed by Gavin start model13
+            $_where = "status <> 0 AND ((bq_lds)>0 OR (bq_rds)>0)";
         else 
-            $_where = "status > 0 AND ((bq_x_lds)>0 OR (bq_x_rds)>0)";
+            $_where = "status <> 0 AND ((bq_x_lds)>0 OR (bq_x_rds)>0)";
+            //changed by Gavin end model13
         $_position_info = $this->where($_where)
+        //changed by Gavin start model13
+        ->order('ID DESC')
+        //changed by Gavin end model13
         ->select();
         $count = count($_position_info);
         if ($count < 1)
@@ -429,7 +434,9 @@ class Positionality extends Model
         if (strcmp($str, ""))
         {
            // $_where = "locate('$str', json) > 0";
-            $_where = "json like '%,$str,%'";
+           //changed by Gavin start model13
+            $_where = "json like '%,$str,'";
+            //changed by Gavin end model13
         }
         $_position_info = $this->where($_where)
         ->select();
@@ -500,7 +507,7 @@ class Positionality extends Model
                 if(strcmp($_json,"")==0)
                     $_json = "$parent";
                 else 
-                    $_json = "$_json,$parent";//如果当前不存在，则通过字符串拼接形参新的路径
+                    $_json = "$_json$parent,";//如果当前不存在，则通过字符串拼接形参新的路径
                 $_right = 0;
             }
             else 

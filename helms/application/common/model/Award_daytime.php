@@ -12,6 +12,14 @@ class Award_daytime extends Model
     
     public function AwarddailyQueryByPage($id,$_fromtime,$_totime)//
     {
+        $member = new Positionality();//M('member');
+        $pos = strrpos($id,'H');
+        if( $pos == false )//没有找到，说明是数字，不是H开头的字符串
+        {
+            $vo = $member->PositionQueryByID($id);
+            $id = $vo["user_id"];
+        }
+        
         $_where = '';
         
         if (strcmp("$id", ""))
@@ -46,6 +54,13 @@ class Award_daytime extends Model
     
     public function AwarddailyQuery($id)//
     {
+        $member = new Positionality();//M('member');
+        $pos = strrpos($id,'H');
+        if( $pos == false )//没有找到，说明是数字，不是H开头的字符串
+        {
+            $vo = $member->PositionQueryByID($id);
+            $id = $vo["user_id"];
+        }
         $_where = '';
         $date = date("Y-m-d");
         if (strcmp("$id", ""))
@@ -65,6 +80,13 @@ class Award_daytime extends Model
     
     public function isAwarddailyExist($id)//
     {
+        $member = new Positionality();//M('member');
+        $pos = strrpos($id,'H');
+        if( $pos == false )//没有找到，说明是数字，不是H开头的字符串
+        {
+            $vo = $member->PositionQueryByID($id);
+            $id = $vo["user_id"];
+        }
         $_where = '';
         $date = date("Y-m-d");
         if (strcmp("$id", ""))
@@ -83,6 +105,13 @@ class Award_daytime extends Model
     
     public function AwarddailyDel($id)
     {
+        $member = new Positionality();//M('member');
+        $pos = strrpos($id,'H');
+        if( $pos == false )//没有找到，说明是数字，不是H开头的字符串
+        {
+            $vo = $member->PositionQueryByID($id);
+            $id = $vo["user_id"];
+        }
         $_where = '';
         if (strcmp("$id", ""))
         {
@@ -94,6 +123,13 @@ class Award_daytime extends Model
     
     public function AwarddailyInsert($id, $direct=0, $balance=0, $tutor=0, $appreciation=0, $staticbonus=0, $sum=0, $Sactualsalary=0, $income = 0)
     {
+        $member = new Positionality();//M('member');
+        $pos = strrpos($id,'H');
+        if( $pos == false )//没有找到，说明是数字，不是H开头的字符串
+        {
+            $vo = $member->PositionQueryByID($id);
+            $id = $vo["user_id"];
+        }
         $_record = array();
         if (strcmp("$id", ""))
         {
@@ -125,6 +161,13 @@ class Award_daytime extends Model
     
     public function AwarddailyUpdate($id, $direct=-1, $balance=-1, $tutor=-1, $appreciation=-1, $staticbonus=-1, $sum=-1, $actualsalary=-1, $bz0=-1, $bz6=-1, $bz7=-1, $bz8=-1, $income=-1)
     {
+        $member = new Positionality();//M('member');
+        $pos = strrpos($id,'H');
+        if( $pos == false )//没有找到，说明是数字，不是H开头的字符串
+        {
+            $vo = $member->PositionQueryByID($id);
+            $id = $vo["user_id"];
+        }
         $_record = array();
         $date = date("Y-m-d");
         if($direct != -1)

@@ -81,6 +81,7 @@ $(function(){
 	        if(msg.success == true)
 	        {
 	        	alert('删除成功');
+	        	window.location.reload();
 		  	} 
 	        else 
 	        {
@@ -101,6 +102,7 @@ function activateAction(id, minorpwd)
 		        if(msg.success == true)
 		        {
 		        	alert('激活成功');
+		        	window.location.reload();
 			  	} 
 		        else 
 		        {
