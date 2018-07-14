@@ -417,6 +417,17 @@ class Useropt extends Basecontroller
                 $bankOBJ = new User_bankinfo();
                 $detailsOBJ = new User_details();
                 
+                $positionParrentRES = $positionOBJ->PositionQuery($userid);
+                if(count($positionParrentRES) < 1)
+                    return json_encode($_resdata);
+                
+                $parentID = $positionParrentRES[0]["parent"];
+                $positionParrent = 0;
+                if($positionParrentRES[0]["treeplace"] == 0)
+                    $positionParrent = $positionOBJ->updateChildrenId($parentID, 0, -1);
+                if($positionParrentRES[0]["treeplace"] == 1)
+                    $positionParrent = $positionOBJ->updateChildrenId($parentID, -1, 0);
+
                 $userinfRES = $userinfoOBJ->UserinfoDelByForce($userid);
                 $pointRES = $pointOBJ->PointDel($userid);
                 $priorityRES = $priorityOBJ->PriorityDel($userid);
@@ -426,7 +437,7 @@ class Useropt extends Basecontroller
                 $detailsRES = $detailsOBJ->DetailsDel($userid);
                 $userinfoRES = $userinfoOBJ->UserinfoDelByForce($userid);
                 
-                if($userinfRES && $pointRES && $priorityRES && $roleRES && $positionRES && $bankRES && $detailsRES && $userinfoRES)
+                if($positionParrent>=0 && $userinfRES && $pointRES && $priorityRES && $roleRES && $positionRES && $bankRES && $detailsRES && $userinfoRES)
                     $userinfoOBJ->commit();
                     $pointOBJ->commit();
                     $priorityOBJ->commit();

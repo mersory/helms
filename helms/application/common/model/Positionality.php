@@ -123,6 +123,19 @@ class Positionality extends Model
         return $state;
     }
     
+    public function updateChildrenId($ID, $left_child, $right_child)
+    {
+        $_children = array();
+        if($left_child != -1)
+            $_children["leftchild"] = $left_child;
+        if($right_child != -1)
+            $_children["rightchild"] = $right_child;
+        
+        $state = $this-> where("ID=$ID")
+        ->setField($_children);
+        return $state;
+    }
+    
     //只有新添加的节点是某一个节点的右孩子的时候，才会触发本函数，参数是当前新加的节点的ID号，不是userid号，
     //通过这个函数就可以完全更新新加节点的相应的感恩信息
     public function updateGanenInfo($ID)
