@@ -820,15 +820,14 @@ class Adminopt extends Basecontroller
 	    //更新member表
 	    //var_dump("Adminopt.php line:".__LINE__."ID:".$ID);
 	    $member = new Positionality();//M('member');
-	    $pos = strrpos($ID,'H');
-	    if( $pos != false )
-	    {
-	       $vo = $member->PositionQuery($ID);
-	    }
-	    else
-	    {
-	        $vo = $member->PositionQueryByID($ID);
-	    }
+	    if(is_numeric($ID))
+        {
+            $vo = $member->PositionQueryByID($ID);
+        }
+        else {
+            $vo = $member->PositionQuery($ID);
+        }
+        
 	    
 	    $vo = $vo[0];
 	    $id = $vo["user_id"];

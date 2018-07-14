@@ -285,9 +285,7 @@ class Common extends Basecontroller
             $userId = $_session_user["userId"];
     
             $Award = new Award_record();
-            $pageindex = 0;
-            $pagesize = 25;
-            $_res = $Award->AwardRecordQueryWithLimit($userId, $pageindex, $pagesize);
+            $_res = $Award->AwardRecordQueryWithLimit($userId);
     
             $this->assign('userId', $userId);
             $this->assign('page', $_res->render());

@@ -31,7 +31,7 @@ class Award_record extends Model
         return $_award_info;
     }
     
-    public function AwardRecordQueryWithLimit($id)//
+    public function AwardRecordQueryWithLimit($id, $fromtime="", $totime="")//
     {
         $_where = '';
         if (strcmp("$id", ""))
@@ -42,6 +42,17 @@ class Award_record extends Model
         {
             $_where = "ID != '0'";
         }
+        
+        if(strcmp($fromtime, ""))
+        {
+            $_where = "$_where and time >= '$fromtime'";
+        }
+        
+        if(strcmp($totime, ""))
+        {
+            $_where = "$_where and time <= '$totime'";
+        }
+        
         $_award_info = $this->order("time desc")
                             ->where($_where)
                             ->paginate(25);

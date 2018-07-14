@@ -176,9 +176,9 @@ class Common extends Basecontroller
             $userId = $_GET["bonus_userid"];
     
             $Award = new Award_record();
-            $pageindex = 0;
-            $pagesize = 25;
-            $_res = $Award->AwardRecordQueryWithLimit($userId, $pageindex, $pagesize);
+            $fromtime = $_GET["begintime"];
+            $totime = $_GET["endtime"];
+            $_res = $Award->AwardRecordQueryWithLimit($userId,$fromtime,$totime);
     
             $this->assign('userId', $userId);
             $this->assign('page', $_res->render());
@@ -218,11 +218,14 @@ class Common extends Basecontroller
             $userId = $_GET["userid"];
     
             $Award = new Award_daytime();
-            $_fromtime = "";
-            $_totime = "";
+            $_fromtime = $_GET["begintime"];
+            $_totime = $_GET["endtime"];
             $_res = $Award->AwarddailyQueryByPage($userId, $_fromtime,$_totime);
+//             var_dump($_res);
     
-            $this->assign('userId', $userId);
+            $this->assign('userid', $userId);
+            $this->assign('begintime', $_fromtime);
+            $this->assign('endtime', $_totime);
             $this->assign('page', $_res->render());
             $this->assign('pass_data', $_res);
             // 取回打包后的数据

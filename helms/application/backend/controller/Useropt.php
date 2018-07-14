@@ -135,7 +135,7 @@ class Useropt extends Basecontroller
     
     
     //用户注册操作
-    public function UserRegist($ID, $name, $email, $telphone, $recommender, $activator, $pwd1, $pwd2, $userlevel=1)
+    public function UserRegist($ID, $name, $email, $portrait, $telphone, $recommender, $activator, $pwd1, $pwd2, $userlevel=1)
     {
         $_resdata = array();
         $_resdata["success"] = false;
