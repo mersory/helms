@@ -135,7 +135,7 @@ class Useropt extends Basecontroller
     
     
     //用户注册操作
-    public function UserRegist($ID, $name, $email, $portrait, $telphone, $recommender, $activator, $pwd1, $pwd2, $userlevel=1)
+    public function UserRegist($ID, $name, $email, $telphone, $recommender, $activator, $pwd1, $pwd2, $userlevel=1)
     {
         $_resdata = array();
         $_resdata["success"] = false;
@@ -150,16 +150,15 @@ class Useropt extends Basecontroller
 		//$ID = $extern->_auto_userid();
         $_user_info = new User_info();
         //此处插入用的是用户名和密码，必须这样做，因为此处插入之后才会有对应得ID生成，以便后续使用，此处不需要提供ID，因为主表的ID是自增的
-//         $_user_info->startTans();
         $_state = $_user_info->UserinfoInsert($name, $pwd1, $pwd2, $ID);
-//         if ($_state != 0)
-//         {
-//             $_res =$_user_info->UserinfoQuery($ID, $pwd1);
-//             if (count($_res) != 1)
-//             {
-//                 return json_encode($_resdata);
-//             } 
-//         }
+        if ($_state != 0)
+        {
+            $_res =$_user_info->UserinfoQuery($ID, $pwd1);
+            if (count($_res) != 1)
+            {
+                return json_encode($_resdata);
+            } 
+        }
 		$_resdata["success"] = true;
         //银行信息插入
         $_bank_info = new User_bankinfo();
@@ -197,13 +196,6 @@ class Useropt extends Basecontroller
         //用户角色插入
         $_role_info = new User_role();
         
-//         $_bank_info->startTrans();
-//         $_details_info->startTans();
-//         $_point_info->startTans();
-//         $_priority_info->startTrans();
-//         $_role_info->startTans();
-//         $position->startTrans();
-        
         $_bank_insert = $_bank_info->BankinfoInsert($user_id, $bank_name, "unknow", "unknow", $sub_bank, $bank_account_num, $bank_account_name);
         $_details_insert = $_details_info->DetailsInsert($user_id, $name, $email, $portrait, $user_level, $open_time, $recommender, $activator, $registry,$telphone);
         $_point_insert = $_point_info->PointInsert($user_id, $shares, $bonus_point, $regist_point, $re_consume, $universal_point,-1,-1,-1,$shengyu_jing, $shengyu_dong);
@@ -211,28 +203,13 @@ class Useropt extends Basecontroller
         $_role_insert = $_role_info->RoleInsert($user_id);//默认参数列表
         $_position_res = $position->PositionInsertPrev($user_id, $position_res[0]["ID"]);
         
-        if ( !($_state && $_bank_insert && $_details_insert && $_point_insert && $_priority_insert &&$_role_insert && $_position_res) )
+        if ( !($_bank_insert && $_details_insert && $_point_insert && $_priority_insert &&$_role_insert && $_position_res) )
         {
 			$_resdata["success"] = false;
-			$_user_info->rollback();
-			$_bank_info->rollback();
-			$_details_info->rollback();
-			$_point_info->rollback();
-			$_priority_info->rollback();
-			$_role_info->rollback();
-			$position->rollback();
         }
-        else 
-        {
-            $_user_info->commit();
-            $_bank_info->commit();
-            $_details_info->commit();
-            $_point_info->commit();
-            $_priority_info->commit();
-            $_role_info->commit();
-            $position->commit();
-        }
+        
         return json_encode($_resdata);
+        
     }
     
     //删除会员，用于注销
@@ -418,7 +395,7 @@ class Useropt extends Basecontroller
         return json_encode($_resdata);
     }
     
-    //删除注册了但是没有激活的用户
+//删除注册了但是没有激活的用户
     public function inactiveUserDelete()
     {
         $userid = $_POST['userid'];
@@ -440,6 +417,7 @@ class Useropt extends Basecontroller
                 $bankOBJ = new User_bankinfo();
                 $detailsOBJ = new User_details();
                 
+                $userinfRES = $userinfoOBJ->UserinfoDelByForce($userid);
                 $pointRES = $pointOBJ->PointDel($userid);
                 $priorityRES = $priorityOBJ->PriorityDel($userid);
                 $roleRES = $roleOBJ->RoleDel($userid);
@@ -448,7 +426,8 @@ class Useropt extends Basecontroller
                 $detailsRES = $detailsOBJ->DetailsDel($userid);
                 $userinfoRES = $userinfoOBJ->UserinfoDelByForce($userid);
                 
-                if($pointRES && $priorityRES && $roleRES && $positionRES && $bankRES && $detailsRES && $userinfoRES)
+                if($userinfRES && $pointRES && $priorityRES && $roleRES && $positionRES && $bankRES && $detailsRES && $userinfoRES)
+                    $userinfoOBJ->commit();
                     $pointOBJ->commit();
                     $priorityOBJ->commit();
                     $roleOBJ->commit();
