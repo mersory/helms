@@ -123,21 +123,22 @@ class Award_daytime extends Model
             $_record["ID"] = $id;
         }
    
-        $_record["direct"] = $direct;
-
-        $_record["balance"] = $balance;
-    
-        $_record["tutor"] = $tutor;
-        
-        $_record["appreciation"] = $appreciation;
-        
-        $_record["staticbonus"] = $staticbonus;
-        
-        $_record["sum"] = $sum;
-        
-        $_record["actualsalary"] = $Sactualsalary;
-        
-        $_record["income"] = $income;
+        if($direct > 0)
+            $_record["direct"] = $direct;
+        if($balance > 0)
+            $_record["balance"] = $balance;
+        if($tutor > 0)
+            $_record["tutor"] = $tutor;
+        if($appreciation > 0)
+            $_record["appreciation"] = $appreciation;
+        if($staticbonus > 0)
+            $_record["staticbonus"] = $staticbonus;
+        if($sum > 0)
+            $_record["sum"] = $sum;
+        if($Sactualsalary > 0)
+            $_record["actualsalary"] = $Sactualsalary;
+        if($income > 0)
+            $_record["income"] = $income;
         
         $_record["date"] = date("Y-m-d");;
 

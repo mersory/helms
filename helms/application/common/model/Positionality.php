@@ -609,8 +609,7 @@ class Positionality extends Model
             //var_dump("Positionality.php the data is complete same".__LINE__);
             return 1;
         }
-        else 
-            //var_dump("Positionality.php: not the same".__LINE__);
+
         $_positioninfo = array();
         if ($gushu > 0)
         {
@@ -632,6 +631,40 @@ class Positionality extends Model
                       ->setField($_positioninfo);
         return $state;
     }
+    
+    public function updateGushuByArray($ID, $gushu=-1, $bz5=-1, $cf_count = -1)
+    {
+        
+            $_positioninfo = array();
+            var_dump($ID);
+            if ($gushu > 0)
+            {
+                $_positioninfo["test"] = 3;
+            }
+            
+            //$where['id']=array('in',$ID["ID"]);
+            
+            if($gushu > 0)
+            {
+                $state = $state && $this-> where("ID != 1 and status > -10 and ID < 50000")
+                ->setInc("test", $gushu);
+            }
+                
+            if($bz5 > 0)
+            {
+                $state = $this-> where("ID != 1 and status > -10 and ID < 50000")
+                ->setInc("bq_x_rds", $bz5);
+            }
+            
+            if($cf_count > 0)
+            {
+                $state = $state && $this-> where("ID != 1 and status > -10 and ID < 50000")
+                ->setInc("sq_x_rds", $cf_count);
+            }
+            
+            return $state;
+    }
+    
     
     public function updateJiangjin($ID, $gushu=-1, $l_ds=-1, $bq_lds=-1, $sq_lds=-1, $r_ds=-1, $bq_rds=-1, $sq_rds=-1, $l_x_ds=-1, $bq_x_lds=-1, $sq_x_lds=-1, $r_x_ds=-1, $bq_x_rds=-1, $sq_x_rds=-1, $sum_ds=1)
     {
@@ -682,7 +715,7 @@ class Positionality extends Model
             $_positioninfo["bq_x_lds"] = $bq_x_lds;
         }
         
-        if ($sq_x_lds >= 0)
+        if ($sq_x_lds > -999999)
         {
             $_positioninfo["sq_x_lds"] = $sq_x_lds;
         }
@@ -697,7 +730,7 @@ class Positionality extends Model
             $_positioninfo["bq_x_rds"] = $bq_x_rds;
         }
 
-        if ($sq_x_rds >= 0)
+        if ($sq_x_rds > -999999)
         {
             $_positioninfo["sq_x_rds"] = $sq_x_rds;
         }

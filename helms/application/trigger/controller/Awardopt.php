@@ -56,13 +56,14 @@ class Awardopt extends Controller
                 $positionRES = $positionOBJ->PositionQuery($re_id);
                 $positionRES = $positionRES[0];
                 $awardday = new Award_daytime();
-                $_res_qibonus = $awardday->AwarddailyQuery($positionRES["ID"]);
+                //changed by Gavin start model13
+                $_res_qibonus = $awardday->AwarddailyQuery($positionRES["user_id"]);
                 if(count($_res_qibonus) < 1)
-                    $awardday->AwarddailyInsert($positionRES["ID"], $get_money);
+                    $awardday->AwarddailyInsert($positionRES["user_id"], $get_money);
                 else
                 {
                     $_res_qibonus = $_res_qibonus[0];
-                    $awardday->AwarddailyUpdate($positionRES["ID"], $_res_qibonus["direct"] + $get_money);
+                    $awardday->AwarddailyUpdate($positionRES["user_id"], $_res_qibonus["direct"] + $get_money);
                 }
                 
                 //奖金明细，添加一天记录 
@@ -219,17 +220,18 @@ class Awardopt extends Controller
             if($get_money > 0){
                 $_res_points_set = $_points->PointUpdate($ganen_id, $_pointsRes[0]['shares'], $_pointsRes[0]['bonus_point'] + $ok_money, $_pointsRes[0]['regist_point'], $_pointsRes[0]['re_consume'] + $produceCX, 
                                 $_pointsRes[0]['universal_point'], $_pointsRes[0]['re_cast'], -1,-1,-1, $_pointsRes[0]['shengyu_dong'] - $get_money);
-                $_res_point_dayly = $_dayly_point->AwarddailyQuery($ganen_id_pos["ID"]);
+                //changed by Gavin start model13
+                $_res_point_dayly = $_dayly_point->AwarddailyQuery($ganen_id_pos["user_id"]);
                 if(sizeof($_res_point_dayly) > 0)
                 {
                    //var_dump("inbonus Awardopt.php line:".__LINE__);
-                   $_dayly_point->AwarddailyUpdate($ganen_id_pos["ID"], -1, $_res_point_dayly[0]["balance"] +$get_money);
+                   $_dayly_point->AwarddailyUpdate($ganen_id_pos["user_id"], -1, $_res_point_dayly[0]["balance"] +$get_money);
                    $this->_in_bonus($ganen_id, $inUserID, 4, $get_money);
                 }
                 else
                 {
                    //var_dump("inbonus Awardopt.php line:".__LINE__);
-                   $_dayly_point->AwarddailyInsert($ganen_id_pos["ID"], 0, $get_money);
+                   $_dayly_point->AwarddailyInsert($ganen_id_pos["user_id"], 0, $get_money);
                    $this->_in_bonus($ganen_id, $inUserID, 4, $get_money);
                 }
             }
@@ -238,17 +240,18 @@ class Awardopt extends Controller
             if($get_money > 0){
                $_res_points_set = $_points->PointUpdate($ganen_r_id, $_pointsRes[0]['shares'], $_pointsRes[0]['bonus_point'] + $ok_money, $_pointsRes[0]['regist_point'], $_pointsRes[0]['re_consume'] + $produceCX, 
                                 $_pointsRes[0]['universal_point'], $_pointsRes[0]['re_cast'], -1,-1,-1, $_pointsRes[0]['shengyu_dong'] - $get_money);
-                $_res_point_dayly = $_dayly_point->AwarddailyQuery($ganen_r_id_pos["ID"]);
+               //changed by Gavin start model13 
+               $_res_point_dayly = $_dayly_point->AwarddailyQuery($ganen_r_id_pos["user_id"]);
                 if(sizeof($_res_point_dayly) > 0)
                 {
                     //var_dump("inbonus Awardopt.php line:".__LINE__);
-                    $_dayly_point->AwarddailyUpdate($ganen_r_id_pos["ID"], -1, $_res_point_dayly[0]["balance"] +$get_money);
+                    $_dayly_point->AwarddailyUpdate($ganen_r_id_pos["user_id"], -1, $_res_point_dayly[0]["balance"] +$get_money);
                     $this->_in_bonus($ganen_r_id, $inUserID, 4, $get_money);
                 }
                 else 
                 {
                    //var_dump("inbonus Awardopt.php line:".__LINE__);
-                   $_dayly_point->AwarddailyInsert($ganen_r_id_pos["ID"], 0, $get_money);
+                   $_dayly_point->AwarddailyInsert($ganen_r_id_pos["user_id"], 0, $get_money);
                    $this->_in_bonus($ganen_r_id, $inUserID, 4, $get_money);
                 }
             }
@@ -290,15 +293,18 @@ class Awardopt extends Controller
 	        if ($tpl == 0) {
 	            $data['l_ds'] = $curNode[0]['l_ds'] + $danshu;
 	            $data['bq_lds'] = $curNode[0]['bq_lds'] + $danshu;
-	            $position->updateJiangjin($ID, -1,$data['l_ds'],$data['bq_lds'],-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,$data['sum_ds']);
-	    
+	            //changed by Gavin start model13
+	            $position->updateJiangjin($ID, -1,$data['l_ds'],$data['bq_lds'],-1,-1,-1,-1,-1,-1,-999999,-1,-1,-999999,$data['sum_ds']);
+	            //changed by Gavin end model13
 	            //平衡奖总额对碰，增加对碰额
 	            /* $data['l_dse'] = array('exp','l_dse+'.$reg_money);
 	             $data['bq_lds'] = array('exp', 'bq_ldse+'.$reg_money); */
 	        } elseif ($tpl == 1) {
 	            $data['r_ds'] = $curNode[0]['r_ds'] + $danshu;
 	            $data['bq_rds'] = $curNode[0]['bq_rds'] + $danshu;
-	            $position->updateJiangjin($ID, -1,-1,-1,-1,$data['r_ds'],$data['bq_rds'],-1,-1,-1,-1,-1,-1,-1, $data['sum_ds']);
+	            //changed by Gavin start model13
+	            $position->updateJiangjin($ID, -1,-1,-1,-1,$data['r_ds'],$data['bq_rds'],-1,-1,-1,-999999,-1,-1,-999999, $data['sum_ds']);
+	           //changed by Gavin end model13
 	        }
 	        $tpl = $curNode[0]['treeplace'];
 	    }
@@ -331,15 +337,18 @@ class Awardopt extends Controller
 	                if ($tpl == 0) {
 	                    $data['l_ds'] = $curNode[0]['l_ds'] + $danshu;
 	                    $data['bq_lds'] = $curNode[0]['bq_lds'] + $danshu;
-	                    $position->updateJiangjin($ID, -1,$data['l_ds'],$data['bq_lds'],-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,$data['sum_ds']);
-	                     
+	                    //changed by Gavin start model113
+	                    $position->updateJiangjin($ID, -1,$data['l_ds'],$data['bq_lds'],-1,-1,-1,-1,-1,-1,-999999,-1,-1,-999999,$data['sum_ds']);
+	                    //changed by Gavin end model13 
 	                    //平衡奖总额对碰，增加对碰额
 	                    /* $data['l_dse'] = array('exp','l_dse+'.$reg_money);
 	                     $data['bq_lds'] = array('exp', 'bq_ldse+'.$reg_money); */
 	                } elseif ($tpl == 1) {
 	                    $data['r_ds'] = $curNode[0]['r_ds'] + $danshu;
 	                    $data['bq_rds'] = $curNode[0]['bq_rds'] + $danshu;
-	                    $position->updateJiangjin($ID, -1,-1,-1,-1,$data['r_ds'],$data['bq_rds'],-1,-1,-1,-1,-1,-1,-1, $data['sum_ds']);
+	                    //changed by Gavin start model13
+	                    $position->updateJiangjin($ID, -1,-1,-1,-1,$data['r_ds'],$data['bq_rds'],-1,-1,-1,-999999,-1,-1,-999999, $data['sum_ds']);
+	                   //changed by Gavin end model13
 	                }
 	                $tpl = $curNode[0]['treeplace'];
 	    }
@@ -373,19 +382,27 @@ class Awardopt extends Controller
             $curNode = $position->PositionQueryByID($ID);
 
             $data = array();
-            $tpl = $curNode[0]['treeplace'];
+            //changed by Gavin start model13
+            //$tpl = $curNode[0]['treeplace'];
             if ($tpl == 0) {
                 //var_dump("left vitual danshu");
                 $data['l_x_ds'] = $curNode[0]['l_x_ds'] + $danshu;
                 $data['bq_x_lds'] = $curNode[0]['bq_x_lds'] + $danshu;
-                $position->updateJiangjin($ID, -1,-1,-1,-1,-1,-1,-1,$data['l_x_ds'],$data['bq_x_lds'],-1,-1,-1,-1);
+                //changed by Gavin start model13
+                $position->updateJiangjin($ID, -1,-1,-1,-1,-1,-1,-1,$data['l_x_ds'],$data['bq_x_lds'],-999999,-1,-1,-999999);
+                //changed by Gavin end model13
 
             } elseif ($tpl == 1) {
                 //var_dump("right vitual danshu");
                 $data['r_x_ds'] = $curNode[0]['r_x_ds'] + $danshu;
-                $data['bq_x_rds'] = $curNode[0]['bq_x_rds'] + $danshu;
-                $position->updateJiangjin($ID, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,$data['r_x_ds'],$data['bq_x_rds'],-1);
+                $data['bq_x_rds'] = $curNode[0]['bq_x_rds'] + $danshu;   
+                //changed by Gavin start model13
+                $position->updateJiangjin($ID, -1,-1,-1,-1,-1,-1,-1,-1,-1,-999999,$data['r_x_ds'],$data['bq_x_rds'],-999999);
+                //changed by Gavin end model13
             }
+            
+            $tpl = $curNode[0]['treeplace'];
+            //changed by Gavin end model13
 	    }  
 	}
 	
@@ -448,9 +465,9 @@ class Awardopt extends Controller
 	        return;
 
 	    foreach ($_res as $vo) {
-	        if($vo['status'] < 1){
-	            continue;
-	        }
+	        //changed by Gavin start model13
+	        
+	        //changed by Gavin end model13
 	        //var_dump("Awardopt.php user id:".$vo["user_id"]."line:".__LINE__);
 	        $paramOBJ = new External();
 	        $jj = $paramOBJ->getParam("pingheng_proportion", -1, $vo["user_id"]);
@@ -487,7 +504,10 @@ class Awardopt extends Controller
 	        $user_point = new User_point();
 	        $_point = $user_point->PointQuery($inUserID);
 	        $_point = $_point[0];
-	        if ($ft > 0) {
+	        //changed by Gavin start model13
+	        $_res_jiangjin = $position->updateJiangjin($vo['ID'], -1, -1, 0, $ls, -1, 0, $rs, -1, -1, -999999, -1, -1, -999999, -1);
+	        
+	        if ($ft > 0 && $vo['status'] != 0 && $vo['status'] != -1) {
 	            $get_money = $this->_fengding($get_money, $ft, $vo['dp_leiji']); //
 	            $get_money = ($_point['shengyu_dong'] - $get_money)<0 ? $_point['shengyu_dong']:$get_money;
 	            $data = array();
@@ -510,9 +530,13 @@ class Awardopt extends Controller
 	            //$_res_award_record = $award_record->AwardRecordInsert($myids, "平衡奖", $get_money, $myids, $minfo);
 	            
 	            $user_point->PointUpdate($inUserID, -1, $data['bonus_point'], -1, $data['re_consume'], -1, -1, -1, -1, -1, $data['shengyu_dong']);
+	            
+	        }else{
+	            continue;
 	        }
 	        //$this->query("UPDATE __TABLE__ SET `sq_lds`={$ls},`sq_rds`={$rs},`bq_lds`=0,`bq_rds`=0 WHERE `id`=".$myids);//数据库更新左右区单数
-	        $_res_jiangjin = $position->updateJiangjin($vo['ID'], -1, -1, 0, $ls, -1, 0, $rs, -1, -1, -1, -1, -1, -1, -1);
+	      
+	        //changed by Gavin end model13
 	        if ($get_money > 0) {
 	            //var_dump("inbonus Awardopt.php line:".__LINE__);
 	            $this->_in_bonus($myids, $inUserID, 2, $get_money);// 参数3等于2表示添加平衡奖，只有平衡对于积分的修改在in_bonus内部，其他的都在外面
@@ -585,7 +609,9 @@ class Awardopt extends Controller
     	        $user_point = new User_point();
     	        $_point = $user_point->PointQuery($inUserID);
     	        $_point = $_point[0];
-    	        if ($ft > 0) {
+    	        //changed by Gavin start model13
+    	        $position->updateJiangjin($vo['ID'], -1, -1, -1, -1, -1, -1, -1, -1, 0, $ls, -1, 0, $rs, -1);
+    	        if ($ft > 0 && $vo['status'] != 0 && $vo['status'] != -1) {
     	            $get_money = $this->_fengding($get_money, $ft, $vo['dp_leiji']); //
     	            $get_money = ($_point['shengyu_dong'] - $get_money)<0 ? $_point['shengyu_dong']:$get_money;
     	            $data = array();
@@ -608,9 +634,12 @@ class Awardopt extends Controller
     	            //$_res_award_record = $award_record->AwardRecordInsert($myids, "平衡奖", $get_money, $myids, $minfo);
     	            
     	            $user_point->PointUpdate($inUserID, -1, $data['bonus_point'], -1, $data['re_consume'], -1, -1, -1, -1, -1, $data['shengyu_dong']);
+    	        }else{
+    	            continue;
     	        }
     	        //$this->query("UPDATE __TABLE__ SET `sq_lds`={$ls},`sq_rds`={$rs},`bq_lds`=0,`bq_rds`=0 WHERE `id`=".$myids);//数据库更新左右区单数
-    	        $position->updateJiangjin($vo['ID'], -1, -1, -1, -1, -1, -1, -1, -1, -1, $ls, -1, -1, $rs, -1);
+    	        
+    	        //changed by Gavin end model13
     	        if ($get_money > 0) {
     	            //var_dump("inbonus Awardopt.php line:".__LINE__);
     	            $this->_in_bonus($myids, $inUserID, 2, $get_money);// 参数3等于2表示添加平衡奖，只有平衡对于积分的修改在in_bonus内部，其他的都在外面
@@ -651,6 +680,14 @@ class Awardopt extends Controller
 	    if($bkey == 5){ //静态奖金的处理，人每天表,只有万能分的人/每天表更新是在这里面
 	        //$qibonus->query("update __TABLE__ set b0=b0+{$get_money},b{$bkey}=b{$bkey}+{$get_money},b6=b6,b7=b7,b8=b8 where id=".$bid);
 	        //unset($qibonus);
+	        
+	        if(is_numeric($myids))
+	        {
+	            $member = new Positionality();
+	            $vo = $member->PositionQueryByID($myids);
+	            $myids = $vo[0]["user_id"];
+	        }
+	        
 	        $detailOBJ = new User_details();
 	        $detailRES = $detailOBJ->DetailsQuery($myids);
 	        $detailRES = $detailRES[0];

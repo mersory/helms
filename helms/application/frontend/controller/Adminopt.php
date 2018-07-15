@@ -31,6 +31,18 @@ class Adminopt extends Basecontroller
 {
     public function index()
     {
+        $_repath = ",";
+        $strArr =  explode(",",$_repath);
+        var_dump("count:".count($strArr));
+        $member = new Positionality();
+        $frs = $member->getAllLegUser();
+        var_dump(gettype($frs));
+        var_dump("ID:".$frs[0]["ID"]);
+        $ids = array(1,2,3,4,5,6,7,8,9);
+        var_dump($ids);
+        
+        $ress = $member->updateGushuByArray($ids,2,1,1);
+        
         $pointOBJ = new User_info();
         $ress = $pointOBJ->UserApplicationWithLimit();
         var_dump("ress:".$ress);
@@ -1268,7 +1280,11 @@ class Adminopt extends Basecontroller
 	        return json_encode($_resdata);
 	    }
 	    $_resact = $this->activeUserOpt($user_id, $level, $regist_money, $minor_pwd);
-	    $_resdata["success"] = true;
+	    if($_resact)
+	    {
+	    	$_resdata["success"] = true;
+	    }
+	    
 	    
 	    return json_encode($_resdata);
 	}
@@ -1281,6 +1297,7 @@ class Adminopt extends Basecontroller
 	    {
 	        //var_dump('ERROR : Adminopt.php on line:'.__LINE__);
 	         //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
+		return false;
 	    }
 	    
 	    $_userid = $_session_user["userId"];
@@ -1314,25 +1331,26 @@ class Adminopt extends Basecontroller
 	        $_res_qibonus = $awardday->AwarddailyQuery($ID);
 	        if(count($_res_qibonus) < 1)
 	            $awardday->AwarddailyInsert($ID,0,0,0,0,0,0,0,$param);
-            else
-            {
-                $_res_qibonus = $_res_qibonus[0];
-                $awardday->AwarddailyUpdate($ID,0,0,0,0,0,0,0,0,0,0,0,$param);
-            }
+	        else
+	        {
+	            $_res_qibonus = $_res_qibonus[0];
+	            $awardday->AwarddailyUpdate($ID,0,0,0,0,0,0,0,0,0,0,0,$param);
+	        }
 	        
-            //2018-5-6 激活时才更新感恩信息
-            $positionOBJ = new Positionality();
-            $positionRes = $positionOBJ->PositionQuery($user_id);
-            $positionRes = $positionRes[0];
-            if($positionRes["treeplace"]==1)
-            {
-                $positionOBJ->updateGanenInfo($positionRes["ID"]);
-            }
+	        //2018-5-6 激活时才更新感恩信息
+	        $positionOBJ = new Positionality();
+	        $positionRes = $positionOBJ->PositionQuery($user_id);
+	        $positionRes = $positionRes[0];
+	        if($positionRes["treeplace"]==1)
+	        {
+	            $positionOBJ->updateGanenInfo($positionRes["ID"]);
+	        }
             
 	        //奖金处理等系列操作
 	        $this->audit_member_open($ID, $openid);//the most import logic module
-	        
+	        return true;
 	    } 
+	    return false;
 	}
 	
 	//用户升级，页面直接调用
@@ -1675,6 +1693,8 @@ class Adminopt extends Basecontroller
                         //$this->error('更新会员ID为'.$vo['ID'].'数据错误！');
                     }
                 }
+                $res["success"] = true;
+                return json_encode($res);
             }
 	    }
 	    elseif($use_gujia == 2)
@@ -1693,7 +1713,7 @@ class Adminopt extends Basecontroller
 	        return json_encode($res);
 	    }
 	    
-        $res["success"] = true;
+            $res["success"] = true;
 	    return json_encode($res);
 	}
 	

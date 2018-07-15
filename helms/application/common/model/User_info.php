@@ -248,129 +248,136 @@ class User_info extends Model
     
             //获取当前待激活人的推荐路径
             $_details_current = $_detail_info->DetailsQuery($ID);
-            if(strcmp($_details_parent[0]["repath"],"")!=0)
-                $_repath = $_details_parent[0]["repath"].','.$_details_parent[0]["AUTO_ID"];
-                else
-                    $_repath = $_details_parent[0]["AUTO_ID"];
+            //changed by Gavin start model13
+            if(strcmp($_details_parent[0]["repath"],",")!=0)
+            
+                $_repath = $_details_parent[0]["repath"].$_details_parent[0]["AUTO_ID"].',';
+            
+            else
+                $_repath = $_details_parent[0]["AUTO_ID"].',';
+            //changed by Gavin end model13
     
-                    //var_dump("repath:".$_repath);
-                    //进行拆分，去除逗号
-                    $strArr =  explode(",",$_repath);
-                    $recommondLevel = count($strArr);//本来需要加一，但是去除根节点之后，正好不需要加一
-                    //var_dump($strArr);
-                    $_detail_info = new User_details();
+            //var_dump("repath:".$_repath);
+            //进行拆分，去除逗号
+            $strArr =  explode(",",$_repath);
+            //changed by Gavin start model13
+            $recommondLevel = count($strArr)-2;//本来需要加一，但是去除根节点之后，正好不需要加一
+            //changed by Gavin end model13
+            //var_dump($strArr);
+            $_detail_info = new User_details();
     
-                    //更新整条推荐路径上所有节点的repath_ds
-                    //var_dump("更新推荐结构信息",$level."level");
-                    //var_dump("更新推荐数组",$strArr);
+            //更新整条推荐路径上所有节点的repath_ds
+            //var_dump("更新推荐结构信息",$level."level");
+            //var_dump("更新推荐数组",$strArr);
                      
-                    switch ($level)
+            switch ($level)
+            {
+                case 1:
+                    foreach ($strArr as $cur)
                     {
-                        case 1:
-                            foreach ($strArr as $cur)
-                            {
-                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
-                                ->setInc('repath_ds');
-                            }
-    
-                            break;
-                        case 2:
-                            foreach ($strArr as $cur)
-                            {
-                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
-                                ->setInc('repath_ds',2);
-                            }
-                            break;
-                        case 3:
-                            foreach ($strArr as $cur)
-                            {
-                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
-                                ->setInc('repath_ds',6);
-                            }
-                            break;
-                        case 4:
-                            foreach ($strArr as $cur)
-                            {
-                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
-                                ->setInc('repath_ds',6);
-                            }
-                            break;
-                        case 5:
-                            foreach ($strArr as $cur)
-                            {
-                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
-                                ->setInc('repath_ds',6);
-                            }
-                            break;
-                        case 6:
-                            foreach ($strArr as $cur)
-                            {
-                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
-                                ->setInc('repath_ds',6);
-                            }
-                            break;
-                        case 7:
-                            foreach ($strArr as $cur)
-                            {
-                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
-                                ->setInc('repath_ds',6);
-                            }
-                            break;
-                        case 8:
-                            foreach ($strArr as $cur)
-                            {
-                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
-                                ->setInc('repath_ds',6);
-                            }
-                            break;
-                        case 9:
-                            foreach ($strArr as $cur)
-                            {
-                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
-                                ->setInc('repath_ds',6);
-                            }
-                            break;
-                        case 10:
-                            foreach ($strArr as $cur)
-                            {
-                                $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
-                                ->setInc('repath_ds',6);
-                            }
-                            break;
-                        default:
-                            break;
+                        $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                        ->setInc('repath_ds');
                     }
+    
+                    break;
+                case 2:
+                    foreach ($strArr as $cur)
+                    {
+                        $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                        ->setInc('repath_ds',2);
+                    }
+                    break;
+                case 3:
+                    foreach ($strArr as $cur)
+                    {
+                        $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                        ->setInc('repath_ds',6);
+                    }
+                    break;
+                case 4:
+                    foreach ($strArr as $cur)
+                    {
+                        $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                        ->setInc('repath_ds',6);
+                    }
+                    break;
+                case 5:
+                    foreach ($strArr as $cur)
+                    {
+                        $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                        ->setInc('repath_ds',6);
+                    }
+                    break;
+                case 6:
+                    foreach ($strArr as $cur)
+                    {
+                        $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                        ->setInc('repath_ds',6);
+                    }
+                    break;
+                case 7:
+                    foreach ($strArr as $cur)
+                    {
+                        $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                        ->setInc('repath_ds',6);
+                    }
+                    break;
+                case 8:
+                    foreach ($strArr as $cur)
+                    {
+                        $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                        ->setInc('repath_ds',6);
+                    }
+                    break;
+                case 9:
+                    foreach ($strArr as $cur)
+                    {
+                        $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                        ->setInc('repath_ds',6);
+                    }
+                    break;
+                case 10:
+                    foreach ($strArr as $cur)
+                    {
+                        $_detail_info_res = $_detail_info->where("AUTO_ID = '$cur'")
+                        ->setInc('repath_ds',6);
+                    }
+                    break;
+                default:
+                    break;
+            }
                      
-                    $_detail = array();
-                    $_detail["kaitongID"] = $_id;
-                    $_detail["open_time"] =  date("Y-m-d H:i:s");
-                    $_detail["user_level"] = $level;
-                    $_detail["pay_gujia"] = $now_gujia;
-                    $_detail["recommandlevel"] = $recommondLevel;//1，2，3，5 1的推荐等级是1，5的推荐等级是4，由re_path确定
-                    $_detail["re_nums"] = 0;//他推荐的人数是0，此时需要加一行，推荐他的这个人的re_nums需要加一
-                    $_detail["repath"] = $_repath;//推荐结构图
-                    $_detail["repath_ds"] = 0;//他自己是0，整个推荐关系表中所有上级人的repath加一
-                    $_detail["open_time"] = date("Y-m-d H:i:s");
+            $_detail = array();
+            $_detail["kaitongID"] = $_id;
+            $_detail["open_time"] =  date("Y-m-d H:i:s");
+            $_detail["user_level"] = $level;
+            $_detail["pay_gujia"] = $now_gujia;
+            $_detail["recommandlevel"] = $recommondLevel;//1，2，3，5 1的推荐等级是1，5的推荐等级是4，由re_path确定
+            $_detail["re_nums"] = 0;//他推荐的人数是0，此时需要加一行，推荐他的这个人的re_nums需要加一
+            $_detail["repath"] = $_repath;//推荐结构图
+            $_detail["repath_ds"] = 0;//他自己是0，整个推荐关系表中所有上级人的repath加一
+            $_detail["open_time"] = date("Y-m-d H:i:s");
     
-                    if(count($_detail_info->DetailsQuery($ID)) < 1)
-                    {
-                        //var_dump("User_info.php ERROR ar line:".__LINE__);
-                        return false;
-                    }
-                    $_detail_info_res = $_detail_info->where("ID='$ID'")
-                    ->setField($_detail);
-                    //var_dump("details info");
-                    //var_dump($_detail_info_res);
-                    $_status_info = array();
-                    $_status_info["user_status"] = 1;
-                    $_activate = $this->where("ID='$ID'")
-                    ->setField($_status_info);
-                    //var_dump("action res");
-                    //var_dump($_activate);
+            if(count($_detail_info->DetailsQuery($ID)) < 1)
+            {
+                //var_dump("User_info.php ERROR ar line:".__LINE__);
+                return false;
+            }
+            $_detail_info_res = $_detail_info->where("ID='$ID'")
+            ->setField($_detail);
+            //var_dump("details info");
+            //var_dump($_detail_info_res);
+            $_status_info = array();
+            $_status_info["user_status"] = 1;
+            $_activate = $this->where("ID='$ID'")
+            ->setField($_status_info);
+            //var_dump("action res");
+            //var_dump($_activate);
+            return true;
         }
     
         //var_dump($_status_info);
-        return true;
+        return false;
     }
     
     public function UserUpdate($ID, $name, $minor_pwd, $level, $cost)//用户开通，激活
