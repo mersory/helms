@@ -38,7 +38,7 @@ class Award_daytime extends Model
         ->order("P.date desc")
         ->where($_where)
         ->field('U.username,  P.ID, P.direct, P.balance, P.tutor, P.appreciation, P.staticbonus, P.sum, P.actualsalary, P.date, P.bz0')
-        ->paginate(25);
+        ->paginate(25,false,['query' => request()->param()]);
  
         return $_award_info;
     }

@@ -55,7 +55,7 @@ class User_point extends Model
             }
     
             $_points = $this->where($_where)
-                            ->paginate(25);
+                            ->paginate(25,false,['query' => request()->param()]);
             
             return $_points;
         }
@@ -73,7 +73,7 @@ class User_point extends Model
         $res = $this->table('helms_user_point up,helms_positionality p,helms_user_details ud')
             ->where($_where)
             ->order("ud.open_time desc")
-            ->paginate(25);
+            ->paginate(25,false,['query' => request()->param()]);
 
         return $res;
     }

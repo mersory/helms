@@ -23,7 +23,7 @@ class Preference_option extends Model
     public function PreferenceInfoAllQueryPage()
     {
         $_where = '';
-        $_preferenceinfo = $this->where($_where)->order("update_time desc")->paginate(10);
+        $_preferenceinfo = $this->where($_where)->order("update_time desc")->paginate(10,false,['query' => request()->param()]);
         $count = count($_preferenceinfo);
         if ($count < 1)
         {

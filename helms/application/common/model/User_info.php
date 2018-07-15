@@ -639,14 +639,14 @@ class User_info extends Model
             $res = $this->table('helms_user_info info, helms_user_details details, helms_user_point point, helms_positionality positionality')
             ->where("$_where and info.ID=details.ID and info.user_status != 0 and details.recommender != '0' and point.ID=info.ID and positionality.user_id=info.ID")
             ->order("details.open_time desc")
-            ->paginate(25);
+            ->paginate(25,false,['query' => request()->param()]);
         }
         else
         {
             $res = $this->table('helms_user_info info, helms_user_details details, helms_user_point point, helms_positionality positionality')
             ->order("details.open_time desc")
             ->where("info.ID=details.ID and info.user_status != 0 and details.recommender != '0'")
-            ->paginate(25);
+            ->paginate(25,false,['query' => request()->param()]);
         }
 
         return $res;
@@ -713,7 +713,7 @@ class User_info extends Model
             ->order("details.open_time desc")
             ->where("$_where and info.ID=details.ID and info.user_status = 0")
             ->field( 'details.AUTO_ID, details.portrait, details.user_name, details.telphone, details.email, details.user_level, details.open_time, helms_user_info.ID')
-            ->paginate(25);
+            ->paginate(25,false,['query' => request()->param()]);
         }
         else
         {
@@ -721,7 +721,7 @@ class User_info extends Model
             ->order("details.open_time desc")
             ->where("info.ID=details.ID and info.user_status = 0")
            ->field( 'details.AUTO_ID, details.portrait, details.user_name, details.telphone, details.email, details.user_level, details.open_time, helms_user_info.ID')
-            ->paginate(25);
+            ->paginate(25,false,['query' => request()->param()]);
             
         }
         return $res;

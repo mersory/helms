@@ -55,7 +55,7 @@ class Award_record extends Model
         
         $_award_info = $this->order("time desc")
                             ->where($_where)
-                            ->paginate(25);
+                            ->paginate(25,false,['query' => request()->param()]);
        
         return $_award_info;
     }

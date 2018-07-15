@@ -26,7 +26,7 @@ class Store_product extends Model
     public function ProductInfoAllQueryPage()
     {
         $_where = '';
-        $_productinfo = $this->where($_where)->order("id desc")->paginate(10);
+        $_productinfo = $this->where($_where)->order("id desc")->paginate(10,false,['query' => request()->param()]);
         $count = count($_productinfo);
         if ($count < 1)
         {

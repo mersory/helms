@@ -84,14 +84,14 @@ class Point_transform_record extends Model
         {
             $res = $this->order("point_change_time desc")
             ->where($_where)
-            ->field( 'POINT_ID, user_id, 	point_change_type, 	point_change_sum, point_change_time, point_before')->paginate(25);
+            ->field( 'POINT_ID, user_id, 	point_change_type, 	point_change_sum, point_change_time, point_before')->paginate(25,false,['query' => request()->param()]);
         }
         else
         {
             $res = $this->order("point_change_time desc")
             ->field( 'POINT_ID, user_id, 	point_change_type, 	point_change_sum, point_change_time, point_before')
             ->select()
-            ->paginate(25);;
+            ->paginate(25,false,['query' => request()->param()]);
         }
         return $res;
     }

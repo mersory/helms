@@ -25,7 +25,7 @@ class Store_order extends Model
     public function OrderInfoAllQueryPage()
     {
 //         $sql = "select * from helms_store_order order by update_time desc";
-        $_orderinfo = $this->order('update_time desc')->paginate(10);
+        $_orderinfo = $this->order('update_time desc')->paginate(10,false,['query' => request()->param()]);
         if(count($_orderinfo) > 0){
             for($i=0;$i<count($_orderinfo);++$i){
                 $orderLine = new Store_order_line();

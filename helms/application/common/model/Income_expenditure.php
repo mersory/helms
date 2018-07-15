@@ -78,13 +78,13 @@ class Income_expenditure extends Model
             $res = $this->order("count_time desc")
             ->where($_where)
             ->field( 'record_id, incomings, outgoing, current_profit, count_time, out_contrast_in')
-            ->paginate(25);
+            ->paginate(25,false,['query' => request()->param()]);
         }
         else
         {
             $res = $this->order("count_time desc")
                         ->field( 'record_id, incomings, outgoing, current_profit, count_time, out_contrast_in')
-                        ->paginate(25);
+                        ->paginate(25,false,['query' => request()->param()]);
         }
         return $res;
     }

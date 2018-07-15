@@ -51,7 +51,7 @@ class Recharge_record extends Model
 
             $_recharge = $this->order("cz_time desc")
                         ->where($_where)
-                        ->paginate(25);
+                        ->paginate(25,false,['query' => request()->param()]);
 
             return $_recharge;
     }

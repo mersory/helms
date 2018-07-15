@@ -41,7 +41,7 @@ class Userupgrade_record extends Model
         }
         $_upgrade_info = $this->order("upgrade_time desc")
                             ->where($_where)
-                            ->paginate(25);
+                            ->paginate(25,false,['query' => request()->param()]);
         return $_upgrade_info;
     }
     

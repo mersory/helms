@@ -39,7 +39,7 @@ class Positionality extends Model
         }
         $_position_info = $this->order("fenh_time desc")
                                 ->where($_where)
-                                ->paginate(25);
+                                ->paginate(25,false,['query' => request()->param()]);
         
         return $_position_info;
     }

@@ -9,7 +9,7 @@ class System_menu extends Model
     // 根据用户ID查询所有的角色
     public function MenuAllQueryPage()
     {
-        $_menu_info = $this->paginate(10);
+        $_menu_info = $this->paginate(10,false,['query' => request()->param()]);
         $count = count($_menu_info);
         if ($count < 1) {
             //var_dump("menu info not exsist");

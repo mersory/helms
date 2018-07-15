@@ -104,13 +104,13 @@ class Withdrawal_record extends Model
             $res = $this->table('helms_withdrawal_record W, helms_user_bankinfo B, helms_user_details D')
             ->where("$_where and W.user_id=B.user_id and D.ID=W.user_id")
             ->order("apply_time desc")
-            ->paginate(25);
+            ->paginate(25,false,['query' => request()->param()]);
         }
         else
         {
             $res = $this->order("apply_time desc")
             ->where("W.user_id=B.user_id")
-            ->paginate(25);
+            ->paginate(25,false,['query' => request()->param()]);
         }
         return $res;
     }
