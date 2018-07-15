@@ -632,37 +632,30 @@ class Positionality extends Model
         return $state;
     }
     
-    public function updateGushuByArray($ID, $gushu=-1, $bz5=-1, $cf_count = -1)
+    public function updateGushuByArray($is_cf=0, $is_zj=0)
     {
+        //每次只能进行一种操作，拆分或者是涨价
+        if(($is_cf != 0 && $is_zj != 0) || ($is_cf == 0 && $is_zj == 0))
+            return -1;
+        $gpset = new Gp_set();
+        $res = $gpset->GpSetQuery();
         
-            $_positioninfo = array();
-            var_dump($ID);
-            if ($gushu > 0)
-            {
-                $_positioninfo["test"] = 3;
-            }
-            
-            //$where['id']=array('in',$ID["ID"]);
-            
-            if($gushu > 0)
-            {
-                $state = $state && $this-> where("ID != 1 and status > -10 and ID < 50000")
-                ->setInc("test", $gushu);
-            }
-                
-            if($bz5 > 0)
-            {
-                $state = $this-> where("ID != 1 and status > -10 and ID < 50000")
-                ->setInc("bq_x_rds", $bz5);
-            }
-            
-            if($cf_count > 0)
-            {
-                $state = $state && $this-> where("ID != 1 and status > -10 and ID < 50000")
-                ->setInc("sq_x_rds", $cf_count);
-            }
-            
-            return $state;
+        $current_price = $res[0]["now_price"];
+        if($is_cf != 0 && $is_zj == 0)
+        {
+            $sql = "update `helms_positionality` set gushu=gushu * 2, bz5 = gushu*1 , cf_count=cf_count+1 where status != 0 and status != -1 and ID != 1";
+        }
+        else if($is_zj != 0 && $is_cf == 0)
+        {
+            $sql = "update `helms_positionality` set bz5 = gushu*'$current_price' where status != 0 and status != -1 and ID != 1";
+        }
+        else 
+        {
+            return -1;
+        }
+        $state = $this->query($sql);
+        
+        return $state;
     }
     
     
