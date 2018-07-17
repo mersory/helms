@@ -109,7 +109,7 @@ class Award_daytime extends Model
         return $state;
     }
     
-    public function AwarddailyInsert($id, $direct=0, $balance=0, $tutor=0, $appreciation=0, $staticbonus=0, $sum=0, $Sactualsalary=0, $income = 0)
+    public function AwarddailyInsert($id, $direct=0, $balance=0, $tutor=0, $appreciation=0, $staticbonus=0, $sum=0, $Sactualsalary=0, $bz0 = 0, $bz6 = 0, $bz7 = 0, $bz8 = 0, $income = 0)
     {
         $member = new Positionality();//M('member');
         if(is_numeric($id))
@@ -139,7 +139,18 @@ class Award_daytime extends Model
             $_record["actualsalary"] = $Sactualsalary;
         if($income > 0)
             $_record["income"] = $income;
+        if($bz0 > 0)
+            $_record["bz0"] = $bz0;
         
+        if($bz6 > 0)
+            $_record["bz6"] = $bz6;
+    
+        if($bz7 > 0)
+            $_record["bz7"] = $bz7;
+
+        if($bz8 > 0)
+            $_record["bz8"] = $bz8;
+
         $_record["date"] = date("Y-m-d");;
 
         $state = $this->save($_record);

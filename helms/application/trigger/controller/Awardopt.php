@@ -48,23 +48,13 @@ class Awardopt extends Controller
                 //$this->_in_bonus($vo['id'], $inUserID, 1, $get_money);   //！！！！！！！奖金处理需要更改
                 $state = $user->PointUpdate($re_id, -1, $res["bonus_point"]+$get_money, -1, $res["re_consume"]+ $get_money*0.1, 
                                 -1, -1, -1, -1,-1,$res["shengyu_dong"] - $get_money);
-                if($state)
-                    //echo "update success";
-                
+
                 //更新人/每天表，此处是直推奖
                 $positionOBJ=new Positionality();
                 $positionRES = $positionOBJ->PositionQuery($re_id);
                 $positionRES = $positionRES[0];
                 $awardday = new Award_daytime();
                 //changed by Gavin start model13
-                $_res_qibonus = $awardday->AwarddailyQuery($positionRES["user_id"]);
-                if(count($_res_qibonus) < 1)
-                    $awardday->AwarddailyInsert($positionRES["user_id"], $get_money);
-                else
-                {
-                    $_res_qibonus = $_res_qibonus[0];
-                    $awardday->AwarddailyUpdate($positionRES["user_id"], $_res_qibonus["direct"] + $get_money);
-                }
                 
                 //奖金明细，添加一天记录 
                 $paramOBJ = new External();
@@ -76,6 +66,15 @@ class Awardopt extends Controller
                 $ok_money = $this->_wei2($get_money - $shui-$jijin - $produceCX);//实际发放金额
                 $minfo = '实发（'.$ok_money.'）重消分（'.$produceCX.'）税收（'.$shui.'）基金（'.$jijin.'）。';
                 
+		        $_res_qibonus = $awardday->AwarddailyQuery($positionRES["user_id"]);
+                if(count($_res_qibonus) < 1)
+                    $awardday->AwarddailyInsert($positionRES["user_id"], $get_money, 0, 0, 0, 0, $get_money, $ok_money, $ok_money, $shui, $jijin, $produceCX, 0);
+                else
+                {
+                    $_res_qibonus = $_res_qibonus[0];
+                    $awardday->AwarddailyUpdate($positionRES["user_id"], $_res_qibonus["direct"] + $get_money, 0, 0, 0, 0, $_res_qibonus["sum"] + $get_money, $_res_qibonus["actualsalary"] + $ok_money, $_res_qibonus["bz0"] + $ok_money, $_res_qibonus["bz6"] + $shui, $_res_qibonus["bz7"] + $jijin, $_res_qibonus["bz8"] + $produceCX, 0);
+                }
+		
                 $award_record = new Award_record();
                 $_res_award_record = $award_record->AwardRecordInsert($re_id, "直推奖", $get_money, $inUserID, $minfo);
             }
@@ -151,34 +150,32 @@ class Awardopt extends Controller
            //echo "money:";
            //var_dump($_pointsRes[0]['bonus_point']);
            //update the user points table
-           $paramOBJ = new External();
-           $shui_bl = $paramOBJ->getParam("tax_proportion", -1, $ID);
-           $jijin_bl = $paramOBJ->getParam("foundation_proportion", -1, $ID);//cy_get_conf('bl_jijin');//1
-           $shui = $this->_wei2($get_money * $shui_bl / 100);//保留两位小数，税
-           $jijin = $this->_wei2($get_money * $jijin_bl / 100);//基金
-           $produceCX = $this->_wei2($get_money*0.1); //重复消费分
-           $ok_money = $this->_wei2($get_money - $shui-$jijin - $produceCX);//实际发放金额
-           $_res_points_set = $_points->PointUpdate($_userid, $_pointsRes[0]['shares'], $_pointsRes[0]['bonus_point'] + $ok_money, $_pointsRes[0]['regist_point'], $_pointsRes[0]['re_consume'] + $produceCX, 
-                                $_pointsRes[0]['universal_point'], $_pointsRes[0]['re_cast'], $_pointsRes[0]['remain_point'] - $get_money,-1,-1,$_pointsRes["shengyu_dong"] - $get_money);
+           //changed by Gavin start model15
+           if($get_money>0){
+	           $paramOBJ = new External();
+	           $shui_bl = $paramOBJ->getParam("tax_proportion", -1, $ID);
+	           $jijin_bl = $paramOBJ->getParam("foundation_proportion", -1, $ID);//cy_get_conf('bl_jijin');//1
+	           $shui = $this->_wei2($get_money * $shui_bl / 100);//保留两位小数，税
+	           $jijin = $this->_wei2($get_money * $jijin_bl / 100);//基金
+	           $produceCX = $this->_wei2($get_money*0.1); //重复消费分
+	           $ok_money = $this->_wei2($get_money - $shui-$jijin - $produceCX);//实际发放金额
+	           $_res_points_set = $_points->PointUpdate($_userid, $_pointsRes[0]['shares'], $_pointsRes[0]['bonus_point'] + $ok_money, $_pointsRes[0]['regist_point'], $_pointsRes[0]['re_consume'] + $produceCX, 
+	                                $_pointsRes[0]['universal_point'], $_pointsRes[0]['re_cast'], $_pointsRes[0]['remain_point'] - $get_money,-1,-1,$_pointsRes["shengyu_dong"] - $get_money);
            
-           //var_dump("point update failed");
-           //update the user daily points records table
+	           //var_dump("point update failed");
+	           //update the user daily points records table
            
                
-           $positionOBJ = new Positionality();
-           $positionRES = $positionOBJ->PositionQueryByID($ID);
-           $ID = $positionRES[0]["user_id"];
-           $_res_point_dayly = $_dayly_point->AwarddailyQuery($ID);
-           if(sizeof($_res_point_dayly) > 0)
-           {
-              //var_dump("inbonus Awardopt.php line:".__LINE__);
-              $_dayly_point->AwarddailyUpdate($ID, -1, -1, $_res_point_dayly[0]["balance"] +$get_money);
-              $this->_in_bonus($_userid, $inUserID, 3, $get_money);
-           }
-           else
-           {
-               //var_dump("inbonus Awardopt.php line:".__LINE__);
-               $res = $_dayly_point->AwarddailyInsert($ID, -1, -1, $get_money);
+	           $positionOBJ = new Positionality();
+	           $positionRES = $positionOBJ->PositionQueryByID($ID);
+	           $ID = $positionRES[0]["user_id"];
+	           $_res_point_dayly = $_dayly_point->AwarddailyQuery($ID);
+	           if(sizeof($_res_point_dayly) < 1)
+	           {
+		           //var_dump("inbonus Awardopt.php line:".__LINE__);
+		           $res = $_dayly_point->AwarddailyInsert($ID);
+		           //$this->_in_bonus($_userid, $inUserID, 3, $get_money);
+	           }
                $this->_in_bonus($_userid, $inUserID, 3, $get_money);
            }
         }
@@ -220,40 +217,36 @@ class Awardopt extends Controller
             if($get_money > 0){
                 $_res_points_set = $_points->PointUpdate($ganen_id, $_pointsRes[0]['shares'], $_pointsRes[0]['bonus_point'] + $ok_money, $_pointsRes[0]['regist_point'], $_pointsRes[0]['re_consume'] + $produceCX, 
                                 $_pointsRes[0]['universal_point'], $_pointsRes[0]['re_cast'], -1,-1,-1, $_pointsRes[0]['shengyu_dong'] - $get_money);
-                //changed by Gavin start model13
+                //changed by Gavin start model15
                 $_res_point_dayly = $_dayly_point->AwarddailyQuery($ganen_id_pos["user_id"]);
-                if(sizeof($_res_point_dayly) > 0)
+                if(sizeof($_res_point_dayly) < 1)
                 {
                    //var_dump("inbonus Awardopt.php line:".__LINE__);
-                   $_dayly_point->AwarddailyUpdate($ganen_id_pos["user_id"], -1, $_res_point_dayly[0]["balance"] +$get_money);
-                   $this->_in_bonus($ganen_id, $inUserID, 4, $get_money);
+                    $_dayly_point->AwarddailyInsert($ganen_id_pos["user_id"]);
+                   
                 }
-                else
-                {
-                   //var_dump("inbonus Awardopt.php line:".__LINE__);
-                   $_dayly_point->AwarddailyInsert($ganen_id_pos["user_id"], 0, $get_money);
-                   $this->_in_bonus($ganen_id, $inUserID, 4, $get_money);
-                }
+                //$_dayly_point->AwarddailyUpdate($ganen_id_pos["user_id"], -1, $_res_point_dayly[0]["balance"] +$get_money);
+                $this->_in_bonus($ganen_id, $inUserID, 4, $get_money);
+                
+                //changed by Gavin end model15
             }
         }
         if($ganen_r_id){
             if($get_money > 0){
                $_res_points_set = $_points->PointUpdate($ganen_r_id, $_pointsRes[0]['shares'], $_pointsRes[0]['bonus_point'] + $ok_money, $_pointsRes[0]['regist_point'], $_pointsRes[0]['re_consume'] + $produceCX, 
                                 $_pointsRes[0]['universal_point'], $_pointsRes[0]['re_cast'], -1,-1,-1, $_pointsRes[0]['shengyu_dong'] - $get_money);
-               //changed by Gavin start model13 
+               //changed by Gavin start model15 
                $_res_point_dayly = $_dayly_point->AwarddailyQuery($ganen_r_id_pos["user_id"]);
-                if(sizeof($_res_point_dayly) > 0)
+                if(sizeof($_res_point_dayly) < 1)
                 {
                     //var_dump("inbonus Awardopt.php line:".__LINE__);
-                    $_dayly_point->AwarddailyUpdate($ganen_r_id_pos["user_id"], -1, $_res_point_dayly[0]["balance"] +$get_money);
-                    $this->_in_bonus($ganen_r_id, $inUserID, 4, $get_money);
+                    $_dayly_point->AwarddailyInsert($ganen_r_id_pos["user_id"]);
+                    
                 }
-                else 
-                {
-                   //var_dump("inbonus Awardopt.php line:".__LINE__);
-                   $_dayly_point->AwarddailyInsert($ganen_r_id_pos["user_id"], 0, $get_money);
-                   $this->_in_bonus($ganen_r_id, $inUserID, 4, $get_money);
-                }
+                //$_dayly_point->AwarddailyUpdate($ganen_r_id_pos["user_id"], -1, $_res_point_dayly[0]["balance"] +$get_money);
+                $this->_in_bonus($ganen_r_id, $inUserID, 4, $get_money);
+                
+                //changed by Gavin end model15
             }
         }
          
@@ -642,6 +635,13 @@ class Awardopt extends Controller
     	        //changed by Gavin end model13
     	        if ($get_money > 0) {
     	            //var_dump("inbonus Awardopt.php line:".__LINE__);
+    	            //changed by Gavin start model15
+    	            $qibonus = new Award_daytime();
+    	            $_res_qibonus = $qibonus->AwarddailyQuery($myids);  
+    	             if(count($_res_qibonus) < 1) //如果当天记录不存在，则先插入一条记录，然后再在后面更新
+    	             {
+    	                   $qibonus->AwarddailyInsert($myids);
+    	             }
     	            $this->_in_bonus($myids, $inUserID, 2, $get_money);// 参数3等于2表示添加平衡奖，只有平衡对于积分的修改在in_bonus内部，其他的都在外面
     	            
     	            //辅导奖
@@ -693,17 +693,17 @@ class Awardopt extends Controller
 	        $detailRES = $detailRES[0];
 	        $dayID = $detailRES["AUTO_ID"];
 	        $_res_qibonus = $qibonus->AwarddailyQuery($dayID);
-	        
+	        //changed by Gavin start model15
 	        if(count($_res_qibonus) < 1)
 	        {
-	            $qibonus->AwarddailyInsert($dayID, 0, 0, 0, 0, $get_money);
+	            $qibonus->AwarddailyInsert($dayID);
 	        }
-            else
-            {
-                $_res_qibonus = $_res_qibonus[0];
-    	        //var_dump("Qibonus".$_res_qibonus["direct"]);
-    	        $qibonus->AwarddailyUpdate($dayID, -1, -1, -1, -1, -1, $_res_qibonus["sum"] + $get_money, -1, $_res_qibonus["bz0"]+$get_money);
-            }
+		$_res_qibonus = $qibonus->AwarddailyQuery($dayID);
+	        $_res_qibonus = $_res_qibonus[0];
+	        //var_dump("Qibonus".$_res_qibonus["direct"]);
+	        $qibonus->AwarddailyUpdate($dayID, -1, -1, -1, -1, -1, $_res_qibonus["sum"] + $get_money, 
+	    	$_res_qibonus["actualsalary"]+$get_money, $_res_qibonus["bz0"]+$get_money);
+           
 
 	        
 	        //$data['sum_jj_jingtai'] = array('exp','sum_jj_jingtai+'.$get_money);
@@ -738,7 +738,7 @@ class Awardopt extends Controller
 	        //unset($qibonus);
 	        
 	        
-		$_res_qibonus = $qibonus->AwarddailyQuery($myids);
+		    $_res_qibonus = $qibonus->AwarddailyQuery($myids);
 	        /*//这里不需要这一步
 		
 	        

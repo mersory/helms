@@ -31,20 +31,10 @@ class Adminopt extends Basecontroller
 {
     public function index()
     {
-        $_repath = ",";
-        $strArr =  explode(",",$_repath);
-        var_dump("count:".count($strArr));
         $member = new Positionality();
-        $frs = $member->getAllLegUser();
-        var_dump(gettype($frs));
-        var_dump("ID:".$frs[0]["ID"]);
-        $ids = array(1,2,3,4,5,6,7,8,9);
-        var_dump($ids);
-        
-        $ress = $member->updateGushuByArray($ids,2,1,1);
-        
-        $pointOBJ = new User_info();
-        $ress = $pointOBJ->UserApplicationWithLimit();
+
+        $ress = $member->updateGushuByArray(0,1);
+
         var_dump("ress:".$ress);
         /*
         $str = "hello";
@@ -803,6 +793,7 @@ class Adminopt extends Basecontroller
 	        //$this->error('ERROR : Adminopt.php on line:'.__LINE__);
 	    }
 	    $paramOBJ = new External();
+	    $ok = $member->updateGushuByArray(1, 0);
 	    $frs = $member->getAllLegUser();
 	    foreach($frs as $vo){
 	        //$ok = $member->where('id='.$vo['id'])->save($data6);
@@ -812,7 +803,7 @@ class Adminopt extends Basecontroller
 	        $gue = $gushu * $now_gujia;
 	        $curID = $vo['ID'];
 	        //var_dump("Adminopt.php line:".__LINE__."ID:".$curID."gue:".$gue."gushu:".$gushu);
-	        $ok = $member->updateGushu($curID, $gushu, $gue, $vo['cf_count'] + 1);
+	        
 	        $futouJine = $paramOBJ->getParam("register_total", $vo["status"], "") * $paramOBJ->getParam("share_proportion", $vo["status"], "") * 4 / 100;
 	        //var_dump("curID:".$curID."gue:".$gue."futoujine:".$futouJine);
 	        if($gue >= $futouJine)   //reg_money*配股比例*4
@@ -1674,15 +1665,14 @@ class Adminopt extends Basecontroller
             //更新所有会员的股额,获取所有有效用户，并剔除管理员，虚拟根节点
             $member = new Positionality();
             $paramOBJ = new External();
+            
             $frs = $member->getAllLegUser();//$member->where($map5)->field('id,user_id,gushu,bz5')->order('id ASC')->select();
             if(is_array($frs) && !empty($frs)){
-                
+                $ok = $member->updateGushuByArray(0, 1);
                 foreach($frs as $vo){
                     //var_dump($vo["ID"]);
                     $gue = $vo['gushu'] * $use_gujia;
                     $curID = $vo['ID'];
-                    //var_dump("Adminopt.php , line:".__LINE__."update bz5".$gue);
-                    $ok = $member->updateGushu($curID, $vo['gushu'],  $gue, 0);//$member->where($map6)->save($data5);
                     $futouJine = $paramOBJ->getParam("register_total", $vo["status"], "") * $paramOBJ->getParam("share_proportion", $vo["status"], "") * 4 /100;
                     //var_dump("futou 所需金额:".$futouJine);
                     if($gue >= $futouJine) //reg_money*配股比例*4
@@ -1713,7 +1703,7 @@ class Adminopt extends Basecontroller
 	        return json_encode($res);
 	    }
 	    
-            $res["success"] = true;
+        $res["success"] = true;
 	    return json_encode($res);
 	}
 	
