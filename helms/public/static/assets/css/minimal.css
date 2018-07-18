@@ -61,7 +61,7 @@ body.modal-open {
 body.bg-1 {
 	background-image: url(../images/noise.png),
 		url(../images/backgrounds/1.jpg);
-	background-repeat: repeat, no-repeat;
+	background-repeat: repeat;
 	background-position: left top;
 	background-size: auto, cover;
 }
@@ -69,7 +69,7 @@ body.bg-1 {
 body.bg-2 {
 	background-image: url(../images/noise.png),
 		url(../images/backgrounds/2.jpg);
-	background-repeat: repeat, no-repeat;
+	background-repeat: repeat;
 	background-position: left top;
 	background-size: auto, cover;
 }
@@ -77,7 +77,7 @@ body.bg-2 {
 body.bg-3 {
 	background-image: url(../images/noise.png),
 		url(../images/backgrounds/3.jpg);
-	background-repeat: repeat, no-repeat;
+	background-repeat: repeat;
 	background-position: left top;
 	background-size: auto, cover;
 }
@@ -85,7 +85,7 @@ body.bg-3 {
 body.bg-4 {
 	background-image: url(../images/noise.png),
 		url(../images/backgrounds/4.jpg);
-	background-repeat: repeat, no-repeat;
+	background-repeat: repeat;
 	background-position: left top;
 	background-size: auto, cover;
 }
@@ -93,7 +93,7 @@ body.bg-4 {
 body.bg-5 {
 	background-image: url(../images/noise.png),
 		url(../images/backgrounds/5.jpg);
-	background-repeat: repeat, no-repeat;
+	background-repeat: repeat;
 	background-position: left top;
 	background-size: auto, cover;
 }
@@ -101,7 +101,7 @@ body.bg-5 {
 body.bg-6 {
 	background-image: url(../images/noise.png),
 		url(../images/backgrounds/6.jpg);
-	background-repeat: repeat, no-repeat;
+	background-repeat: repeat;
 	background-position: left top;
 	background-size: auto, cover;
 }
@@ -14248,11 +14248,18 @@ table tbody.files>tr>td .preview canvas, table tbody.files>tr>td .preview img
 	.superbox-list, .colorbox-list {
 		width: 100%;
 	}
+	
+	.tile.color.transparent-white .title-body{
+		height:auto;
+	}
 }
 
 @media only screen and (min-width: 680px) {
 	.superbox-list, .colorbox-list {
 		width: 47.8%;
+	}
+	.tile.color.transparent-white .title-body{
+		height:auto;
 	}
 }
 
@@ -14260,11 +14267,17 @@ table tbody.files>tr>td .preview canvas, table tbody.files>tr>td .preview img
 	.superbox-list, .colorbox-list {
 		width: 31.8%;
 	}
+	.tile.color.transparent-white .title-body{
+		height:100px;
+	}
 }
 
 @media only screen and (min-width: 1360px) {
 	.superbox-list, .colorbox-list {
 		width: 23.8%;
+	}
+	.tile.color.transparent-white .title-body{
+		height:100px;
 	}
 }
 
@@ -14272,11 +14285,17 @@ table tbody.files>tr>td .preview canvas, table tbody.files>tr>td .preview img
 	.superbox-list, .colorbox-list {
 		width: 19%;
 	}
+	.tile.color.transparent-white .title-body{
+		height:100px;
+	}
 }
 
 @media only screen and (min-width: 1900px) {
 	.superbox-list, .colorbox-list {
 		width: 15.85%;
+	}
+	.tile.color.transparent-white .title-body{
+		height:100px;
 	}
 }
 /************************************/

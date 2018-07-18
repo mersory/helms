@@ -9,7 +9,8 @@ class Store_area_fee extends Model
      * 根据所在区域运费
      */
     public function StoreAreaFeeByAreaQuery($province,$city,$area){
-        $sql = "select * from helms_store_area_fee where area_id in('$province','$province$city','$province$city$area') order by LENGTH(area_id) desc limit 1";
+        $sql = "select * from helms_store_area_fee af left join helms_store_province sp on af.area_id = sp.province_id where province in('$province','$province$city','$province$city$area') order by LENGTH(area_id) desc limit 1";
+        
         $res = $this->query($sql);
         return $res;   
     }

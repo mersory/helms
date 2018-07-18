@@ -57,6 +57,24 @@ $(function(){
 	
 	//省级联
 	$("select[name='receiver_province']").on("change",function(){
+		var addressId = $("input[name='radio_cds']").val();
+		var province = $("select[name='receiver_province'] option:selected").val();
+		var city = $("select[name='receiver_city'] option:selected").val();
+		var area = $("select[name='receiver_area'] option:selected").val();
+		
+		if("new" == addressId &&"" != province){
+			$.post("/public/index.php/frontend/store/getShippingFee", {
+				addressId : addressId,
+				province:province,
+				city:city,
+				area:area
+			}, function(result) {
+				result = JSON.parse(result);
+				$(".shipping-fee").html(result.shippingFee);
+				$(".summary-total").html(parseFloat($(".product-total").text())+parseFloat(result.shippingFee));
+			});
+		}
+		
 		if(""!=$(this).find("option:selected").val()){
 			var provinceId = $(this).find("option:selected").val();
 			$.post("/public/index.php/frontend/store/getCityByProvince", {
@@ -79,6 +97,24 @@ $(function(){
 	
 		//市级联
 	$("select[name='receiver_city']").on("change",function(){
+		var addressId = $("input[name='radio_cds']").val();
+		var province = $("select[name='receiver_province'] option:selected").val();
+		var city = $("select[name='receiver_city'] option:selected").val();
+		var area = $("select[name='receiver_area'] option:selected").val();
+		
+		if("new" == addressId &&"" != province){
+			$.post("/public/index.php/frontend/store/getShippingFee", {
+				addressId : addressId,
+				province:province,
+				city:city,
+				area:area
+			}, function(result) {
+				result = JSON.parse(result);
+				$(".shipping-fee").html(result.shippingFee);
+				$(".summary-total").html(parseFloat($(".product-total").text())+parseFloat(result.shippingFee));
+			});
+		}
+		
 		if(""!=$(this).find("option:selected").val()){
 			var cityId = $(this).find("option:selected").val();
 			$.post("/public/index.php/frontend/store/getAreaByCity", {
@@ -102,7 +138,7 @@ $(function(){
 		var city = $("select[name='receiver_city'] option:selected").val();
 		var area = $("select[name='receiver_area'] option:selected").val();
 		
-		if(("new" == addressId &&"" != province && "" != city && "" != area) || "new" != addressId){
+		if("new" == addressId &&"" != province){
 			$.post("/public/index.php/frontend/store/getShippingFee", {
 				addressId : addressId,
 				province:province,

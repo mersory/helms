@@ -97,6 +97,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     width: 45%;
     float: left;
 }
+.items .item img{
+	max-width:130px;
+}
+
 .quantity1, .quantity2, .quantity3 {
     width: 15%;
     float: left;
