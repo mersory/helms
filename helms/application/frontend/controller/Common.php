@@ -526,7 +526,7 @@ class Common extends Basecontroller
         $_resdata = array();
         $_resdata["info"] = "no";
 
-        var_dump("fassfa");
+        
         $_user = new Historical_price();
         $_res = $_user->HistoricalpriceQueryByTiem($from, $to);        
         $_tmp = array();
