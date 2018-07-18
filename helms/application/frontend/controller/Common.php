@@ -489,6 +489,8 @@ class Common extends Basecontroller
                     $_resdata["shares"] = $_res[0]["shares"];
                     $_resdata["bonus_point"] = $_res[0]["bonus_point"];
                     $_resdata["regist_point"] = $_res[0]["regist_point"];
+                    $_resdata["re_consume"] = $_res[0]["re_consume"];
+                    $_resdata["universal_point"] = $_res[0]["universal_point"];
                 }
                 
                 $_resdata["type"] = $type;

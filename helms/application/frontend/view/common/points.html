@@ -38,7 +38,14 @@
 
 					<!-- tile widget -->
 					<div class="tile-widget">
-						<span>当前余额</span> <span>500</span>
+						<span>当前余额</span> 
+						<span>
+							{if condition="$pass_data['type'] == 'universal'"}{$pass_data['universal_point']} {/if}
+							{if condition="$pass_data['type'] == 'bonus'"}{$pass_data['bonus_point']}{/if}
+							{if condition="$pass_data['type'] == 'regist'"}{$pass_data['regist_point']}{/if}
+							{if condition="$pass_data['type'] == 'consume'"}{$pass_data['re_consume']}{/if}
+						
+						</span>
 					</div>
 					{if condition="$pass_data['type'] == 'universal' or $pass_data['type'] == 'bonus'"}
 					<div class="tile-widget">

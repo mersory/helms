@@ -181,7 +181,7 @@ class User_point extends Model
                ->setField($_pointinfo);
 
                $point_transfor = new Point_transform_record();
-               $point_transfor->PointTransformInsert($user_id, $pointtype[$point_type], $pointtype[$point_change_type], $point_change_sum);
+               $point_transfor->PointTransformInsert($user_id, $point_type, $point_change_type, $point_change_sum);
            }
         }
         return true;
