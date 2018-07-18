@@ -74,7 +74,7 @@ class Awardopt extends Controller
                 else
                 {
                     $_res_qibonus = $_res_qibonus[0];
-                    $awardday->AwarddailyUpdate($positionRES["user_id"], $_res_qibonus["direct"] + $get_money, 0, 0, 0, 0, $_res_qibonus["sum"] + $get_money, $_res_qibonus["actualsalary"] + $ok_money, $_res_qibonus["bz0"] + $ok_money, $_res_qibonus["bz6"] + $shui, $_res_qibonus["bz7"] + $jijin, $_res_qibonus["bz8"] + $produceCX, 0);
+                    $awardday->AwarddailyUpdate($positionRES["user_id"], $_res_qibonus["direct"] + $get_money, -1, -1, -1, -1, $_res_qibonus["sum"] + $get_money, $_res_qibonus["actualsalary"] + $ok_money, $_res_qibonus["bz0"] + $ok_money, $_res_qibonus["bz6"] + $shui, $_res_qibonus["bz7"] + $jijin, $_res_qibonus["bz8"] + $produceCX, 0);
                 }
 		
                 $award_record = new Award_record();
@@ -703,7 +703,7 @@ class Awardopt extends Controller
 		$_res_qibonus = $qibonus->AwarddailyQuery($dayID);
 	        $_res_qibonus = $_res_qibonus[0];
 	        //var_dump("Qibonus".$_res_qibonus["direct"]);
-	        $qibonus->AwarddailyUpdate($dayID, -1, -1, -1, -1, $get_money, $_res_qibonus["sum"] + $get_money, 
+	        $qibonus->AwarddailyUpdate($dayID, -1, -1, -1, -1, $_res_qibonus["staticbonus"] + $get_money, $_res_qibonus["sum"] + $get_money, 
 	    	$_res_qibonus["actualsalary"]+$get_money, $_res_qibonus["bz0"]+$get_money);
            
 

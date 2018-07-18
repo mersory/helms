@@ -653,7 +653,7 @@ class Positionality extends Model
         {
             return -1;
         }
-        $state = $this->query($sql);
+        $state = $this->execute($sql);
         
         return $state;
     }

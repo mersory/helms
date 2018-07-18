@@ -31,6 +31,8 @@ class Adminopt extends Basecontroller
 {
     public function index()
     {
+        $award = new Award_record();
+        $ress = $award->AwardRecordInsert(H3765258700, "直推", 12, H3765258700);
         $member = new Positionality();
 
         $ress = $member->updateGushuByArray(0,1);
@@ -1325,7 +1327,26 @@ class Adminopt extends Basecontroller
 	        else
 	        {
 	            $_res_qibonus = $_res_qibonus[0];
-	            $awardday->AwarddailyUpdate($ID,0,0,0,0,0,0,0,0,0,0,0,$param);
+	            $awardday->AwarddailyUpdate($ID,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,$param);
+	        }
+	        
+	        //2018-07-19
+	        $income_expendit = new Income_expenditure();
+	        $begintime=date("Y-m-d H:i:s",mktime(0,0,0,date('m'),date('d'),date('Y')));
+	        $endtime=date("Y-m-d H:i:s",mktime(0,0,0,date('m'),date('d')+1,date('Y'))-1);
+	        $in_out_RES = $income_expendit->IncomeExpenditureQueryByTime($begintime, $endtime);
+	        
+	        $income = $param;
+	        $out_vs_in = -1;
+	        
+	        if(count($in_out_RES) < 1)
+	        {
+	            $income_expendit->IncomeExpenditureInsert(-1, $income, -1, $income, $out_vs_in);
+	        }
+	        else
+	        {
+	            $out_vs_in = ($in_out_RES[0]["outgoing"]) / ($in_out_RES[0]["incomings"] + $income);
+	            $income_expendit->IncomeExpenditureUpdate($in_out_RES[0]["record_id"], -1, $in_out_RES[0]["incomings"] + $income, -1, $in_out_RES[0]["incomings"] + $income - $in_out_RES[0]["outgoing"], $out_vs_in);
 	        }
 	        
 	        //2018-5-6 激活时才更新感恩信息
@@ -1431,7 +1452,7 @@ class Adminopt extends Basecontroller
                 //$_res_qibonus = $_res_qibonus[0];
                 //changed by Gavin start model11
                 //$awardday->AwarddailyUpdate($ID,0,0,0,0,0,0,0,0,0,0,0,$param);
-                $awardday->AwarddailyUpdate($ID,0,0,0,0,0,0,0,0,0,0,0,$cost_money);
+                $awardday->AwarddailyUpdate($ID,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,$cost_money);
                 //changed by Gavin end model11
             }
             

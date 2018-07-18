@@ -95,6 +95,49 @@ class Award_record extends Model
         
         $state = $this->save($_record);
         
+        //2018-07-19
+        $income_expendit = new Income_expenditure();
+        $begintime=date("Y-m-d H:i:s",mktime(0,0,0,date('m'),date('d'),date('Y')));
+        $endtime=date("Y-m-d H:i:s",mktime(0,0,0,date('m'),date('d')+1,date('Y'))-1);
+        $in_out_RES = $income_expendit->IncomeExpenditureQueryByTime($begintime, $endtime);
+        
+        $out = $money;
+        $out_vs_in = -1;
+        
+        if(count($in_out_RES) < 1)
+        {
+            $income_expendit->IncomeExpenditureInsert(-1, -1, $out, -$out, $out_vs_in);
+        }
+        else 
+        {
+            if($in_out_RES[0]["incomings"] != 0)
+            {
+                $out_vs_in = ($in_out_RES[0]["outgoing"] + $out)/$in_out_RES[0]["incomings"];
+            }
+            $income_expendit->IncomeExpenditureUpdate($in_out_RES[0]["record_id"], -1, -1, $in_out_RES[0]["outgoing"] + $out, $in_out_RES[0]["incomings"]-($in_out_RES[0]["outgoing"]+$out), $out_vs_in);
+        }
+
+        
+        
+//         $income_expendit = new Income_expenditure();
+//         $begintime=date("Y-m-d H:i:s",mktime(0,0,0,date('m'),date('d'),date('Y')));
+//         $endtime=date("Y-m-d H:i:s",mktime(0,0,0,date('m'),date('d')+1,date('Y'))-1);
+//         $in_out_RES = $income_expendit->IncomeExpenditureQueryByTime($begintime, $endtime);
+         
+//         $income = $money;
+//         $out_vs_in = -1;
+         
+//         if(count($in_out_RES) < 1)
+//         {
+//             $income_expendit->IncomeExpenditureInsert(-1, $income, -1, $income, $out_vs_in);
+//         }
+//         else
+//         {
+//             $out_vs_in = ($in_out_RES[0]["outgoing"]) / ($in_out_RES[0]["incomings"] + $income);
+//             $income_expendit->IncomeExpenditureUpdate($in_out_RES[0]["record_id"], -1, $in_out_RES[0]["incomings"] + $income, -1, $in_out_RES[0]["incomings"] + $income-$in_out_RES[0]["outgoing"], $out_vs_in);
+//         }
+         
+
         return $state;
     }
     

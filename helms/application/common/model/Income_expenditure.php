@@ -33,25 +33,25 @@ class Income_expenditure extends Model
         $_where = '';
         if (strcmp("$_start", "") )
         {
-            $_where = "count_time > '$_start'";   //���ﲻҪ=���ţ���Ϊ�������ݿ��е�ID����int����
+            $_where = "count_time >= '$_start'";   //���ﲻҪ=���ţ���Ϊ�������ݿ��е�ID����int����
         }
         else
         {
-            $_where = "count_time > '1970-01-01 00:00:00'";
+            $_where = "count_time >= '1970-01-01 00:00:00'";
         }
         if (strcmp("$_end", "") )
         {
-            $_where = "$_where and count_time < '$_end'";//������Ҫ�������
+            $_where = "$_where and count_time <= '$_end'";//������Ҫ�������
         }
         if (strcmp("$_where", ""))
         {
             $res = $this->where($_where)
-                        ->field( 'user_id, deal_count, current_profit, count_time, comment')
+                        ->field( 'record_id, user_id, outgoing, incomings, deal_count, current_profit, count_time, comment')
                         ->select();
         }
         else
         {
-            $res = $this->field( 'user_id, deal_count, current_profit, count_time')
+            $res = $this->field( 'record_id, user_id, outgoing, incomings, deal_count, current_profit, count_time, comment')
                         ->select();
         }
         return $res;
@@ -152,7 +152,7 @@ class Income_expenditure extends Model
             $_inandoutinfo["outgoing"] = $outgoing;
         }
     
-        if ($current_profit >=0)
+        if ($current_profit != -999999)
         {
             $_inandoutinfo["current_profit"] = $current_profit;//һ������ֻ��Ϊ0����ʾ�����ύ����û���
         }
@@ -160,7 +160,8 @@ class Income_expenditure extends Model
         {
             $_inandoutinfo["out_contrast_in"] = $out_contrast_in;
         }
-        $_inandoutinfo["count_time"] = date("Y-m-d H:i:s");
+        $endtime=date("Y-m-d H:i:s",mktime(0,0,0,date('m'),date('d')+1,date('Y'))-1);
+        $_inandoutinfo["count_time"] = $endtime;
         
         $state = $this->save($_inandoutinfo);
         
@@ -185,7 +186,7 @@ class Income_expenditure extends Model
             $_inandoutinfo["outgoing"] = $outgoing;
         }
     
-        if ($current_profit >=0)
+        if ($current_profit != -999999)
         {
             $_inandoutinfo["current_profit"] = $current_profit;//һ������ֻ��Ϊ0����ʾ�����ύ����û���
         }
@@ -193,7 +194,7 @@ class Income_expenditure extends Model
         {
             $_inandoutinfo["out_contrast_in"] = $out_contrast_in;
         }
-        $_inandoutinfo["count_time"] = date("Y-m-d H:i:s");
+
         $state = $this-> where("record_id=$record_id")
         ->setField($_inandoutinfo);
         return $state;
