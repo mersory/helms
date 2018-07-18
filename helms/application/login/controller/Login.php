@@ -111,7 +111,7 @@ class Login extends Controller
                 $_password = md5($_password."hermes");
                 $_user = new User_info();
                 $_res = $_user->UserinfoQuery($_username, $_password);
-                if (count($_res) == 1 && $_res[0]["user_status"] != 0)
+                if (count($_res) == 1 && $_res[0]["user_status"] != 0 && $_res[0]["user_status"] != -1)
                 {
                     $_resdata["success"] = true;
                     $_session_user = array();
@@ -154,10 +154,14 @@ class Login extends Controller
                 {
                     $_resdata["error"] = 1;
                     $_resdata["success"] = false;
+                } else if(count($_res) == 1 && $_res[0]["user_status"] == -1)
+                {
+                    $_resdata["error"] = 2;
+                    $_resdata["success"] = false;
                 }
                 else
                 {
-                    $_resdata["error"] = 2;
+                    $_resdata["error"] = 3;
                     $_resdata["success"] = false;
                 }
             }

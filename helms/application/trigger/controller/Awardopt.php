@@ -46,8 +46,7 @@ class Awardopt extends Controller
             if ($get_money > 0) {
                 //var_dump("re_id:".$re_id."|bonus:".$res["bonus_point"]."getmoney:".$get_money);
                 //$this->_in_bonus($vo['id'], $inUserID, 1, $get_money);   //！！！！！！！奖金处理需要更改
-                $state = $user->PointUpdate($re_id, -1, $res["bonus_point"]+$get_money, -1, $res["re_consume"]+ $get_money*0.1, 
-                                -1, -1, -1, -1,-1,$res["shengyu_dong"] - $get_money);
+                
 
                 //更新人/每天表，此处是直推奖
                 $positionOBJ=new Positionality();
@@ -65,6 +64,9 @@ class Awardopt extends Controller
                 $produceCX = $this->_wei2($get_money*0.1); //重复消费分
                 $ok_money = $this->_wei2($get_money - $shui-$jijin - $produceCX);//实际发放金额
                 $minfo = '实发（'.$ok_money.'）重消分（'.$produceCX.'）税收（'.$shui.'）基金（'.$jijin.'）。';
+                
+                $state = $user->PointUpdate($re_id, -1, $res["bonus_point"]+$ok_money, -1, $res["re_consume"]+ $get_money*0.1,
+                    -1, -1, -1, -1,-1,$res["shengyu_dong"] - $get_money);
                 
 		        $_res_qibonus = $awardday->AwarddailyQuery($positionRES["user_id"]);
                 if(count($_res_qibonus) < 1)
@@ -701,7 +703,7 @@ class Awardopt extends Controller
 		$_res_qibonus = $qibonus->AwarddailyQuery($dayID);
 	        $_res_qibonus = $_res_qibonus[0];
 	        //var_dump("Qibonus".$_res_qibonus["direct"]);
-	        $qibonus->AwarddailyUpdate($dayID, -1, -1, -1, -1, -1, $_res_qibonus["sum"] + $get_money, 
+	        $qibonus->AwarddailyUpdate($dayID, -1, -1, -1, -1, $get_money, $_res_qibonus["sum"] + $get_money, 
 	    	$_res_qibonus["actualsalary"]+$get_money, $_res_qibonus["bz0"]+$get_money);
            
 
@@ -789,9 +791,9 @@ class Awardopt extends Controller
                 $_res_qibonus[0]["appreciation"] = -1;
             
             $qibonus->AwarddailyUpdate($myids, $_res_qibonus[0]["direct"], $_res_qibonus[0]["balance"], $_res_qibonus[0]["tutor"],
-            $_res_qibonus[0]["appreciation"], $_res_qibonus[0]["staticbonus"], $_res_qibonus[0]["sum"] + $get_money, -1, $_res_qibonus[0]["bz0"]+$ok_money,
+            $_res_qibonus[0]["appreciation"], -1, $_res_qibonus[0]["sum"] + $get_money, $_res_qibonus[0]["actualsalary"] + $ok_money, $_res_qibonus[0]["bz0"]+$ok_money,
             $_res_qibonus[0]["bz6"]+$shui, $_res_qibonus[0]["bz7"]+$jijin, $_res_qibonus[0]["bz8"]+$produceCX);
-             
+            
             /*zly 这部分是针对对碰产生奖励的逻辑，这部分是更新整个产生对碰奖的一系列的用户
              $data = array();
              $data['bz1'] = array('exp', 'bz1+'.$ok_money);

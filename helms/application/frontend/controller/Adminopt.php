@@ -1041,7 +1041,7 @@ class Adminopt extends Basecontroller
 	        } 
 	        else
 	        {
-	            $qibonus->AwarddailyInsert($myids, 0, 0, 0, 0, $get_money, $get_money, $get_money);
+	            $qibonus->AwarddailyInsert($myids, 0, 0, 0, 0, $get_money, $get_money, $get_money, $get_money);
 	        }
 	        //添加奖金纪录
 	        $award_record = new Award_record();
@@ -1321,7 +1321,7 @@ class Adminopt extends Basecontroller
 	        $awardday = new Award_daytime();
 	        $_res_qibonus = $awardday->AwarddailyQuery($ID);
 	        if(count($_res_qibonus) < 1)
-	            $awardday->AwarddailyInsert($ID,0,0,0,0,0,0,0,$param);
+	            $awardday->AwarddailyInsert($ID,0,0,0,0,0,0,0,0,0,0,0,$param);
 	        else
 	        {
 	            $_res_qibonus = $_res_qibonus[0];
@@ -1425,7 +1425,7 @@ class Adminopt extends Basecontroller
 	        $awardday = new Award_daytime();
 	        $_res_qibonus = $awardday->AwarddailyQuery($ID);
 	        if(count($_res_qibonus) < 1)
-	            $awardday->AwarddailyInsert($ID,0,0,0,0,0,0,0,$cost_money);
+	            $awardday->AwarddailyInsert($ID,0,0,0,0,0,0,0,0,0,0,0,$cost_money);
             else
             {
                 //$_res_qibonus = $_res_qibonus[0];

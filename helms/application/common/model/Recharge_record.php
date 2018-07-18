@@ -56,7 +56,7 @@ class Recharge_record extends Model
             return $_recharge;
     }
     
-    public function RechargeInsert($user_id, $cz_money=-1, $cz_type=-1, $content=-1, $status=-1, $real_name=-1, $cz_instruction=-1, $czyt_type=-1)
+    public function RechargeInsert($user_id, $cz_money=0, $cz_type=-1, $content=-1, $status=-1, $real_name=-1, $cz_instruction=-1, $czyt_type=-1)
     {
         //var_dump("updateJiangjin");
         $_session_user = Session::get(USER_SEESION);
@@ -70,11 +70,11 @@ class Recharge_record extends Model
                 $_rechargeinfo["user_id"] = $user_id;
             }
             
-            if ($cz_money > -1)
+            if ($cz_money != 0)
             {
                 $_rechargeinfo["cz_money"] = $cz_money;
             }
-            if ($cz_money > -1)
+            if ($cz_money != 0)
             {
                 $_rechargeinfo["hk_money"] = $cz_money;
             }

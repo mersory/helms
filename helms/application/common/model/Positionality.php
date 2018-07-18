@@ -647,7 +647,7 @@ class Positionality extends Model
         }
         else if($is_zj != 0 && $is_cf == 0)
         {
-            $sql = "update `helms_positionality` set bz5 = gushu*'$current_price' where status != 0 and status != -1 and ID != 1";
+            $sql = "update `helms_positionality` set bz5 = gushu*$current_price where status != 0 and status != -1 and ID != 1";
         }
         else 
         {

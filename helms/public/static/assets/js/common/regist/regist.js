@@ -11,8 +11,16 @@ $(function(){
 	$("#product option[value='"+$("#level option:selected").val()+"']").show();
 	
 	$("#level").on("change",function(){
-		$("#product option").hide();
-		$("#product option[value='"+$("#level option:selected").val()+"']").show();
+		var i = $("#level option:selected").val();
+		if(i == 1){
+			$("#product option").hide();
+			$("#product option[value='1']").show();
+		}else if(i==2){
+			$("#product option").hide();
+			$("#product option[value='2']").show();
+			$("#product option[value='3']").show();
+			$("#product option[value='4']").show();
+		}
 	})
 	
 	$('#regist').on("click",function(){

@@ -38,6 +38,8 @@ $(function(){
 				 if(result.error == 1)
 					 showError("用户尚未激活，请及时激活！");	 
 				 else if(result.error == 2)
+					 showError("用户已被锁定，请联系管理员解锁");
+				 else if(result.error == 3)
 					 showError("用户名和密码不正确，请重新登录");	 
 				 return false;
 			 }

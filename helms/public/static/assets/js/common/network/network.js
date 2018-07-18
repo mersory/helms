@@ -14,7 +14,7 @@ $(function() {
 							$.post(urlres,{id:parentId},function(result){
 								result = JSON.parse(result);
 							if(result.success == 1){
-								var url = "/public/index.php/frontend/Useropt/RegistIndex?parentId=" + parentId+"&position=left";
+								var url = "/public/index.php/frontend/Useropt/registindex?parentId=" + parentId+"&position=left";
 								//window.open(url);
 								//changed by Gavin start
 								window.location.href=url;
