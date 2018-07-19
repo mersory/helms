@@ -94,7 +94,8 @@ class Award_record extends Model
             $_record["comment"] = $comment;
         
         $state = $this->save($_record);
-        
+        var_dump("Award_record.php 97| ID:".$id);
+        var_dump("Award_record.php 98| array:".$_record);
         //2018-07-19
         $income_expendit = new Income_expenditure();
         $begintime=date("Y-m-d H:i:s",mktime(0,0,0,date('m'),date('d'),date('Y')));
@@ -103,7 +104,7 @@ class Award_record extends Model
         
         $out = $money;
         $out_vs_in = -1;
-        
+        //changed by Gavin start model17
         if(count($in_out_RES) < 1)
         {
             $income_expendit->IncomeExpenditureInsert(-1, -1, $out, -$out, $out_vs_in);
@@ -112,11 +113,11 @@ class Award_record extends Model
         {
             if($in_out_RES[0]["incomings"] != 0)
             {
-                $out_vs_in = ($in_out_RES[0]["outgoing"] + $out)/$in_out_RES[0]["incomings"];
+                $out_vs_in = ($in_out_RES[0]["outgoing"] + $out)/$in_out_RES[0]["incomings"]*100;
             }
             $income_expendit->IncomeExpenditureUpdate($in_out_RES[0]["record_id"], -1, -1, $in_out_RES[0]["outgoing"] + $out, $in_out_RES[0]["incomings"]-($in_out_RES[0]["outgoing"]+$out), $out_vs_in);
         }
-
+        //changed by Gavin end model17
         
         
 //         $income_expendit = new Income_expenditure();

@@ -43,15 +43,17 @@ class Awardopt extends Controller
             //calculate real money as awards
             $get_money = ($res["shengyu_dong"] - $get_money)<0 ? $res['shengyu_dong']:$get_money;
             //update relative data to database
-            if ($get_money > 0) {
+            //changed by Gavin start model18
+            $positionOBJ=new Positionality();
+            $positionRES = $positionOBJ->PositionQuery($re_id);
+            $positionRES = $positionRES[0];
+            if ($get_money > 0 && $positionRES['status']!=-1) {
                 //var_dump("re_id:".$re_id."|bonus:".$res["bonus_point"]."getmoney:".$get_money);
                 //$this->_in_bonus($vo['id'], $inUserID, 1, $get_money);   //！！！！！！！奖金处理需要更改
                 
 
                 //更新人/每天表，此处是直推奖
-                $positionOBJ=new Positionality();
-                $positionRES = $positionOBJ->PositionQuery($re_id);
-                $positionRES = $positionRES[0];
+                //changed by Gaivn end model18
                 $awardday = new Award_daytime();
                 //changed by Gavin start model13
                 
@@ -152,8 +154,11 @@ class Awardopt extends Controller
            //echo "money:";
            //var_dump($_pointsRes[0]['bonus_point']);
            //update the user points table
-           //changed by Gavin start model15
-           if($get_money>0){
+           //changed by Gavin start model18
+           $positionOBJ = new Positionality();
+           $positionRES = $positionOBJ->PositionQueryByID($ID);
+           $ID = $positionRES[0]["user_id"];
+           if($get_money>0 && $positionRES[0]['status'] !=-1){
 	           $paramOBJ = new External();
 	           $shui_bl = $paramOBJ->getParam("tax_proportion", -1, $ID);
 	           $jijin_bl = $paramOBJ->getParam("foundation_proportion", -1, $ID);//cy_get_conf('bl_jijin');//1
@@ -168,11 +173,9 @@ class Awardopt extends Controller
 	           //update the user daily points records table
            
                
-	           $positionOBJ = new Positionality();
-	           $positionRES = $positionOBJ->PositionQueryByID($ID);
-	           $ID = $positionRES[0]["user_id"];
+	           //changed by Gavin end model18
 	           $_res_point_dayly = $_dayly_point->AwarddailyQuery($ID);
-	           if(sizeof($_res_point_dayly) < 1)
+	           if(count($_res_point_dayly) < 1)
 	           {
 		           //var_dump("inbonus Awardopt.php line:".__LINE__);
 		           $res = $_dayly_point->AwarddailyInsert($ID);
@@ -192,36 +195,36 @@ class Awardopt extends Controller
         $_res= $position->PositionQuery($inUserID);
         //var_dump($_res[0]['json']);
         $paramOBJ= new External();
-        $jj = $paramOBJ->getParam("ganen_proportion", -1, $ganen_id );
-        $get_money = $pingheng_money * $jj / 100;
-        if($ganen_id)
-            $_pointsRes = $_points->PointQuery($ganen_id);
-        else 
-            $_pointsRes = $_points->PointQuery($ganen_r_id);
-        $get_money = ($_pointsRes[0]['shengyu_dong'] - $get_money)<0 ? $_pointsRes[0]['shengyu_dong']:$get_money;
-        //var_dump($get_money);
-        $paramOBJ = new External();
-        $shui_bl = $paramOBJ->getParam("tax_proportion", -1, $ganen_id);
-        $jijin_bl = $paramOBJ->getParam("foundation_proportion", -1, $ganen_id);//cy_get_conf('bl_jijin');//1
-        $shui = $this->_wei2($get_money * $shui_bl / 100);//保留两位小数，税
-        $jijin = $this->_wei2($get_money * $jijin_bl / 100);//基金
-        $produceCX = $this->_wei2($get_money*0.1); //重复消费分
-        $ok_money = $this->_wei2($get_money - $shui-$jijin - $produceCX);//实际发放金额
         
         $ganen_id_pos = $position->PositionQuery($ganen_id);
         $ganen_id_pos = $ganen_id_pos[0];
         
         $ganen_r_id_pos = $position->PositionQuery($ganen_r_id);
         $ganen_r_id_pos = $ganen_r_id_pos[0];
-        
-        if($ganen_id){
+        //changed by Gavin start model18
+        if($ganen_id && $ganen_id_pos['status']!=-1){
+            //changed by Gavin end model18
             //echo "point search:";
+            $jj = $paramOBJ->getParam("ganen_proportion", -1, $ganen_id );
+            $get_money = $pingheng_money * $jj / 100;
+            
+            $_pointsRes = $_points->PointQuery($ganen_id);         
+                
+            $get_money = ($_pointsRes[0]['shengyu_dong'] - $get_money)<0 ? $_pointsRes[0]['shengyu_dong']:$get_money;
+            //var_dump($get_money);
+            $paramOBJ = new External();
+            $shui_bl = $paramOBJ->getParam("tax_proportion", -1, $ganen_id);
+            $jijin_bl = $paramOBJ->getParam("foundation_proportion", -1, $ganen_id);//cy_get_conf('bl_jijin');//1
+            $shui = $this->_wei2($get_money * $shui_bl / 100);//保留两位小数，税
+            $jijin = $this->_wei2($get_money * $jijin_bl / 100);//基金
+            $produceCX = $this->_wei2($get_money*0.1); //重复消费分
+            $ok_money = $this->_wei2($get_money - $shui-$jijin - $produceCX);//实际发放金额
             if($get_money > 0){
                 $_res_points_set = $_points->PointUpdate($ganen_id, $_pointsRes[0]['shares'], $_pointsRes[0]['bonus_point'] + $ok_money, $_pointsRes[0]['regist_point'], $_pointsRes[0]['re_consume'] + $produceCX, 
                                 $_pointsRes[0]['universal_point'], $_pointsRes[0]['re_cast'], -1,-1,-1, $_pointsRes[0]['shengyu_dong'] - $get_money);
                 //changed by Gavin start model15
                 $_res_point_dayly = $_dayly_point->AwarddailyQuery($ganen_id_pos["user_id"]);
-                if(sizeof($_res_point_dayly) < 1)
+                if(count($_res_point_dayly) < 1)
                 {
                    //var_dump("inbonus Awardopt.php line:".__LINE__);
                     $_dayly_point->AwarddailyInsert($ganen_id_pos["user_id"]);
@@ -233,13 +236,31 @@ class Awardopt extends Controller
                 //changed by Gavin end model15
             }
         }
-        if($ganen_r_id){
+        //changed by Gavin start model18
+        if($ganen_r_id && $ganen_r_id_pos['status']!=-1){
+            //changed by Gavin end model18
+            
+            $jj = $paramOBJ->getParam("ganen_proportion", -1, $ganen_r_id );
+            $get_money = $pingheng_money * $jj / 100;
+            
+            $_pointsRes = $_points->PointQuery($ganen_r_id);
+            
+            $get_money = ($_pointsRes[0]['shengyu_dong'] - $get_money)<0 ? $_pointsRes[0]['shengyu_dong']:$get_money;
+            //var_dump($get_money);
+            $paramOBJ = new External();
+            $shui_bl = $paramOBJ->getParam("tax_proportion", -1, $ganen_r_id);
+            $jijin_bl = $paramOBJ->getParam("foundation_proportion", -1, $ganen_r_id);//cy_get_conf('bl_jijin');//1
+            $shui = $this->_wei2($get_money * $shui_bl / 100);//保留两位小数，税
+            $jijin = $this->_wei2($get_money * $jijin_bl / 100);//基金
+            $produceCX = $this->_wei2($get_money*0.1); //重复消费分
+            $ok_money = $this->_wei2($get_money - $shui-$jijin - $produceCX);//实际发放金额
+            
             if($get_money > 0){
                $_res_points_set = $_points->PointUpdate($ganen_r_id, $_pointsRes[0]['shares'], $_pointsRes[0]['bonus_point'] + $ok_money, $_pointsRes[0]['regist_point'], $_pointsRes[0]['re_consume'] + $produceCX, 
                                 $_pointsRes[0]['universal_point'], $_pointsRes[0]['re_cast'], -1,-1,-1, $_pointsRes[0]['shengyu_dong'] - $get_money);
                //changed by Gavin start model15 
                $_res_point_dayly = $_dayly_point->AwarddailyQuery($ganen_r_id_pos["user_id"]);
-                if(sizeof($_res_point_dayly) < 1)
+                if(count($_res_point_dayly) < 1)
                 {
                     //var_dump("inbonus Awardopt.php line:".__LINE__);
                     $_dayly_point->AwarddailyInsert($ganen_r_id_pos["user_id"]);
@@ -294,12 +315,14 @@ class Awardopt extends Controller
 	            //平衡奖总额对碰，增加对碰额
 	            /* $data['l_dse'] = array('exp','l_dse+'.$reg_money);
 	             $data['bq_lds'] = array('exp', 'bq_ldse+'.$reg_money); */
+	            //var_dump('ID:'.$ID.'  l_ds:'.$data['l_ds'].'   bq_lds:'.$data['bq_lds']);
 	        } elseif ($tpl == 1) {
 	            $data['r_ds'] = $curNode[0]['r_ds'] + $danshu;
 	            $data['bq_rds'] = $curNode[0]['bq_rds'] + $danshu;
 	            //changed by Gavin start model13
 	            $position->updateJiangjin($ID, -1,-1,-1,-1,$data['r_ds'],$data['bq_rds'],-1,-1,-1,-999999,-1,-1,-999999, $data['sum_ds']);
 	           //changed by Gavin end model13
+	            //var_dump('ID:'.$ID.'  r_ds:'.$data['r_ds'].'   bq_rds:'.$data['bq_rds']);
 	        }
 	        $tpl = $curNode[0]['treeplace'];
 	    }
@@ -456,14 +479,15 @@ class Awardopt extends Controller
 	    //会员ID，用户名，开通排序，推荐人ID，用户等级，上期左区单数，本期左区单数，上期右区单数，本期右区单数，对碰业绩累积，推荐路径，推荐人等级，
 	    //$frs = $this->where($where)->field($fields)->select();
 	    $_res = $position->getDuiPengInfo(1);
-	    if(count($_res) < 1)
-	        return;
-
+	    //changed by Gavin start model17
+	    if(count($_res)>0){
 	    foreach ($_res as $vo) {
 	        //changed by Gavin start model13
 	        
 	        //changed by Gavin end model13
 	        //var_dump("Awardopt.php user id:".$vo["user_id"]."line:".__LINE__);
+	            if($vo['parent'] == 0)
+	                continue;
 	        $paramOBJ = new External();
 	        $jj = $paramOBJ->getParam("pingheng_proportion", -1, $vo["user_id"]);
 	        //$jj = 7;//cy_get_conf('s4'); 	//7|8|9|10|11  %
@@ -501,7 +525,7 @@ class Awardopt extends Controller
 	        $_point = $_point[0];
 	        //changed by Gavin start model13
 	        $_res_jiangjin = $position->updateJiangjin($vo['ID'], -1, -1, 0, $ls, -1, 0, $rs, -1, -1, -999999, -1, -1, -999999, -1);
-	        
+	    	//var_dump('userid:'.$vo['ID'].'  l_ds:'.$l.'  r_ds:'.$r.'   sq_ls:'.$ls.'   sq_rs:'.$rs);
 	        if ($ft > 0 && $vo['status'] != 0 && $vo['status'] != -1) {
 	            $get_money = $this->_fengding($get_money, $ft, $vo['dp_leiji']); //
 	            $get_money = ($_point['shengyu_dong'] - $get_money)<0 ? $_point['shengyu_dong']:$get_money;
@@ -534,30 +558,41 @@ class Awardopt extends Controller
 	        //changed by Gavin end model13
 	        if ($get_money > 0) {
 	            //var_dump("inbonus Awardopt.php line:".__LINE__);
-	            $this->_in_bonus($myids, $inUserID, 2, $get_money);// 参数3等于2表示添加平衡奖，只有平衡对于积分的修改在in_bonus内部，其他的都在外面
+	                $qibonus = new Award_daytime();
+	                $_res_qibonus = $qibonus->AwarddailyQuery($myids);
+	                if(count($_res_qibonus) < 1) //如果当天记录不存在，则先插入一条记录，然后再在后面更新
+	                {
+	                    $qibonus->AwarddailyInsert($myids);
+	                }
+		            $this->_in_bonus($myids, $inUserID, 2, $get_money);// 参数3等于2表示添加平衡奖，只有平衡对于积分的修改在in_bonus内部，其他的都在外面
 	            
-	            //辅导奖
-	            //$this->guanli_jj($vo['user_id'], $vo['re_path'], $vo['re_level'], $get_money);
-	            $detailsOBJ = new User_details();
-	            $_resDetails = $detailsOBJ->DetailsQuery($vo["user_id"]);
-	            $_resDetails = $_resDetails[0];
-	            $this->tutorAward($vo['user_id'], $_resDetails['repath'], $_resDetails["recommandlevel"]/*$vo['re_level']*/, $get_money,$ft);
+		            //辅导奖
+		            //$this->guanli_jj($vo['user_id'], $vo['re_path'], $vo['re_level'], $get_money);
+		            $detailsOBJ = new User_details();
+		            $_resDetails = $detailsOBJ->DetailsQuery($vo["user_id"]);
+		            $_resDetails = $_resDetails[0];
+		            $this->tutorAward($vo['user_id'], $_resDetails['repath'], $_resDetails["recommandlevel"]/*$vo['re_level']*/, $get_money,$ft);
 	            
-	            //感恩奖
-	            //var_dump("Awardopt line:".__LINE__."id:".$vo['user_id']);
-	            $ganenForthanks = $position->getUserIdByID($vo['ganen_next_id']);
-	            if(count($ganenForthanks) < 1)
-	                $ganenForthanks = 0;
+		            //感恩奖
+		            //var_dump("Awardopt line:".__LINE__."id:".$vo['user_id']);
+		            $ganenForthanks = $position->getUserIdByID($vo['ganen_next_id']);
+		            if(count($ganenForthanks) < 1)
+		                $ganenForthanks = 0;
 	            
-	            $ganenRidForthanks = $position->getUserIdByID($vo['ganen_next_r_id']);
-	            if(count($ganenRidForthanks) < 1)
-	                $ganenRidForthanks = 0;
+		            $ganenRidForthanks = $position->getUserIdByID($vo['ganen_next_r_id']);
+		            if(count($ganenRidForthanks) < 1)
+		                $ganenRidForthanks = 0;
 	            
-                //var_dump("ganenid:".$ganenForthanks);
-                //var_dump("ganen_r_id:".$ganenRidForthanks);
-	            $this->thanksAward($ganenForthanks,$ganenRidForthanks,$vo['user_id'],$get_money);
+	                //var_dump("ganenid:".$ganenForthanks);
+	                //var_dump("ganen_r_id:".$ganenRidForthanks);
+		            $this->thanksAward($ganenForthanks,$ganenRidForthanks,$vo['user_id'],$get_money);
+ 		   }
 	        }
 	    }
+
+	    
+	    
+	    //changed by Gavin end model17
 
 	}
 	

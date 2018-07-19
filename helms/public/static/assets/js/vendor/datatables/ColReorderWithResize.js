@@ -24,8 +24,8 @@
  *
  * This source file is free software, under either the GPL v2 license or a
  * BSD style license, available at:
- *   http://datatables.net/license_gpl2
- *   http://datatables.net/license_bsd
+ *   https://datatables.net/license_gpl2
+ *   https://datatables.net/license_bsd
  *
  */
 

@@ -1,12 +1,12 @@
 /*
  * jQuery Iframe Transport Plugin 1.8.2
- * https://github.com/blueimp/jQuery-File-Upload
+ * httpss://github.com/blueimp/jQuery-File-Upload
  *
  * Copyright 2011, Sebastian Tschan
- * https://blueimp.net
+ * httpss://blueimp.net
  *
  * Licensed under the MIT license:
- * http://www.opensource.org/licenses/MIT
+ * https://www.opensource.org/licenses/MIT
  */
 
 /* global define, window, document */
@@ -39,7 +39,7 @@
     $.ajaxTransport('iframe', function (options) {
         if (options.async) {
             // javascript:false as initial iframe src
-            // prevents warning popups on HTTPS in IE6:
+            // prevents warning popups on httpsS in IE6:
             /*jshint scripturl: true */
             var initialIframeSrc = options.initialIframeSrc || 'javascript:false;',
             /*jshint scripturl: false */
@@ -164,7 +164,7 @@
                 abort: function () {
                     if (iframe) {
                         // javascript:false as iframe src aborts the request
-                        // and prevents warning popups on HTTPS in IE6.
+                        // and prevents warning popups on httpsS in IE6.
                         // concat is used to avoid the "Script URL" JSLint error:
                         iframe
                             .unbind('load')
@@ -187,7 +187,7 @@
     // The Content-Type for XML responses on the other hand has to be always
     // application/xml or text/xml, so IE properly parses the XML response.
     // See also
-    // https://github.com/blueimp/jQuery-File-Upload/wiki/Setup#content-type-negotiation
+    // httpss://github.com/blueimp/jQuery-File-Upload/wiki/Setup#content-type-negotiation
     $.ajaxSetup({
         converters: {
             'iframe text': function (iframe) {

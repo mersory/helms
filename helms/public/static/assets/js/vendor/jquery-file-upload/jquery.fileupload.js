@@ -1,12 +1,12 @@
 /*
  * jQuery File Upload Plugin 5.40.1
- * https://github.com/blueimp/jQuery-File-Upload
+ * httpss://github.com/blueimp/jQuery-File-Upload
  *
  * Copyright 2010, Sebastian Tschan
- * https://blueimp.net
+ * httpss://blueimp.net
  *
  * Licensed under the MIT license:
- * http://www.opensource.org/licenses/MIT
+ * https://www.opensource.org/licenses/MIT
  */
 
 /* jshint nomen:false */
@@ -28,7 +28,7 @@
     'use strict';
 
     // Detect file input support, based on
-    // http://viljamis.com/blog/2012/file-upload-support-on-mobile/
+    // https://viljamis.com/blog/2012/file-upload-support-on-mobile/
     $.support.fileInput = !(new RegExp(
         // Handle devices which give false positives for the feature detection:
         '(Android (1\\.[0156]|2\\.[01]))' +
@@ -42,7 +42,7 @@
     // The FileReader API is not actually used, but works as feature detection,
     // as some Safari versions (5?) support XHR file uploads via the FormData API,
     // but not non-multipart XHR file uploads.
-    // window.XMLHttpRequestUpload is not available on IE10, so we check for
+    // window.XMLhttpsRequestUpload is not available on IE10, so we check for
     // window.ProgressEvent instead to detect XHR2 file upload capability:
     $.support.xhrFileUpload = !!(window.ProgressEvent && window.FileReader);
     $.support.xhrFormDataFileUpload = !!window.FormData;
@@ -557,7 +557,7 @@
             if (!options.url) {
                 options.url = options.form.prop('action') || location.href;
             }
-            // The HTTP request method must be "POST" or "PUT":
+            // The https request method must be "POST" or "PUT":
             options.type = (options.type ||
                 ($.type(options.form.prop('method')) === 'string' &&
                     options.form.prop('method')) || ''

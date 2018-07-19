@@ -1,6 +1,6 @@
 /*!
  * Distpicker v1.0.4
- * https://github.com/fengyuanchen/distpicker
+ * httpss://github.com/fengyuanchen/distpicker
  *
  * Copyright (c) 2014-2016 Fengyuan Chen
  * Released under the MIT license

@@ -111,6 +111,7 @@ class Award_daytime extends Model
     
     public function AwarddailyInsert($id, $direct=0, $balance=0, $tutor=0, $appreciation=0, $staticbonus=0, $sum=0, $Sactualsalary=0, $bz0 = 0, $bz6 = 0, $bz7 = 0, $bz8 = 0, $income = 0)
     {
+        //var_dump('--------------------------------------------');
         $member = new Positionality();//M('member');
         if(is_numeric($id))
         {
@@ -151,10 +152,20 @@ class Award_daytime extends Model
         if($bz8 > 0)
             $_record["bz8"] = $bz8;
 
-        $_record["date"] = date("Y-m-d");;
-
-        $state = $this->save($_record);
-       
+        $_record["date"] = date("Y-m-d");
+        //var_dump('date:'.$_record["date"]);
+        
+        
+        if($direct<=0&&$balance<=0&&$tutor<=0&&$appreciation<=0&&$staticbonus<=0&&$sum<=0&&$Sactualsalary<=0&&$bz0 <= 0&&$bz6 <= 0&& $bz7 <= 0&&$bz8 <= 0&&$income <= 0){
+            $data1 = $_record['date'];
+            $sql = "insert into `helms_award_daytime` (`ID`,`date`) VALUES('$id', '$data1') ";
+            $state = $this->execute($sql);
+        }else{
+            $state = $this->save($_record);
+        }
+        
+        //var_dump("Award_daytime.php 157|ID:".$id);
+        //var_dump("Award_daytime.php 158|array:".$_record);
         return $state;
     }
     
@@ -206,7 +217,8 @@ class Award_daytime extends Model
     
         $state = $this-> where("ID='$id'  and date = '$date'")
         ->setField($_record);
-       
+       //var_dump("Award_daytime.php 210|ID:".$id);
+       //var_dump("Award_daytime.php 211|array:".$_record);
         return $state;
     }
     

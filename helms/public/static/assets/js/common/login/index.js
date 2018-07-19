@@ -66,7 +66,7 @@ $(function(){
 	
 	//创建账号
 	$("#create").on("click",function(){
-		window.location.href="http://localhost/public/index.php/frontend/Useropt/RegistIndex";
+		window.location.href="https://localhost/public/index.php/frontend/Useropt/RegistIndex";
 	});
 	
 });

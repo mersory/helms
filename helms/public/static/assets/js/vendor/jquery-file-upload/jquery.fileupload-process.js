@@ -1,12 +1,12 @@
 /*
  * jQuery File Upload Processing Plugin 1.3.0
- * https://github.com/blueimp/jQuery-File-Upload
+ * httpss://github.com/blueimp/jQuery-File-Upload
  *
  * Copyright 2012, Sebastian Tschan
- * https://blueimp.net
+ * httpss://blueimp.net
  *
  * Licensed under the MIT license:
- * http://www.opensource.org/licenses/MIT
+ * https://www.opensource.org/licenses/MIT
  */
 
 /* jshint nomen:false */

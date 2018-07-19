@@ -197,6 +197,8 @@ class Income_expenditure extends Model
 
         $state = $this-> where("record_id=$record_id")
         ->setField($_inandoutinfo);
+        //var_dump("incomeandexp.php 201| ID:".$record_id);
+        //var_dump("incomeandexp.php 202| array:".$_inandoutinfo);
         return $state;
     }
 }

@@ -351,7 +351,7 @@ class Common extends Basecontroller
             $pointsOBJ = new User_point();
             $pointsRES = $pointsOBJ->PointQuery($_user_id);
             $withdrawOBJ = new Withdrawal_record();
-            if(count($points<=0 || $pointsRES) < 1)
+            if($points<=0 || count($pointsRES) < 1)
             {
                 return json_encode($resdata);
             }
