@@ -1277,6 +1277,10 @@ class Adminopt extends Basecontroller
 	    {
 	    	$_resdata["success"] = true;
 	    }
+	    else 
+	    {
+	        $_resdata["success"] = false;
+	    }
 	    
 	    
 	    return json_encode($_resdata);

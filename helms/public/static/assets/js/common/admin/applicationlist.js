@@ -11,6 +11,7 @@ $(function(){
 				var applicationId = $("#confirmApplicationDialog #application_id").val();
 				var minorpwd = $("#confirmApplicationDialog #minorpwd").val();
 				if(isEmpty(minorpwd)){
+					hideMask();
 					alert("请输入二级密码");
 					return false;
 				}else{
