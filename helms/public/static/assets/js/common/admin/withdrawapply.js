@@ -46,7 +46,19 @@ $(function(){
 		var withdrawId = $(this).parents("tr").find("td").eq(0).html();
 		var userId = $(this).parents("tr").find("td").eq(1).html();
 		var points = $(this).parents("tr").find("td").eq(3).html();
-		var pointType = $(this).parents("tr").find("td").eq(2).html();
+		var pointType = $.trim($(this).parents("tr").find("td").eq(2).html());
+		if(pointType == "奖励分提现"){
+			pointType = 1;
+		}
+		else if(pointType == "注册分提现"){
+			pointType = 2;
+		}
+		else if (pointType == "万能分提现"){
+			pointType = 3;
+		}
+		else{
+			pointType = -1;
+		}
 		$.post("/public/index.php/backend/common/userWithdrawDeny", {
 			appID : withdrawId,
 			userid : userId, 

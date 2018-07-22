@@ -15,7 +15,7 @@ return [
     // 锟斤拷锟斤拷锟斤拷锟斤拷址
     'hostname'        => '47.94.92.83',
     // 锟斤拷锟捷匡拷锟斤拷
-    'database'        => 'helms_clone',
+    'database'        => 'helms_cl1',
     // 锟矫伙拷锟斤拷
     'username'        => 'helms',
     // 锟斤拷锟斤拷
