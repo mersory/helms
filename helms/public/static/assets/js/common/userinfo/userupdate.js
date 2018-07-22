@@ -27,6 +27,9 @@ $(function(){
 		
 		var url =  "/public/index.php/frontend/Adminopt/updateUserOpt";
 		$.post(url,{user_id:needupdateid, level:level, cost_money:0, minor_pwd:minorpassword},function(result){
+			//changed by Gavin start model19
+			hideMask();
+			//changed by Gavin end model19
 			result = JSON.parse(result);
 			if(result.success){
 				alert("升级成功");

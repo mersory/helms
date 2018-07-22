@@ -1,12 +1,12 @@
 /*
  * jQuery File Upload Validation Plugin 1.1.2
- * httpss://github.com/blueimp/jQuery-File-Upload
+ * https://github.com/blueimp/jQuery-File-Upload
  *
  * Copyright 2013, Sebastian Tschan
- * httpss://blueimp.net
+ * https://blueimp.net
  *
  * Licensed under the MIT license:
- * https://www.opensource.org/licenses/MIT
+ * http://www.opensource.org/licenses/MIT
  */
 
 /* global define, window */

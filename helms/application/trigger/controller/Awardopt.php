@@ -111,7 +111,9 @@ class Awardopt extends Controller
         $pos = strrpos($strSRC,',');
         if( strlen($strSRC)!=0 && $pos == false )
             $pos = true;
-        $strSRC = substr($strSRC,0, $pos);//这里是当前节点是谁的直推节点，谁就拿辅导奖
+        //changed by Gavin start model19
+        //$strSRC = substr($strSRC,0, $pos);//这里是当前节点是谁的直推节点，谁就拿辅导奖
+        //changed by Gavin end model19
         //var_dump("Awardopt.php line:".__LINE__."string:".$strSRC);
         $daishuForaward = 1;
         while ( $pos != false ){
@@ -135,6 +137,7 @@ class Awardopt extends Controller
            $jj = $paramOBJ->getParam("fudao_proportion", -1, $_userid );//cy_get_conf('s5'); //5|5|5|5|5|5 %
            $dai = $paramOBJ->getParam("fudao_daishu", -1, $_userid );//cy_get_conf('s6');	//1|2|2|3|4|5　代，a推荐b，b推荐c，c产生对碰奖，且代为2，则a和b都拿辅导奖，且基数为5%
            
+           //var_dump("continue之前,ID:".$ID."user_id:".$_userid);
            if($dai < $daishuForaward)
            {
                $daishuForaward = $daishuForaward + 1;
@@ -144,7 +147,7 @@ class Awardopt extends Controller
            else 
                $daishuForaward = $daishuForaward +1;
            //$i++;
-           //var_dump($_userid);
+           //var_dump("continue之后,ID:".$ID."user_id:".$_userid);
            
            $_pointsRes = $_points->PointQuery($_userid);
            $_pointsRes = $_pointsRes[0];
@@ -166,9 +169,10 @@ class Awardopt extends Controller
 	           $jijin = $this->_wei2($get_money * $jijin_bl / 100);//基金
 	           $produceCX = $this->_wei2($get_money*0.1); //重复消费分
 	           $ok_money = $this->_wei2($get_money - $shui-$jijin - $produceCX);//实际发放金额
-	           $_res_points_set = $_points->PointUpdate($_userid, $_pointsRes[0]['shares'], $_pointsRes[0]['bonus_point'] + $ok_money, $_pointsRes[0]['regist_point'], $_pointsRes[0]['re_consume'] + $produceCX, 
-	                                $_pointsRes[0]['universal_point'], $_pointsRes[0]['re_cast'], $_pointsRes[0]['remain_point'] - $get_money,-1,-1,$_pointsRes["shengyu_dong"] - $get_money);
-           
+	           //changed by Gavin start model19
+	           $_res_points_set = $_points->PointUpdate($_userid, $_pointsRes['shares'], $_pointsRes['bonus_point'] + $ok_money, $_pointsRes['regist_point'], $_pointsRes['re_consume'] + $produceCX, 
+	                                $_pointsRes['universal_point'], $_pointsRes['re_cast'], $_pointsRes['remain_point'] - $get_money,-1,-1,$_pointsRes["shengyu_dong"] - $get_money);
+               //changed by Gavin end model19
 	           //var_dump("point update failed");
 	           //update the user daily points records table
            
@@ -208,9 +212,11 @@ class Awardopt extends Controller
             $jj = $paramOBJ->getParam("ganen_proportion", -1, $ganen_id );
             $get_money = $pingheng_money * $jj / 100;
             
-            $_pointsRes = $_points->PointQuery($ganen_id);         
-                
-            $get_money = ($_pointsRes[0]['shengyu_dong'] - $get_money)<0 ? $_pointsRes[0]['shengyu_dong']:$get_money;
+            $_pointsRes = $_points->PointQuery($ganen_id);  
+            //changed by Gavin start model19
+            $_pointsRes = $_pointsRes[0];            
+            $get_money = ($_pointsRes['shengyu_dong'] - $get_money)<0 ? $_pointsRes['shengyu_dong']:$get_money;
+            //changed by Gavin end model19
             //var_dump($get_money);
             $paramOBJ = new External();
             $shui_bl = $paramOBJ->getParam("tax_proportion", -1, $ganen_id);
@@ -220,8 +226,10 @@ class Awardopt extends Controller
             $produceCX = $this->_wei2($get_money*0.1); //重复消费分
             $ok_money = $this->_wei2($get_money - $shui-$jijin - $produceCX);//实际发放金额
             if($get_money > 0){
-                $_res_points_set = $_points->PointUpdate($ganen_id, $_pointsRes[0]['shares'], $_pointsRes[0]['bonus_point'] + $ok_money, $_pointsRes[0]['regist_point'], $_pointsRes[0]['re_consume'] + $produceCX, 
-                                $_pointsRes[0]['universal_point'], $_pointsRes[0]['re_cast'], -1,-1,-1, $_pointsRes[0]['shengyu_dong'] - $get_money);
+                //changed by Gavin start model19
+                $_res_points_set = $_points->PointUpdate($ganen_id, $_pointsRes['shares'], $_pointsRes['bonus_point'] + $ok_money, $_pointsRes['regist_point'], $_pointsRes['re_consume'] + $produceCX, 
+                                $_pointsRes['universal_point'], $_pointsRes['re_cast'], -1,-1,-1, $_pointsRes['shengyu_dong'] - $get_money);
+                //changed by Gavin end model19
                 //changed by Gavin start model15
                 $_res_point_dayly = $_dayly_point->AwarddailyQuery($ganen_id_pos["user_id"]);
                 if(count($_res_point_dayly) < 1)
@@ -242,10 +250,11 @@ class Awardopt extends Controller
             
             $jj = $paramOBJ->getParam("ganen_proportion", -1, $ganen_r_id );
             $get_money = $pingheng_money * $jj / 100;
-            
+            //changed by Gavin start model19
             $_pointsRes = $_points->PointQuery($ganen_r_id);
-            
-            $get_money = ($_pointsRes[0]['shengyu_dong'] - $get_money)<0 ? $_pointsRes[0]['shengyu_dong']:$get_money;
+            $_pointsRes = $_pointsRes[0];
+            $get_money = ($_pointsRes['shengyu_dong'] - $get_money)<0 ? $_pointsRes['shengyu_dong']:$get_money;
+            //changed by Gavin end model19
             //var_dump($get_money);
             $paramOBJ = new External();
             $shui_bl = $paramOBJ->getParam("tax_proportion", -1, $ganen_r_id);
@@ -256,8 +265,10 @@ class Awardopt extends Controller
             $ok_money = $this->_wei2($get_money - $shui-$jijin - $produceCX);//实际发放金额
             
             if($get_money > 0){
-               $_res_points_set = $_points->PointUpdate($ganen_r_id, $_pointsRes[0]['shares'], $_pointsRes[0]['bonus_point'] + $ok_money, $_pointsRes[0]['regist_point'], $_pointsRes[0]['re_consume'] + $produceCX, 
-                                $_pointsRes[0]['universal_point'], $_pointsRes[0]['re_cast'], -1,-1,-1, $_pointsRes[0]['shengyu_dong'] - $get_money);
+                //changed by Gavin start model19
+               $_res_points_set = $_points->PointUpdate($ganen_r_id, $_pointsRes['shares'], $_pointsRes['bonus_point'] + $ok_money, $_pointsRes['regist_point'], $_pointsRes['re_consume'] + $produceCX, 
+                                $_pointsRes['universal_point'], $_pointsRes['re_cast'], -1,-1,-1, $_pointsRes['shengyu_dong'] - $get_money);
+               //changed by Gavin end model19
                //changed by Gavin start model15 
                $_res_point_dayly = $_dayly_point->AwarddailyQuery($ganen_r_id_pos["user_id"]);
                 if(count($_res_point_dayly) < 1)
@@ -486,8 +497,8 @@ class Awardopt extends Controller
 	        
 	        //changed by Gavin end model13
 	        //var_dump("Awardopt.php user id:".$vo["user_id"]."line:".__LINE__);
-	            if($vo['parent'] == 0)
-	                continue;
+	        /*     if($vo['parent'] == 0)
+	                continue; */
 	        $paramOBJ = new External();
 	        $jj = $paramOBJ->getParam("pingheng_proportion", -1, $vo["user_id"]);
 	        //$jj = 7;//cy_get_conf('s4'); 	//7|8|9|10|11  %

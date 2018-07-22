@@ -17,7 +17,10 @@ $(function(){
 
                 if(undefined != $("#show-gue")){
                     $("#show-gue").empty().html(result.result.gue);
-                }
+                }//changed by Gavin start model19
+                if(undefined != $("#show-dongtai")){
+                    $("#show-dongtai").empty().html(result.result.shengyu_dong);
+                }//changed by Gavin end model19
             }
         });
     },5000);

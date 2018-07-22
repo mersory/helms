@@ -484,22 +484,28 @@ class Useropt extends Basecontroller
         if($newpwd == "")
         {
             $resData["ok"] = 0;
+            //var_dump('++++');
             return json_encode($resData);
         }
         if(empty($_session_user)){
             return $this->redirect("/login/login/index");
         }else{
             $_user_id = $_session_user["userId"];
-            $pwd = md5($pwd."hermes");
+            //changed by Gavin start model19
+            //$pwd = md5($pwd."hermes");
+            //changed by Gavin end model19
             $user = new User_info();
             $res = $user->UserinfoCheckMinor($_user_id, $pwd);
             if(count($res) < 1)//输入的用户名或者密码错误
             {
                 $resData["ok"] = 0;
+                //var_dump('----'.$_user_id);
+                //var_dump($pwd);
             }
             else
             {
                 $newpwd = md5($newpwd."hermes");
+                //var_dump('newpwd:'.$newpwd);
                 $resUpdate = $user->updateUserMinorPwd($_user_id, $newpwd);
             }
         }

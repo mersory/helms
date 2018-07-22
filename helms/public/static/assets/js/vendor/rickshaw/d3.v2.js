@@ -2923,7 +2923,7 @@
     return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x);
   };
   d3.xhr = function(url, mime, callback) {
-    var req = new XMLhttpsRequest;
+    var req = new XMLHttpRequest;
     if (arguments.length < 3) callback = mime, mime = null; else if (mime && req.overrideMimeType) req.overrideMimeType(mime);
     req.open("GET", url, true);
     if (mime) req.setRequestHeader("Accept", mime);
@@ -2971,11 +2971,11 @@
     d3.xhr(url, mime, ready);
   };
   var d3_nsPrefix = {
-    svg: "https://www.w3.org/2000/svg",
-    xhtml: "https://www.w3.org/1999/xhtml",
-    xlink: "https://www.w3.org/1999/xlink",
-    xml: "https://www.w3.org/XML/1998/namespace",
-    xmlns: "https://www.w3.org/2000/xmlns/"
+    svg: "http://www.w3.org/2000/svg",
+    xhtml: "http://www.w3.org/1999/xhtml",
+    xlink: "http://www.w3.org/1999/xlink",
+    xml: "http://www.w3.org/XML/1998/namespace",
+    xmlns: "http://www.w3.org/2000/xmlns/"
   };
   d3.ns = {
     prefix: d3_nsPrefix,

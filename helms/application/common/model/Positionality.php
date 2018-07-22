@@ -276,10 +276,10 @@ class Positionality extends Model
         $gpsetOBJ = new Gp_set();
         $_resGPset = $gpsetOBJ->GpSetQuery();
         $_resGPset = $_resGPset[0];
-       
-        $gushu = $base_gushu + ($cost_money * $paramOBJ->getParam("share_proportion", $status, "") / 100) / $_resGPset["now_price"];
+        //changed by Gavin start model19
+        $gushu = $base_gushu + floor(($cost_money * $paramOBJ->getParam("share_proportion", $status, "") / 100) / $_resGPset["now_price"]);
         $bz5 = $gushu * $_resGPset["now_price"];
-       
+        //changed by Gavin end model19
         $userstatus = array();
         $userstatus["status"] = $status;
         $userstatus["gushu"] = $gushu;
@@ -641,20 +641,21 @@ class Positionality extends Model
         $res = $gpset->GpSetQuery();
         
         $current_price = $res[0]["now_price"];
+        //changed by Gavin start model19
         if($is_cf != 0 && $is_zj == 0)
         {
-            $sql = "update `helms_positionality` set gushu=gushu * 2, bz5 = gushu*1 , cf_count=cf_count+1 where status != 0 and status != -1 and ID != 1";
+            $sql = "update `helms_positionality` set gushu=gushu * 2, bz5 = gushu*1 , cf_count=cf_count+1 where status != 0 and ID != 1";
         }
         else if($is_zj != 0 && $is_cf == 0)
         {
-            $sql = "update `helms_positionality` set bz5 = gushu*$current_price where status != 0 and status != -1 and ID != 1";
+            $sql = "update `helms_positionality` set bz5 = gushu*$current_price where status != 0 and ID != 1";
         }
         else 
         {
             return -1;
         }
         $state = $this->execute($sql);
-        
+        //changed by Gavin end model19
         return $state;
     }
     

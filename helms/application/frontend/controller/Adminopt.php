@@ -379,7 +379,7 @@ class Adminopt extends Basecontroller
             //$member->where('id='.$vo['parent_id'])->setField('t'.$vo['treeplace'].'_uid', $vo['id']);
             //单数和奖金统计
             //$member->where('id IN(0'.$vo['p_path'].'0) AND is_pay>0')->setInc('sum_yj', $vo['reg_money']);
-            //var_dump("Adminopt.php : audit_member_open".__LINE__);
+            //var_dump("Adminopt.php : audit_member_open".__LINE__);            
             $award->tree2ds_tongji($vo['json'], $vo['treeplace'], $vo['status']); //看函数内部
 
             //var_dump("Adminopt.php : audit_member_open".__LINE__);
@@ -604,7 +604,9 @@ class Adminopt extends Basecontroller
 	    $xinzeng_sale  = $member->PositionQueryByID($uid);//id和user_id，gushu是股数，bz5是总股额，都有；reg_money通过state获取
 	    $paramOBJ = new External();
 	    //$param = $paramOBJ->getParam("register_total", $xinzeng_sale[0]["status"], "");
-	    $xinzeng_gushu = ($cost_money * $paramOBJ->getParam("share_proportion", -1, $xinzeng_sale[0]["user_id"]) / 100) / $gp[0]["now_price"];
+	    //changed by Gavin start model19
+	    $xinzeng_gushu = floor(($cost_money * $paramOBJ->getParam("share_proportion", -1, $xinzeng_sale[0]["user_id"]) / 100) / $gp[0]["now_price"]);
+	    //changed by Gaivn end model19
 	    $ok_money = $cost_money;//
 	    //$gp = $gpset->where('id=1')->find();//存放公司股票相关的，只会有一条
 
@@ -1412,7 +1414,7 @@ class Adminopt extends Basecontroller
 	    else 
 	        return json_encode($resdata);
 	    
-	    if($currentLevel == $level)
+	    if($currentLevel >= $level)
 	        return json_encode($resdata);
 	        
 	    //var_dump("ll:".$currentLevel);
@@ -1441,6 +1443,7 @@ class Adminopt extends Basecontroller
 	        $openid = $posinfo[0]["ID"];
 	        $base_gushu = $posinfo[0]["gushu"];
 	        //更新新注册用户的网络结构表positionality表数据，用户等级，开通人，开通时间
+	        
 	        $res=$position->updateStatusBY($ID, $level, $cost_money, $base_gushu);
 	        
 	        //开通时最先增加一条收入记录，在人每天表，用于计算收支比时的数据源
@@ -1448,7 +1451,7 @@ class Adminopt extends Basecontroller
 	        $param = $paramOBJ->getParam("register_total", $level, "");
 	        //var_dump("income:".$param);
 	        $awardday = new Award_daytime();
-	        $_res_qibonus = $awardday->AwarddailyQuery($ID);
+	        $_res_qibonus = $awardday->AwarddailyQuery($ID);	        
 	        if(count($_res_qibonus) < 1)
 	            $awardday->AwarddailyInsert($ID,0,0,0,0,0,0,0,0,0,0,0,$cost_money);
             else

@@ -1,11 +1,11 @@
 /*
 	SuperBox v1.0.0
-	by Todd Motto: https://www.toddmotto.com
-	Latest version: httpss://github.com/toddmotto/superbox
+	by Todd Motto: http://www.toddmotto.com
+	Latest version: https://github.com/toddmotto/superbox
 	
 	Copyright 2013 Todd Motto
 	Licensed under the MIT license
-	https://www.opensource.org/licenses/mit-license.php
+	http://www.opensource.org/licenses/mit-license.php
 
 	SuperBox, the lightbox reimagined. Fully responsive HTML5 image galleries.
 */

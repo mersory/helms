@@ -478,16 +478,18 @@ class Useropt extends Basecontroller
         
         return json_encode($resdata);
     }
-    
+    //changed by Gavin start model19
     public function userGujiaGue($user_id)
     {
         $gpset = new Gp_set();
         $detail = new User_details();
         $position = new Positionality();
+        $points = new User_point();
         
         $gpres = $gpset->GpSetQuery();
         $detailres = $detail->DetailsQuery($user_id);
         $positionres = $position->PositionQuery($user_id);
+        $pointres = $points->PointQuery($user_id);
         $resdata = array();
         $resdata["success"] = false;
         $_res = array();
@@ -499,11 +501,12 @@ class Useropt extends Basecontroller
             $res["pay_gujia"] = $detailres[0]["pay_gujia"];
             $res["gushu"] = $positionres[0]["gushu"];
             $res["gue"] = $positionres[0]["bz5"];
+            $res['shengyu_dong'] = $pointres[0]["shengyu_dong"];
             $resdata["result"] = $res;
         }
         return json_encode($resdata);
     }
-    
+    //changed by Gavin end model19
 //---------------------------------单个接口测试--------------------------------
 //---------------------------------单个接口测试--------------------------------
 //---------------------------------单个接口测试--------------------------------

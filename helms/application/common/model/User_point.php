@@ -172,17 +172,31 @@ class User_point extends Model
         {
             if($_res[$pointtype[$point_type]] < $point_change_sum)
                 return false;
+            //changed by Gavin start model19
            else 
            {
-               $_pointinfo[$pointtype[$point_type]] = $_res[$pointtype[$point_type]] - $point_change_sum;
-               $_pointinfo[$pointtype[$point_change_type]] = $_res[$pointtype[$point_change_type]] + $point_change_sum;
+               if($point_change_type == 1){
+                   $_pointinfo[$pointtype[$point_type]] = $_res[$pointtype[$point_type]] - $point_change_sum;
+                   $_pointinfo[$pointtype[1]] = $_res[$pointtype[1]] + $point_change_sum*6/7;
+                    
+                   $state = $this-> where("ID='$user_id'")
+                   ->setField($_pointinfo);
+                   
+                   $point_transfor = new Point_transform_record();
+                   $point_transfor->PointTransformInsert($user_id, $point_type, $point_change_type, $point_change_sum);
+               }elseif ($point_change_type == 2){
+                   $_pointinfo[$pointtype[$point_type]] = $_res[$pointtype[$point_type]] - $point_change_sum;
+                   $_pointinfo[$pointtype[1]] = $_res[$pointtype[1]] + $point_change_sum;
+                    
+                   $state = $this-> where("ID='$user_id'")
+                   ->setField($_pointinfo);
+                   
+                   $point_transfor = new Point_transform_record();
+                   $point_transfor->PointTransformInsert($user_id, $point_type, $point_change_type, $point_change_sum);
+               }
                
-               $state = $this-> where("ID='$user_id'")
-               ->setField($_pointinfo);
-
-               $point_transfor = new Point_transform_record();
-               $point_transfor->PointTransformInsert($user_id, $point_type, $point_change_type, $point_change_sum);
            }
+           //changed by Gavin end model19
         }
         return true;
     }

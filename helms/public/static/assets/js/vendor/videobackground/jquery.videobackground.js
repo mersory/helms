@@ -1,6 +1,6 @@
 /*!
  * jQuery Video Background plugin
- * httpss://github.com/georgepaterson/jquery-videobackground
+ * https://github.com/georgepaterson/jquery-videobackground
  *
  * Copyright 2012, George Paterson
  * Dual licensed under the MIT or GPL Version 2 licenses.

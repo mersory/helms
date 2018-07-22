@@ -58,11 +58,11 @@ return [
     // +----------------------------------------------------------------------
 
     // Ĭ��ģ����
-    'default_module'         => 'index',
+    'default_module'         => 'login',
     // ��ֹ����ģ��
     'deny_module_list'       => ['common'],
     // Ĭ�Ͽ�������
-    'default_controller'     => 'Index',
+    'default_controller'     => 'login',
     // Ĭ�ϲ�����
     'default_action'         => 'index',
     // Ĭ����֤��

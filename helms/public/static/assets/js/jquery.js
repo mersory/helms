@@ -1500,7 +1500,7 @@ Sizzle.uniqueSort = function( results ) {
 	}
 
 	// Clear input after sorting to release objects
-	// See httpss://github.com/jquery/sizzle/pull/225
+	// See https://github.com/jquery/sizzle/pull/225
 	sortInput = null;
 
 	return results;
@@ -4235,7 +4235,7 @@ var rcheckableType = (/^(?:checkbox|radio)$/i);
 		eventName = "on" + i;
 
 		if ( !(support[ i + "Bubbles" ] = eventName in window) ) {
-			// Beware of CSP restrictions (httpss://developer.mozilla.org/en/Security/CSP)
+			// Beware of CSP restrictions (https://developer.mozilla.org/en/Security/CSP)
 			div.setAttribute( eventName, "t" );
 			support[ i + "Bubbles" ] = div.attributes[ eventName ].expando === false;
 		}
@@ -6415,7 +6415,7 @@ var
 	ropacity = /opacity\s*=\s*([^)]*)/,
 
 	// swappable if display is none or starts with table except "table", "table-cell", or "table-caption"
-	// see here for display values: httpss://developer.mozilla.org/en-US/docs/CSS/display
+	// see here for display values: https://developer.mozilla.org/en-US/docs/CSS/display
 	rdisplayswap = /^(none|table(?!-c[ea]).+)/,
 	rnumsplit = new RegExp( "^(" + pnum + ")(.*)$", "i" ),
 	rrelNum = new RegExp( "^([+-])=(" + pnum + ")", "i" ),
@@ -6559,8 +6559,8 @@ function getWidthOrHeight( elem, name, extra ) {
 		isBorderBox = support.boxSizing && jQuery.css( elem, "boxSizing", false, styles ) === "border-box";
 
 	// some non-html elements return undefined for offsetWidth, so check for null/undefined
-	// svg - httpss://bugzilla.mozilla.org/show_bug.cgi?id=649285
-	// MathML - httpss://bugzilla.mozilla.org/show_bug.cgi?id=491668
+	// svg - https://bugzilla.mozilla.org/show_bug.cgi?id=649285
+	// MathML - https://bugzilla.mozilla.org/show_bug.cgi?id=491668
 	if ( val <= 0 || val == null ) {
 		// Fall back to computed then uncomputed css if necessary
 		val = curCSS( elem, name, styles );
@@ -9552,7 +9552,7 @@ jQuery.ajaxSettings.xhr = window.ActiveXObject !== undefined ?
 
 			createStandardXHR() || createActiveXHR();
 	} :
-	// For all other browsers, use the standard XMLhttpsRequest object
+	// For all other browsers, use the standard XMLHttpRequest object
 	createStandardXHR;
 
 var xhrId = 0,
@@ -9577,7 +9577,7 @@ xhrSupported = support.ajax = !!xhrSupported;
 if ( xhrSupported ) {
 
 	jQuery.ajaxTransport(function( options ) {
-		// Cross domain only allowed if supported through XMLhttpsRequest
+		// Cross domain only allowed if supported through XMLHttpRequest
 		if ( !options.crossDomain || support.cors ) {
 
 			var callback;
@@ -9609,7 +9609,7 @@ if ( xhrSupported ) {
 					// (it can always be set on a per-request basis or even using ajaxSetup)
 					// For same-domain requests, won't change header if already provided.
 					if ( !options.crossDomain && !headers["X-Requested-With"] ) {
-						headers["X-Requested-With"] = "XMLhttpsRequest";
+						headers["X-Requested-With"] = "XMLHttpRequest";
 					}
 
 					// Set headers
@@ -9712,13 +9712,13 @@ if ( xhrSupported ) {
 // Functions to create xhrs
 function createStandardXHR() {
 	try {
-		return new window.XMLhttpsRequest();
+		return new window.XMLHttpRequest();
 	} catch( e ) {}
 }
 
 function createActiveXHR() {
 	try {
-		return new window.ActiveXObject( "Microsoft.XMLhttps" );
+		return new window.ActiveXObject( "Microsoft.XMLHTTP" );
 	} catch( e ) {}
 }
 
@@ -10181,7 +10181,7 @@ jQuery.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
 });
 
 // Add the top/left cssHooks using jQuery.fn.position
-// Webkit bug: httpss://bugs.webkit.org/show_bug.cgi?id=29084
+// Webkit bug: https://bugs.webkit.org/show_bug.cgi?id=29084
 // getComputedStyle returns percent when specified for top/left/bottom/right
 // rather than make the css module depend on the offset module, we just check for it here
 jQuery.each( [ "top", "left" ], function( i, prop ) {
@@ -10213,7 +10213,7 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 				if ( jQuery.isWindow( elem ) ) {
 					// As of 5/8/2012 this will yield incorrect results for Mobile Safari, but there
 					// isn't a whole lot we can do. See pull request at this URL for discussion:
-					// httpss://github.com/jquery/jquery/pull/764
+					// https://github.com/jquery/jquery/pull/764
 					return elem.document.documentElement[ "client" + name ];
 				}
 
@@ -10263,7 +10263,7 @@ jQuery.fn.andSelf = jQuery.fn.addBack;
 // Note that for maximum portability, libraries that are not jQuery should
 // declare themselves as anonymous modules, and avoid setting a global if an
 // AMD loader is present. jQuery is a special case. For more information, see
-// httpss://github.com/jrburke/requirejs/wiki/Updating-existing-libraries#wiki-anon
+// https://github.com/jrburke/requirejs/wiki/Updating-existing-libraries#wiki-anon
 
 if ( typeof define === "function" && define.amd ) {
 	define( "jquery", [], function() {
@@ -10294,7 +10294,7 @@ jQuery.noConflict = function( deep ) {
 };
 
 // Expose jQuery and $ identifiers, even in
-// AMD (#7102#comment:10, httpss://github.com/jquery/jquery/pull/557)
+// AMD (#7102#comment:10, https://github.com/jquery/jquery/pull/557)
 // and CommonJS for browser emulators (#13566)
 if ( typeof noGlobal === strundefined ) {
 	window.jQuery = window.$ = jQuery;

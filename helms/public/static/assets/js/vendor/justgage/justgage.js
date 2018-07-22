@@ -1,6 +1,6 @@
 /**
  * JustGage - this is work-in-progress, unreleased, unofficial code, so it might not work top-notch :)
- * Check https://www.justgage.com for official releases
+ * Check http://www.justgage.com for official releases
  * Licensed under MIT.
  * @author Bojan Djuricic  (@Toorshia)
  *
@@ -10,7 +10,7 @@
  * May 17, 2013.
  * -----------------------------
      * make kvLookup() part of prototype per @toorshia
-     * httpss://github.com/toorshia/justgage/pull/59
+     * https://github.com/toorshia/justgage/pull/59
 
  * -----------------------------
  * April 25, 2013.
@@ -20,19 +20,19 @@
  * -----------------------------
  * April 18, 2013.
  * -----------------------------
-     * parentNode - use this instead of id, to attach gauge to node which is outside of DOM tree - httpss://github.com/toorshia/justgage/issues/48
+     * parentNode - use this instead of id, to attach gauge to node which is outside of DOM tree - https://github.com/toorshia/justgage/issues/48
      * width - force gauge width
      * height - force gauge height
 
  * -----------------------------
  * April 17, 2013.
  * -----------------------------
-     * fix - httpss://github.com/toorshia/justgage/issues/49
+     * fix - https://github.com/toorshia/justgage/issues/49
 
  * -----------------------------
  * April 01, 2013.
  * -----------------------------
-     * fix - httpss://github.com/toorshia/justgage/issues/46
+     * fix - https://github.com/toorshia/justgage/issues/46
 
  * -----------------------------
  * March 26, 2013.
@@ -43,7 +43,7 @@
  * March 23, 2013.
  * -----------------------------
      * counter - option to animate value  in counting fashion
-     * fix - httpss://github.com/toorshia/justgage/issues/45
+     * fix - https://github.com/toorshia/justgage/issues/45
 
  * -----------------------------
  * March 13, 2013.
@@ -59,7 +59,7 @@
  * -----------------------------
  * December 31, 2012.
  * -----------------------------
-     * fixed text y-position for hidden divs - workaround for Raphael <tspan> 'dy' bug - httpss://github.com/DmitryBaranovskiy/raphael/issues/491
+     * fixed text y-position for hidden divs - workaround for Raphael <tspan> 'dy' bug - https://github.com/DmitryBaranovskiy/raphael/issues/491
      * 'show' parameters, like showMinMax are now 'hide' because I am lame developer - please update these in your setups
      * Min and Max labels are now auto-off when in donut mode
      * Start angle in donut mode is now 90
@@ -655,7 +655,7 @@
   setDy(obj.txtMax, obj.params.maxFontSize, obj.params.maxY);
 
   var defs = obj.canvas.canvas.childNodes[1];
-  var svg = "https://www.w3.org/2000/svg";
+  var svg = "http://www.w3.org/2000/svg";
 
   if (ie < 9) {
     onCreateElementNsReady(function() {
@@ -965,7 +965,7 @@ function cutHex(str) {
   return (str.charAt(0)=="#") ? str.substring(1,7):str;
 }
 
-/**  Human friendly number suffix - From: https://stackoverflow.com/questions/2692323/code-golf-friendly-number-abbreviator */
+/**  Human friendly number suffix - From: http://stackoverflow.com/questions/2692323/code-golf-friendly-number-abbreviator */
 function humanFriendlyNumber( n, d ) {
   var p, d2, i, s;
 
@@ -981,7 +981,7 @@ function humanFriendlyNumber( n, d ) {
  return n;
 }
 
-/** Format numbers with commas - From: https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript */
+/** Format numbers with commas - From: http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript */
 function formatNumber(x) {
     var parts = x.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");

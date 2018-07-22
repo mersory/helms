@@ -52,11 +52,11 @@ class Award_record extends Model
         {
             $_where = "$_where and time <= '$totime'";
         }
-        
-        $_award_info = $this->order("time desc")
+        //changed by Gavin start model19
+        $_award_info = $this->order("time desc, AUTO desc")
                             ->where($_where)
                             ->paginate(25,false,['query' => request()->param()]);
-       
+        //changed by Gavin end model19
         return $_award_info;
     }
     
@@ -94,20 +94,26 @@ class Award_record extends Model
             $_record["comment"] = $comment;
         
         $state = $this->save($_record);
-        var_dump("Award_record.php 97| ID:".$id);
-        var_dump("Award_record.php 98| array:".$_record);
+        //var_dump("Award_record.php 97| ID:".$id);
+        //var_dump("Award_record.php 98| array:".$_record);
         //2018-07-19
         $income_expendit = new Income_expenditure();
         $begintime=date("Y-m-d H:i:s",mktime(0,0,0,date('m'),date('d'),date('Y')));
         $endtime=date("Y-m-d H:i:s",mktime(0,0,0,date('m'),date('d')+1,date('Y'))-1);
         $in_out_RES = $income_expendit->IncomeExpenditureQueryByTime($begintime, $endtime);
-        
-        $out = $money;
+        //changed by Gavin start model19
+        if($award == "静态奖"){
+            $out = $money;
+        }else{
+            $out = $money*0.84;
+        }
+        //changed by Gavin end model19
         $out_vs_in = -1;
         //changed by Gavin start model17
         if(count($in_out_RES) < 1)
-        {
+        {            
             $income_expendit->IncomeExpenditureInsert(-1, -1, $out, -$out, $out_vs_in);
+            
         }
         else 
         {

@@ -1,11 +1,14 @@
 $(function(){
 	// 获取创建用户前页面传递的数据，赋值给对应的输入框
+	//changed by Gavin start model19
 	var info= GetQueryString("parentId");
 	var recInput = document.getElementById("recommender");
 	var actInput= document.getElementById("activator");
+	var emailInput = document.getElementById('email');
 	recInput.value = info;
 	actInput.value = info;
-	
+	emailInput.value = "hermesplus_service@163.com";
+	//changed by Gavin end model19
 	//处理产品级别
 	$("#product option").hide();
 	$("#product option[value='"+$("#level option:selected").val()+"']").show();
@@ -73,7 +76,7 @@ $(function(){
 			return false;
 		}*/
 		var url =  "/public/index.php/backend/Useropt/UserRegist";
-		$.post(url,{ID:id, name:username, email:email, portrait:product, telphone:telphone, recommender:recommender, activator:activator, pwd1:"123", pwd2:"123", userlevel:level},function(result){
+		$.post(url,{ID:id, name:username, email:email, portrait:product, telphone:telphone, recommender:recommender, activator:activator, pwd1:"111111", pwd2:"111111", userlevel:level},function(result){
 			hideMask();
 			result = JSON.parse(result);
 			if(result.success){

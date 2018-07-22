@@ -1,14 +1,28 @@
 $(function(){
 	// 获取创建用户前页面传递的数据，赋值给对应的输入框
+	//changed by Gavin start model19
 	var info= GetQueryString("parentId");
 	var recInput = document.getElementById("recommender");
 	var actInput= document.getElementById("activator");
+	var emailInput = document.getElementById('email');
 	recInput.value = info;
 	actInput.value = info;
-	
+	emailInput.value = "hermesplus_service@163.com";
 	//处理产品级别
+	
 	$("#product option").hide();
-	$("#product option[value='"+$("#level option:selected").val()+"']").show();
+	var j = $("#level option:selected").val();
+	if(j == 1){
+		$("#product option").hide();
+		$("#product option[value='1']").show();
+	}else if(j==2){
+		$("#product option").hide();
+		$("#product option[value='2']").show();
+		$("#product option[value='3']").show();
+		$("#product option[value='4']").show();
+	}
+	//changed by Gavin end model19
+	//$("#product option[value='"+$("#level option:selected").val()+"']").show();
 	
 	$("#level").on("change",function(){
 		var i = $("#level option:selected").val();
@@ -72,9 +86,11 @@ $(function(){
 			showError("二级密码不能为空");
 			return false;
 		}*/
+		//changed by Gavin start model19
 		var url =  "/public/index.php/frontend/Useropt/UserRegist";
-		$.post(url,{ID:id, name:username, email:email, portrait:product, telphone:telphone, recommender:recommender, activator:activator, pwd1:"123", pwd2:"123", userlevel:level},function(result){
+		$.post(url,{ID:id, name:username, email:email, portrait:product, telphone:telphone, recommender:recommender, activator:activator, pwd1:"111111", pwd2:"111111", userlevel:level},function(result){
 			hideMask();
+		//changed by Gavin end model19
 			result = JSON.parse(result);
 			if(result.success){
 				alert("注册成功，点击确定回到主页");

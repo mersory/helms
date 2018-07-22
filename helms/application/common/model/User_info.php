@@ -190,7 +190,7 @@ class User_info extends Model
         //var_dump("_id".$_id);
         //var_dump($_id);
         $_res = $this->table('helms_user_info U, helms_user_point P')
-        ->where("U.ID=P.ID and U.ID = '$_id' and P.regist_point > $cost")
+        ->where("U.ID=P.ID and U.ID = '$_id' and P.regist_point >= $cost")
         ->field('U.ID,U.username,U.user_status,P.regist_point')//
         ->select();
         $_gp = new Gp_set();
@@ -383,6 +383,11 @@ class User_info extends Model
     public function UserUpdate($ID, $name, $minor_pwd, $level, $cost)//用户开通，激活
     {
         $_res = $this->UserinfoCheckMinor($name, $minor_pwd);
+        //changed by Gavin start model19
+        if(!$_res){
+            return false;
+        }
+        //changed by Gavin end model19
         $_id = $_res[0]->getData("ID");
         //var_dump("_id".$_id);
         //var_dump($_id);
@@ -443,8 +448,10 @@ class User_info extends Model
             
             //var_dump("repath:".$_repath);
             //进行拆分，去除逗号
+            //changed by Gavin start model19
             $strArr =  explode(",",$_repath);
-            $recommondLevel = count($strArr);//本来需要加一，但是去除根节点之后，正好不需要加一
+            $recommondLevel = count($strArr)-2;//本来需要加一，但是去除根节点之后，正好不需要加一
+            //changed by Gavin end model19
             //var_dump($strArr);
             $_detail_info = new User_details();
 
@@ -476,9 +483,12 @@ class User_info extends Model
             //var_dump($_detail_info_res);
             //var_dump("action res");
             //var_dump($_activate);
+            //changed by Gavin start model19
+            return true;
         }
         
-        return true;
+        return false;
+        //changed by Gavin end model19
     }
     
     public function updateUserPwd($ID, $pwd)
