@@ -84,7 +84,7 @@ class Login extends Controller
             $_res = $_user->SubscriberLoginlQuery($_username, $_password);
             if(count($_res) == 0){
                 $_resdata["success"] = false;
-                $_resdata["error"] = 2;
+                $_resdata["error"] = 3;
             }else{
                 $_resdata["success"] = true;
                 $_resdata["redirectUrl"] = "/public/index.php/backend/common/index";

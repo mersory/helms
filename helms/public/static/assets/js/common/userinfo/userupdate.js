@@ -1,5 +1,6 @@
 $(function(){
 	$('#btn_update').on("click",function(){
+		showMask();
 		var needupdateid = $("#memberId").val();
 		var minorpassword = $("#minorpassword").val();
 		var level = $("#level").val();

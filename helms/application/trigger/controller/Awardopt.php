@@ -621,9 +621,9 @@ class Awardopt extends Controller
 	        foreach ($_res as $vo) {
     	        /*if($vo['is_lock'] != 0){
     	         continue;
-    	         }*/
+    	         }
     	        if($vo["parent"] == 0)//当前节点是管理员账号，不进行积分计算
-    	            continue;
+    	            continue;*/
 	            $paramOBJ = new External();
 	            $jj = $paramOBJ->getParam("pingheng_proportion", -1, $vo["user_id"]);
 	            $ft = $paramOBJ->getParam("pingheng_max", -1, $vo["user_id"]);
