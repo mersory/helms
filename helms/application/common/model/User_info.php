@@ -392,7 +392,7 @@ class User_info extends Model
         //var_dump("_id".$_id);
         //var_dump($_id);
         $_res = $this->table('helms_user_info U, helms_user_point P')
-                    ->where("U.ID=P.ID and U.ID = '$_id' and P.regist_point > $cost")
+                    ->where("U.ID=P.ID and U.ID = '$_id' and P.regist_point >= $cost")
                     ->field('U.ID,U.username,U.user_status,P.regist_point')//
                     ->select();
         $_gp = new Gp_set();

@@ -15,7 +15,7 @@ class Historical_price extends Model
         $_where = '';
         if ($time != -1)
         {
-            $_where = "`current_time` > $time";  //ʱ���ֶβ�ѯʱ��Ҫ������Ͻǵķ���
+            $_where = "`current_time_helms` >= $time";  //ʱ���ֶβ�ѯʱ��Ҫ������Ͻǵķ���
         }
         ////echo $_where;
         $_price_info = $this->where($_where)
@@ -35,17 +35,17 @@ class Historical_price extends Model
         
         if (strcmp("$from", "") )
         {
-            $_where = "current_time > '$from'";   //���ﲻҪ=���ţ���Ϊ�������ݿ��е�ID����int����
+            $_where = "current_time_helms >= '$from'";   //���ﲻҪ=���ţ���Ϊ�������ݿ��е�ID����int����
         }
         if (strcmp("$to", "") )
         {
             if($_where == "")
             {
-                $_where = "current_time < '$to'";//������Ҫ�������
+                $_where = "current_time_helms <= '$to'";//������Ҫ�������
             }
             else 
             {
-                $_where = "$_where and current_time < '$to'";//������Ҫ�������
+                $_where = "$_where and current_time_helms <= '$to'";//������Ҫ�������
             }
         }
         
@@ -67,7 +67,7 @@ class Historical_price extends Model
         {
             $_historicalpriceinfo["share_price"] = $share_price;
         }
-        $_historicalpriceinfo["current_time"] = date("Y-m-d H:i:s");
+        $_historicalpriceinfo["current_time"] = date("Y-m-d");
         
         $state = $this->save($_historicalpriceinfo);
         

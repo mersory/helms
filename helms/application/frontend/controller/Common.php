@@ -360,7 +360,8 @@ class Common extends Basecontroller
                 switch ($point_type)
                 {
                     case 1:
-                        if($pointsRES[0]["bonus_point"] > $points)
+                        //changed by Gavin start model20
+                        if($pointsRES[0]["bonus_point"] >= $points)
                         {
                             $actRES = $pointsOBJ->PointUpdate($_user_id, -1, $pointsRES[0]["bonus_point"] - $points);
                             $actRES = $actRES && $withdrawOBJ->WithdrawalInsert($_user_id, $points*6*0.95, $point_type, $points, 0);
@@ -371,7 +372,7 @@ class Common extends Basecontroller
                         else
                             return json_encode($resdata);
                     case 2:
-                        if($pointsRES[0]["regist_point"] > $points)
+                        if($pointsRES[0]["regist_point"] >= $points)
                         {
                             $actRES = $pointsOBJ->PointUpdate($_user_id, -1, -1, $pointsRES[0]["regist_point"] - $points);
                             $actRES = $actRES && $withdrawOBJ->WithdrawalInsert($_user_id, $points*6*0.95, $point_type, $points, 0);
@@ -382,7 +383,7 @@ class Common extends Basecontroller
                         else
                             return json_encode($resdata);
                     case 3:
-                        if($pointsRES[0]["universal_point"] > $points)
+                        if($pointsRES[0]["universal_point"] >= $points)
                         {
                             $actRES = $pointsOBJ->PointUpdate($_user_id, -1, -1,-1, -1, $pointsRES[0]["universal_point"] - $points);
                             $actRES = $actRES && $withdrawOBJ->WithdrawalInsert($_user_id, $points*6*0.95, $point_type, $points, 0);
@@ -535,8 +536,8 @@ class Common extends Basecontroller
             $_resdata["info"] = "ok";
             for($i= 0; $i<count($_res); $i++)
             {
-                $_res[$i]["current_time"] = substr($_res[$i]["current_time"], 0, 10);
-                $_tmp[ $_res[$i]["current_time"] ] = $_res[$i]["share_price"];
+                $_res[$i]["current_time_helms"] = substr($_res[$i]["current_time_helms"], 0, 10);
+                $_tmp[ $_res[$i]["current_time_helms"] ] = $_res[$i]["share_price"];
             }
             $_resdata['res'] = $_tmp;
         }

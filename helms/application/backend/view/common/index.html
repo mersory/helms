@@ -1,6 +1,7 @@
 {extend name="base/backend"}
-
+<!-- changed by Gavin start model20 -->
 {block name="js"}
+ <script type="text/javascript" src="_JS_/common/index.js"></script>
 {/block}
 
 {block name="css"}
@@ -8,4 +9,206 @@
 {/block}
 
 {block name="content"}
+<!-- Page content -->
+        <div id="content" class="col-md-12">
+          <!-- page header -->
+          <div class="pageheader">
+            <h2><i class="fa fa-tachometer"></i> 个人主页<span></span></h2>
+            <div class="breadcrumbs">
+              <ol class="breadcrumb">
+                <li><a href="index.html">HERMES</a></li>
+                <li class="active">主页</li>
+              </ol>
+            </div>
+          </div>
+          <!-- /page header -->
+
+          <!-- content main container -->
+          <div class="main">
+          	 <!-- cards -->
+            <div class="row cards">
+              
+              <div class="card-container col-lg-3 col-sm-6 col-sm-12">
+                <div class="card card-redbrown hover">
+                  <div class="front"> 
+
+                    <div class="media">
+                      <span class="pull-left">
+                        <i class="fa fa-usd media-object"></i>
+                      </span>
+
+                      <div class="media-body">
+                        <small>万能分</small>
+                        <h2 class="media-heading animate-number" data-value='{$pass_data["universal_point"]}'  data-animation-duration="10">0</h2>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="back">
+                    <a href="points?type=universal">
+                      <!-- <i class="fa fa-bar-chart-o fa-4x"></i> -->
+                      <span>积分明细</span>
+                    </a>  
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card-container col-lg-3 col-sm-6 col-sm-12">
+                <div class="card card-blue hover">
+                  <div class="front">        
+                    
+                     <div class="media">
+                      <span class="pull-left">
+                        <i class="fa fa-usd media-object"></i>
+                      </span>
+
+                      <div class="media-body">
+                        <small>奖励分</small>
+                        <h2 class="media-heading animate-number" data-value='{$pass_data["bonus_point"]}'  data-animation-duration="10">0</h2>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="back">
+                    <a href="points?type=bonus">
+                      <!-- <i class="fa fa-bar-chart-o fa-4x"></i> -->
+                      <span>积分明细</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="card-container col-lg-3 col-sm-6 col-sm-12">
+                <div class="card card-greensea hover">
+                  <div class="front">        
+                    
+                    <div class="media">
+                      <span class="pull-left">
+                        <i class="fa fa-usd media-object"></i>
+                      </span>
+
+                      <div class="media-body">
+                        <small>注册分</small>
+                        <h2 class="media-heading animate-number" data-value='{$pass_data["regist_point"]}' data-animation-duration="10">0</h2>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="back">
+                    <a href="points?type=regist">
+                      <!-- <i class="fa fa-bar-chart-o fa-4x"></i> -->
+                      <span>积分明细</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="card-container col-lg-3 col-sm-6 col-xs-12">
+                <div class="card card-slategray hover">
+                  <div class="front"> 
+
+                    <div class="media">
+                      <span class="pull-left">
+                        <i class="fa fa-usd media-object"></i>
+                      </span>
+
+                      <div class="media-body">
+                        <small>重复消费分</small>
+                        <h2 class="media-heading animate-number" data-value='{$pass_data["re_consume"]}' data-animation-duration="10">0</h2>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="back">
+                    <a href="">
+                      <!-- <i class="fa fa-bar-chart-o fa-4x"></i> -->
+                      <span>积分明细</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+
+ 			<!-- row -->
+            <div class="row">
+
+
+              <!-- col 8 -->
+              <div class="col-lg-8 col-md-12">
+
+                <!-- tile -->
+                <section class="tile transparent">
+
+                  <!-- tile header -->
+                  <div class="tile-header color transparent-black textured rounded-top-corners stock-price">
+                    <h1><strong>股价趋势</strong> </h1>
+                    <div class="controls">
+                      <a href="#" class="reload"  reloadType="1">近一周</a>
+                      <a href="#" class="reload" reloadType="2">近一个月</a>
+                      <a href="#" class="reload" reloadType="3">近半年</a>
+                      <a href="#" class="remove"><i class="fa fa-times"></i></a>
+                    </div>
+                  </div>
+                  <!-- /tile header -->
+
+
+                  <!-- tile widget -->
+                  <div class="tile-widget color transparent-black textured">
+                    <div id="statistics-chart" class="chart statistics" style="height: 350px;"></div>
+                  </div>
+                  <!-- /tile widget -->
+
+
+                </section>
+                <!-- /tile -->
+
+              </div>
+              <!-- /col 8 -->
+
+               <!-- col 4 -->
+              <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+               
+                <!-- tile -->
+                <section class="tile color transparent-black">
+
+
+
+                  <!-- tile header -->
+                  <div class="tile-header">
+                    <h1><strong>新闻公告</strong></h1>
+                    <div class="controls">
+                      <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
+                      <a href="#" class="remove"><i class="fa fa-times"></i></a>
+                    </div>
+                  </div>
+                  <!-- /tile header -->
+
+                  <!-- tile body -->
+				  <div class="tile-body">
+				  	<ul class="news-title">  					  
+  					  <li><a href="/public/index.php/frontend/common/news"  class="text-muted">HERMES全新系统升级(beta版)</a></li>
+					</ul>
+
+                  </div>
+                  <!-- /tile body --> 
+
+                </section>
+                <!-- /tile -->
+
+              </div>
+              <!-- /col 4 -->
+
+            </div>
+            <!-- /row -->
+
+          </div>
+          <!-- /content container -->
+
+        </div>
+        <!-- Page content end -->
 {/block}
+<!-- changed by Gavin end model20 -->

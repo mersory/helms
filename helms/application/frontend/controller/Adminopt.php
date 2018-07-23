@@ -1462,6 +1462,25 @@ class Adminopt extends Basecontroller
                 $awardday->AwarddailyUpdate($ID,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,$cost_money);
                 //changed by Gavin end model11
             }
+            //changed by Gavin start model20
+            $income_expendit = new Income_expenditure();
+            $begintime=date("Y-m-d H:i:s",mktime(0,0,0,date('m'),date('d'),date('Y')));
+            $endtime=date("Y-m-d H:i:s",mktime(0,0,0,date('m'),date('d')+1,date('Y'))-1);
+            $in_out_RES = $income_expendit->IncomeExpenditureQueryByTime($begintime, $endtime);
+             
+            $income = $cost_money;
+            $out_vs_in = -1;
+             
+            if(count($in_out_RES) < 1)
+            {
+                $income_expendit->IncomeExpenditureInsert(-1, $income, -1, $income, $out_vs_in);
+            }
+            else
+            {
+                $out_vs_in = ($in_out_RES[0]["outgoing"]) / ($in_out_RES[0]["incomings"] + $income);
+                $income_expendit->IncomeExpenditureUpdate($in_out_RES[0]["record_id"], -1, $in_out_RES[0]["incomings"] + $income, -1, $in_out_RES[0]["incomings"] + $income - $in_out_RES[0]["outgoing"], $out_vs_in);
+            }
+            //changed by Gavin end model20
             
             //奖金处理等系列操作----针对用户升级
             $this->audit_member_update($ID, $openid, $cost_money);//the most import logic module
