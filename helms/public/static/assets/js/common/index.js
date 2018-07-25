@@ -409,6 +409,7 @@ function refreshStockChart(data) {
 		data : d1,
 		points : {
 			show : true,
+			hoverable:true,
 			fill : true,
 			radius : 6,
 			fillColor : "rgba(0,0,0,.5)",
@@ -434,8 +435,18 @@ function refreshStockChart(data) {
 		},
 
 		yaxis : {
-			ticks : 4,
-			tickDecimals : 0,
+			ticks :    function piTickGenerator(axis) { 
+			       var res = [], i = 1; 
+		           res.push([toFixed(axis.min,3), toFixed(axis.min,3) ]); 
+			       do { 
+			           var v =axis.min + ( i * (parseFloat(axis.max) - parseFloat(axis.min))/4); 
+			           res.push([toFixed(v,3), toFixed(v,3)]); 
+			           ++i; 
+			        } while (i <=4);
+			       res.push([toFixed(axis.max,3), toFixed(axis.max,3) ]); 
+			       return res; 
+			    },
+			tickDecimals : 2,
 			tickColor : "rgba(255,255,255,.3)",
 
 			font : {
@@ -503,5 +514,12 @@ function refreshStockChart(data) {
 		plot.setupGrid();
 		plot.draw();
 	});
+	
+}
 
+function toFixed(num, s) {
+    var times = Math.pow(10, s)
+    var des = num * times + 0.5
+    des = parseInt(des, 10) / times
+    return des + ''
 }

@@ -70,8 +70,8 @@ $(function(){
 				area:area
 			}, function(result) {
 				result = JSON.parse(result);
-				$(".shipping-fee").html(result.shippingFee);
-				$(".summary-total").html(parseFloat($(".product-total").text())+parseFloat(result.shippingFee));
+				$(".shipping-fee").html(parseFloat($(".product-num").val()) * parseFloat(result.shippingFee));
+				$(".summary-total").html(parseFloat($(".product-total").text())+parseFloat($(".product-num").val()) * parseFloat(result.shippingFee));
 			});
 		}
 		
@@ -110,8 +110,8 @@ $(function(){
 				area:area
 			}, function(result) {
 				result = JSON.parse(result);
-				$(".shipping-fee").html(result.shippingFee);
-				$(".summary-total").html(parseFloat($(".product-total").text())+parseFloat(result.shippingFee));
+				$(".shipping-fee").html(parseFloat($(".product-num").val()) * parseFloat(result.shippingFee));
+				$(".summary-total").html(parseFloat($(".product-total").text())+parseFloat($(".product-num").val()) * parseFloat(result.shippingFee));
 			});
 		}
 		
@@ -146,8 +146,8 @@ $(function(){
 				area:area
 			}, function(result) {
 				result = JSON.parse(result);
-				$(".shipping-fee").html(result.shippingFee);
-				$(".summary-total").html(parseFloat($(".product-total").text())+parseFloat(result.shippingFee));
+				$(".shipping-fee").html(parseFloat($(".product-num").val()) * parseFloat(result.shippingFee));
+				$(".summary-total").html(parseFloat($(".product-total").text())+parseFloat($(".product-num").val()) * parseFloat(result.shippingFee));
 			});
 		}
 	});
@@ -167,10 +167,13 @@ $(function(){
 
 function initSummary(){
 	var productTotal = 0;
+	var productNum = 0;
 	$(".pro_shop_list .shop_porlist ").each(function(index,element){
 		productTotal += parseFloat($(element).find("td:nth-child(4)").text()) * parseFloat($(element).find("td:nth-child(3)").text());
+		productNum += parseInt($(element).find("td:nth-child(3)").text());
 	});
 	$(".product-total").html(productTotal);
+	$(".product-num").val(productNum);
 	
 	var addressId = $("input[name='radio_cds']").val();
 	var province = $("select[name='receiver_province'] option:selected").text();
@@ -184,8 +187,8 @@ function initSummary(){
 		area:area
 	}, function(result) {
 		result = JSON.parse(result);
-		$(".shipping-fee").html(result.shippingFee);
-		$(".summary-total").html(parseFloat(productTotal)+parseFloat(result.shippingFee));
+		$(".shipping-fee").html(parseFloat($(".product-num").val()) * parseFloat(result.shippingFee));
+		$(".summary-total").html(parseFloat(productTotal)+parseFloat($(".product-num").val()) * parseFloat(result.shippingFee));
 	});
 }
 

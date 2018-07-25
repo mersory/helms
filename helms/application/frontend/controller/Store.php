@@ -171,6 +171,8 @@ class Store extends Basecontroller
         $_shoppingcart = new Store_shoppingcart();
         $_shoppingcart_data = $_shoppingcart->ShoppingcartInfoAllQuery($user_id);
         $total = null;
+        
+        $totalProductNum = 0;
         if (count($_shoppingcart_data) > 0) {
             for ($i = 0; $i < count($_shoppingcart_data); ++ $i) {
                 $productNum = $_shoppingcart_data[$i]["product_num"];
@@ -194,6 +196,7 @@ class Store extends Basecontroller
                 }
                 
                 $total = $total + $productNum * $productPrice;
+                $totalProductNum = $totalProductNum + $productNum;
             }
             
             // 计算运费
@@ -203,6 +206,8 @@ class Store extends Basecontroller
             if (count($shippingFeeInfo) == 1) {
                 $shippingFee = $shippingFeeInfo[0]["shipping_fee"];
             }
+            
+            $shippingFee = $totalProductNum * $shippingFee;
             
             // 创建订单
             $order = new Store_order();

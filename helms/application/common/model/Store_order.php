@@ -126,7 +126,7 @@ class Store_order extends Model
             $_orderinfo["lifecycle"] = $lifecycle;
         }
         
-        if ($expressCode >=0)
+        if ($expressCode)
         {
             $_orderinfo["express_code"] = $expressCode;
         }
