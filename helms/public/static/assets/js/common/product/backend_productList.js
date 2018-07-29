@@ -114,10 +114,12 @@ $(function() {
 				$("#addProductDialog #product_description_url").val(result[0].description_url);
 				$("#addProductDialog #product_inventory").val(result[0].invetory);
 				$("#addProductDialog #product_price").val(result[0].price);
-				$("#addProductDialog #product_cur_price").val(result[0].cur_pirce),
-				$("#addProductDialog #product_category").val(result[0].category),
-				$("#addProductDialog #product_category_name").val(result[0].category_name),
-				$("#addProductDialog #product_order").val(result[0].order)
+				//changed by Gavin start model21
+				$("#addProductDialog #product_cur_price").val(result[0].cur_price);
+				//changed by Gavin end model21
+				$("#addProductDialog #product_category").val(result[0].category);
+				$("#addProductDialog #product_category_name").val(result[0].category_name);
+				$("#addProductDialog #product_order").val(result[0].order);
 				$("#addProductDialog #product_id").val(productId);
 				$("#addProductDialog").dialog( "open" );
 			}

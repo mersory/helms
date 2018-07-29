@@ -256,12 +256,13 @@ class Store extends Basecontroller
                 
                 $orderLineResult = $orderLine->StoreOrderLineInsert($orderCode, $productId, $productNum, $productPrice * $productNum, $user_id);
                 
-                if (!$state) {
+                if (!$orderLineResult) {
                     //回滚
                     $order -> rollback();
                     $product->rollback();
                     $orderLine->rollback();
                     $_resdata['result'] = false;
+                    $_resdata['message'] = "订单行创建失败";
                     return json_encode($_resdata);
                 }
             }

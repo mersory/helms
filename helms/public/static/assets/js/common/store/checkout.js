@@ -57,12 +57,12 @@ $(function(){
 	
 	//省级联
 	$("select[name='receiver_province']").on("change",function(){
-		var addressId = $("input[name='radio_cds']").val();
+		var addressId = $("input[name='radio_cds']").filter(":checked").val();
 		var province = $("select[name='receiver_province'] option:selected").val();
 		var city = $("select[name='receiver_city'] option:selected").val();
 		var area = $("select[name='receiver_area'] option:selected").val();
 		
-		if("new" == addressId &&"" != province){
+		if(("new" == addressId &&"" != province) || "new" != addressId){
 			$.post("/public/index.php/frontend/store/getShippingFee", {
 				addressId : addressId,
 				province:province,
@@ -97,12 +97,12 @@ $(function(){
 	
 		//市级联
 	$("select[name='receiver_city']").on("change",function(){
-		var addressId = $("input[name='radio_cds']").val();
+		var addressId = $("input[name='radio_cds']").filter(":checked").val();
 		var province = $("select[name='receiver_province'] option:selected").val();
 		var city = $("select[name='receiver_city'] option:selected").val();
 		var area = $("select[name='receiver_area'] option:selected").val();
 		
-		if("new" == addressId &&"" != province){
+	if(("new" == addressId &&"" != province) || "new" != addressId){
 			$.post("/public/index.php/frontend/store/getShippingFee", {
 				addressId : addressId,
 				province:province,
@@ -133,12 +133,12 @@ $(function(){
 	})
 	
 	$("select[name='receiver_city'],select[name='receiver_area'],input[name='radio_cds']").on("change",function(){
-		var addressId = $("input[name='radio_cds']").val();
+		var addressId = $("input[name='radio_cds']").filter(":checked").val();
 		var province = $("select[name='receiver_province'] option:selected").val();
 		var city = $("select[name='receiver_city'] option:selected").val();
 		var area = $("select[name='receiver_area'] option:selected").val();
 		
-		if("new" == addressId &&"" != province){
+	if(("new" == addressId &&"" != province) || "new" != addressId){
 			$.post("/public/index.php/frontend/store/getShippingFee", {
 				addressId : addressId,
 				province:province,
@@ -175,7 +175,7 @@ function initSummary(){
 	$(".product-total").html(productTotal);
 	$(".product-num").val(productNum);
 	
-	var addressId = $("input[name='radio_cds']").val();
+	var addressId = $("input[name='radio_cds']").filter(":checked").val();
 	var province = $("select[name='receiver_province'] option:selected").text();
 	var city = $("select[name='receiver_city'] option:selected").text();
 	var area = $("select[name='receiver_area'] option:selected").text();

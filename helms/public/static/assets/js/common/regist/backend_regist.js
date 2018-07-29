@@ -27,7 +27,7 @@ $(function(){
 	})
 	
 	$('#regist').on("click",function(){
-		showMask();
+		
 		var id = $("#memberId").val();
 		var username = $("#fullname").val();
 		var email = $("#email").val();
@@ -40,23 +40,29 @@ $(function(){
 		var product = $("#product option:selected").val();
 
 		if("" == $.trim(username)){
-			showError("用户名不能为空");
+			alert("用户名不能为空");
+			//showError("用户名不能为空");
 			return false;
 		}
 		
 		if("" == $.trim(email)){
-			showError("邮箱不能为空");
+			alert("邮箱不能为空");
+			//showError("邮箱不能为空");
 			return false;
 		}
 		if("" == $.trim(telphone)){
-			showError("电话不能为空");
+			alert("电话不能为空");
+			//showError("电话不能为空");
 			return false;
 		}
 		
 		if("0" == $.trim(product)){
-			showError("请选择产品");
+			alert("请选择产品");
+			//showError("请选择产品");
 			return false;
 		}
+		showMask();
+		//changed by Gavin end model23
 		
 /*		if("" == $.trim(recommender)){
 			showError("推荐人不能为空");

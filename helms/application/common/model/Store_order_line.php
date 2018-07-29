@@ -38,8 +38,16 @@ class Store_order_line extends Model
     
         $t=time();
         $_storeOrderLineInfo["create_time"] = date("Y-m-d H:i:s",$t);
-    
-        $state = $this->save($_storeOrderLineInfo);
+        //changed by Gavin start model23
+        
+        $data1 = $_storeOrderLineInfo['create_time'];
+        $sql = "insert into `helms_store_order_line` (`order_code`,`product_id`,`product_num`,`total`,`user_id`,`create_time`) value('$orderCode','$productId','$productNum','$total','$userId','$data1')";
+        $state =  $this->execute($sql);
+        
+        return $state;
+        //changed by Gavin end model23
+        
+        //$state = $this->save($_storeOrderLineInfo);
         
         return $state;
     }

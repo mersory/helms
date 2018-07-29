@@ -76,7 +76,9 @@
 									<td>{$vo.mobile}</td>
 									<td>{$vo.province}{$vo.city}{$vo.area}{$vo.address}</td>
 									<td>{$vo.create_time}</td>
-									<td>{$vo.total}</td>
+									<!-- changed by Gavin start model21 -->
+									<td>{$vo.total+$vo.shipping_fee}</td>
+									<!-- changed by Gavin end model21 -->
 									<td>{$vo.shipping_fee}</td>
 									<td>{$vo.express_code}</td>
 									<td class="text-center">
