@@ -58,16 +58,17 @@
 						        </select>
 							</div>
 						</div>
-						
+						<!-- changed by Gavin start model24 -->
 						<div class="form-group">
 							<label class="col-sm-3 control-label">充值类型</label>
 							<div class="col-sm-3">
 							    <select class="form-control" id="recharge_type">
 								    <option value="0">注册分</option>
+								    <option value="2">重复消费分</option>
 						        </select>
 							</div>
 						</div>
-						
+						<!-- changed by Gavin end model24 -->
 					</div>
 					<div class="tile-widget">
 						<button type="button" class="btn btn-primary" id="btn_recharge">确定充值</button>
@@ -127,9 +128,7 @@
 										{elseif $vo.cz_type eq 1}
 											奖励分
 										{elseif $vo.cz_type eq 2}
-											万能分
-										{elseif $vo.cz_type eq 3}
-											重复消费分
+											重复消费分										
 										{else}
 											其他
 										{/if}

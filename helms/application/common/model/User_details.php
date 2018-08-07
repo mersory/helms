@@ -194,7 +194,7 @@ class User_details extends Model
     }
     
     public function DetailsUpdate($user_id, $user_name, $email, $portrait, $user_level,
-        $open_time, $recommender, $activator, $registry)
+        $open_time, $recommender, $activator, $registry,$telphone=-1)
     {
         $_detailsinfo = array();
     
@@ -236,6 +236,10 @@ class User_details extends Model
         if ($registry >=0)
         {
             $_detailsinfo["registry"] = $registry;
+        }
+        if ($telphone >=0)
+        {
+            $_detailsinfo["telphone"] = $telphone;
         }
         $state = $this-> where("ID='$user_id'")
                       ->setField($_detailsinfo);

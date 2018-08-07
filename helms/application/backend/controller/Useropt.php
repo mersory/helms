@@ -355,8 +355,25 @@ class Useropt extends Basecontroller
             */
             $pointOBJ = new User_point();
             $pointRES = $pointOBJ->PointQuery($user_id);
-            $regist = $pointRES[0]["regist_point"] + $money;
-            $pointRES = $pointOBJ->PointUpdate($user_id, -1, -1, $regist);
+            //changed by Gavin start model24
+            if($cz_type == 0) //注册分
+            {
+                $rechargfen = $pointRES[0]["regist_point"] + $money;
+                if($rechargfen < 0){
+                    return json_encode($_resdata);
+                }
+                $pointRES = $pointOBJ->PointUpdate($user_id, -1, -1, $rechargfen);
+            }elseif($cz_type == 2)
+            {
+                $rechargfen = $pointRES[0]["re_consume"] + $money;
+                if($rechargfen < 0){
+                    return json_encode($_resdata);
+                }
+                $pointRES = $pointOBJ->PointUpdate($user_id, -1, -1, -1, $rechargfen);
+            }
+            
+            
+            //changed by Gavin end model24
             $userdetailsOBJ = new User_details();
             $userdetailsRES = $userdetailsOBJ->DetailsQuery($user_id);
             $real_name = $userdetailsRES[0]["user_name"];

@@ -152,11 +152,9 @@
 										<th class="sort-amount">剩余静态</th>
 										<th class="sort-amount">剩余动态</th>
 										<!-- changed by Gavin start   model7 -->
-										<td class="text-center">
-											<a
-												href="#"
-												class="check-toggler checked"></a>
-										</td>
+										<!-- changed by Gavin start model24 -->
+										<td class="sort-amount">产品</td>
+										<td class="sort-amount">状态</td>
 									</tr>
 								</thead>
 								<tbody>
@@ -188,7 +186,33 @@
 										<td>{$vo.cf_count}</td>
 										<td>{$vo.shengyu_jing}</td>
 										<td>{$vo.shengyu_dong}</td>
-										<td></td>
+										<td>
+										{if $vo.portrait eq 1}
+											冰箱鲜生1台
+										{elseif $vo.portrait eq 2}
+											卟叮1台
+										{elseif $vo.portrait eq 3}
+										          迦尔纳1台
+										{elseif $vo.portrait eq 4}
+										          冰箱鲜生2台
+										{elseif $vo.portrait eq 5}
+										          嘿氢 1/2										
+										{else}
+											
+										{/if}
+										</td>
+										<td>
+										{if $vo.status eq -2}
+											提现关闭
+										{elseif $vo.status eq -1}
+											已封号
+										{elseif $vo.status eq 0}
+										          未激活
+										{else}
+											正常
+										{/if}
+										</td>
+										<!-- changed by Gavin end model24 -->
 									</tr>
 									{/foreach} {/if}
 

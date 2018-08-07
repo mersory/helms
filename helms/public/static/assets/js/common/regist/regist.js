@@ -1,6 +1,6 @@
 $(function(){
 	// 获取创建用户前页面传递的数据，赋值给对应的输入框
-	//changed by Gavin start model19
+	//changed by Gavin start model24
 	var info= GetQueryString("parentId");
 	var recInput = document.getElementById("recommender");
 	var actInput= document.getElementById("activator");
@@ -20,8 +20,9 @@ $(function(){
 		$("#product option[value='2']").show();
 		$("#product option[value='3']").show();
 		$("#product option[value='4']").show();
+		$("#product option[value='5']").show();
 	}
-	//changed by Gavin end model19
+	
 	//$("#product option[value='"+$("#level option:selected").val()+"']").show();
 	
 	$("#level").on("change",function(){
@@ -34,9 +35,10 @@ $(function(){
 			$("#product option[value='2']").show();
 			$("#product option[value='3']").show();
 			$("#product option[value='4']").show();
+			$("#product option[value='5']").show();
 		}
 	})
-	
+	//changed by Gavin end model24
 	$('#regist').on("click",function(){
 		
 		var id = $("#memberId").val();

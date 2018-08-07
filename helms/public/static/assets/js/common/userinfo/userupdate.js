@@ -1,6 +1,7 @@
 $(function(){
 	$('#btn_update').on("click",function(){
-		showMask();
+		//changed by Gavin start model24
+		
 		var needupdateid = $("#memberId").val();
 		var minorpassword = $("#minorpassword").val();
 		var level = $("#level").val();
@@ -25,7 +26,8 @@ $(function(){
 			showError("备注不能为空");
 			return false;
 		}
-		
+		showMask();
+		//changed by Gavin end model24
 		var url =  "/public/index.php/frontend/Adminopt/updateUserOpt";
 		$.post(url,{user_id:needupdateid, level:level, cost_money:0, minor_pwd:minorpassword},function(result){
 			//changed by Gavin start model19

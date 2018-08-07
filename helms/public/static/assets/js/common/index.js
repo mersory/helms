@@ -189,6 +189,8 @@ $(function() {
 	$("#userinfo_btn").on("click",function(){
 		var userid = $('#changeuserinfo_userid').val();
 		var email = $('#changeuserinfo_email').val();
+		//changed by Gavin start model24
+		var telphone = $('#changeuserinfo_telphone').val();		
 		var bank_name = $('#changeuserinfo_bankname').val();
 		var bank_account_name = $('#changeuserinfo_bank_account_name').val();
 		var bank_account_num = $('#changeuserinfo_bank_account_num').val();
@@ -199,6 +201,7 @@ $(function() {
 			var urlres =  "/public/index.php/frontend/Useropt/updateUserInfoDetails";
 			$.post(urlres,{user_id:userid,
 				email:email,
+				telphone:telphone,
 				bank_name:bank_name,
 				province:province,
 				city:city,
@@ -214,6 +217,7 @@ $(function() {
 				} 
 			});
 		}
+		//changed by Gavin end model24
 		else
 		{
 			alert("请填写信息");

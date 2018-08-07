@@ -225,9 +225,10 @@ class Store extends Basecontroller
             $addressUser -> startTrans();
             
             // 生成订单编码
+            //changed by Gavin start model24
             $orderCode = $this->generateOrderCode();
-            $orderResult = $order->StoreOrderInsert($orderCode, $user_id, $total, $shippingFee, $receiver, $mobile, $address, $province, $city, $area);
-            
+            $orderResult = $order->StoreOrderInsert($orderCode, $user_id, $total, $shippingFee, $receiver, $mobile, $address, $province, $city, $area,$pointType);
+            //changed by Gavin end model24
             //回滚
             if (!$orderResult) {
                 $order -> rollback();
