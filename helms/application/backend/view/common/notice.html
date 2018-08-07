@@ -1,7 +1,7 @@
 {extend name="base/backend"}
 
 {block name="js"}
-<script type="text/javascript" src="_JS_/common/admin/bonusdetails.js"></script>
+<script type="text/javascript" src="_JS_/common/admin/notice.js"></script>
 {/block}
 
 {block name="css"}
@@ -19,7 +19,7 @@
 		<div class="breadcrumbs">
 			<ol class="breadcrumb">
 				<li><a href="/public/index.php/backend/common/index">HERMES</a></li>
-				<li class="active">奖金明细</li>
+				<li class="active">公告发布</li>
 			</ol>
 		</div>
 	</div>
@@ -28,34 +28,28 @@
 	<!-- content main container -->
 	<div class="main">
 		<div class="row">
-			<div class="col-md-10">
+			<div class="col-md-11">
 				<section class="tile color transparent-white">
 
 					<!-- tile widget -->
 					<div class="title-body" style="height: 35px;">
 						<div class="form-group">
-							<label for="input01" class="col-sm-2 control-label">用户ID</label>
+							<label for="input01" class="col-sm-2 control-label">主题</label>
 							<div class="col-sm-3">
-								<input type="text" class="form-control"
-									id="bonus_userid" value="{$bonus_userid}">
+								<input type="text" class="form-control" id="noticeid">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="input01" class="col-sm-2 control-label">时间</label>
-							<div class="col-sm-2">
-								<input type="text" class="form-control"
-									id="income_expense_start" value="{$begintime}">
-							</div>
-							<div class="col-sm-2">
-								<input type="text" class="form-control"
-									id="income_expense_end" value="{$endtime}">
+							<label for="input01" class="col-sm-2 control-label">内容</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control"  id="notice_content">
 							</div>
 						</div>
 					</div>
 
 					<div class="tile-widget">
 						<button type="button" class="btn btn-primary"
-							id="btn_bonus">搜索</button>
+							id="btn_bonus">发布公告</button>
 					</div>
 					<!-- tile widget -->
 
@@ -63,7 +57,7 @@
 						<!-- tile header -->
 						<div class="tile-header">
 							<h1>
-								<strong>奖金明细</strong>
+								<strong>公告明细</strong>
 							</h1>
 							<div class="controls">
 								<a href="#" class="refresh"><i class="fa fa-refresh"></i></a> <a
@@ -79,11 +73,10 @@
 								<thead>
 									<tr>
 										<th class="sort-asc">序号</th>
-										<th class="sort-asc">会员ID</th>
-										<th class="sort-numeric">奖金类型</th>
-										<th class="sort-amount">积分</th>
-										<th class="sort-amount">发放时间</th>
-										<th class="sort-amount">备注</th>
+										<th class="sort-asc">主题</th>
+										<th class="sort-amount">日期</th>
+										<th class="sort-amount">内容</th>
+										<th class="sort-numeric">状态</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -95,9 +88,6 @@
 										<td>{$vo.award}</td>
 										<td>{$vo.money}</td>
 										<td>{$vo.time}</td>
-										<td>{$vo.comment}</td>
-										<td>
-										</td>
 									</tr>
 									{/foreach} {/if}
 

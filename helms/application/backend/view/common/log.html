@@ -1,7 +1,7 @@
 {extend name="base/backend"}
 
 {block name="js"}
-<script type="text/javascript" src="_JS_/common/admin/bonusdetails.js"></script>
+<script type="text/javascript" src="_JS_/common/admin/log.js"></script>
 {/block}
 
 {block name="css"}
@@ -19,7 +19,7 @@
 		<div class="breadcrumbs">
 			<ol class="breadcrumb">
 				<li><a href="/public/index.php/backend/common/index">HERMES</a></li>
-				<li class="active">奖金明细</li>
+				<li class="active">日志明细</li>
 			</ol>
 		</div>
 	</div>
@@ -32,31 +32,7 @@
 				<section class="tile color transparent-white">
 
 					<!-- tile widget -->
-					<div class="title-body" style="height: 35px;">
-						<div class="form-group">
-							<label for="input01" class="col-sm-2 control-label">用户ID</label>
-							<div class="col-sm-3">
-								<input type="text" class="form-control"
-									id="bonus_userid" value="{$bonus_userid}">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="input01" class="col-sm-2 control-label">时间</label>
-							<div class="col-sm-2">
-								<input type="text" class="form-control"
-									id="income_expense_start" value="{$begintime}">
-							</div>
-							<div class="col-sm-2">
-								<input type="text" class="form-control"
-									id="income_expense_end" value="{$endtime}">
-							</div>
-						</div>
-					</div>
-
-					<div class="tile-widget">
-						<button type="button" class="btn btn-primary"
-							id="btn_bonus">搜索</button>
-					</div>
+					
 					<!-- tile widget -->
 
 					<div class="tile-widget bg-transparent-white-2">
@@ -79,11 +55,9 @@
 								<thead>
 									<tr>
 										<th class="sort-asc">序号</th>
-										<th class="sort-asc">会员ID</th>
-										<th class="sort-numeric">奖金类型</th>
-										<th class="sort-amount">积分</th>
-										<th class="sort-amount">发放时间</th>
-										<th class="sort-amount">备注</th>
+										<th class="sort-asc">登陆IP</th>
+										<th class="sort-numeric">操作</th>
+										<th class="sort-amount">时间</th>
 									</tr>
 								</thead>
 								<tbody>
