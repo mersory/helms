@@ -1,6 +1,6 @@
 $(function(){
 	// 获取创建用户前页面传递的数据，赋值给对应的输入框
-	//changed by Gavin start model19
+	//changed by Gavin start model24
 	var info= GetQueryString("parentId");
 	var recInput = document.getElementById("recommender");
 	var actInput= document.getElementById("activator");
@@ -8,10 +8,21 @@ $(function(){
 	recInput.value = info;
 	actInput.value = info;
 	emailInput.value = "hermesplus_service@163.com";
-	//changed by Gavin end model19
-	//处理产品级别
+	
+	//处理产品级别	
+	//$("#product option[value='"+$("#level option:selected").val()+"']").show();
 	$("#product option").hide();
-	$("#product option[value='"+$("#level option:selected").val()+"']").show();
+	var j = $("#level option:selected").val();
+	if(j == 1){
+		$("#product option").hide();
+		$("#product option[value='1']").show();
+	}else if(j==2){
+		$("#product option").hide();
+		$("#product option[value='2']").show();
+		$("#product option[value='3']").show();
+		$("#product option[value='4']").show();
+		$("#product option[value='5']").show();
+	}
 	
 	$("#level").on("change",function(){
 		var i = $("#level option:selected").val();
@@ -23,9 +34,10 @@ $(function(){
 			$("#product option[value='2']").show();
 			$("#product option[value='3']").show();
 			$("#product option[value='4']").show();
+			$("#product option[value='5']").show();
 		}
 	})
-	
+	//changed by Gavin end model24
 	$('#regist').on("click",function(){
 		
 		var id = $("#memberId").val();

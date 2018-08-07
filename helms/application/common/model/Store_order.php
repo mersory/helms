@@ -25,7 +25,9 @@ class Store_order extends Model
     public function OrderInfoAllQueryPage()
     {
 //         $sql = "select * from helms_store_order order by update_time desc";
-        $_orderinfo = $this->order('update_time desc')->paginate(10,false,['query' => request()->param()]);
+//changed by Gavin start model24
+        $_orderinfo = $this->order('create_time desc')->paginate(10,false,['query' => request()->param()]);
+//changed by Gavin end model24
         if(count($_orderinfo) > 0){
             for($i=0;$i<count($_orderinfo);++$i){
                 $orderLine = new Store_order_line();
@@ -49,7 +51,8 @@ class Store_order extends Model
         return $_orderinfo;
     }
     
-    public function StoreOrderInsert($code, $userId,$total,$shippingFee,$receiver,$mobile,$address,$province,$city,$area)
+    //changed by Gavin start model24
+    public function StoreOrderInsert($code, $userId,$total,$shippingFee,$receiver,$mobile,$address,$province,$city,$area,$point_type='')
     {
         $_orderinfo = array();
         if ($code >=0)
@@ -100,6 +103,11 @@ class Store_order extends Model
         if ($address >=0)
         {
             $_orderinfo["address"] = $address;
+        }
+        
+        if (strcmp($point_type,''))
+        {
+            $_orderinfo["point_type"] = $point_type;
         }
         
         $_orderinfo["lifecycle"] = "1";

@@ -49,6 +49,9 @@
 									<th class="sort-amount">下单时间</th>
 									<th class="sort-amount">总金额</th>
 									<th class="sort-amount">运费</th>
+									<!-- changed by Gavin start model24 -->
+									<th class="sort-amount">积分类型</th>
+									<!-- changed by Gavin end model24 -->
 									<th class="sort-amount">运单号</th>
 									<th class="sort-amount">状态</th>
 								</tr>
@@ -68,6 +71,21 @@
 									<td>{$vo.total+$vo.shipping_fee}</td>
 									<!-- changed by Gaivn end model21 -->
 									<td>{$vo.shipping_fee}</td>
+									<!-- changed by Gavin start model24 -->
+									<td>
+									{if $vo.point_type eq 'regist'}
+										注册分
+									{elseif $vo.point_type eq 'bonus'}
+										奖励分
+									{elseif $vo.point_type eq 'consume'}
+										重复消费分
+									{elseif $vo.point_type eq 'universal'}
+										万能分
+									{else}
+									
+									{/if}
+									</td>
+									<!-- changed by Gavin end model24 -->
 									<td>{$vo.express_code}</td>
 									<td class="text-center">
 										{if condition="$vo.lifecycle eq 1"} <button

@@ -47,9 +47,11 @@
 						
 						</span>
 					</div>
-					{if condition="$pass_data['type'] == 'universal' or $pass_data['type'] == 'bonus'"}
+					<!-- changed by Gavin start model24 -->
+					{if condition="$pass_data['type'] == 'bonus'"}
+					<!-- changed by Gavin end model24 -->
 					<div class="tile-widget">
-						<a href="#transform1Dialog" role="button" class="btn btn-cyan"
+						<a href="#transform1Dialog"  role="button" class="btn btn-cyan"
 							data-toggle="modal">积分转换</a>
 
 						<div class="modal fade" id="transform1Dialog" tabindex="-1"

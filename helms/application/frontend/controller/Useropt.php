@@ -353,6 +353,9 @@ class Useropt extends Basecontroller
             $_resdata["userName"] = $_res[0]["user_name"];
             $_resdata["email"] = $_res[0]["email"];
             $_resdata["userLevel"] = $_res[0]["user_level"];
+            //changed by Gavin start model24
+            $_resdata["telphone"] = $_res[0]["telphone"];
+            //changed by Gavin end model24
             
             $_user = new User_bankinfo();
             $_res = $_user->BankinfoQuery($_user_id);
@@ -513,7 +516,8 @@ class Useropt extends Basecontroller
     }
     
     //用户修改信息，页面直接调用
-    public function updateUserInfoDetails($user_id, $email=-1, $bank_name=-1, $province=-1, $city=-1, $sub_bank=-1, $bank_account_num=-1, $bank_account_name=-1)
+    //changed by Gavin start model24
+    public function updateUserInfoDetails($user_id, $email=-1, $telphone=-1, $bank_name=-1, $province=-1, $city=-1, $sub_bank=-1, $bank_account_num=-1, $bank_account_name=-1)
     {
         $result = array();
         $result["ok"] = 1;
@@ -521,11 +525,11 @@ class Useropt extends Basecontroller
         $detailsOBJ = new User_details();
 
         $bankRES = $bankOBJ->BankinfoUpdate($user_id,$bank_name, $province, $city, $sub_bank, $bank_account_num, $bank_account_name);
-        $detailRES = $detailsOBJ->DetailsUpdate($user_id, -1, $email, -1, -1, -1, -1, -1, -1);
+        $detailRES = $detailsOBJ->DetailsUpdate($user_id, -1, $email, -1, -1, -1, -1, -1, -1, $telphone);
         
         return json_encode($result);
     }
-    
+    //changed by Gavin end model24
 //---------------------------------单个接口测试--------------------------------
 //---------------------------------单个接口测试--------------------------------
 //---------------------------------单个接口测试--------------------------------
