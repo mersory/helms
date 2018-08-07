@@ -725,6 +725,16 @@ li.remove_frame a:hover {
 }
 
 body,#wrap,#row,#content,.pageheader,.main,.row{
-	min-width:1500px;
-	max-height:1000px;
+	min-width:1080px;
+	/* max-height:1000px; */
 }
+
+@media screen and (max-width: 800px) {
+    #content, .pageheader, .main, .cards{
+    max-width: 700px; 
+   }}
+
+@media screen and (min-width: 1200px) {
+    #content, .pageheader, .main, .row {
+    min-width: 1500px; 
+   }}
