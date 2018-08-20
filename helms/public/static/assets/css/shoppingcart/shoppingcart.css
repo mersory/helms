@@ -215,7 +215,7 @@ License URL: https://creativecommons.org/licenses/by/3.0/
 
 /*--- Responsive Code ---*/
 
-@media screen and (max-width: 1920px) {
+/* @media screen and (max-width: 1920px) {
     .shoppingcart h1 {
         padding: 60px 0;
         font-size: 50px;
@@ -561,7 +561,7 @@ License URL: https://creativecommons.org/licenses/by/3.0/
     .checkout-btn a {
         margin-right: 5px;
     }
-}
+} */
 
 .alert-close{
     background: url(../../images/close.png) no-repeat 0px 0;

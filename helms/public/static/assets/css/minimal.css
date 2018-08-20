@@ -14250,7 +14250,7 @@ table tbody.files>tr>td .preview canvas, table tbody.files>tr>td .preview img
 	margin: 5px;
 }
 
-@media only screen and (min-width: 320px) {
+/* @media only screen and (min-width: 320px) {
 	.superbox-list, .colorbox-list {
 		width: 100%;
 	}
@@ -14303,7 +14303,7 @@ table tbody.files>tr>td .preview canvas, table tbody.files>tr>td .preview img
 	.tile.color.transparent-white .title-body{
 		height:100px;
 	}
-}
+} */
 /************************************/
 /************* TIMELINE *************/
 /************************************/
@@ -16719,8 +16719,8 @@ body #content.full-page.error .search input:-ms-input-placeholder {
 /**************************************/
 /************* RESPONSIVE *************/
 /**************************************/
-@media only screen and (max-width: 1700px) {
-	/* mail */
+/* @media only screen and (max-width: 1700px) {
+	mail
 	.mail-content .message .content {
 		max-height: 845px;
 	}
@@ -16728,7 +16728,7 @@ body #content.full-page.error .search input:-ms-input-placeholder {
 
 @media only screen and (max-width: 1024px) {
 	body {
-		/* navbar */
+		navbar
 		
 	}
 	body .navbar .search input {
@@ -16752,7 +16752,7 @@ body #content.full-page.error .search input:-ms-input-placeholder {
 		padding-right: 25px;
 	}
 
-	/* timeline */
+	timeline
 	.timeline>li>.el-container .side {
 		width: 100px;
 		font-size: 30px;
@@ -16770,9 +16770,9 @@ body #content.full-page.error .search input:-ms-input-placeholder {
 
 @media only screen and (max-width: 970px) {
 	body {
-		/* tables */
-		/* tile navbar */
-		/* mail */
+		tables
+		tile navbar
+		mail
 		
 	}
 	body .table-responsive {
@@ -16813,13 +16813,13 @@ body #content.full-page.error .search input:-ms-input-placeholder {
 
 @media only screen and (max-width: 768px) {
 	body {
-		/* navbar */
-		/* pageheader */
-		/* recent activity */
-		/* datatables */
-		/* misc */
-		/* timeline */
-		/* mail */
+		navbar
+		pageheader
+		recent activity
+		datatables
+		misc
+		timeline
+		mail
 		
 	}
 	body .navbar.navbar-default .navbar-collapse {
@@ -17111,15 +17111,15 @@ body #content.full-page.error .search input:-ms-input-placeholder {
 	body #content .horizontal-mail .mail-content {
 		padding: 0;
 	}
-}
+ */}
 
-@media only screen and (max-width: 479px) {
+/* @media only screen and (max-width: 479px) {
 	body {
-		/* pageheader */
-		/* tiles */
-		/* recent activity */
-		/* timeline */
-		/* login page */
+		pageheader
+		tiles
+		recent activity
+		timeline
+		login page
 		
 	}
 	body .pageheader {
@@ -17183,7 +17183,7 @@ body #content.full-page.error .search input:-ms-input-placeholder {
 		right: 25%;
 		top: 10px;
 	}
-}
+} */
 
 body #content .tile.color .tile-body  #chart-container .orgchart   table>tbody>tr>td
 	{
