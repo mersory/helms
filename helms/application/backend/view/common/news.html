@@ -1,7 +1,7 @@
 {extend name="base/backend"}
 
 {block name="js"}
-	<script type="text/javascript" src="_JS_/common/admin/applicationlist.js"></script>
+    <script type="text/javascript" src="_JS_/common/index.js"></script>
 {/block}
 
 {block name="css"}
@@ -9,16 +9,15 @@
 {/block}
 
 {block name="content"}
-
-        <!-- Page content -->
+           <!-- Page content -->
         <div id="content" class="col-md-12">
           <!-- page header -->
           <div class="pageheader">
-            <h2><i class="fa fa-tachometer"></i> 会员申请<span></span></h2>
+            <h2><i class="fa fa-tachometer"></i> 新闻公告<span></span></h2>
             <div class="breadcrumbs">
               <ol class="breadcrumb">
                 <li><a href="/public/index.php/backend/common/index">HERMES</a></li>
-                <li class="active">会员申请</li>
+                <li class="active">新闻公告</li>
               </ol>
             </div>
           </div>
@@ -27,31 +26,11 @@
           <!-- content main container -->
           <div class="main">
           	<div class="row">
-                <div class="col-md-11">
-                 <section class="tile color transparent-white">
-
-                  <!-- tile widget -->
-				<div class="title-body" style="height: 35px;">
-                      <div class="form-group">
-                        <label for="input01" class="col-sm-2 control-label">申请时间</label>
-                        <div class="col-sm-3">
-                          <input type="text" class="form-control"  id="applytime_start" value="{$fromTime}">
-                        </div>
-                        <div class="col-sm-3">
-                           <input type="text" class="form-control"  id="applytime_end" value="{$toTime}">
-                        </div>
-                      </div>
-                  </div>
-                  
-                 <div class="tile-widget">
-					<button type="button" class="btn btn-primary" id="btn_application_list">搜索</button>
-				</div>
-                  <!-- tile widget -->
-
-				<div class="tile-widget bg-transparent-white-2">
+                <div class="col-md-10">
+                  <section class="tile color transparent-white news-content">
                   <!-- tile header -->
                   <div class="tile-header">
-                    <h1><strong>会员申请</strong></h1>
+                    <h1><strong>{$pass_data['news_notice']["subject"]}</strong> </h1>
                     <div class="controls">
                       <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
                       <a href="#" class="remove"><i class="fa fa-times"></i></a>
@@ -59,105 +38,30 @@
                   </div>
                   <!-- /tile header -->
 
-                  <!-- tile body -->
-                  <div class="tile-body no-vpadding">
-                    
-                    <table class="table table-custom" id="applyList_table">
-                      <thead>
-                        <tr>
-                          <th class="sort-numeric">序号</th>
-						  <th class="sort-amount">申请人会员ID</th>
-                          <th class="sort-numeric">会员名</th>
-                          <th class="sort-amount">手机号</th>
-                          <th class="sort-amount">邮箱</th>
-                          <!-- changed by Gavin start model7 -->
-                          <th class="sort-amount">会员等级</th>
-                          <!-- changed by Gavin start model7 -->
-                          <th class="sort-amount">申请时间</th>
-                          <th class="sort-amount">申请产品</th>
-                          <th style="width: 60px;">操作</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-									{if condition="empty($pass_data) neq true"} {foreach
-									name='pass_data' item='vo'}
-									<tr>
-									    <td>{$vo.AUTO_ID}</td>
-										<td>{$vo.ID}</td>
-										<td>{$vo.user_name}</td>
-										<td>{$vo.telphone}</td>
-										<td>{$vo.email}</td>
-										<td>{$vo.user_level}</td>
-										<td>{$vo.open_time}</td>
-										<td>
-											{if $vo.portrait eq 1}
-												冰箱鲜生1台
-											{elseif $vo.portrait eq 2}
-												卟叮1台
-											{elseif $vo.portrait eq 3}
-												迦尔纳1台
-											{elseif $vo.portrait eq 4}
-												冰箱鲜生2台
-											{elseif $vo.portrait eq 5}
-												嘿氢1/2
-											{else}
-												空
-											{/if}
-										</td>
-										<td>
-											<button type="button" menu_id="{$vo.ID}" class="btn btn-primary menu_pass">激活</button>
-											<button type="button" menu_id="{$vo.ID}" class="btn btn-primary menu_delete">删除</button>
-										</td>
-									</tr>
-									{/foreach} {/if}
+                  <!-- tile widget -->
+                  <div class="tile-widget">
+                    <span>来源:系统管理员</span>
+                    <span>日期:{$pass_data['news_notice']["time"]}</span>
+                  </div>
+                  <!-- /tile widget -->
 
-								</tbody>
-                    </table>
+                  <!-- tile body -->
+                  <div class="tile-body">
+                    
+                    <p>{$pass_data['news_notice']["comment"]}</p>
 
                   </div>
                   <!-- /tile body -->
-
-                  <!-- tile footer -->
-<!--                   <div class="tile-footer bg-transparent-white-2 rounded-bottom-corners">
-                    <div class="row">  
-                      
-                      <div class="col-sm-4">
-                        <small class="inline table-options paging-info">showing 1-3 of 24 items</small>
-                      </div>
-
-                      <div class="col-sm-4 text-center sm-center">
-                        <ul class="pagination pagination-xs nomargin pagination-custom">
-                          <li class="disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                          <li class="active"><a href="#">1</a></li>
-                          <li><a href="#">2</a></li>
-                          <li><a href="#">3</a></li>
-                          <li><a href="#">4</a></li>
-                          <li><a href="#">5</a></li>
-                          <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
-                        </ul>
-                      </div>
-
-                    </div>
-                  </div> -->
-                  
-                  	<div id="confirmApplicationDialog" >
-						<input type="hidden" id="application_id" value="" /> 
-						<label for="input03" class="col-sm-5 text-left control-label">二级密码</label>
-						<input type="text" class="form-control" type="regist" id="minorpwd" />
-					</div>
-                  
-				</div>
-
+           
                 </section>
-              </div>
+                </div>
             </div>
           </div>
           <!-- /content container -->
 
         </div>
         <!-- Page content end -->
-
-    <script>
+        <script>
     $(function(){
 
       // Initialize card flip
@@ -400,4 +304,4 @@
     })
       
     </script>
-      {/block}
+{/block} 

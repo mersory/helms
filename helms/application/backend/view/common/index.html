@@ -190,7 +190,10 @@
                   <!-- tile body -->
 				  <div class="tile-body">
 				  	<ul class="news-title">  					  
-  					  <li><a href="/public/index.php/frontend/common/news"  class="text-muted">HERMES全新系统升级(beta版)</a></li>
+  					  {if condition='empty($pass_data.news_data) neq true'} 
+				  	{foreach name='$pass_data.news_data' item='vo'}  					  
+  					  <li><a href="/public/index.php/backend/common/news?newsID={$vo.Id}"  class="text-muted">{$vo.subject}</a></li>
+					{/foreach} {/if}
 					</ul>
 
                   </div>

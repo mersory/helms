@@ -32,6 +32,30 @@
 				<section class="tile color transparent-white">
 
 					<!-- tile widget -->
+					<div class="title-body" style="height: 35px;">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">会员ID</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" id="userid" value="{$userId}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">时间</label>
+							<div class="col-sm-2">
+								<input class="form-control"
+									id="log_start" value="{$fromTime}">
+							</div>
+							<div class="col-sm-2">
+								<input class="form-control"
+									id="log_end" value="{$toTime}">
+							</div>
+						</div>
+					</div>
+
+					<div class="tile-widget">
+						<button type="button" class="btn btn-primary"
+							id="btn_log_search">搜索</button>
+					</div>
 					
 					<!-- tile widget -->
 
@@ -39,7 +63,7 @@
 						<!-- tile header -->
 						<div class="tile-header">
 							<h1>
-								<strong>奖金明细</strong>
+								<strong>操作日志</strong>
 							</h1>
 							<div class="controls">
 								<a href="#" class="refresh"><i class="fa fa-refresh"></i></a> <a
@@ -54,7 +78,7 @@
 							<table class="table table-custom" id="income_expense_table">
 								<thead>
 									<tr>
-										<th class="sort-asc">序号</th>
+										<th class="sort-asc">会员ID</th>
 										<th class="sort-asc">登陆IP</th>
 										<th class="sort-numeric">操作</th>
 										<th class="sort-amount">时间</th>
@@ -64,14 +88,10 @@
 									{if condition="empty($pass_data) neq true"} {foreach
 									name='pass_data' item='vo'}
 									<tr>
-										<td>{$vo.AUTO}</td>
-										<td>{$vo.ID}</td>
-										<td>{$vo.award}</td>
-										<td>{$vo.money}</td>
+										<td>{$vo.userid}</td>
+										<td>{$vo.ip}</td>
+										<td>{$vo.action}</td>
 										<td>{$vo.time}</td>
-										<td>{$vo.comment}</td>
-										<td>
-										</td>
 									</tr>
 									{/foreach} {/if}
 
@@ -80,33 +100,12 @@
 
 						</div>
 						<!-- /tile body -->
-						<div>
-							{$page}
-						</div>
+						
 
 
 						<!-- tile footer -->
-						<div
-							class="tile-footer bg-transparent-white-2 rounded-bottom-corners">
-							<div class="row">
-
-								<!-- <div class="col-sm-4">
-                        <small class="inline table-options paging-info">showing 1-3 of 24 items</small>
-                      </div>
-
-                      <div class="col-sm-4 text-center sm-center">
-                        <ul class="pagination pagination-xs nomargin pagination-custom">
-                          <li class="disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                          <li class="active"><a href="#">1</a></li>
-                          <li><a href="#">2</a></li>
-                          <li><a href="#">3</a></li>
-                          <li><a href="#">4</a></li>
-                          <li><a href="#">5</a></li>
-                          <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
-                        </ul>
-                      </div> -->
-
-							</div>
+						<div>
+							{$page}
 						</div>
 					</div>
 				</section>

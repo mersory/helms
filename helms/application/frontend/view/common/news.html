@@ -30,7 +30,7 @@
                   <section class="tile color transparent-white news-content">
                   <!-- tile header -->
                   <div class="tile-header">
-                    <h1><strong>HERMES系统开始上线</strong> </h1>
+                    <h1><strong>{$pass_data['news_notice']["subject"]}</strong> </h1>
                     <div class="controls">
                       <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
                       <a href="#" class="remove"><i class="fa fa-times"></i></a>
@@ -41,14 +41,14 @@
                   <!-- tile widget -->
                   <div class="tile-widget">
                     <span>来源:系统管理员</span>
-                    <span>日期:2018-07-20</span>
+                    <span>日期:{$pass_data['news_notice']["time"]}</span>
                   </div>
                   <!-- /tile widget -->
 
                   <!-- tile body -->
                   <div class="tile-body">
                     
-                    <p>HERMES会员管理系统全新升级上线！</p>
+                    <p>{$pass_data['news_notice']["comment"]}</p>
 
                   </div>
                   <!-- /tile body -->

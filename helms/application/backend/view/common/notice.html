@@ -36,13 +36,13 @@
 						<div class="form-group">
 							<label for="input01" class="col-sm-2 control-label">主题</label>
 							<div class="col-sm-3">
-								<input type="text" class="form-control" id="noticeid">
+								<input type="text" class="form-control" id="notice_subject" value="{$subject}">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="input01" class="col-sm-2 control-label">内容</label>
 							<div class="col-sm-3">
-								<input type="text" class="form-control"  id="notice_content">
+								<input type="textarea" class="form-control"  id="notice_content" value="{$comment}">
 							</div>
 						</div>
 					</div>
@@ -72,22 +72,24 @@
 							<table class="table table-custom" id="income_expense_table">
 								<thead>
 									<tr>
-										<th class="sort-asc">序号</th>
 										<th class="sort-asc">主题</th>
 										<th class="sort-amount">日期</th>
 										<th class="sort-amount">内容</th>
 										<th class="sort-numeric">状态</th>
+										<th class="sort-amount">操作</th>
 									</tr>
 								</thead>
 								<tbody>
 									{if condition="empty($pass_data) neq true"} {foreach
 									name='pass_data' item='vo'}
 									<tr>
-										<td>{$vo.AUTO}</td>
-										<td>{$vo.ID}</td>
-										<td>{$vo.award}</td>
-										<td>{$vo.money}</td>
+										<td>{$vo.subject}</td>
 										<td>{$vo.time}</td>
+										<td>{$vo.comment}</td>
+										<td>{$vo.status}</td>
+										<td>
+											<button type="button" menu_id="{$vo.Id}" class="btn btn-primary menu_delete">删除</button>
+										</td>
 									</tr>
 									{/foreach} {/if}
 
