@@ -24,6 +24,8 @@ use think\Session;
 use app\trigger\controller\External;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use app\extra\controller\Basecontroller;
+use app\common\model\User_log;
+use app\common\model\Notice;
 
 class Adminopt extends Basecontroller
 {
@@ -319,6 +321,33 @@ class Adminopt extends Basecontroller
         }
     }
     
+    public function notice($subject, $comment)
+    {
+        $_session_user = Session::get(USER_SEESION);
+        $_resdata = array();
+        $_resdata["ok"] = 0;
+        if(empty($_session_user))
+        {
+            return json_encode($_resdata);
+        }
+        else
+        {
+            $_userid = $_session_user["userId"];
+            if($_userid < "1000")//当前用户是管理员
+            {
+                $noticeOBJ = new Notice();
+                $noticeRES = $noticeOBJ->NoticeInsert($subject, $comment);
+                if(count($noticeRES) > 0)
+                {
+                    $_resdata["ok"] = 1;
+                    $_resdata["res"] = $_resdata;
+                }
+                return json_encode($_resdata);
+            }
+            else
+                return json_encode($_resdata);
+        }
+    }
     //--------------------------------------------------------
     //--------------------------------------------------------
     //--------------------------------------------------------
@@ -450,6 +479,8 @@ class Adminopt extends Basecontroller
         $_res = $_point_transform->PointTransformInsert($point_id, $user_id, $point_type, $point_change_sum, $point_change_type);
         //var_dump($_res);
     }
+    
+    
     
 
 }
