@@ -9,6 +9,7 @@ use app\common\model\Subuser_info;
 use app\common\model\System_subscriber;
 use app\common\model\User_point;
 use app\common\model\Store_shoppingcart;
+use app\common\model\User_log;
 
 class Login extends Controller
 {
@@ -77,6 +78,8 @@ class Login extends Controller
     //鐢ㄦ埛鐧诲綍鎿嶄綔
     public function Login($_username, $_password,$isAdmin)
     {
+        $userlog = new User_log();
+        $userlog->UserLogInsert($_username, "登陆");
         $_resdata = array();
         
         if($isAdmin == "true"){

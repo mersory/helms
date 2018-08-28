@@ -757,6 +757,8 @@ class Common extends Basecontroller
             $_user_id = $_session_user["userId"];
             if($_user_id < "1000")
             {
+                $userlog = new User_log();
+                $userlog->UserLogInsert($_user_id, "申请提现通过");
                 $withdrawOBJ = new Withdrawal_record();
                 $withdrawRES = $withdrawOBJ->WithdrawalUpdate($appID, 1);
                 if($withdrawRES >= 0)
@@ -782,7 +784,8 @@ class Common extends Basecontroller
             {
                 return json_encode($res);
             }
-            
+            $userlog = new User_log();
+            $userlog->UserLogInsert($_user_id, "提现申请拒绝");
             $withdrawOBJ = new Withdrawal_record();
             $pointsOBJ = new User_point();
             

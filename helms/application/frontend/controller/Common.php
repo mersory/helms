@@ -17,6 +17,7 @@ use app\extra\controller\Basecontroller;
 use app\common\model\Award_record;
 use app\common\model\Notice;
 use think\Request;
+use app\common\model\User_log;
 
 class Common extends Basecontroller
 {
@@ -297,6 +298,9 @@ class Common extends Basecontroller
             return $this->redirect("/login/login/index");
         }else{
             $_user_id = $_session_user["userId"];
+            $userlog = new User_log();
+            $userlog->UserLogInsert($_user_id, "提现申请");
+             
             //检测是否填写完整信息
             $bankinfoOBJ = new User_bankinfo();
             $bankRES = $bankinfoOBJ->BankinfoQuery($_user_id);
