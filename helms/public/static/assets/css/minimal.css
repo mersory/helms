@@ -16045,7 +16045,8 @@ body #content.full-page .inside-block {
 	display: block;
 	margin: 0 auto;
 	text-align: center;
-	width: 360px;
+	width: 70%;
+	max-width:360px;
 	background-color: rgba(0, 0, 0, 0.3);
 	height: 100%;
 	-webkit-box-sizing: content-box;
