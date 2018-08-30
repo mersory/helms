@@ -9,7 +9,7 @@ $(function(){
 		if(res.ok == 1)
 		{
 		  alert("发布成功");
-		  window.location.href = "notice.html";
+		  window.location.href = "notice";
 		} else {
 		  alert("发布失败");
 		  return false;
@@ -27,7 +27,7 @@ $(function(){
 			res = JSON.parse(res);
 			if(res.success > 0){
 				alert("删除成功");
-				window.location.href = "notice.html";
+				window.location.href = "notice";
 			}else{
 				alert("删除失败");
 			}
