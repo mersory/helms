@@ -61,10 +61,13 @@
 								<tbody>
 								{if condition="empty($pass_data) neq true"} {foreach
 								name='pass_data' item='vo'}
+								<!-- changed by Gavin start model27 -->
 								<tr>
 									<td>{$vo.user_id}</td>
 									<td>
-										{if $vo.point_change_type eq 1}
+										{if $vo.point_change_type eq 0}
+											商城消费
+										{elseif $vo.point_change_type eq 1}
 											奖励分转注册分
 										{elseif $vo.point_change_type eq 2}
 											万能分转注册分
@@ -81,7 +84,7 @@
 								{/foreach} {/if}
 								</tbody>
 							</table>
-
+                            <!-- changed by Gavin end model27 -->
 						</div>
 						<!-- /tile body -->
 

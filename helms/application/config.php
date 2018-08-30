@@ -230,7 +230,7 @@ return [
         'type'           => '',
         // �Ƿ��Զ����� SESSION
         'auto_start'     => true,
-        'path'           =>TEMP_PATH,
+//         'path'           =>TEMP_PATH,
         'expire'         => 1800,
     ],
 

@@ -33,30 +33,33 @@ class Award_record extends Model
     
     public function AwardRecordQueryWithLimit($id, $fromtime="", $totime="")//
     {
+        //changed by Gavin start model25
         $_where = '';
         if (strcmp("$id", ""))
         {
-            $_where = "ID = '$id'";
+            $_where = "record.ID = '$id'";
         }
         else
         {
-            $_where = "ID != '0'";
+            $_where = "record.ID != '0'";
         }
         
         if(strcmp($fromtime, ""))
         {
-            $_where = "$_where and time >= '$fromtime'";
+            $_where = "$_where and record.time >= '$fromtime'";
         }
         
         if(strcmp($totime, ""))
         {
-            $_where = "$_where and time <= '$totime'";
+            $_where = "$_where and record.time <= '$totime'";
         }
-        //changed by Gavin start model19
-        $_award_info = $this->order("time desc, AUTO desc")
-                            ->where($_where)
+        
+        $_award_info = $this->table("helms_award_record record, helms_user_info info")
+                            ->order("record.time desc, record.AUTO desc")
+                            ->where("$_where and record.ID = info.ID")
                             ->paginate(25,false,['query' => request()->param()]);
-        //changed by Gavin end model19
+        
+        //changed by Gavin end model25
         return $_award_info;
     }
     
