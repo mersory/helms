@@ -1762,7 +1762,7 @@ body #content .tile .tile-header.transparent .controls a:hover {
 }
 
 body #content .tile .tile-widget {
-	padding: 15px;
+	margin: 15px;
 }
 
 body #content .tile .tile-widget h2 {
