@@ -235,7 +235,7 @@ body .navbar.navbar-transparent-black .navbar-header {
 body .navbar .navbar-header {
 	width: 250px;
 	position: relative;
-	z-index: 99;
+	z-index: 999999;
 }
 
 body .navbar .navbar-header .navbar-brand {
