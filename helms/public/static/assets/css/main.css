@@ -184,7 +184,7 @@ none
 }
 
 #chart-container {
-	position: relative;
+	position: relative; 
 	height: 600px;
 	border: 2px dashed #aaa;
 	border-radius: 5px;
@@ -723,10 +723,21 @@ li.remove_frame a:hover {
 .description-img-array{
     margin-top: 85px;
 }
-
-body,#wrap,#row,#content,.pageheader,.main,.row{
-	min-width:1080px;
-	/* max-height:1000px; */
+@media screen and (min-width: 960px) {
+	body,#wrap,#row,#content,.pageheader,.main,.row{
+		min-width:1080px; 
+	 }
+	body .navbar .navbar-nav.side-nav>li.collapsed-content {
+		display: none;
+	}
+}
+@media screen and (max-width: 960px) {
+	body,#wrap,#row,#content,.pageheader,.main,.row{
+    	max-width: 900px; 
+	 }
+	body .navbar .navbar-nav.side-nav>li.collapsed-content {
+		display:none;
+	}
 }
 
 /* @media screen and (max-width: 800px) {

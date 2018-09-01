@@ -1762,7 +1762,7 @@ body #content .tile .tile-header.transparent .controls a:hover {
 }
 
 body #content .tile .tile-widget {
-	margin: 15px;
+	/* margin: 15px; */
 }
 
 body #content .tile .tile-widget h2 {
@@ -8629,8 +8629,7 @@ body #content .input-group-addon:not (:first-child ):not (:last-child ),
 	display: inline-block;
 	vertical-align: top;
 	position: absolute;
-	right: 0;
-	top: 0;
+    top: 35px;
 }
 
 .pageheader .breadcrumbs ol.breadcrumb {

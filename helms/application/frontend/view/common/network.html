@@ -43,7 +43,7 @@ body #content .tile.transparent-white table>tbody>tr>td.topLine{
 	<div class="main">
 		<div class="row">
 			<div class="col-md-10">
-				<section class="tile color transparent-white news-content">
+				<section class="tile color transparent-white news-content" >
 
 					<div class="tile-widget bg-transparent-white-2">
 						<form class="form-horizontal" role="form">
@@ -59,10 +59,15 @@ body #content .tile.transparent-white table>tbody>tr>td.topLine{
 					</div>
 
 					<!-- tile body -->
-					<div class="tile-body">
+					<div class="tile-body" >
+						<div style="overflow-x:scroll;">
 						<div id="chart-container"></div>
+						</div>
+					
 						<div id="edit-panel" class="view-state">
-							<label for="rd-parent">节点人</label><input type="text" name="node-type" id="rd-node-user" /> 
+							<label for="rd-parent">节点人</label>
+							<br/>
+							<input type="text" name="node-type" id="rd-node-user" /> 
 							<button type="button" id="btn-add-user">帮助创建用户</button>
 						</div>
 					</div>
