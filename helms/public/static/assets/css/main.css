@@ -184,11 +184,10 @@ none
 }
 
 #chart-container {
-	position: relative; 
 	height: 600px;
 	border: 2px dashed #aaa;
 	border-radius: 5px;
-	overflow: auto;
+	overflow-x: auto;
 	text-align: center;
 }
 
@@ -730,14 +729,6 @@ li.remove_frame a:hover {
 	body .navbar .navbar-nav.side-nav>li.collapsed-content {
 		display: none;
 	}
-	#chart-container {
-	position: relative; 
-	border: 2px dashed #aaa;
-	border-radius: 5px;
-	height:600px;
-	overflow: auto;
-	text-align: center;
-	}
 }
 @media screen and (max-width: 960px) {
 	body,#wrap,#row,#content,.pageheader,.main,.row{
@@ -745,13 +736,6 @@ li.remove_frame a:hover {
 	 }
 	body .navbar .navbar-nav.side-nav>li.collapsed-content {
 		display:none;
-	}
-	#chart-container {
-	position: relative; 
-	border: 2px dashed #aaa;
-	border-radius: 5px;
-	overflow: auto;
-	text-align: center;
 	}
 }
 
