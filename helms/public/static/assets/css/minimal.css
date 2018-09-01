@@ -6,7 +6,7 @@ html, body {
 }
 
 html {
-	padding-top: 45px;
+	/* padding-top: 45px; */
 	padding-bottom: 0;
 	overflow: hidden;
 }
@@ -36,6 +36,7 @@ html.mm-opened #wrap>.row #content {
 }
 
 #wrap #content {
+	padding-top:45px;
 	padding-bottom: 0;
 	padding-left: 265px;
 	padding-right: 25px;
@@ -47,7 +48,7 @@ html.mm-opened #wrap>.row #content {
 	margin: 10px 0;
 }
 
-body {
+body {   
 	font-family: "Roboto", "Arial", sans-serif;
 	font-size: 14px;
 	font-weight: 400;

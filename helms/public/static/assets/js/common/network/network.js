@@ -75,6 +75,7 @@ $(function() {
 	});
 	
 	refreshNetworkChart( $('#searchUserId').val(),getChildrenNetworkUrl);
+	
 })
 
 function refreshNetworkChart(_userId, loadNetworkUrl){

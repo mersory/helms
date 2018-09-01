@@ -730,6 +730,14 @@ li.remove_frame a:hover {
 	body .navbar .navbar-nav.side-nav>li.collapsed-content {
 		display: none;
 	}
+	#chart-container {
+	position: relative; 
+	border: 2px dashed #aaa;
+	border-radius: 5px;
+	height:600px;
+	overflow: auto;
+	text-align: center;
+	}
 }
 @media screen and (max-width: 960px) {
 	body,#wrap,#row,#content,.pageheader,.main,.row{
@@ -737,6 +745,13 @@ li.remove_frame a:hover {
 	 }
 	body .navbar .navbar-nav.side-nav>li.collapsed-content {
 		display:none;
+	}
+	#chart-container {
+	position: relative; 
+	border: 2px dashed #aaa;
+	border-radius: 5px;
+	overflow: auto;
+	text-align: center;
 	}
 }
 
@@ -749,3 +764,24 @@ li.remove_frame a:hover {
     #content, .pageheader, .main, .row {
     min-width: 1500px; 
    }} */
+
+@media screen and (max-width: 460px) {
+    .bx-viewport{
+     width: auto; 
+     overflow: auto; 
+     position: relative; 
+   }
+	.sale-product ul li{
+	position: relative;
+     float: none;
+    width:auto; 
+	}
+}
+   
+   
+@media screen and (min-width: 460px) {
+    .bx-viewport{
+     width: 1500px; 
+     overflow: hidden; 
+     position: relative; 
+   }}
