@@ -6,7 +6,7 @@ html, body {
 }
 
 html {
-	padding-top: 45px;
+	/* padding-top: 45px; */
 	padding-bottom: 0;
 	overflow: hidden;
 }
@@ -36,6 +36,7 @@ html.mm-opened #wrap>.row #content {
 }
 
 #wrap #content {
+	padding-top:45px;
 	padding-bottom: 0;
 	padding-left: 265px;
 	padding-right: 25px;
@@ -236,6 +237,7 @@ body .navbar .navbar-header {
 	width: 250px;
 	position: relative;
 	z-index: 999999;
+	transform: translateZ(100px);
 }
 
 body .navbar .navbar-header .navbar-brand {
