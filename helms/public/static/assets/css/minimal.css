@@ -237,6 +237,7 @@ body .navbar .navbar-header {
 	width: 250px;
 	position: relative;
 	z-index: 999999;
+	transform: translateZ(100px);
 }
 
 body .navbar .navbar-header .navbar-brand {
