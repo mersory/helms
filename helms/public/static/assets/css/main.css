@@ -760,6 +760,10 @@ li.remove_frame a:hover {
      float: none;
     width:auto; 
 	}
+	.sale-product ul{
+		margin:0px;
+		padding:0px;
+	}
 }
    
    
@@ -768,4 +772,5 @@ li.remove_frame a:hover {
      width: 1500px; 
      overflow: hidden; 
      position: relative; 
-   }}
+   }
+}
