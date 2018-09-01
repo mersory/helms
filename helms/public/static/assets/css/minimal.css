@@ -1,14 +1,14 @@
 /*****************************************/
 /************* MAIN SETTINGS *************/
 /*****************************************/
-html, body {
-	/* height: 100%; */
+body {
+	height: 100%;
+	overflow:auto;
 }
 
 html {
-	/* padding-top: 45px; */
 	padding-bottom: 0;
-	/* overflow: hidden; */
+	/* overflow: hidden;  */
 }
 
 html.mm-opened #wrap>.row #content {
